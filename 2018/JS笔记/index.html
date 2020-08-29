@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>JS笔记 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="前端,JQuery," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>JS笔记</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2018-09-08
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E5%89%8D%E7%AB%AF/">
+            前端
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="JS笔记"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h3 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(“.id:not(‘.id:first’)”)</span><br><span class="line">$(&#39;.outNUm:not(.outNUm:first)&#39;).remove();</span><br></pre></td></tr></table></figure>
+
+<h3 id="JS判断网页是否到达底部可以用在像微博和QQ空间的自动加载动态等功能"><a href="#JS判断网页是否到达底部可以用在像微博和QQ空间的自动加载动态等功能" class="headerlink" title="JS判断网页是否到达底部可以用在像微博和QQ空间的自动加载动态等功能"></a>JS判断网页是否到达底部可以用在像微博和QQ空间的自动加载动态等功能</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">window.onscroll&#x3D;&#96;&#96;function&#96;&#96;()&#123;</span><br><span class="line">    var a &#x3D; document.documentElement.scrollTop&#x3D;&#x3D;0?document.body.clientHeight:document.documentElement.clientHeight;</span><br><span class="line">    var b &#x3D; document.documentElement.scrollTop&#x3D;&#x3D;0? document.body.scrollTop :document.documentElement.scrollTop;</span><br><span class="line">    var c &#x3D; document.documentElement.scrollTop&#x3D;&#x3D;0? document.body.scrollHeight : document.documentElement.scrollHeight;</span><br><span class="line">    if (a+b &#x3D;&#x3D; c &amp;&amp; b &gt; 600) &#123;</span><br><span class="line">        &#x2F;&#x2F;这里输入你想执行的动作</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;input[name&#x3D;&quot;nw&quot;]&#39;);</span><br><span class="line">$(&#39;#username&#39;).bind(&#39;input propertychange&#39;, function() &#123;</span><br><span class="line">    $(&#39;#result&#39;).html($(this).val().length + &#39; characters&#39;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="JS根据文本框按键-弹出所对应的值"><a href="#JS根据文本框按键-弹出所对应的值" class="headerlink" title="JS根据文本框按键 弹出所对应的值"></a>JS根据文本框按键 弹出所对应的值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function keyUp() &#123;</span><br><span class="line">    if (navigator.appName &#x3D;&#x3D; &quot;Microsoft Internet Explorer&quot;) &#123;</span><br><span class="line">        var keycode &#x3D; event.keyCode;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        var keycode &#x3D; keyUp.caller.arguments[0].which;</span><br><span class="line">    &#125;</span><br><span class="line">    alert(keycode);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="判断输入时间-大小关系"><a href="#判断输入时间-大小关系" class="headerlink" title="判断输入时间 大小关系"></a>判断输入时间 大小关系</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function compare_time(a,b) &#123;</span><br><span class="line">    var arr &#x3D; a.split(&quot;-&quot;);</span><br><span class="line">    var starttime &#x3D; new Date(arr[0],arr[1],arr[2]);</span><br><span class="line">    var starttimes &#x3D; starttime.getTime();</span><br><span class="line">    var arrs &#x3D; b.split(&quot;-&quot;);</span><br><span class="line">    var endtime &#x3D; new Date(arrs[0],arrs[1],arrs[2]);</span><br><span class="line">    var endtimes &#x3D; endtime.getTime();</span><br><span class="line">    if (starttimes &gt; endtimes) &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var a &#x3D; &quot;I want apple&quot;;</span><br><span class="line">var b &#x3D; &quot;an&quot;;</span><br><span class="line">var position &#x3D; 6;</span><br><span class="line">var output &#x3D; [a.slice(0, position), b, a.slice(position)].join(&#39;&#39;);</span><br><span class="line">console.log(output);</span><br><span class="line"></span><br><span class="line">var aa &#x3D; [&#39;2019-02&#39;,&#39;2017-03&#39;,&#39;2017-03&#39;].filter();</span><br><span class="line">onkeyup&#x3D;&quot;value&#x3D;value.replace(&#x2F;[^\d]&#x2F;g,&#39;&#39;)&quot;</span><br><span class="line">alert(str.substring(0,5));----------&quot;01234&quot;</span><br><span class="line">alert(str.substr(0,5));-------------&quot;01234&quot;</span><br><span class="line">alert(&quot;abcdefg&quot;.slice(-4));</span><br></pre></td></tr></table></figure>
+
+<h3 id="Js代码"><a href="#Js代码" class="headerlink" title="Js代码 :"></a>Js代码 :</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;div[id]&quot;)              选择所有含有id属性的div元素   </span><br><span class="line">$(&quot;input[name&#x3D;&#39;newsletter&#39;]&quot;)    选择所有的name属性等于&#39;newsletter&#39;的input元素   </span><br><span class="line">   </span><br><span class="line">$(&quot;input[name!&#x3D;&#39;newsletter&#39;]&quot;) 选择所有的name属性不等于&#39;newsletter&#39;的input元素   </span><br><span class="line">   </span><br><span class="line">$(&quot;input[name^&#x3D;&#39;news&#39;]&quot;)         选择所有的name属性以&#39;news&#39;开头的input元素   </span><br><span class="line">$(&quot;input[name$&#x3D;&#39;news&#39;]&quot;)         选择所有的name属性以&#39;news&#39;结尾的input元素   </span><br><span class="line">$(&quot;input[name*&#x3D;&#39;man&#39;]&quot;)          选择所有的name属性包含&#39;news&#39;的input元素 </span><br><span class="line">$(&quot;input[id][name$&#x3D;&#39;man&#39;]&quot;)    可以使用多个属性进行联合选择，该选择器是得到所有的含有id属性并且那么属性以man结尾的元素   </span><br></pre></td></tr></table></figure>
+
+
+<h3 id="js刷新验证码图片"><a href="#js刷新验证码图片" class="headerlink" title="js刷新验证码图片"></a>js刷新验证码图片</h3><p>function reload(){<br>    var img = document.getElementById(“img”); i<br>    mg.src = “/user/captcha?width=130&amp;height=40”;<br>}</p>
+<p>HTML<br>块级元素    行内元素内联元素<br>块级元素独占一行  可以设置width height  默认100%   div<br>内联元素无效   根据自身内容或者子元素决定  span a img<br>display   block块元素    inline  行内元素<br>               inline-block  元素在行内显示 又能设置宽高<br>块元素  从上到下排列  遇到内联样式 从左到右   普通流</p>
+<p>margin border padding content<br>总宽度=margin-left+border-left+padding-left+width+padding-right-border-right+margin-right<br>width:200px padding:10px border:5px soild #000 margin:20px<br>200+10<em>2+5</em>2+20<em>2=270px<br>小于IE9  200+20</em>2=240px</p>
+<p>posittion   默认值static  正常位置  没有定位  无法使用top right等移动<br>relative    相对定位  相对于元素的正常位置来进行定位  可以使用top right<br>absolute      绝对定位  元素在页面不占据为知  相对于最近一级的定位不是static的父元素进行定位<br>fixed    绝对定位 相对于浏览器窗口来进行定位 和absolute一样 特殊的absolute<br>inherit   从父元素继承position属性的值</p>
+<h3 id="加"><a href="#加" class="headerlink" title="加"></a>加</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">function floatAdd(arg1,arg2) &#123;</span><br><span class="line">    var r1,r2,m;  </span><br><span class="line">    try&#123;r1&#x3D;arg1.toString().split(&quot;.&quot;)[1].length&#125;catch(e)&#123;r1&#x3D;0&#125;  </span><br><span class="line">    try&#123;r2&#x3D;arg2.toString().split(&quot;.&quot;)[1].length&#125;catch(e)&#123;r2&#x3D;0&#125;  </span><br><span class="line">    m&#x3D;Math.pow(10,Math.max(r1,r2));  </span><br><span class="line">    return (arg1*m+arg2*m)&#x2F;m;  </span><br><span class="line">&#125;</span><br><span class="line">&#96;&#96;&#96;    </span><br><span class="line">      </span><br><span class="line">### 减  </span><br><span class="line">···</span><br><span class="line">function floatSub(arg1,arg2) &#123;</span><br><span class="line">    var r1,r2,m,n;  </span><br><span class="line">    try&#123;r1&#x3D;arg1.toString().split(&quot;.&quot;)[1].length&#125;catch(e)&#123;r1&#x3D;0&#125;  </span><br><span class="line">    try&#123;r2&#x3D;arg2.toString().split(&quot;.&quot;)[1].length&#125;catch(e)&#123;r2&#x3D;0&#125;  </span><br><span class="line">    m&#x3D;Math.pow(10,Math.max(r1,r2));  </span><br><span class="line">    &#x2F;&#x2F;动态控制精度长度  </span><br><span class="line">    n&#x3D;(r1&gt;&#x3D;r2)?r1:r2;  </span><br><span class="line">    return ((arg1*m-arg2*m)&#x2F;m).toFixed(n);  </span><br><span class="line">&#125;</span><br><span class="line">···  </span><br><span class="line">       </span><br><span class="line">### 乘  </span><br><span class="line">&#96;&#96;&#96;  </span><br><span class="line">function floatMul(arg1,arg2) &#123;</span><br><span class="line">    var m&#x3D;0,s1&#x3D;arg1.toString(),s2&#x3D;arg2.toString();   </span><br><span class="line">    try&#123;m+&#x3D;s1.split(&quot;.&quot;)[1].length&#125;catch(e)&#123;&#125;   </span><br><span class="line">    try&#123;m+&#x3D;s2.split(&quot;.&quot;)[1].length&#125;catch(e)&#123;&#125;   </span><br><span class="line">    return Number(s1.replace(&quot;.&quot;,&quot;&quot;))*Number(s2.replace(&quot;.&quot;,&quot;&quot;))&#x2F;Math.pow(10,m);   </span><br><span class="line">&#125;   </span><br><span class="line">&#96;&#96;&#96;      </span><br><span class="line">      </span><br><span class="line">### 除</span><br></pre></td></tr></table></figure>
+<p>function floatDiv(arg1,arg2) {<br>    var t1=0,t2=0,r1,r2;<br>    try{t1=arg1.toString().split(“.”)[1].length}catch(e){}<br>    try{t2=arg2.toString().split(“.”)[1].length}catch(e){}   </p>
+<pre><code>r1=Number(arg1.toString().replace(&quot;.&quot;,&quot;&quot;));
+
+r2=Number(arg2.toString().replace(&quot;.&quot;,&quot;&quot;));   
+return (r1/r2)*Math.pow(10,t2-t1);   </code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 字符串长度</span><br><span class="line">&#96;</span><br><span class="line">value.replace(&#39;&#x2F;[^\x00-\xff]&#x2F;g&#39;, &#39;__&#39;).length;</span><br><span class="line">&#96;</span><br><span class="line"></span><br><span class="line">#### js数组遍历 </span><br><span class="line">&#96;</span><br><span class="line">for (var key in params)&#123;</span><br><span class="line">alert(key+&quot; : &quot;+params[key]);</span><br><span class="line">&#125;</span><br><span class="line">&#96;</span><br><span class="line"></span><br><span class="line">#### </span><br><span class="line">&#96;</span><br><span class="line">$(&quot;input[name&#x3D;&#39;modelId&#39;]&quot;).each(function()&#123;</span><br><span class="line">    alert($(this).val());</span><br><span class="line">&#125;);</span><br><span class="line">&#96;   </span><br><span class="line">    </span><br><span class="line">### 拼接所有输入值</span><br></pre></td></tr></table></figure>
+<p>var ids = [];<br>$(“#form input[type=’text’]”).each(function(){<br>    ids.push($(this).val());<br>});<br>var s = ids.join(‘,’);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">### 判断所有input输入重复</span><br></pre></td></tr></table></figure>
+<p>var isflag=true;<br>var array=document.getElementsByName(“replay[]”);<br>for(var i=0;i&lt;array.length;i++ ){<br>    for(var j=i+1;j&lt;array.length;j++){<br>        if(array[i].value!=””&amp;&amp;array[i].value==array[j].value){<br>            isflag=false;<br>            break;<br>        }<br>    }<br>}<br>if(isflag==true){<br>    alert(“没有重复的”);<br>}else{<br>    alert(“有重复的”);<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">###js 获取url  </span><br><span class="line">&#96;&lt;Script language&#x3D;&quot;javascript&quot;&gt; </span><br><span class="line">function GetRequest() &#123; </span><br><span class="line">var url &#x3D; location.search; &#x2F;&#x2F;获取url中&quot;?&quot;符后的字串 </span><br><span class="line">var theRequest &#x3D; new Object(); </span><br><span class="line">if (url.indexOf(&quot;?&quot;) !&#x3D; -1) &#123; </span><br><span class="line">var str &#x3D; url.substr(1); </span><br><span class="line">strs &#x3D; str.split(&quot;&amp;&quot;); </span><br><span class="line">for(var i &#x3D; 0; i &lt; strs.length; i ++) &#123; </span><br><span class="line">theRequest[strs[i].split(&quot;&#x3D;&quot;)[0]]&#x3D;unescape(strs[i].split(&quot;&#x3D;&quot;)[1]); </span><br><span class="line">&#125; </span><br><span class="line">&#125; </span><br><span class="line">return theRequest; </span><br><span class="line">&#125; </span><br><span class="line">&lt;&#x2F;Script&gt;&#96;</span><br><span class="line"></span><br><span class="line">###调用</span><br><span class="line">&#96;var Request &#x3D; new Object(); </span><br><span class="line">Request &#x3D; GetRequest(); </span><br><span class="line">sort &#x3D; Request[&#39;sort&#39;]; &#96;</span><br><span class="line"></span><br><span class="line">### json数据转换</span><br></pre></td></tr></table></figure>
+<p>//上证  深成<br>function getIndexData(){<br>    var obj = $.ajax({url:”/stock/system/name/s_sh000001,s_sz399001”,async:false});<br>    var jsonObj = JSON.stringify(obj);<br>    var str = jQuery.parseJSON(jsonObj);<br>//            var new_str = JSON.stringify(str.responseJSON);<br>    var arr = str.responseJSON;<br>    var showStr = ‘’;<br>    for(var key in arr){<br>//                alert(parseFloat(arr[key].now_price));<br>        if(parseFloat(arr[key].now_price) &lt; 0){<br>            var tcss = ‘text-success’;<br>        }else{<br>            var tcss = ‘text-danger’;<br>        }<br>        showStr += “<h4 class='text-left'><b>“+arr[key].name+”：</b></h4><h5 class='"+tcss+"'>当前价格：”+arr[key].now_point+”，涨跌率：”+arr[key].now_change+”，涨跌金额：”+arr[key].now_price+”，成交量(手)：”+arr[key].trade_volume+”，成交额(万元)：”+arr[key].trade_price;<br>    }<br>    return showStr;<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 判断字符串</span><br><span class="line">&#96;&#96;&#96; </span><br><span class="line">var index &#x3D; phone.indexOf(&quot;,&quot;);</span><br><span class="line"></span><br><span class="line">语法 </span><br><span class="line">stringObject.substring(start,stop) </span><br><span class="line">参数 描述 </span><br><span class="line">start 必需。一个非负的整数，规定要提取的子串的第一个字符在 stringObject 中的位置。 </span><br><span class="line">stop 可选。一个非负的整数，比要提取的子串的最后一个字符在 stringObject 中的位置多 1。如果省略该参数，那么返回的子串会一直到字符串的结尾。 </span><br></pre></td></tr></table></figure>
+
+<h3 id="JQUERY-事件绑定"><a href="#JQUERY-事件绑定" class="headerlink" title="JQUERY 事件绑定"></a>JQUERY 事件绑定</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;input[type&#x3D;&#39;text&#39;]&quot;).change( function() &#123; </span><br><span class="line">&#x2F;&#x2F; 这里可以写你想要的验证代码； </span><br><span class="line">&#125;); </span><br><span class="line"></span><br><span class="line">$(function () &#123; </span><br><span class="line">    $(&quot;#txtAssessmentTotal&quot;).change(function () &#123; </span><br><span class="line">    &#x2F;&#x2F;这里写你想要的验证的代码； </span><br><span class="line">    &#125;) </span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line">为每个匹配元素的特定事件绑定事件处理函数。 </span><br><span class="line">.bind() 方法是用于往文档上附加行为的主要方式。</span><br><span class="line">所有JavaScript事件对象，比如focus, mouseover, 和 resize，都是可以作为type参数传递进来的。 </span><br><span class="line">个人理解bind就是为这个控件绑定事件在给这个事件定义一个匿名的方法去实现你想要的验证； </span><br><span class="line">$(&quot;#txtAssessmentTotal&quot;).bind(&#39;click&#39;, function() &#123; </span><br><span class="line">    alert($(&quot;#txtAssessmentTotal&quot;).val()); </span><br><span class="line">&#125;); </span><br><span class="line"></span><br><span class="line">$(&quot;#txtAssessmentTotal&quot;).bind(&#39;mouseenter mouseleave&#39;, function() &#123; </span><br><span class="line">    alert($(&quot;#txtAssessmentTotal&quot;).val()); </span><br><span class="line">&#125;); </span><br></pre></td></tr></table></figure>
+
+<h3 id="定义鼠标"><a href="#定义鼠标" class="headerlink" title="定义鼠标"></a>定义鼠标</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">body&#123;cursor: url(cur.ani或cur);&#125;</span><br><span class="line"></span><br><span class="line">各种样式的光标 </span><br><span class="line">default： 标准箭头</span><br><span class="line">auto： 标准光标</span><br><span class="line">hand： 手形光标</span><br><span class="line">wait： 等待光标</span><br><span class="line">text： I形光标</span><br><span class="line">vertical-text： 水平I形光标</span><br><span class="line">no-drop： 不可拖动光标</span><br><span class="line">not-allowed： 无效光标</span><br><span class="line">help： ?帮助光标</span><br><span class="line">all-scroll： 三角方向标</span><br><span class="line">move： 移动标</span><br><span class="line">crosshair： 十字标 e-resize n-resize nw-resize w-resize s-resize se-resize sw-resize</span><br></pre></td></tr></table></figure>
+
+<h3 id="取得IP"><a href="#取得IP" class="headerlink" title="取得IP"></a>取得IP</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">userip &#x3D; Request.ServerVariables(&quot;HTTP_X_FORWARDED_FOR&quot;)</span><br><span class="line">if (userip &#x3D; &quot;&quot;) &#123;</span><br><span class="line">    userip &#x3D; Request.ServerVariables(&quot;REMOTE_ADDR&quot;)</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<h3 id="CSS样式"><a href="#CSS样式" class="headerlink" title="CSS样式"></a>CSS样式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a:link：表示已经链接；</span><br><span class="line">a:hover：表示鼠标移上链接时；</span><br><span class="line">a:active：表示链接激活时；</span><br><span class="line">a:visited：表示己点击过的链接。</span><br></pre></td></tr></table></figure>
+
+<h3 id="禁止鼠标右键"><a href="#禁止鼠标右键" class="headerlink" title="禁止鼠标右键"></a>禁止鼠标右键</h3><p>在<code>&lt;body&gt;</code>标签中加入 <code>&lt;body oncontextmenu=&quot;return false&quot;&gt;</code></p>
+<h3 id="禁止页面正文选取"><a href="#禁止页面正文选取" class="headerlink" title="禁止页面正文选取"></a>禁止页面正文选取</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;body oncontextmenu&#x3D;&quot;return false&quot; ondragstart&#x3D;&quot;return false&quot; onselectstart &#x3D;&quot;return false&quot; onselect&#x3D;&quot;document.selection.empty()&quot; oncopy&#x3D;&quot;document.selection.empty()&quot; onbeforecopy&#x3D;&quot;return false&quot;onmouseup&#x3D;&quot;document.selection.empty()&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="页面定时刷新"><a href="#页面定时刷新" class="headerlink" title="页面定时刷新"></a>页面定时刷新</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta http-equiv&#x3D;&quot;Refresh&quot; content&#x3D;&quot;秒&quot; &gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="页面定时转向新的地址"><a href="#页面定时转向新的地址" class="headerlink" title="页面定时转向新的地址"></a>页面定时转向新的地址</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta http-equiv&#x3D;&quot;refresh&quot; content&#x3D;&quot;秒;URL&#x3D;url&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="设为首页"><a href="#设为首页" class="headerlink" title="设为首页"></a>设为首页</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;A href&#x3D;# onclick&#x3D;&quot;this.style.behavior&#x3D;&#39;url(#default#homepage)&#39;; this.setHomePage(&#39;url&#39;);&quot;&gt;设为首页&lt;&#x2F;A&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="文字滚动"><a href="#文字滚动" class="headerlink" title="文字滚动"></a>文字滚动</h3><p>插入边框为0的1行1列的表格，在表格中输入文字，选中文字，<br>按ctrl+t输入marquee direction=”up”, 回车即可让文字在表格区域内向上滚动。<br>（right、down可用于让文字或图象向右及向下滚动，修改html原代码还可以得到需要的滚动速度。</p>
+<h3 id="表单验正"><a href="#表单验正" class="headerlink" title="表单验正"></a>表单验正</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;SCRIPT language&#x3D;javascript&gt;</span><br><span class="line">function checkform(theform)&#123;</span><br><span class="line">    if(theform.name.value&#x3D;&#x3D;&quot;&quot;)&#123;</span><br><span class="line">        alert(&quot;姓名不能为空!&quot;);</span><br><span class="line">        theform.name.focus();</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    if(theform.tel.value&#x3D;&#x3D;&quot;&quot;)&#123;</span><br><span class="line">        alert(&quot;电话不能为空!&quot;);</span><br><span class="line">        theform.tel.focus();</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;SCRIPT&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="滚动条"><a href="#滚动条" class="headerlink" title="滚动条"></a>滚动条</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">window.scroll滚动条的用法总结：</span><br><span class="line">overflow:内容溢出时的设置（设定被指定对象是否显示滚动条）</span><br><span class="line">overflow-x:水平溢出时的设置；</span><br><span class="line">overflow-y：垂直溢出时的设置；</span><br><span class="line">以上三个属性的值有：visible(默认值)，hidden,scroll,auto;</span><br></pre></td></tr></table></figure>
+
+<p>溢出栏的设制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">visible：超出的部分照样显示；</span><br><span class="line">hidden：超出的部分隐藏；</span><br><span class="line">scrool：不管有否超出，都显示滚动条；</span><br><span class="line">auto：有超出时才出现滚动条；</span><br><span class="line">onMouseOver：鼠标移到目标上；</span><br><span class="line">onMouseUp：按下鼠标再放开左键时；</span><br><span class="line">onMouseOut：鼠标移开时；</span><br><span class="line">onMouseDown：按下鼠标时（不需要放开左键）；</span><br><span class="line">onClink：点击时；</span><br><span class="line">onDblClick：双击时；</span><br><span class="line">onLoad：载入网页时；</span><br><span class="line">onUnload：离开页面时；</span><br><span class="line">onResize：当浏览者改变浏览窗口的大小时；</span><br><span class="line">onScroll：当浏览者拖动滚动条的时。</span><br><span class="line">window.scroll(0,0)返回窗口的顶部；</span><br><span class="line">window.moveTo(x,y)返回移动窗口屏幕位置到指定的位置（x,y）的偏移(绝对位置)；</span><br><span class="line">window.moveBy(x,y)返回移动窗口屏幕位置到指定（x,y)的偏移（相对位置）；</span><br><span class="line">window.scrollTo(x,y)返回滚动窗口屏幕位置到指定(x,y)的偏移（绝对位置）；</span><br><span class="line">window.scrollBy(x,y)返回滚动窗口屏幕位置到指定(x,y)的偏移（绝对位置）；</span><br><span class="line">window.resizeTo(wudth,height)改变窗口大小到指定的高度和宽度；(绝对位置)</span><br><span class="line">window.resizeBy(x,y)改变窗口大小到指定的高度和宽度;(相对位置)；</span><br><span class="line">window.screenTop 返回网页正文上面距离；</span><br><span class="line">window.screenLeft 返回网页正文左面距离；</span><br><span class="line">window.screen.height:屏幕分辨率的高度；</span><br><span class="line">window.screen.width: 屏幕分辨率的宽度；</span><br><span class="line">window.screen.availheight:屏幕可用工作区域的高度；</span><br><span class="line">window.screen.availwidth:屏幕可用工作区域的宽度；</span><br><span class="line">window.resizeTo(200,300):使窗口变成指定大小；</span><br><span class="line">状态栏的设置: window.status&#x3D;&quot;字符&quot;;</span><br><span class="line">默认的状态栏文字设置: window.defaultStatus &#x3D; &quot;文字.&quot;;</span><br><span class="line">返回上一个页面; window.history.go(-1);</span><br><span class="line">window.history.go(返回第几，也可以是访问过的URL);</span><br><span class="line">window.location.reload():刷新当前网页</span><br><span class="line">window.history.back():返回上一页；</span><br><span class="line">window.history.forward():返回前一页；</span><br><span class="line">window.navigate(&quot;http:&#x2F;&#x2F;www.baidu.com&quot;):JS中的窗口重定向到百度</span><br><span class="line">window.location(&quot;http:&#x2F;&#x2F;www.baidu.com&quot;)转移到目标url或者用window.location.assign(&quot;http:&#x2F;&#x2F;www.baidu.com&quot;);</span><br><span class="line">window.focus():是当前窗口在所有窗口之前；</span><br><span class="line">设置为收藏window.external.AddFavorite(url,title);</span><br><span class="line">DOM第二级事件模型</span><br><span class="line">DOM第0级事件模型的缺点是，属性被用于存储事件处理函数的引用，所以每个元素对于任何特定的事件类型，每次只能注册一个事件处理程序。</span><br><span class="line">DOM第2级事件模型（也称为监听器）被设计来解决这些类型的问题。每个DOM元素都定义名为addEventListener()的方法，用于把事件处 理程序(监听器)附加到元素上。这个方法的格式如下所示：</span><br><span class="line">addEventListener(eventType,listener,useCapture)</span><br><span class="line">eventType：表示的是事件类型例如onclick onmuseover等</span><br><span class="line">listener: 表示的是事件处理函数，</span><br><span class="line">useCapture:是布尔值；</span><br></pre></td></tr></table></figure>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2018/JS%E7%AC%94%E8%AE%B0/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/JQuery/">
+              #JQuery
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2018/My-Happy-Ending-Avril%20Lavigne/" target="_self">My-Happy-Ending - Avril Lavigne</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2018/%E6%8F%90%E9%AB%98php%E5%BA%94%E7%94%A8%E7%9A%84%E6%80%A7%E8%83%BD-%E4%BC%98%E5%8C%96/" target="_self">提高PHP应用的性能、优化</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>PHP笔记 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="PHP,笔记," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>PHP笔记</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2019-12-02
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/PHP/">
+            PHP
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="PHP笔记"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>php -S localhost:1234<br>php -S localhost:8000 -t /PHP/Test</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ignore_user_abort();&#x2F;&#x2F;关闭浏览器仍然执行</span><br><span class="line">set_time_limit(0);&#x2F;&#x2F;让程序一直执行下去</span><br><span class="line">$interval&#x3D;3;&#x2F;&#x2F;每隔一定时间运行</span><br><span class="line">do&#123;</span><br><span class="line">    $msg&#x3D;date(&quot;Y-m-d H:i:s&quot;);</span><br><span class="line">    file_put_contents(&quot;log.log&quot;,$msg,FILE_APPEND);&#x2F;&#x2F;记录日志</span><br><span class="line">    sleep($interval);&#x2F;&#x2F;等待时间，进行下一次操作。</span><br><span class="line">&#125; while (true);</span><br></pre></td></tr></table></figure>
+
+<p>PHP获取IP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function get_client_ip() &#123;</span><br><span class="line">    if(getenv(&#39;HTTP_CLIENT_IP&#39;) &amp;&amp; strcasecmp(getenv(&#39;HTTP_CLIENT_IP&#39;), &#39;unknown&#39;)) &#123;</span><br><span class="line">        $ip &#x3D; getenv(&#39;HTTP_CLIENT_IP&#39;);</span><br><span class="line">    &#125; elseif(getenv(&#39;HTTP_X_FORWARDED_FOR&#39;) &amp;&amp; strcasecmp(getenv(&#39;HTTP_X_FORWARDED_FOR&#39;), &#39;unknown&#39;)) &#123;</span><br><span class="line">        $ip &#x3D; getenv(&#39;HTTP_X_FORWARDED_FOR&#39;);</span><br><span class="line">    &#125; elseif(getenv(&#39;REMOTE_ADDR&#39;) &amp;&amp; strcasecmp(getenv(&#39;REMOTE_ADDR&#39;), &#39;unknown&#39;)) &#123;</span><br><span class="line">        $ip &#x3D; getenv(&#39;REMOTE_ADDR&#39;);</span><br><span class="line">    &#125; elseif(isset($_SERVER[&#39;REMOTE_ADDR&#39;]) &amp;&amp; $_SERVER[&#39;REMOTE_ADDR&#39;] &amp;&amp; strcasecmp($_SERVER[&#39;REMOTE_ADDR&#39;], &#39;unknown&#39;)) &#123;</span><br><span class="line">        $ip &#x3D; $_SERVER[&#39;REMOTE_ADDR&#39;];</span><br><span class="line">    &#125;</span><br><span class="line">    return preg_match ( &#39;&#x2F;[\d\.]&#123;7,15&#125;&#x2F;&#39;, $ip, $matches ) ? $matches [0] : &#39;&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>refer头<br>唯一密匙<br>xss,csrf的防御<br>IP提交限制</p>
+<p>类似于break  直接跳过下面部分执行内容<br>goto a;<br>echo ‘Foo’;//此句被略过</p>
+<p>a:<br>echo ‘Bar’;   </p>
+<h3 id="使用PHP处理POST上传时-FILES数组为何为空"><a href="#使用PHP处理POST上传时-FILES数组为何为空" class="headerlink" title="使用PHP处理POST上传时$_FILES数组为何为空"></a>使用PHP处理POST上传时$_FILES数组为何为空</h3><p>上传文件的表单中未设置属性  enctype=”multipart/form-data”.</p>
+<p>php上传文件$_FILES数组为空的解决办法：<br>用php做上传文件的应用时，在后台打印$_FILES时发现为空数组，出现这个问题可能有以下两个原因： </p>
+<p>表单类型原因或者php设置问题：<br>1，表单类型：<br>上传文件的表单编码类型必须设置成 enctype=”multipart/form-data”，因为要传大数据，一般提交方式用POST。 </p>
+<p>2，php设置问题：<br>php默认的post_max_size 为2M.如果 POST 数据尺寸大于 post_max_size $_POST 和 $_FILES 超全局变量便会为空. 解决的方法是： </p>
+<ol>
+<li>一般的文件上传,除非文件很小.就像一个5M的文件,很可能要超过一分钟才能上传完. 但在php中,默认的该页最久执行时间为 30 秒.就是说超过30秒,该脚本就停止执行. 这就导致出现 无法打开网页的情况.这时我们可以修改 max_execution_time 在php.ini里查找 max_execution_time 默认是30秒.改为 max_execution_time = 0（可修改范围为PHP_INI_ALL） 0表示没有限制<br>或者在php文件头设置ini_set(‘max_execution_time’,0); </li>
+<li>修改 post_max_size 设定 POST 数据所允许的最大大小。此设定也影响到文件上传。 查找 post_max_size .改为 post_max_size = 150M（可修改范围为PHP_INI_PHP_INI_PERDIR） </li>
+<li>很多人都会改了第二步.但上传文件时最大仍然为 8M. 为什么呢.我们还要改一个参数upload_max_filesize 表示所上传的文件的最大大小。 查找upload_max_filesize,默认为8M改为 upload_max_filesize = 100M（可修改范围为PHP_INI_PHP_INI_PERDIR）<br>另外要说明的是post_max_size是整个表达的大小，而upload_max_filesize是上传文件的大小，前者应大于后者.</li>
+</ol>
+<p>1.使用 ip2long() 和 long2ip() 函数来把 IP 地址转化成整型存储到数据库里。这种方法把存储空间降到了接近四分之一（char(15) 的 15 个字节对整形的 4 个字节），计算一个特定的地址是不是在一个区段内页更简单了，而且加快了搜索和排序的速度（虽然有时仅仅是快了一点）。</p>
+<p>2.在验证 email 地址的时候使用 checkdnsrr() 函数验证域名是否存在。这个内置函数能够确认指定的域名能够解析成 IP 地址。该函数的PHP 文档的用户评论部分有一个简单的用户自定义函数，这个函数基于 checkdnsrr()，用来验证 email 地址的合法性。对于那些认为自己的 email 地址是 “<a href="mailto:&#106;&#111;&#101;&#x75;&#115;&#101;&#114;&#x40;&#x77;&#119;&#119;&#x70;&#104;&#112;&#46;&#x6e;&#x65;&#116;">&#106;&#111;&#101;&#x75;&#115;&#101;&#114;&#x40;&#x77;&#119;&#119;&#x70;&#104;&#112;&#46;&#x6e;&#x65;&#116;</a>” 而不是 “<a href="mailto:&#106;&#x6f;&#x65;&#x75;&#x73;&#101;&#114;&#x40;&#112;&#104;&#x70;&#x2e;&#x6e;&#101;&#116;">&#106;&#x6f;&#x65;&#x75;&#x73;&#101;&#114;&#x40;&#112;&#104;&#x70;&#x2e;&#x6e;&#101;&#116;</a>” 的家伙们，这个方法可以很方便的抓住他们。</p>
+<p>3.如果你使用的是 PHP 5 和 MySQL 4.1 或者更高的版本，考虑抛弃 mysql_* 系列函数改用改进版的 mysqli_* 系列函数。一个很好的功能就是你可以使用预处理语句，如果你在维护一个数据库密集型站点，这个功能能够加快查询速度。一些评估分数。</p>
+<p>4.学会爱上三元运算符。</p>
+<p>5.如果你在项目中感觉到有可复用的部分，在你写下一行代码前先看看 PEAR 中是否已经有了。很多 PHP 程序员都知道 PEAR 是一个很好的资源库，虽然还有很多程序员不知道。这个在线资源库包含了超过 400 个可以复用的程序片段，这些程序片段你可以立即用刀你的程序里。除非说你的项目真的是非常特别的，你总能找到帮你节省时间的 PEAR 包。</p>
+<p>6.用 highlight_file() 来自动的打印出格式化的很漂亮的源代码。如果你在留言板、IRC 这些地方寻求一个脚本的帮助的话，这个函数用起来非常的顺手。当然了，要小心不要意外的泄露出你的数据库连接信息和密码等。</p>
+<p>7.使用 error_reporting(0) 函数来防止用户看到潜在的敏感错误信息。]在理想情况下，发布服务器应该在 php.ini 里完全禁止。但是如果你用的是一个共享的 web 服务器的话，你没有自己的 php.ini 文件，那么这种情况下你最好的选择就是在所有脚本的第一行前加上 error_reporting(0);（或者使用 require_once() 方法）。这就能够在出错的时候完全屏蔽敏感的 SQL 查询语句和路径名。</p>
+<p>8.在网数据库中存储很大的字符串之前使用 gzcompress() 和 gzuncompress() 来显式的压缩/解压字符串。这个 PHP 内置函数使用 gzip 算法，可以压缩普通文本达 90%。在我每次要读写 BLOB 类型的字段的时候都使用这些函数。唯一额例外就是当我需要全文检索的时候。</p>
+<p>9.通过“引用”传递参数的方法从一个函数中得到多个返回值。就像三元运算符一样，大部分受过正式编程训练的程序员都知道这个技巧。但是那些 HTML 背景大于 Pascal 背景的程序员都或多或少的有过这样的疑问“在仅能使用一次 return 的情况下，从一个函数里返回多个值？”答案就是在变量前加上一个 “&amp;” 符号，通过“引用”传递而非“值”传递。</p>
+<p>10.完全理解“魔术引号”和 SQL 注入的危险性</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2019/PHP%E7%AC%94%E8%AE%B0/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%AC%94%E8%AE%B0/">
+              #笔记
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2019/%E9%AD%94%E6%96%B9/" target="_self">魔方</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2019/%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%8F%82%E6%95%B0/" target="_self">编译安装参数</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

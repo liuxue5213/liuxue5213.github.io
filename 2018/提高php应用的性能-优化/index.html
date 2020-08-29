@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>提高PHP应用的性能、优化 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="PHP,优化," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>提高PHP应用的性能、优化</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2018-09-21
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/PHP/">
+            PHP
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="提高php应用的性能-优化"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>.php-&gt;zend引擎scanner -&gt;exprs转码-&gt;opcodes-&gt;prase解析-&gt;output</p>
+<p>缓存就是   opcodes的内容      不需要扫描转码解析</p>
+<p>数据库设置1台MASTER数据库只写，N台SLAVE数据库只读。<br>二、        记住MASTER数据库不创建索引，而SLAVE数据库定要创建大量索引。<br>三、        页面的生成可采用静态，若非要采用动态请加上Memcached。<br>四、        非即时需更新与新增的SQL采用异步更新到MASTER库，异步的SQL存储到Memcached当中，定时或条件触发更新到主库当中。<br>五、        存储到Memcached当中的数据尽可能的小，不要存储大数组，若非来存储大数组，请拆分成多个KEY分别进行存储。<br>六、        MYSQL 与Memcached不对外网，只对WEB服务提供内网服务。<br>七、        不采用SESSION，采用COOKIE加密码校验算法，非要采用SEESION请将SESSION存储到数据表内存表或Memcached当中。<br>八、        多服务器WEB程序与WEB服务器做境像，采用DNS轮循定位。<br>九、        尽可能的少写代码，能重复使用的代码尽可能的重用，代码尽可能的精短高效，以追求精益求精为宗旨。<br>十、        动态页面（PHP JSP ASP）与静态页面(HTML JPG GIF PNG)最好分服务器专门提供服务。<br>十一、        有条件的话静态文件或大图片文件有条件可采用CDN服务。<br>十二、        有C语言技术做后盾的话可用C语言开发PHP扩展。</p>
+<p>多使用内置函数    少用@   循环内使用运算   带引号的键值少用数字   合理使用正则和内存   减少魔法函数  __set  get      全部分布式部署     资源释放（生命周期）</p>
+<p>减少文件类操作   网络请求（读  写  网络数据）   缓存服用   smarty调优   </p>
+<p>a.设置超时时间（读800ms-1s    写500ms     连接200ms  ）  </p>
+<p>b.串行请求并行化（使用curl_multi_*     swoole扩展）    </p>
+<p>内存 &lt; 数据库 &lt; 磁盘&lt;   网络</p>
+<p>Gzip压缩接口输出（利弊） </p>
+<p>利:更快获取到数据   </p>
+<p>弊:额外CPU开销</p>
+<p>服务器环境    数据库    磁盘文件读写    缓存（硬件内存  memcached redis） 网络   </p>
+<p>APC缓存优化（12年终止维护）     PECL站点找工具   </p>
+<p>runtime优化    hhvm   phpng</p>
+<p>扩展 分析opcodes    vid</p>
+<p>xhprof分析php     php –ri xhprof检测安装</p>
+<p>需要断点函数      </p>
+<p>xhprof_enable()</p>
+<p>$data=xhprof_disable();   </p>
+<p>$obj=new XHProfRuns_Default();</p>
+<p>$run_id=$obj-&gt;save_run($data,’test’);</p>
+<p>var_dump($run_id);</p>
+<p>调用次数   总执行时间   单个时间  </p>
+<p>grep ‘函数’ ./ -r   寻找函数</p>
+<p>减少http请求 读html文件 时间10-20% 图片地图 css sprites 雪碧图 转移CDN 压缩http响应包 样式顶部 脚本底部</p>
+<p>1、 如果能将类的方法定义成static，就尽量定义成static，它的速度会提升将近4倍。<br>2、$row[’id’] 的速度是$row[id]的7倍。<br>3、echo 比 print快，并且使用echo的多重参数(译注：指用逗号而不是句点)代替字符串连接，比如echo$str1,$str2。<br>4、在执行for循环之前确定最大循环数，不要每循环一次都计算最大值，最好运用foreach代替。<br>5、注销那些不用的变量尤其是大数组，以便释放内存。<br>6、尽量避免使用__get，__set，__autoload。<br>7、require_once()代价昂贵。<br>8、include文件时尽量使用绝对路径，因为它避免了PHP去include_path里查找文件的速度，解析操作系统路径所需的时间会更少。<br>9、如果你想知道脚本开始执行(译注：即服务器端收到客户端请求)的时刻，使用$_SERVER[‘REQUEST_TIME’]要好于 time()。<br>10、函数代替正则表达式完成相同功能。<br>11、str_replace函数比preg_replace函数快，但strtr函数的效率是str_replace函数的四倍。<br>12、如果一个字符串替换函数，可接受数组或字符作为参数，并且参数长度不太长，那么可以考虑额外写一段替换代码，使得每次传递参数是一个字符，而不是只写一行代码接受数组作为查询和替换的参数。<br>13、使用选择分支语句(译注：即switch case)好于使用多个if，else if语句。<br>14、用@屏蔽错误消息的做法非常低效，极其低效。<br>15、打开apache的mod_deflate模块，可以提高网页的浏览速度。<br>16、数据库连接当使用完毕时应关掉，不要用长连接。<br>17、错误消息代价昂贵。<br>18、在方法中递增局部变量，速度是最快的。几乎与在函数中调用局部变量的速度相当。<br>19、递增一个全局变量要比递增一个局部变量慢2倍。<br>20、递增一个对象属性(如：$this-&gt;prop++)要比递增一个局部变量慢3倍。<br>21、递增一个未预定义的局部变量要比递增一个预定义的局部变量慢9至10倍。<br>22、仅定义一个局部变量而没在函数中调用它，同样会减慢速度(其程度相当于递增一个局部变量)。PHP大概会检查看是否存在全局变量。<br>23、方法调用看来与类中定义的方法的数量无关，因为我(在测试方法之前和之后都)添加了10个方法，但性能上没有变化。<br>24、派生类中的方法运行起来要快于在基类中定义的同样的方法。<br>25、调用带有一个参数的空函数，其花费的时间相当于执行7至8次的局部变量递增操作。类似的方法调用所花费的时间接近于15次的局部变量递增操作。<br>26、Apache解析一个PHP脚本的时间要比解析一个静态HTML页面慢2至10倍。尽量多用静态HTML页面，少用脚本。<br>27、除非脚本可以缓存，否则每次调用时都会重新编译一次。引入一套PHP缓存机制通常可以提升25%至100%的性能，以免除编译开销。<br>28、尽量做缓存，可使用memcached。memcached是一款高性能的内存对象缓存系统，可用来加速动态Web应用程序，减轻数据库负载。对运算码 (OP code)的缓存很有用，使得脚本不必为每个请求做重新编译。<br>29、当操作字符串并需要检验其长度是否满足某种要求时，你想当然地会使用strlen()函数。此函数执行起来相当快，因为它不做任何计算，只返回在zval 结构(C的内置数据结构，用于存储PHP变量)中存储的已知字符串长度。但是，由于strlen()是函数，多多少少会有些慢，因为函数调用会经过诸多步骤，如字母小写化(译注：指函数名小写化，PHP不区分函数名大小写)、哈希查找，会跟随被调用的函数一起执行。在某些情况下，你可以使用isset() 技巧加速执行你的代码。<br>(举例如下)<br>if (strlen($foo) &lt; 5) { echo “Foo is too short”$$ }<br>(与下面的技巧做比较)<br>if (!isset($foo{5})) { echo “Foo is too short”$$ }<br>调用isset()恰巧比strlen()快，因为与后者不同的是，isset()作为一种语言结构，意味着它的执行不需要函数查找和字母小写化。也就是说，实际上在检验字符串长度的顶层代码中你没有花太多开销。<br>34、当执行变量$i的递增或递减时，$i++会比++$i慢一些。这种差异是PHP特有的，并不适用于其他语言，所以请不要修改你的C或 Java代码并指望它们能立即变快，没用的。++$i更快是因为它只需要3条指令(opcodes)，$i++则需要4条指令。后置递增实际上会产生一个临时变量，这个临时变量随后被递增。而前置递增直接在原值上递增。这是最优化处理的一种，正如Zend的PHP优化器所作的那样。牢记这个优化处理不失为一个好主意，因为并不是所有的指令优化器都会做同样的优化处理，并且存在大量没有装配指令优化器的互联网服务提供商(ISPs)和服务器。<br>35、并不是事必面向对象(OOP)，面向对象往往开销很大，每个方法和对象调用都会消耗很多内存。<br>36、并非要用类实现所有的数据结构，数组也很有用。<br>37、不要把方法细分得过多，仔细想想你真正打算重用的是哪些代码?<br>38、当你需要时，你总能把代码分解成方法。<br>39、尽量采用大量的PHP内置函数。<br>40、如果在代码中存在大量耗时的函数，你可以考虑用C扩展的方式实现它们。<br>41、评估检验(profile)你的代码。检验器会告诉你，代码的哪些部分消耗了多少时间。Xdebug调试器包含了检验程序，评估检验总体上可以显示出代码的瓶颈。<br>42、mod_zip可作为Apache模块，用来即时压缩你的数据，并可让数据传输量降低80%。<br>43、在可以用file_get_contents替代file、fopen、feof、fgets等系列方法的情况下，尽量用 file_get_contents，因为他的效率高得多!但是要注意file_get_contents在打开一个URL文件时候的PHP版本问题;<br>44、尽量的少进行文件操作，虽然PHP的文件操作效率也不低的;<br>45、优化Select SQL语句，在可能的情况下尽量少的进行Insert、Update操作;<br>46、尽可能的使用PHP内部函数(但是我却为了找个PHP里面不存在的函数，浪费了本可以写出一个自定义函数的时间，经验问题啊!);<br>47、循环内部不要声明变量，尤其是大变量：对象(这好像不只是PHP里面要注意的问题吧?);<br>48、多维数组尽量不要循环嵌套赋值;<br>49、在可以用PHP内部字符串操作函数的情况下，不要用正则表达式;<br>50、foreach效率更高，尽量用foreach代替while和for循环;<br>51、用单引号替代双引号引用字符串;<br>52、“用i+=1代替i=i+1。符合c/c++的习惯，效率还高”;<br>53、对global变量，应该用完就unset()掉。</p>
+<p>1.尽量静态化：<br>   如果一个方法能被静态，那就声明它为静态的，速度可提高1/4，甚至我测试的时候，这个提高了近三倍。<br>   当然了，这个测试方法需要在十万级以上次执行，效果才明显。<br>   其实静态方法和非静态方法的效率主要区别在内存：静态方法在程序开始时生成内存,实例方法在程序运行中生成内存，所以静态方法可以直接调用,实例方法要先成生实例,通过实例调用方法，静态速度很快，但是多了会占内存。<br>  任何语言都是对内存和磁盘的操作,至于是否面向对象,只是软件层的问题,底层都是一样的,只是实现方法不同。静态内存是连续的,因为是在程序开始时就生成了,而实例申请的是离散的空间,所以当然没有静态方法快。<br>   静态方法始终调用同一块内存，其缺点就是不能自动进行销毁，而是实例化可以销毁。</p>
+<p>2.echo的效率高于print,因为echo没有返回值，print返回一个整型;<br>  测试：<br>  Echo<br>  0.000929 - 0.001255 s (平均 0.001092 seconds)<br>  Print<br>  0.000980 - 0.001396 seconds (平均 0.001188 seconds)<br>  相差8%左右，总体上echo是比较快的。<br>  注意，echo大字符串的时候，如果没有做调整就严重影响性能。使用打开apached的mod_deflate进行压缩或者打开ob_start先将内容放进缓冲区。</p>
+<p>3.在循环之前设置循环的最大次数，而非在在循环中;<br>    傻子都明白的道理。</p>
+<p>4.销毁变量去释放内存，特别是大的数组;<br>  数组和对象在php特别占内存的，这个由于php的底层的zend引擎引起的，<br>  一般来说，PHP数组的内存利用率只有 1/10, 也就是说，一个在C语言里面100M 内存的数组，在PHP里面就要1G。<br>  特别是在PHP作为后台服务器的系统中，经常会出现内存耗费太大的问题。</p>
+<p>5.避免使用像__get, __set, __autoload等魔术方法;<br>  对于__开头的函数就命名为魔术函数，此类函数都在特定的条件下初访的。总得来说，有下面几个魔术函数<br>  __construct()，__destruct()，__get()，__set()，__unset()，__call()，__callStatic()，__sleep()，__wakeup()，__toString()，__set_state()，__clone()，__autoload()</p>
+<pre><code> 其实，如果__autoload不能高效的将类名与实际的磁盘文件(注意，这里指实际的磁盘文件，而不仅仅是文件名)对应起来，系统将不得不做大量的文件是 否存在(需要在每个include path中包含的路径中去寻找)的判断，而判断文件是否存在需要做磁盘I/O操作，众所周知磁盘I/O操作的效率很低，因此这才是使得autoload机制效率降低的原因。</code></pre>
+<p>  因此，我们在系统设计时，需要定义一套清晰的将类名与实际磁盘文件映射的机制。这个规则越简单越明确，autoload机制的效率就越高。<br>  结论：autoload机制并不是天然的效率低下，只有滥用autoload，设计不好的自动装载函数才会导致其效率的降低.</p>
+<p>  所以说尽量避免使用__autoload魔术方法，有待商榷。</p>
+<p>6.requiere_once()比较耗资源;<br>  这是因为requiere_once需要判断该文件是否被引用过),所以能不用尽量不用。常用require/include方法避免。</p>
+<p>7.在includes和requires中使用绝对路径。<br>  如果包含相对路径，PHP会在include_path里面遍历查找文件。<br>  用绝对路径就会避免此类问题，因此解析操作系统路径所需的时间会更少。</p>
+<p>8.如果你需要得到脚本执行时的时间，$_SERVER[‘REQUSET_TIME’]优于time();<br>  可以想象。一个是现成就可以直接用，一个还需要函数得出的结果。</p>
+<p>9.能用PHP内部字符串操作函数的情况下，尽量用他们，不要用正则表达式； 因为其效率高于正则;<br> 没得说，正则最耗性能。<br> 有没有你漏掉的好用的函数？例如：strpbrk()strncasecmp()strpos()/strrpos()/stripos()/strripos()加速 strtr如果需要转换的全是单个字符的时候，<br>用字符串而不是数组来做 strtr：<br><?php
+$addr = strtr($addr, "abcd", "efgh"); // good
+$addr = strtr($addr, array('a' => 'e', )); // bad
+?><br>效率提升：10 倍。</p>
+<p>10.str_replace字符替换比正则替换preg_replace快，但strtr比str_replace又快1/4;<br>  另外不要做无谓的替换即使没有替换，str_replace 也会为其参数分配内存。很慢！解决办法：<br>  用 strpos 先查找(非常快)，看是否需要替换，如果需要，再替换效率：- 如果需要替换：效率几乎相等，差别在 0.1% 左右。<br>  如果不需要替换：用 strpos 快 200%。</p>
+<p>11.参数为字符串<br>  如果一个函数既能接受数组又能接受简单字符做为参数，例如字符替换函数，并且参数列表不是太长，可以考虑额外写一段替换代码，使得每次传递参数都是一   个字符，而不是接受数组做为查找和替换参数。大事化小，1+1&gt;2;</p>
+<p>12.最好不用@，用@掩盖错误会降低脚本运行速度;<br>   用@实际上后台有很多操作。用@比起不用@，效率差距：3 倍。特别不要在循环中使用@，在 5 次循环的测试中，即使是先用 error_reporting(0) 关掉错误，在循环完成后再打开，都比用@快。</p>
+<p>13.$row[‘id’]比$row[id]速度快7倍<br>    建议养成数组键加引号的习惯;</p>
+<p>14.在循环里别用函数<br>   例如For($x=0; $x &lt; count($array); $x), count()函数在外面先计算;原因你懂的。</p>
+<p>16.在类的方法里建立局部变量速度最快，几乎和在方法里调用局部变量一样快;<br>17.建立一个全局变量要比局部变量要慢2倍;<br>  由于局部变量是存在栈中的，当一个函数占用的栈空间不是很大的时候，这部分内存很有可能全部命中cache，这时候CPU访问的效率是很高的。<br>  相反，如果一个函数里既使用了全局变量又使用了局部变量，那么当这两段地址相差较大时，cpu cache需要来回切换，那么效率会下降。<br>  (我理解啊)</p>
+<p>18.建立一个对象属性(类里面的变量)例如($this-&gt;prop++)比局部变量要慢3倍;<br>19.建立一个未声明的局部变量要比一个已经定义过的局部变量慢9-10倍<br>20.声明一个未被任何一个函数使用过的全局变量也会使性能降低(和声明相同数量的局部变量一样)。<br>    PHP可能去检查这个全局变量是否存在;</p>
+<p>21.方法的性能和在一个类里面定义的方法的数目没有关系<br>  因为我添加10个或多个方法到测试的类里面(这些方法在测试方法的前后)后性能没什么差异;</p>
+<p>22.在子类里方法的性能优于在基类中;<br>23.只调用一个参数并且函数体为空的函数运行花费的时间等于7-8次$localvar++运算，而一个类似的方法(类里的函数)运行等于大约15次$localvar++运算;<br>24 用单引号代替双引号来包含字符串，这样做会更快一些。<br>   因为PHP会在双引号包围的字符串中搜寻变量，单引号则不会。</p>
+<p>   PHP 引擎允许使用单引号和双引号来封装字符串变量，但是这个是有很大的差别的！使用双引号的字符串告诉 PHP 引擎首先去读取字符串内容，查找其中的变    量，并改为变量对应的值。一般来说字符串是没有变量的，所以使用双引号会导致性能不佳。最好是使用字<br>  符串连接而不是双引号字符串。<br>BAD:<br>$output = “This is a plain string”;<br>GOOD:<br>$output = ‘This is a plain string’;<br>BAD:<br>$type = “mixed”;<br>$output = “This is a $type string”;<br>GOOD:<br>$type = ‘mixed’;<br>$output = ‘This is a ‘ . $type .’ string’;</p>
+<p>25.当echo字符串时用逗号代替点连接符更快些。<br>  echo一种可以把多个字符串当作参数的“函数”（译注：PHP手册中说echo是语言结构，不是真正的函数，故把函数加上了双引号）。</p>
+<p>  例如echo $str1,$str2。</p>
+<p>26.Apache解析一个PHP脚本的时间要比解析一个静态HTML页面慢2至10倍。<br>     尽量多用静态HTML页面，少用脚本。</p>
+<p>28.尽量使用缓存，建议用memcached。<br>   高性能的分布式内存对象缓存系统，提高动态网络应用程序性能，减轻数据库的负担;</p>
+<p>   也对运算码 (OP code)的缓存很有用，使得脚本不必为每个请求做重新编译。</p>
+<p>29.使用ip2long()和long2ip()函数把IP地址转成整型存放进数据库而非字符型。<br>     这几乎能降低1/4的存储空间。同时可以很容易对地址进行排序和快速查找;</p>
+<p>30.使用checkdnsrr()通过域名存在性来确认部分email地址的有效性<br>    这个内置函数能保证每一个的域名对应一个IP地址;</p>
+<p>31.使用mysql_<em>的改良函数mysqli_</em>;<br>32.试着喜欢使用三元运算符(?：);<br>33.是否需要PEAR<br>在你想在彻底重做你的项目前，看看PEAR有没有你需要的。PEAR是个巨大的资源库，很多php开发者都知道;</p>
+<p>35.使用error_reporting(0)函数来预防潜在的敏感信息显示给用户。<br>  理想的错误报告应该被完全禁用在php.ini文件里。可是如果你在用一个共享的虚拟主机，php.ini你不能修改，那么你最好添加error_reporting(0)函数，放在每个脚本文件的第一行(或用</p>
+<p>require_once()来加载)这能有效的保护敏感的SQL查询和路径在出错时不被显示;</p>
+<p>36.使用 gzcompress() 和gzuncompress()对容量大的字符串进行压缩(解压)在存进(取出)数据库时。<br>    这种内置的函数使用gzip算法能压缩到90%;</p>
+<p>37.通过参数变量地址得引用来使一个函数有多个返回值。<br>   你可以在变量前加个“&amp;”来表示按地址传递而非按值传递;</p>
+<ol start="38">
+<li>完全理解魔术引用和SQL注入的危险。<br>Fully understand “magic quotes” and the dangers of SQL injection. I’m hoping that most developers reading this are already familiar with SQL injection. However, I list it here because it’s absolutely critical to understand. If you’ve never heard the term before, spend the entire rest of the day googling and reading.</li>
+</ol>
+<p>39.某些地方使用isset代替strlen<br>  当操作字符串并需要检验其长度是否满足某种要求时，你想当然地会使用strlen()函数。此函数执行起来相当快，因为它不做任何计算，只返回在zval 结构（C的内置数据结构，用于存储PHP变量）中存储的已知字符串长度。但是，由于strlen()是函数，多多少少会有些慢，因为函数调用会经过诸多步骤，如字母小写化（译注：指函数名小写化，PHP不区分函数名大小写）、哈希查找，会跟随被调用的函数一起执行。在某些情况下，你可以使用isset() 技巧加速执行你的代码。</p>
+<p>（举例如下）<br>if (strlen($foo) &lt; 5) { echo “Foo is too short”$$ }<br>（与下面的技巧做比较）<br>if (!isset($foo{5})) { echo “Foo is too short”$$ }<br>调用isset()恰巧比strlen()快，因为与后者不同的是，isset()作为一种语言结构，意味着它的执行不需要函数查找和字母小写化。也就是说，实际上在检验字符串长度的顶层代码中你没有花太多开销。</p>
+<p>40.使用++$i递增<br>When incrementing or decrementing the value of the variable $i++ happens to be a tad slower then ++$i. This is something PHP specific and does not apply to other languages, so don’t go modifying your C or Java code thinking it’ll suddenly become faster, it won’t. ++$i happens to be faster in PHP because instead of 4 opcodes used for $i++ you only need 3. Post incrementation actually causes in the creation of a temporary var that is then incremented. While preincrementation increases the original value directly. This is one of the optimization that opcode optimized like Zend’s PHP optimizer. It is a still a good idea to keep in mind since not all opcode optimizers perform this optimization and there are plenty of ISPs and servers running without an opcode optimizer.</p>
+<p>   当执行变量$i的递增或递减时，$i++会比++$i慢一些。这种差异是PHP特有的，并不适用于其他语言，所以请不要修改你的C或Java代码并指望它们能立即变快，没用的。++$i更快是因为它只需要3条指令(opcodes)，$i++则需要4条指令。后置递增实际上会产生一个临时变量，这个临时变量随后被递增。而前置递增直接在原值上递增。这是最优化处理的一种，正如Zend的PHP优化器所作的那样。牢记这个优化处理不失为一个好主意，因为并不是所有的指令优化器都会做同样的优化处理，并且存在大量没有装配指令优化器的互联网服务<br>提供商（ISPs）和服务器。</p>
+<ol start="40">
+<li>不要随便就复制变量<br>有时候为了使 PHP 代码更加整洁，一些 PHP 新手（包括我）会把预定义好的变量复制到一个名字更简短的变量中，其实这样做的结果是增加了一倍的内存消耗，只会使程序更加慢。试想一下，在下面的例子中，如果用户恶意插入 512KB 字节的文字到文本输入框中，这样就会导致 1MB 的内存被消耗！<br>BAD:<br>$description = $_POST[‘description’];<br>echo $description;<br>GOOD:<br>echo $_POST[‘description’];</li>
+</ol>
+<p>41 使用选择分支语句<br>     switch case好于使用多个if，else if语句,并且代码更加容易阅读和维护。</p>
+<p>42.在可以用file_get_contents替代file、fopen、feof、fgets<br>    在可以用file_get_contents替代file、fopen、feof、fgets等系列方法的情况下，尽量用 file_get_contents，因为他的效率高得多！但是要注意file_get_contents在打开一个URL文件时候的PHP版本问题；</p>
+<p>43.尽量的少进行文件操作，虽然PHP的文件操作效率也不低的；<br>44.优化Select SQL语句，在可能的情况下尽量少的进行Insert、Update操作(在update上，我被恶批过)；<br>45.尽可能的使用PHP内部函数<br>46.循环内部不要声明变量，尤其是大变量：对象<br>   (这好像不只是PHP里面要注意的问题吧？)；</p>
+<p>47.多维数组尽量不要循环嵌套赋值；<br>48.foreach效率更高，尽量用foreach代替while和for循环；<br>49.“用i+=1代替i=i+1。符合c/c++的习惯，效率还高”；<br>50.对global变量，应该用完就unset()掉；<br>51 并不是事必面向对象(OOP)，面向对象往往开销很大，每个方法和对象调用都会消耗很多内存。<br>52 不要把方法细分得过多，仔细想想你真正打算重用的是哪些代码？<br>53 如果在代码中存在大量耗时的函数，你可以考虑用C扩展的方式实现它们。<br>54、打开apache的mod_deflate模块，可以提高网页的浏览速度。<br>   （提到过echo 大变量的问题）</p>
+<p>55、数据库连接当使用完毕时应关掉，不要用长连接。<br>56、split比exploade快<br>split()<br>0.001813 - 0.002271 seconds (avg 0.002042 seconds)<br>explode()<br>0.001678 - 0.003626 seconds (avg 0.002652 seconds)<br>Split can take regular expressions as delimiters, and runs faster too. ~23% on average.</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2018/%E6%8F%90%E9%AB%98php%E5%BA%94%E7%94%A8%E7%9A%84%E6%80%A7%E8%83%BD-%E4%BC%98%E5%8C%96/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E4%BC%98%E5%8C%96/">
+              #优化
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2018/JS%E7%AC%94%E8%AE%B0/" target="_self">JS笔记</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2018/Innocence-Avril%20Lavigne/" target="_self">Innocence - Avril Lavigne</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

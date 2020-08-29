@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>JS判断只能输入数字、字母等验证总结 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="前端,JS," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>JS判断只能输入数字、字母等验证总结</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2014-10-25
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E5%89%8D%E7%AB%AF/">
+            前端
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="JS判断只能输入数字、字母等验证总结"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="JS判断只能是数字和小数点"><a href="#JS判断只能是数字和小数点" class="headerlink" title="JS判断只能是数字和小数点"></a>JS判断只能是数字和小数点</h2><h3 id="不能输入中文"><a href="#不能输入中文" class="headerlink" title="不能输入中文"></a>不能输入中文</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function chkIt(frm) &#123;</span><br><span class="line">    if (frm.n1.value.length&gt;0 &amp;&amp; frm.n1.value.match(&#x2F;[\x01-\xFF]*&#x2F;)&#x3D;&#x3D;false) &#123;</span><br><span class="line">        alert(‘n1不能输入中文！’)</span><br><span class="line">        frm.n1.focus();</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="文本框只能输入数字代码-小数点也不能输入"><a href="#文本框只能输入数字代码-小数点也不能输入" class="headerlink" title="文本框只能输入数字代码(小数点也不能输入)"></a>文本框只能输入数字代码(小数点也不能输入)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup&#x3D;”this.value&#x3D;this.value.replace(&#x2F;\D&#x2F;g,”)” onafterpaste&#x3D;”this.value&#x3D;this.value.replace(&#x2F;\D&#x2F;g,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入数字-能输小数点"><a href="#只能输入数字-能输小数点" class="headerlink" title="只能输入数字,能输小数点."></a>只能输入数字,能输小数点.</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup&#x3D;”if(isNaN(value))execCommand(‘undo’)” onafterpaste&#x3D;”if(isNaN(value))execCommand(‘undo’)”&gt;</span><br><span class="line">&lt;input name&#x3D;txt1 onchange&#x3D;”if(&#x2F;\D&#x2F;.test(this.value))&#123;alert(‘只能输入数字’);this.value&#x3D;”;&#125;”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入字母和汉字"><a href="#只能输入字母和汉字" class="headerlink" title="只能输入字母和汉字"></a>只能输入字母和汉字</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[\d]&#x2F;g,”) “onbeforepaste&#x3D;”clipboardData.setData(‘text’,clipboardData.getData(‘text’).replace(&#x2F;[\d]&#x2F;g,”))” maxlength&#x3D;10 name&#x3D;”Numbers”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入英文字母和数字-不能输入中文"><a href="#只能输入英文字母和数字-不能输入中文" class="headerlink" title="只能输入英文字母和数字,不能输入中文"></a>只能输入英文字母和数字,不能输入中文</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^\w\.\&#x2F;]&#x2F;ig,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入数字和英文chun"><a href="#只能输入数字和英文chun" class="headerlink" title="只能输入数字和英文chun"></a>只能输入数字和英文<font color=”Red”>chun</font></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onKeyUp&#x3D;”value&#x3D;value.replace(&#x2F;[^\d|chun]&#x2F;g,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="小数点后只能有最多两位-数字-中文都可输入-不能输入字母和运算符号"><a href="#小数点后只能有最多两位-数字-中文都可输入-不能输入字母和运算符号" class="headerlink" title="小数点后只能有最多两位(数字,中文都可输入),不能输入字母和运算符号:"></a>小数点后只能有最多两位(数字,中文都可输入),不能输入字母和运算符号:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onKeyPress&#x3D;”if((event.keyCode&lt;48 || event.keyCode&gt;57) &amp;&amp; event.keyCode!&#x3D;46 || &#x2F;\.\d\d$&#x2F;.test(value))event.returnValue&#x3D;false”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="小数点后只能有最多两位-数字-字母-中文都可输入-可以输入运算符号"><a href="#小数点后只能有最多两位-数字-字母-中文都可输入-可以输入运算符号" class="headerlink" title="小数点后只能有最多两位(数字,字母,中文都可输入),可以输入运算符号:"></a>小数点后只能有最多两位(数字,字母,中文都可输入),可以输入运算符号:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup&#x3D;”this.value&#x3D;this.value.replace(&#x2F;^(\-)*(\d+)\.(\d\d).*$&#x2F;,’$1$2.$3′)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="禁止特殊字符："><a href="#禁止特殊字符：" class="headerlink" title="禁止特殊字符："></a>禁止特殊字符：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onKeyPress&#x3D;”if(event.keyCode &lt; 45 || event.keyCode &gt; 57 ) event.returnValue &#x3D; false;”</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入汉字："><a href="#只能输入汉字：" class="headerlink" title="只能输入汉字："></a>只能输入汉字：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^&#x2F;u4E00-&#x2F;u9FA5]&#x2F;g,”)” onbeforepaste&#x3D;”clipboardData.setData(‘text’,clipboardData.getData(‘text’).replace(&#x2F;[^&#x2F;u4E00-&#x2F;u9FA5]&#x2F;g,”))”&gt;</span><br></pre></td></tr></table></figure>
+<p>禁止汉字输入法 style=”ime-mode:disabled”</p>
+<h3 id="只能输入数字："><a href="#只能输入数字：" class="headerlink" title="只能输入数字："></a>只能输入数字：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^&#x2F;d]&#x2F;g,”) “onbeforepaste&#x3D;”clipboardData.setData(‘text’,clipboardData.getData(‘text’).replace(&#x2F;[^&#x2F;d]&#x2F;g,”))”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入英文和数字："><a href="#只能输入英文和数字：" class="headerlink" title="只能输入英文和数字："></a>只能输入英文和数字：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[&#x2F;W]&#x2F;g,”) “onbeforepaste&#x3D;”clipboardData.setData(‘text’,clipboardData.getData(‘text’).replace(&#x2F;[^&#x2F;d]&#x2F;g,”))”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="控制输入框只能输入文字或数字，也可以不允许输入特殊字符"><a href="#控制输入框只能输入文字或数字，也可以不允许输入特殊字符" class="headerlink" title="控制输入框只能输入文字或数字，也可以不允许输入特殊字符"></a>控制输入框只能输入文字或数字，也可以不允许输入特殊字符</h3><p>这里不允许输入如下字符: (像 ^&amp;* 等)<br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;textarea rows&#x3D;2 cols&#x3D;20 name&#x3D;comments onKeypress&#x3D;”if ((event.keyCode &gt; 32 &amp;&amp; event.keyCode &lt; 48) || (event.keyCode &gt; 57 &amp;&amp; event.keyCode &lt; 65) || (event.keyCode &gt; 90 &amp;&amp; event.keyCode &lt; 97)) event.returnValue &#x3D; false;”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只禁止空格输入"><a href="#只禁止空格输入" class="headerlink" title="只禁止空格输入"></a>只禁止空格输入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;&#x2F;s&#x2F;g,”)”</span><br><span class="line">onkeydown&#x3D;”if(event.keyCode&#x3D;&#x3D;32) return false”</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入中文和英文："><a href="#只能输入中文和英文：" class="headerlink" title="只能输入中文和英文："></a>只能输入中文和英文：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^&#x2F;a-zA-Z&#x2F;u4E00-&#x2F;u9FA5]&#x2F;g,”)” onbeforepaste&#x3D;”clipboardData.setData(‘text’,clipboardData.getData(‘text’).replace(&#x2F;[^&#x2F;a-zA-Z&#x2F;u4E00-&#x2F;u9FA5]&#x2F;g,”))”</span><br></pre></td></tr></table></figure>
+
+<h3 id="不允许输入特殊字符和空格"><a href="#不允许输入特殊字符和空格" class="headerlink" title="不允许输入特殊字符和空格:"></a>不允许输入特殊字符和空格:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input id&#x3D;”code” onkeypress&#x3D;”return ValidateSpecialCharacter();” onblur&#x3D;”validate(this)”&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="不能为空"><a href="#不能为空" class="headerlink" title="不能为空"></a>不能为空</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onblur&#x3D;”if(this.value.replace(&#x2F;^ +| +$&#x2F;g,”)&#x3D;&#x3D;”)alert(‘不能为空!’)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="判断字符由字母和数字，下划线-点号组成-且开头的只能是下划线和字母"><a href="#判断字符由字母和数字，下划线-点号组成-且开头的只能是下划线和字母" class="headerlink" title="判断字符由字母和数字，下划线,点号组成.且开头的只能是下划线和字母"></a>判断字符由字母和数字，下划线,点号组成.且开头的只能是下划线和字母</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;^([a-zA-z_]&#123;1&#125;)([\w]*)$&#x2F;g.test(str)</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入数字"><a href="#只能输入数字" class="headerlink" title="只能输入数字"></a>只能输入数字</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input name&#x3D;”text” type&#x3D;”text” id&#x3D;”NewPage” onKeyUp&#x3D;”value&#x3D;value.replace(&#x2F;\D&#x2F;g,”)” onafterpaste&#x3D;”value&#x3D;value.replace(&#x2F;\D&#x2F;g,”)” &gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入中文"><a href="#只能输入中文" class="headerlink" title="只能输入中文"></a>只能输入中文</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type&#x3D;”text” onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^\u4E00-\u9FA5]&#x2F;g,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入英文"><a href="#只能输入英文" class="headerlink" title="只能输入英文"></a>只能输入英文</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type&#x3D;”text” onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^\a-\z\A-\Z]&#x2F;g,”)”&gt;</span><br><span class="line">&lt;input type&#x3D;”text” onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^a-zA-Z]&#x2F;g,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="文本框只能输入数字代码-小数点也不能输入-1"><a href="#文本框只能输入数字代码-小数点也不能输入-1" class="headerlink" title="文本框只能输入数字代码(小数点也不能输入)"></a>文本框只能输入数字代码(小数点也不能输入)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup&#x3D;”this.value&#x3D;this.value.replace(&#x2F;&#x2F;D&#x2F;g,”)” onafterpaste&#x3D;”this.value&#x3D;this.value.replace(&#x2F;&#x2F;D&#x2F;g,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入数字-能输小数点-1"><a href="#只能输入数字-能输小数点-1" class="headerlink" title="只能输入数字,能输小数点."></a>只能输入数字,能输小数点.</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup&#x3D;”if(isNaN(value))execCommand(‘undo’)” onafterpaste&#x3D;”if(isNaN(value))execCommand(‘undo’)”&gt;</span><br><span class="line">&lt;input name&#x3D;txt1 onchange&#x3D;”if(&#x2F;&#x2F;D&#x2F;.test(this.value))&#123;alert(‘只能输入数字’);this.value&#x3D;”;&#125;”&gt;</span><br><span class="line">&lt;input onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[&#x2F;d]&#x2F;g,”) “onbeforepaste&#x3D;”clipboardData.setData(‘text’,clipboardData.getData(‘text’).replace(&#x2F;[&#x2F;d]&#x2F;g,”))” maxlength&#x3D;10 name&#x3D;”Numbers”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入英文字母和数字-不能输入中文-1"><a href="#只能输入英文字母和数字-不能输入中文-1" class="headerlink" title="只能输入英文字母和数字,不能输入中文"></a>只能输入英文字母和数字,不能输入中文</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^&#x2F;w&#x2F;.&#x2F;&#x2F;]&#x2F;ig,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入数字和英文chun-1"><a href="#只能输入数字和英文chun-1" class="headerlink" title="只能输入数字和英文chun"></a>只能输入数字和英文<font color=”Red”>chun</font></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onKeyUp&#x3D;”value&#x3D;value.replace(&#x2F;[^&#x2F;d|chun]&#x2F;g,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="小数点后只能有最多两位-数字-中文都可输入-不能输入字母和运算符号-1"><a href="#小数点后只能有最多两位-数字-中文都可输入-不能输入字母和运算符号-1" class="headerlink" title="小数点后只能有最多两位(数字,中文都可输入),不能输入字母和运算符号:"></a>小数点后只能有最多两位(数字,中文都可输入),不能输入字母和运算符号:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onKeyPress&#x3D;”if((event.keyCode&lt;48 || event.keyCode&gt;57) &amp;&amp; event.keyCode!&#x3D;46 || &#x2F;&#x2F;.&#x2F;d&#x2F;d$&#x2F;.test(value))event.returnValue&#x3D;false”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="小数点后只能有最多两位-数字-字母-中文都可输入-可以输入运算符号-1"><a href="#小数点后只能有最多两位-数字-字母-中文都可输入-可以输入运算符号-1" class="headerlink" title="小数点后只能有最多两位(数字,字母,中文都可输入),可以输入运算符号:"></a>小数点后只能有最多两位(数字,字母,中文都可输入),可以输入运算符号:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onkeyup&#x3D;”this.value&#x3D;this.value.replace(&#x2F;^(&#x2F;-)*(&#x2F;d+)&#x2F;.(&#x2F;d&#x2F;d).*$&#x2F;,’$1$2.$3′)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入中文、英文、数字、-符号和-符号"><a href="#只能输入中文、英文、数字、-符号和-符号" class="headerlink" title="只能输入中文、英文、数字、@符号和.符号"></a>只能输入中文、英文、数字、@符号和.符号</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type&#x3D;”text” onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^\a-\z\A-\Z0-9\u4E00-\u9FA5\@\.]&#x2F;g,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只允许输入英文，且不能粘贴也无法弹出粘贴菜单"><a href="#只允许输入英文，且不能粘贴也无法弹出粘贴菜单" class="headerlink" title="只允许输入英文，且不能粘贴也无法弹出粘贴菜单"></a>只允许输入英文，且不能粘贴也无法弹出粘贴菜单</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type&#x3D;”text” onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^\a-\z\A-\Z]&#x2F;g,”)” onkeydown&#x3D;”fncKeyStop(event)” onpaste&#x3D;”return false” oncontextmenu &#x3D; “return false”&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只能输入数字和点号-注意-在-d-里的d不能写成大写D-否则就变成除了数字以外的所有字符"><a href="#只能输入数字和点号-注意-在-d-里的d不能写成大写D-否则就变成除了数字以外的所有字符" class="headerlink" title="只能输入数字和点号(注意:在[^\d.]里的d不能写成大写D,否则就变成除了数字以外的所有字符)"></a>只能输入数字和点号(注意:在[^\d.]里的d不能写成大写D,否则就变成除了数字以外的所有字符)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input name&#x3D;”price” type&#x3D;”text” size&#x3D;”8″ maxlength&#x3D;”8″ onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^\d\.]&#x2F;g,”)” &gt;</span><br></pre></td></tr></table></figure>
+
+<p>先在<code>&lt;input&gt;</code>里输入onkeyup=”value=value.replace(/[^\X]/g,”)” 然后在(/[\X]/g,”)里的X换成你想输入的代码就可以了<br>中文：u4E00-u9FA5<br>数字：d、0-9<br>英文：a-z、A-Z<br>其它符号@,点或其它符号.也可以多个,用\隔开就行了<br>例如:<br>中、英文和数字加@符号加点符号：\a-\z\A-\Z0-9\u4E00-\u9FA5@.</p>
+<h3 id="文本框里不能右键弹出菜单和不能粘贴进复制的信息的话就要在里输入"><a href="#文本框里不能右键弹出菜单和不能粘贴进复制的信息的话就要在里输入" class="headerlink" title="文本框里不能右键弹出菜单和不能粘贴进复制的信息的话就要在里输入"></a>文本框里不能右键弹出菜单和不能粘贴进复制的信息的话就要在<input>里输入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onKeyDown&#x3D;”fncKeyStop(event)” onpaste&#x3D;”return false” oncontextmenu&#x3D;”return false;”</span><br></pre></td></tr></table></figure>
+
+<h3 id="只允许输入数字和小数点"><a href="#只允许输入数字和小数点" class="headerlink" title="只允许输入数字和小数点"></a>只允许输入数字和小数点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input onKeypress&#x3D;”return (&#x2F;[&#x2F;d.]&#x2F;.test(String.fromCharCode(event.keyCode)))” style&#x3D;”ime-mode:Disabled”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只允许输入数字"><a href="#只允许输入数字" class="headerlink" title="只允许输入数字"></a>只允许输入数字</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input name&#x3D;”username” type&#x3D;”text” onkeyup&#x3D;”value&#x3D;this.value.replace(&#x2F;&#x2F;D+&#x2F;g,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="判断的更详细一些，甚至22-2这样不算数字也判断得出来"><a href="#判断的更详细一些，甚至22-2这样不算数字也判断得出来" class="headerlink" title="判断的更详细一些，甚至22..2这样不算数字也判断得出来"></a>判断的更详细一些，甚至22..2这样不算数字也判断得出来</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">function check() &#123;</span><br><span class="line">    if (isNaN(tt.value)) &#123;</span><br><span class="line">        alert(“非法字符！”);</span><br><span class="line">        tt.value&#x3D;””;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line">&lt;input type&#x3D;”text” name&#x3D;”tt” onkeyup&#x3D;”check();”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只允许输入整数-其实style-”ime-mode-Disabled为关闭输入法-省得有些人开着全角输入数字"><a href="#只允许输入整数-其实style-”ime-mode-Disabled为关闭输入法-省得有些人开着全角输入数字" class="headerlink" title="只允许输入整数,其实style=”ime-mode:Disabled为关闭输入法,省得有些人开着全角输入数字"></a>只允许输入整数,其实<code>style=”ime-mode:Disabled</code>为关闭输入法,省得有些人开着全角输入数字</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language&#x3D;javascript&gt;</span><br><span class="line">function onlyNum()</span><br><span class="line">&#123;</span><br><span class="line">if(!(event.keyCode&#x3D;&#x3D;46)&amp;&amp;!(event.keyCode&#x3D;&#x3D;8)&amp;&amp;!(event.keyCode&#x3D;&#x3D;37)&amp;&amp;!(event.keyCode&#x3D;&#x3D;39))</span><br><span class="line">if(!((event.keyCode&gt;&#x3D;48&amp;&amp;event.keyCode&lt;&#x3D;57)||(event.keyCode&gt;&#x3D;96&amp;&amp;event.keyCode&lt;&#x3D;105)))</span><br><span class="line">event.returnValue&#x3D;false;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;&lt;input onkeydown&#x3D;”onlyNum();” style&#x3D;”ime-mode:Disabled&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只允许输入数字-1"><a href="#只允许输入数字-1" class="headerlink" title="只允许输入数字"></a>只允许输入数字</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input name&#x3D;”username” type&#x3D;”text” onkeyup&#x3D;”value&#x3D;this.value.replace(&#x2F;&#x2F;D+&#x2F;g,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只允许输入英文字母、数字和下划线-以下二种方法实现"><a href="#只允许输入英文字母、数字和下划线-以下二种方法实现" class="headerlink" title="只允许输入英文字母、数字和下划线(以下二种方法实现)"></a>只允许输入英文字母、数字和下划线(以下二种方法实现)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;input name&#x3D;”username” type&#x3D;”text” style&#x3D;”ime-mode:disabled”&gt;</span><br><span class="line">&lt;input name&#x3D;”username” type&#x3D;”text” onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^&#x2F;w&#x2F;.&#x2F;&#x2F;]&#x2F;ig,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只允许输入英文字母、数字和-amp"><a href="#只允许输入英文字母、数字和-amp" class="headerlink" title="只允许输入英文字母、数字和&amp;=@"></a>只允许输入英文字母、数字和&amp;=@</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input name&#x3D;”username” type&#x3D;”text” onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^&#x2F;w&#x3D;@&amp;]|_&#x2F;ig,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只允许输入汉字"><a href="#只允许输入汉字" class="headerlink" title="只允许输入汉字"></a>只允许输入汉字</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;input name&#x3D;”username” type&#x3D;”text” onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^&#x2F;u4E00-&#x2F;u9FA5]&#x2F;g,”)”&gt;</span><br><span class="line">me” type&#x3D;”text” style&#x3D;”ime-mode:disabled”&gt;</span><br><span class="line">&lt;input name&#x3D;”username” type&#x3D;”text” onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^&#x2F;w&#x2F;.&#x2F;&#x2F;]&#x2F;ig,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只允许输入英文字母、数字和-amp-1"><a href="#只允许输入英文字母、数字和-amp-1" class="headerlink" title="只允许输入英文字母、数字和&amp;=@"></a>只允许输入英文字母、数字和&amp;=@</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input name&#x3D;”username” type&#x3D;”text” onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^&#x2F;w&#x3D;@&amp;]|_&#x2F;ig,”)”&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="只允许输入汉字-1"><a href="#只允许输入汉字-1" class="headerlink" title="只允许输入汉字"></a>只允许输入汉字</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input name&#x3D;”username” type&#x3D;”text” onkeyup&#x3D;”value&#x3D;value.replace(&#x2F;[^&#x2F;u4E00-&#x2F;u9FA5]&#x2F;g,”)”&gt;</span><br></pre></td></tr></table></figure>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2014/JS%E5%88%A4%E6%96%AD%E5%8F%AA%E8%83%BD%E8%BE%93%E5%85%A5%E6%95%B0%E5%AD%97%E3%80%81%E5%AD%97%E6%AF%8D%E7%AD%89%E9%AA%8C%E8%AF%81%E6%80%BB%E7%BB%93/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/JS/">
+              #JS
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2014/DIV+CSS%E8%A7%84%E5%88%99%E6%95%B4%E7%90%86%E4%BB%A5%E5%8F%8A%E6%B3%A8%E6%84%8F%E9%97%AE%E9%A2%98/" target="_self">DIV+CSS规则整理以及注意问题</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2014/%E4%B8%89%E4%B8%AA%E7%AE%80%E5%8D%95%E6%AD%A5%E9%AA%A4%EF%BC%8C%E8%AE%A9%E4%BD%A0%E7%9A%84%E7%BD%91%E7%AB%99%E5%8F%98%E6%88%90%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BD%91%E7%AB%99/" target="_self">三个简单步骤，让你的网站变成响应式网站</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

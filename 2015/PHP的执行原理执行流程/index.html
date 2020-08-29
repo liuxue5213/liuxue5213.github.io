@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>PHP的执行原理/执行流程 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="PHP,PHP," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>PHP的执行原理/执行流程</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2015-12-09
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/PHP/">
+            PHP
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="PHP的执行原理执行流程"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>**简介<br>**　　先看看下面这个过程：</p>
+<ul>
+<li><p>我们从未手动开启过PHP的相关进程，它是随着Apache的启动而运行的；</p>
+</li>
+<li><p>PHP通过mod_<a target="_blank" rel="noopener" href="http://www.yeeyan.com/articles/tag/php">php</a>5.so模块和Apache相连（具体说来是SAPI，即服务器应用程序编程接口）；</p>
+</li>
+<li><p>PHP总共有三个模块：内核、Zend引擎、以及扩展层；</p>
+</li>
+<li><p>PHP内核用来处理请求、文件流、错误处理等相关操作；</p>
+</li>
+<li><p>Zend引擎（ZE）用以将源文件转换成机器语言，然后在虚拟机上运行它；</p>
+</li>
+<li><p>扩展层是一组函数、类库和流，PHP使用它们来执行一些特定的操作。比如，我们需要mysql扩展来连接MySQL数据库；</p>
+</li>
+<li><p>当ZE执行程序时可能会需要连接若干扩展，这时ZE将控制权交给扩展，等处理完特定任务后再返还；</p>
+</li>
+<li><p>最后，ZE将程序运行结果返回给PHP内核，它再将结果传送给SAPI层，最终输出到浏览器上。</p>
+</li>
+<li><p>*深入探讨**<br>等等，没有这么简单。以上过程只是个简略版，让我们再深入挖掘一下，看看幕后还发生了些什么。</p>
+</li>
+<li><p>Apache启动后，PHP解释程序也随之启动；</p>
+</li>
+<li><p>PHP的启动过程有两步；</p>
+</li>
+<li><p>第一步是初始化一些环境变量，这将在整个SAPI生命周期中发生作用；</p>
+</li>
+<li><p>第二步是生成只针对当前请求的一些变量设置。</p>
+</li>
+<li><p>*PHP启动第一步**<br>不清楚什么第一第二步是什么？别担心，我们接下来详细讨论一下。让我们先看看第一步，也是最主要的一步。要记住的是，第一步的操作在任何请求到达之前就发生了。</p>
+</li>
+<li><p>启动Apache后，PHP解释程序也随之启动；</p>
+</li>
+<li><p>PHP调用各个扩展的MINIT方法，从而使这些扩展切换到可用状态。看看<a target="_blank" rel="noopener" href="http://www.yeeyan.com/articles/tag/php">php</a>.ini文件里打开了哪些扩展吧；</p>
+</li>
+<li><p>MINIT的意思是“模块初始化”。各个模块都定义了一组函数、类库等用以处理其他请求。<br>一个典型的MINIT方法如下：<br>PHP_MINIT_FUNCTION(extension_name){<br>/* Initialize functions, classes etc */<br>}</p>
+</li>
+<li><p>*PHP启动第二步**</p>
+</li>
+<li><p>当一个页面请求发生时，SAPI层将控制权交给PHP层。于是PHP设置了用于回复本次请求所需的环境变量。同时，它还建立一个变量表，用来存放执行过程中产生的变量名和值。</p>
+</li>
+<li><p>PHP调用各个模块的RINIT方法，即“请求初始化”。一个经典的例子是Session模块的RINIT，如果在<a target="_blank" rel="noopener" href="http://www.yeeyan.com/articles/tag/php">php</a>.ini中启用了Session模块，那在调用该模块的RINIT时就会初始化$_SESSION变量，并将相关内容读入；</p>
+</li>
+<li><p>RINIT方法可以看作是一个准备过程，在程序执行之间就会自动启动。<br>一个典型的RINIT方法如下：<br>PHP_RINIT_FUNCTION(extension_name) {<br>/* Initialize session variables, pre-populate variables, redefine global variables etc */<br>}</p>
+</li>
+<li><p>*PHP关闭第一步**<br>如同PHP启动一样，PHP的关闭也分两步：</p>
+</li>
+<li><p>一旦页面执行完毕（无论是执行到了文件末尾还是用exit或die函数中止），PHP就会启动清理程序。它会按顺序调用各个模块的RSHUTDOWN方法。</p>
+</li>
+<li><p>RSHUTDOWN用以清除程序运行时产生的符号表，也就是对每个变量调用unset函数。<br>一个典型的RSHUTDOWN方法如下：<br>PHP_RSHUTDOWN_FUNCTION(extension_name) {<br>/* Do memory management, unset all variables used in the last PHP call etc */<br>}</p>
+</li>
+<li><p>*PHP关闭第二步**<br>最后，所有的请求都已处理完毕，SAPI也准备关闭了，PHP开始执行第二步：</p>
+</li>
+<li><p>PHP调用每个扩展的MSHUTDOWN方法，这是各个模块最后一次释放内存的机会。<br>一个典型的RSHUTDOWN方法如下：<br>PHP_MSHUTDOWN_FUNCTION(extension_name) {<br>/* Free handlers and persistent memory etc */<br>}<br>这样，整个PHP生命周期就结束了。要注意的是，只有在服务器没有请求的情况下才会执行“启动第一步”和“关闭第二步”。</p>
+</li>
+</ul>
+<h4 id="PHP底层工作原理"><a href="#PHP底层工作原理" class="headerlink" title="PHP底层工作原理"></a>PHP底层工作原理</h4><p><a target="_blank" rel="noopener" href="http://images.cnblogs.com/cnblogs_com/phphuaibei/201109/201109131718487767.png"><img src="http://images.cnblogs.com/cnblogs_com/phphuaibei/201109/201109131718528130.png" alt="wps_clip_image-29471" title="wps_clip_image-29471"></a></p>
+<p>图1 php结构</p>
+<p>从图上可以看出，php从下到上是一个4层体系</p>
+<p>①Zend引擎</p>
+<p>Zend整体用纯c实现，是php的内核部分，它将php代码翻译（词法、语法解析等一系列编译过程）为可执行opcode的处理并实现相应的处理方法、实现了基本的数据结构（如hashtable、oo）、内存分配及管理、提供了相应的api方法供外部调用，是一切的核心，所有的外围功能均围绕zend实现。</p>
+<p>②Extensions</p>
+<p>围绕着zend引擎，extensions通过组件式的方式提供各种基础服务，我们常见的各种内置函数（如array系列）、标准库等都是通过extension来实现，用户也可以根据需要实现自己的extension以达到功能扩展、性能优化等目的（如贴吧正在使用的php中间层、富文本解析就是extension的典型应用）。</p>
+<p>③Sapi</p>
+<p>Sapi全称是Server Application Programming Interface，也就是服务端应用编程接口，sapi通过一系列钩子函数，使得php可以和外围交互数据，这是php非常优雅和成功的一个设计，通过sapi成功的将php本身和上层应用解耦隔离，php可以不再考虑如何针对不同应用进行兼容，而应用本身也可以针对自己的特点实现不同的处理方式。后面将在sapi章节中介绍</p>
+<p>④上层应用</p>
+<p>这就是我们平时编写的php程序，通过不同的sapi方式得到各种各样的应用模式，如通过webserver实现web应用、在命令行下以脚本方式运行等等。</p>
+<p><strong>构架思想：</strong></p>
+<p>引擎(Zend)+组件(ext)的模式降低内部耦合</p>
+<p>中间层(sapi)隔绝web server和php</p>
+<p>如果php是一辆车，那么</p>
+<p>车的框架就是php本身</p>
+<p>Zend是车的引擎（发动机）</p>
+<p>Ext下面的各种组件就是车的轮子</p>
+<p>Sapi可以看做是公路，车可以跑在不同类型的公路上</p>
+<p>而一次php程序的执行就是汽车跑在公路上。</p>
+<p>因此，我们需要：性能优异的引擎+合适的车轮+正确的跑道</p>
+<h4 id="Apache和php的关系"><a href="#Apache和php的关系" class="headerlink" title="Apache和php的关系"></a><strong>Apache和php的关系</strong></h4><p>Apache对于php的解析，就是通过众多Module中的php Module来完成的。</p>
+<p><a target="_blank" rel="noopener" href="http://images.cnblogs.com/cnblogs_com/phphuaibei/201109/201109131718539690.png"><img src="http://images.cnblogs.com/cnblogs_com/phphuaibei/201109/201109131718566084.png" alt="wps_clip_image-31721" title="wps_clip_image-31721"></a></p>
+<p>把php最终集成到Apache系统中，还需要对Apache进行一些必要的设置。这里，我们就以php的mod_php5 SAPI运行模式为例进行讲解，至于SAPI这个概念后面我们还会详细讲解。</p>
+<p>假定我们安装的版本是Apache2 和 Php5，那么需要编辑Apache的主配置文件http.conf，在其中加入下面的几行内容：</p>
+<p>Unix/Linux环境下：</p>
+<p>LoadModule php5_module modules/mod_php5.so</p>
+<p>AddType application/x-httpd-php .php</p>
+<p>注：其中modules/mod_php5.so 是X系统环境下mod_php5.so文件的安装位置。</p>
+<p>Windows环境下：</p>
+<p>LoadModule php5_module d:/php/php5apache2.dll</p>
+<p>AddType application/x-httpd-php .php</p>
+<p>注：其中d:/php/php5apache2.dll 是在Windows环境下php5apache2.dll文件的安装位置。</p>
+<p>这两项配置就是告诉Apache Server，以后收到的Url用户请求，凡是以php作为后缀，就需要调用php5_module模块（mod_php5.so/ php5apache2.dll）进行处理。</p>
+<h4 id="Apache的生命周期"><a href="#Apache的生命周期" class="headerlink" title="Apache的生命周期"></a>Apache的生命周期</h4><p><a target="_blank" rel="noopener" href="http://images.cnblogs.com/cnblogs_com/phphuaibei/201109/201109131718581331.png"><img src="http://images.cnblogs.com/cnblogs_com/phphuaibei/201109/201109131719004038.png" alt="wps_clip_image-8490" title="wps_clip_image-8490"></a></p>
+<h3 id="Apach的请求处理流程"><a href="#Apach的请求处理流程" class="headerlink" title="Apach的请求处理流程"></a>Apach的请求处理流程</h3><p><a target="_blank" rel="noopener" href="http://images.cnblogs.com/cnblogs_com/phphuaibei/201109/201109131719029809.png"><img src="http://images.cnblogs.com/cnblogs_com/phphuaibei/201109/201109131719054599.png" alt="wps_clip_image-17917" title="wps_clip_image-17917"></a></p>
+<p><strong>Apache请求处理循环详解</strong><br>Apache请求处理循环的11个阶段都做了哪些事情呢？</p>
+<p>1、Post-Read-Request阶段</p>
+<p>在正常请求处理流程中，这是模块可以插入钩子的第一个阶段。对于那些想很早进入处理请求的模块来说，这个阶段可以被利用。</p>
+<p>2、URI Translation阶段<br>Apache在本阶段的主要工作：将请求的URL映射到本地文件系统。模块可以在这阶段插入钩子，执行自己的映射逻辑。mod_alias就是利用这个阶段工作的。</p>
+<p>3、Header Parsing阶段<br>Apache在本阶段的主要工作：检查请求的头部。由于模块可以在请求处理流程的任何一个点上执行检查请求头部的任务，因此这个钩子很少被使用。mod_setenvif就是利用这个阶段工作的。</p>
+<p>4、Access Control阶段<br>Apache在本阶段的主要工作：根据配置文件检查是否允许访问请求的资源。Apache的标准逻辑实现了允许和拒绝指令。mod_authz_host就是利用这个阶段工作的。</p>
+<p>5、Authentication阶段<br>Apache在本阶段的主要工作：按照配置文件设定的策略对用户进行认证，并设定用户名区域。模块可以在这阶段插入钩子，实现一个认证方法。</p>
+<p>6、Authorization阶段<br>Apache在本阶段的主要工作：根据配置文件检查是否允许认证过的用户执行请求的操作。模块可以在这阶段插入钩子，实现一个用户权限管理的方法。</p>
+<p>7、MIME Type Checking阶段<br>Apache在本阶段的主要工作：根据请求资源的MIME类型的相关规则，判定将要使用的内容处理函数。标准模块mod_negotiation和mod_mime实现了这个钩子。</p>
+<p>8、FixUp阶段<br>这是一个通用的阶段，允许模块在内容生成器之前，运行任何必要的处理流程。和Post_Read_Request类似，这是一个能够捕获任何信息的钩子，也是最常使用的钩子。</p>
+<p>9、Response阶段<br>Apache在本阶段的主要工作：生成返回客户端的内容，负责给客户端发送一个恰当的回复。这个阶段是整个处理流程的核心部分。</p>
+<p>10、Logging阶段<br>Apache在本阶段的主要工作：在回复已经发送给客户端之后记录事务。模块可能修改或者替换Apache的标准日志记录。</p>
+<p>11、CleanUp阶段<br>Apache在本阶段的主要工作：清理本次请求事务处理完成之后遗留的环境，比如文件、目录的处理或者Socket的关闭等等，这是Apache一次请求处理的最后一个阶段。</p>
+<p><strong>LAMP架构：</strong></p>
+<p><a target="_blank" rel="noopener" href="http://images.cnblogs.com/cnblogs_com/phphuaibei/201109/201109131719063585.png"><img src="http://images.cnblogs.com/cnblogs_com/phphuaibei/201109/201109131719078178.png" alt="wps_clip_image-24435" title="wps_clip_image-24435"></a></p>
+<p>从下往上四层：</p>
+<p>①liunx 属于操作系统的底层</p>
+<p>②apache服务器，属于次服务器，沟通linux和PHP</p>
+<p>③php:属于服务端编程语言，通过php_module 模块 和apache关联</p>
+<p>④mysql和其他web服务：属于应用服务，通过PHP的Extensions外 挂模块和mysql关联</p>
+<h4 id="Android系统架构图"><a href="#Android系统架构图" class="headerlink" title="Android系统架构图"></a><strong>Android系统架构图</strong></h4><p>lamp和安卓的架构图比较一下，貌似和lamp架构有点相似，本人不懂安卓，只是感觉上有点相似，高手可以指出区别，小弟在此不胜感谢</p>
+<p><a target="_blank" rel="noopener" href="http://images.cnblogs.com/cnblogs_com/phphuaibei/201109/201109131719122817.png"><img src="http://images.cnblogs.com/cnblogs_com/phphuaibei/201109/201109131719193020.png" alt="wps_clip_image-27187" title="wps_clip_image-27187"></a></p>
+<p>从上往下：</p>
+<p>安卓架构————–说明——–LAMP架构</p>
+<p>1.应用程序 ——–具体应用——–web应用</p>
+<p>2.应用程序框架 —-java————-PHP语言和库</p>
+<p>3.系统运行库 ：—-虚拟机———WEB服务器</p>
+<p>⒋Linux 内核 ：—操作系统——-lamp架构中的L</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2015/PHP%E7%9A%84%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/PHP/">
+              #PHP
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2015/PHP%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9D%9E%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%89%88%E6%9C%AC%E7%9A%84%E5%8C%BA%E5%88%AB/" target="_self">PHP线程安全与非线程安全版本的区别</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2015/DJANGO%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B/" target="_self">DJANGO字段类型</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

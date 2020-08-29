@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>数据库笔记 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="数据库,MYSQL," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>数据库笔记</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2017-02-18
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+            数据库
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="数据库笔记"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h3 id="tokudb"><a href="#tokudb" class="headerlink" title="tokudb"></a>tokudb</h3><p>insert 性能优 ，select性能优<br>update 和 delete 性能差<br>TokuDB的缺点：<br>    1、cpu usr态消耗高<br>    2、响应时间变长。<br>infiniDB infobright<br>一个 和 tokudb差不多，还有一个是适合 复杂查询</p>
+<h2 id="水平分割和垂直分割"><a href="#水平分割和垂直分割" class="headerlink" title="水平分割和垂直分割"></a>水平分割和垂直分割</h2><h3 id="水平分割：根据一列或多列数据的值把数据行放到两个独立的表中"><a href="#水平分割：根据一列或多列数据的值把数据行放到两个独立的表中" class="headerlink" title="水平分割：根据一列或多列数据的值把数据行放到两个独立的表中"></a>水平分割：根据一列或多列数据的值把数据行放到两个独立的表中</h3><h4 id="水平分割通常在下面的情况下使用"><a href="#水平分割通常在下面的情况下使用" class="headerlink" title="水平分割通常在下面的情况下使用"></a>水平分割通常在下面的情况下使用</h4><ol>
+<li>表很大，分割后可以降低在查询时需要读的数据和索引的页数，同时也降低了索引的层数，提高查询速度。</li>
+<li>表中的数据本来就有独立性，例如表中分别记录各个地区的数据或不同时期的数据，特别是有些数据常用，而另外一些数据不常用。</li>
+<li>需要把数据存放到多个介质上。<br>水平分割会给应用增加复杂度，它通常在查询时需要多个表名，查询所有数据需要union操作。在许多数据库应用中，这种复杂性会超过它带来的优点，因为只 要索引关键字不大，则在索引用于查询时，表中增加两到三倍数据量，查询时也就增加读一个索引层的磁盘次数</li>
+</ol>
+<h3 id="垂直分割：把主码和一些列放到一个表，然后把主码和另外的列放到另一个表中"><a href="#垂直分割：把主码和一些列放到一个表，然后把主码和另外的列放到另一个表中" class="headerlink" title="垂直分割：把主码和一些列放到一个表，然后把主码和另外的列放到另一个表中"></a>垂直分割：把主码和一些列放到一个表，然后把主码和另外的列放到另一个表中</h3><p>如果一个表中某些列常用，而另外一些列不常用，则可以采用垂直分割，另外垂直分割可以使得数据行变小，一个数据页就能存放更多的数据，在查询时就会减少I/O次数。其缺点是需要管理冗余列，查询所有数据需要join操作</p>
+<h4 id="垂直分割通常在下面的情况下使用"><a href="#垂直分割通常在下面的情况下使用" class="headerlink" title="垂直分割通常在下面的情况下使用"></a>垂直分割通常在下面的情况下使用</h4><ol>
+<li>按时间分表</li>
+<li>按区间范围分表 </li>
+<li>hash分表</li>
+<li>利用merge存储引擎分表</li>
+</ol>
+<h3 id="显示服务器上当前存在什么数据库"><a href="#显示服务器上当前存在什么数据库" class="headerlink" title="显示服务器上当前存在什么数据库"></a>显示服务器上当前存在什么数据库</h3><p>SHOW DATABASES;</p>
+<h3 id="显示当前数据库中存在什么表"><a href="#显示当前数据库中存在什么表" class="headerlink" title="显示当前数据库中存在什么表"></a>显示当前数据库中存在什么表</h3><p>SHOW TABLES;</p>
+<h3 id="查看表结构"><a href="#查看表结构" class="headerlink" title="查看表结构"></a>查看表结构</h3><p>DESCRIBE table;</p>
+<h3 id="删除数据-保留表"><a href="#删除数据-保留表" class="headerlink" title="删除数据 保留表"></a>删除数据 保留表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truncate table zhihu_title</span><br></pre></td></tr></table></figure>
+
+<h3 id="编码集"><a href="#编码集" class="headerlink" title="编码集"></a>编码集</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#39;character_set_%&#39;;</span><br><span class="line">set character_set_server &#x3D; utf8;</span><br></pre></td></tr></table></figure>
+
+<h3 id="更改表结构，将test表username字段的字段类型改为CHAR-25"><a href="#更改表结构，将test表username字段的字段类型改为CHAR-25" class="headerlink" title="更改表结构，将test表username字段的字段类型改为CHAR(25)"></a>更改表结构，将test表username字段的字段类型改为CHAR(25)</h3><p>ALTER TABLE test CHANGE username username CHAR(25);</p>
+<h3 id="将当前目录下的mysql-sql导入数据库"><a href="#将当前目录下的mysql-sql导入数据库" class="headerlink" title="将当前目录下的mysql.sql导入数据库"></a>将当前目录下的mysql.sql导入数据库</h3><p>SOURCE ./mysql.sql;</p>
+<h3 id="数据库空间"><a href="#数据库空间" class="headerlink" title="数据库空间"></a>数据库空间</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT CONCAT(TRUNCATE(SUM(data_length)&#x2F;1024&#x2F;1024,2),&#39;MB&#39;) AS data_size,CONCAT(TRUNCATE(SUM(max_data_length)&#x2F;1024&#x2F;1024,2),&#39;MB&#39;) AS max_data_size,CONCAT(TRUNCATE(SUM(data_free)&#x2F;1024&#x2F;1024,2),&#39;MB&#39;) AS data_free,CONCAT(TRUNCATE(SUM(index_length)&#x2F;1024&#x2F;1024,2),&#39;MB&#39;) AS index_size FROM information_schema.tables WHERE TABLE_SCHEMA &#x3D; &#39;test&#39;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看端口-lsof命令可以列出当前的所有网络情况"><a href="#查看端口-lsof命令可以列出当前的所有网络情况" class="headerlink" title="查看端口 lsof命令可以列出当前的所有网络情况"></a>查看端口 lsof命令可以列出当前的所有网络情况</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -n -P -i TCP -s TCP:LISTEN</span><br></pre></td></tr></table></figure>
+<p>此命令的解释如下<br>    -n 表示主机以ip地址显示<br>    -P 表示端口以数字形式显示，默认为端口名称<br>    -i 意义较多，具体 man lsof, 主要是用来过滤lsof的输出结果 -s 和 -i 配合使用，用于过滤输出 </p>
+<h3 id="开启远程访问代码"><a href="#开启远程访问代码" class="headerlink" title="开启远程访问代码"></a>开启远程访问代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line">update user set host &#x3D; &quot;%&quot; where user &#x3D; &quot;root&quot;;</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<h3 id="关闭远程访问代码"><a href="#关闭远程访问代码" class="headerlink" title="关闭远程访问代码"></a>关闭远程访问代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line">update user set host &#x3D; &quot;localhost&quot; where user &#x3D; &quot;root&quot; and host &#x3D; &quot;%&quot;;</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<h3 id="数据库正则"><a href="#数据库正则" class="headerlink" title="数据库正则"></a>数据库正则</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM table WHERE time REGEXP &#39;([0-9]&#123;4&#125;)-([0-9]&#123;2&#125;)-([0-9]&#123;2&#125;)&#39;</span><br></pre></td></tr></table></figure>
+
+<h3 id="数据库多条插入"><a href="#数据库多条插入" class="headerlink" title="数据库多条插入"></a>数据库多条插入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO users(name, age) VALUES(‘姚明’, 25), (‘比尔.盖茨’, 50), (‘火星人’, 600);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">UPDATE categories </span><br><span class="line">    SET display_order &#x3D; CASE id </span><br><span class="line">        WHEN 1 THEN 3 </span><br><span class="line">        WHEN 2 THEN 4 </span><br><span class="line">        WHEN 3 THEN 5 </span><br><span class="line">    END, </span><br><span class="line">    title &#x3D; CASE id </span><br><span class="line">        WHEN 1 THEN &#39;New Title 1&#39;</span><br><span class="line">        WHEN 2 THEN &#39;New Title 2&#39;</span><br><span class="line">        WHEN 3 THEN &#39;New Title 3&#39;</span><br><span class="line">    END</span><br><span class="line">WHERE id IN (1,2,3)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">insert into test_tbl (id,dr) values  (1,&#39;2&#39;),(2,&#39;3&#39;),...(x,&#39;y&#39;)</span><br><span class="line">on duplicate key update dr&#x3D;values(dr);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO &#96;table&#96; (&#96;unique_column&#96;,&#96;num&#96;) </span><br><span class="line">VALUES(&#39;$unique_value&#39;,$num) </span><br><span class="line">ON DUPLICATE UPDATE num&#x3D;$num;﻿​</span><br></pre></td></tr></table></figure>
+
+<h3 id="group-concat函数：是将相同的行组合起来"><a href="#group-concat函数：是将相同的行组合起来" class="headerlink" title="group_concat函数：是将相同的行组合起来"></a>group_concat函数：是将相同的行组合起来</h3><p>完整的语法如下：group_concat([DISTINCT] 要连接的字段 [Order BY ASC<br>    /DESC 排序字段] [Separator ‘分隔符’])</p>
+<h3 id="转换编码"><a href="#转换编码" class="headerlink" title="转换编码"></a>转换编码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cc_suborders.phone400&#x3D;CONVERT(phone400 USING utf8) COLLATE utf8_unicode_ci</span><br></pre></td></tr></table></figure>
+
+<h3 id="根据ID复制记录"><a href="#根据ID复制记录" class="headerlink" title="根据ID复制记录"></a>根据ID复制记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO cc_invoice2order(i_id,order_id,user_id) </span><br><span class="line">SELECT 0 AS i_id,order_id,0 AS user_id </span><br><span class="line">FROM cc_invoice2order</span><br><span class="line">WHERE id  &#x3D;  903 </span><br></pre></td></tr></table></figure>
+
+<h3 id="find-in-set"><a href="#find-in-set" class="headerlink" title="find_in_set"></a>find_in_set</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT o.contact_id,group_concat(c.name)</span><br><span class="line">FROM cc_orders o </span><br><span class="line">LEFT JOIN cc_contacts c ON find_in_set(c.id,o.contact_id) </span><br><span class="line">GROUP BY o.id;</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看数据库查询进程"><a href="#查看数据库查询进程" class="headerlink" title="查看数据库查询进程"></a>查看数据库查询进程</h3><p>show processlist<br>kill 245900</p>
+<p>SELECT TIMESTAMPDIFF(MONTH,’2009-10-01’,’2009-09-01’);<br>interval可是：<br>SECOND 秒 SECONDS<br>MINUTE 分钟 MINUTES<br>HOUR 时间 HOURS<br>DAY 天 DAYS<br>MONTH 月 MONTHS<br>YEAR 年 YEARS </p>
+<h3 id="查询中-设置字段属性"><a href="#查询中-设置字段属性" class="headerlink" title="查询中 设置字段属性"></a>查询中 设置字段属性</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select str_to_date(&#39;2008-4-2 15:3:28&#39;,&#39;%Y-%m-%d %H:%i:%s&#39;);﻿﻿</span><br><span class="line">DATE_FORMAT(b.start_date,&#39;%m&#39;) &#x3D; date_format(date_sub(curdate(),interval +2 month),&#39;%m&#39;)</span><br><span class="line">DATE_FORMAT(now(),&#39;%m&#39;),date_format(date_sub(b.start_date,interval +2 month),&#39;%m&#39;)</span><br><span class="line"></span><br><span class="line">CAST(SUM(fee) AS DECIMAL(10,3)) AS balance</span><br></pre></td></tr></table></figure>
+
+<p>和MySQL中concat函数不同的是,<br>concat_ws函数在执行的时候,不会因为NULL值而返回NULL </p>
+<h3 id="判断字符串包含"><a href="#判断字符串包含" class="headerlink" title="判断字符串包含"></a>判断字符串包含</h3><p>instr(name,’js’) &gt; 0   </p>
+<h3 id="order-by-convert-name-USING-gbk-COLLATE-gbk-chinese-ci-asc"><a href="#order-by-convert-name-USING-gbk-COLLATE-gbk-chinese-ci-asc" class="headerlink" title="order by convert(name USING gbk) COLLATE gbk_chinese_ci asc"></a>order by convert(name USING gbk) COLLATE gbk_chinese_ci asc</h3><h3 id="时区"><a href="#时区" class="headerlink" title="时区"></a>时区</h3><p>show variables like “%time_zone%”;<br>set global time_zone = ‘+8:00’;<br>set time_zone = ‘+8:00’<br>flush privileges; </p>
+<h3 id="修改字段长度"><a href="#修改字段长度" class="headerlink" title="修改字段长度"></a>修改字段长度</h3><p>alter table stock_data modify column today_open_price decimal(10,3)</p>
+<p>ALTER TABLE <code>cc_orders</code> CHANGE <code>end_date</code> <code>end_date</code> DATE NULL DEFAULT NULLCOMMENT ‘订单结束日期’;</p>
+<h3 id="修改自增ID"><a href="#修改自增ID" class="headerlink" title="修改自增ID"></a>修改自增ID</h3><p>alter table users AUTO_INCREMENT=10000;</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>UNIX时间戳—–DATE<br>FROM_UNIXTIME(ctime,’%Y-%m-%d’)) AS time<br>DATE_FORMAT(current_timestamp(),’%Y-%m-%d’)  </p>
+<p>UNIX时间戳转换为日期用函数： FROM_UNIXTIME()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select FROM_UNIXTIME(1156219870);</span><br></pre></td></tr></table></figure>
+
+<p>日期转换为UNIX时间戳用函数： UNIX_TIMESTAMP()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Select UNIX_TIMESTAMP(’2006-11-04 12:23:00′);</span><br></pre></td></tr></table></figure>
+
+
+<p>SELECT o.contact_id,group_concat(c.name)<br>FROM cc_orders o<br>LEFT JOIN cc_contacts c ON find_in_set(c.id,o.contact_id)<br>GROUP BY o.id;</p>
+<p>1： 先开通MYSQL慢查询日志<br>修改my.ini文件，添加如下2行 - 设置查询超过几秒就记录，这里设置5秒，记录的位置通过上面设置，这里设置记录到D盘mysqlslowquery.log<br>log-slow-queries = D:\mysqlslowquery.log<br>long_query_time = 5<br>重启MYSQL，慢查询会自动记录下来</p>
+<p>2: 由于一个效率低SQL语句，就会拖垮整个网站，所以有些效率不是太低的SQL语句，也会因为之前执行了效率很低的语句，导致自身执行速度慢很多而被记录下来<br>如果慢查询更新的很快，建议把log_query_time时间调整大一些</p>
+<p>3：把慢查询复制下来，在MYSQL里执行，看执行时间，多次执行，以便确保不是从缓存读取的，如果执行时间确实很慢，则先把程序内这些查询语句先注释，继续观察慢查询更新。</p>
+<p>4：复制网站内代码文件，注意不要复制图片 JS等文件，复制到单独一个目录，然后可以通过查询文件内容来查找效率低下的SQL语句。操作系统默认无法按文件内容来查询。需要修改注册表，修改方法如下：<br>运行regedit，编辑注册表<br>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\ContentIndex<br>右侧FilterFilesWithUnknownExtensions子键（REG_DEWORD类型）的键值改为1。如果注册表内没有这个子键，则建立一个，然手修改键值即可</p>
+<p>5: 找到这个SQL的文件位置，到网站目录，先注释掉，再观察。同理先注释掉所有有问题的SQL语句，保证网站快速运行状态，观察几天，确保不再有慢查询记录</p>
+<p>6： 如果网站流量过大，慢查询已经没有记录任何SQL语句，而网站还是很慢，则需要更改查询时间，设置为3秒 2秒，1秒等视情况而定。</p>
+<p>7：当慢查询不再更新了，网站速度正常了，那下一步就是重写这些有问题的SQL语句了。</p>
+<p>当数据量较多的时候，可以用mysqldump导出单个表<br>mysqldump –default-character-set utf8 -hxxxxx -uxxxx -p 数据库名 表名&gt;tb1.sql<br>回车 输入密码</p>
+<p>这样就导出了单个表的数据<br>登录另一个数据库，注意登录的时候用<br>mysql –default-character-set utf8 -uroot -p<br>回车输入密码</p>
+<p>use 数据库名<br>source tb1.sql</p>
+<p>Mysql數據庫 命令行.md登录使用默认3306端口的MySQL<br>mysql -u root -p<br>TCP连接管理不同端口的多个MySQL<br>mysql -u root -p –protocol=tcp –host=localhost –port=3307<br>通过socket套接字管理不同端口的多个MySQL<br>mysql -u root -p –socket=/tmp/mysql3307.sock<br>通过端口和IP管理不同端口的多个MySQL<br>mysql -u root -p -P 3306 -h 127.0.0.1</p>
+<p>##</p>
+<h3 id="创建表的时候写注释"><a href="#创建表的时候写注释" class="headerlink" title="创建表的时候写注释"></a>创建表的时候写注释</h3><p>create table test1<br>(<br>    field_name int comment ‘字段的注释’<br>)comment=’表的注释’;  </p>
+<h3 id="修改表的注释"><a href="#修改表的注释" class="headerlink" title="修改表的注释"></a>修改表的注释</h3><p>alter table test1 comment ‘修改后的表的注释’;  </p>
+<h3 id="修改字段的注释"><a href="#修改字段的注释" class="headerlink" title="修改字段的注释"></a>修改字段的注释</h3><p>– 注意：字段名和字段类型照写就行<br>alter table test1 modify column field_name int comment ‘修改后的字段注释’;   </p>
+<h3 id="查看表注释的方法"><a href="#查看表注释的方法" class="headerlink" title="查看表注释的方法"></a>查看表注释的方法</h3><p>在生成的SQL语句中看<br>show create table test1;  </p>
+<h3 id="在元数据的表里面看"><a href="#在元数据的表里面看" class="headerlink" title="在元数据的表里面看"></a>在元数据的表里面看</h3><p>use information_schema;  </p>
+<p>select *<br>from TABLES<br>where TABLE_SCHEMA=’my_db’ and TABLE_NAME=’test1’   </p>
+<h3 id="查看字段注释的方法"><a href="#查看字段注释的方法" class="headerlink" title="查看字段注释的方法"></a>查看字段注释的方法</h3><p>show full columns from test1;  </p>
+<p>在元数据的表里面看<br>select * from COLUMNS where TABLE_SCHEMA=’my_db’ and TABLE_NAME=’test1’  </p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2017/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%94%E8%AE%B0/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/MYSQL/">
+              #MYSQL
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2017/LINUX%E4%B8%8B%E4%BF%AE%E6%94%B9%E7%BD%91%E5%8D%A1IP%E3%80%81DNS%E5%92%8C%E7%BD%91%E5%85%B3/" target="_self">Linux下修改网卡IP、DNS和网关</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2017/RGB%E9%A2%9C%E8%89%B2%E4%B8%8E%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/" target="_self">RGB颜色与十六进制转换</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

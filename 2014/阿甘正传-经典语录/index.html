@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>阿甘正传-经典语录 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="经典语录,电影," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>阿甘正传-经典语录</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2014-10-17
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%BD%95/">
+            经典语录
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="阿甘正传-经典语录"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>## 阿甘正传经典语录 </p>
+<h3 id="1、-His-back-is-as-crooked-as-a-politician"><a href="#1、-His-back-is-as-crooked-as-a-politician" class="headerlink" title="1、 His back is as crooked as a politician."></a>1、 His back is as crooked as a politician.</h3><p>不仅指出了后背的弯曲，而且顺便损了一顿政客的腐败。一语双雕。</p>
+<h3 id="2、-Life-was-like-a-box-of-chocolate-you-never-know-what-you’re-gonna-get"><a href="#2、-Life-was-like-a-box-of-chocolate-you-never-know-what-you’re-gonna-get" class="headerlink" title="2、 Life was like a box of chocolate ,you never know what you’re gonna get."></a>2、 Life was like a box of chocolate ,you never know what you’re gonna get.</h3><p>人生就像一盒巧克力，你永远不知道会尝到哪种滋味.为什么说巧克力而不说棒棒糖呢，因为在美国巧克力通常有十二快或二十四块，每个都有不同的包装和口味形状和颜色，以前没有标志。只能拆开放在嘴里，品尝了之后才知道个中滋味。</p>
+<h3 id="3、-There-is-an-awful-lot-you-can-tell-about-a-person-by-their-shoes-Where-they’re-going-Where-they’ve-been"><a href="#3、-There-is-an-awful-lot-you-can-tell-about-a-person-by-their-shoes-Where-they’re-going-Where-they’ve-been" class="headerlink" title="3、 There is an awful lot you can tell about a person by their shoes.Where they’re going. Where they’ve been."></a>3、 There is an awful lot you can tell about a person by their shoes.Where they’re going. Where they’ve been.</h3><p>通过人家的鞋可以了解别人很多的东西。</p>
+<h3 id="4、-You-are-no-different-than-anybody-else-is"><a href="#4、-You-are-no-different-than-anybody-else-is" class="headerlink" title="4、 You are no different than anybody else is."></a>4、 You are no different than anybody else is.</h3><p>你和别人没有任何的不同，阿甘的妈妈从小就给阿甘一种自信。</p>
+<h3 id="5、-Stupid-is-as-stupid-does"><a href="#5、-Stupid-is-as-stupid-does" class="headerlink" title="5、 Stupid is as stupid does."></a>5、 Stupid is as stupid does.</h3><p>傻人做傻事。阿甘看似傻人，然而往往是那些自以为是自恃甚高的人做了傻事，所以看一个人是看她的行动而非外表。这是典型的阿甘用语。</p>
+<h3 id="6、-We-were-like-peas-and-carrots"><a href="#6、-We-were-like-peas-and-carrots" class="headerlink" title="6、 We were like peas and carrots."></a>6、 We were like peas and carrots.</h3><p>豌豆和胡萝卜丁，一个圆的，一个方的；一个红的，一个绿的。它们的共同点虽然没有太大的味道但营养非常高。故但在美国烹饪时做为主食的点缀，而且它俩都是同时出现。故引申为形影不离。</p>
+<h3 id="7、-There-must-be-someing-can-be-done"><a href="#7、-There-must-be-someing-can-be-done" class="headerlink" title="7、 There must be someing can be done."></a>7、 There must be someing can be done.</h3><p>不同的与其可以传递不同的信息，在电影里阿甘妈妈侧身，眼神里充满的诱惑，对校长暧昧的说了这句话。校长没有领会错她的意思～～女孩子甚用！！</p>
+<h3 id="8、-Miracles-happen-every-day"><a href="#8、-Miracles-happen-every-day" class="headerlink" title="8、 Miracles happen every day."></a>8、 Miracles happen every day.</h3><p>美国人的宗教信仰。阿甘受的时非常典型的美国教育。</p>
+<h3 id="9、-Son-of-bitch"><a href="#9、-Son-of-bitch" class="headerlink" title="9、 Son-of-bitch."></a>9、 Son-of-bitch.</h3><p>狗娘养的、狗崽。骂起人来过瘾！</p>
+<h3 id="10、-Sure-as-hell-was"><a href="#10、-Sure-as-hell-was" class="headerlink" title="10、 Sure as hell was."></a>10、 Sure as hell was.</h3><p>绝对可信，铁板定钉了，敢以人格担保的可信，就是这种感觉。</p>
+<h3 id="11、-Ain’t-I-going-to-be-me"><a href="#11、-Ain’t-I-going-to-be-me" class="headerlink" title="11、 Ain’t I going to be me?"></a>11、 Ain’t I going to be me?</h3><p>我不能成为我自己么，真实的，本色的自我？</p>
+<h3 id="12、-Nobody-gives-a-horse’s-shit-who-you-are-puss-ball"><a href="#12、-Nobody-gives-a-horse’s-shit-who-you-are-puss-ball" class="headerlink" title="12、 Nobody gives a horse’s shit who you are,puss ball."></a>12、 Nobody gives a horse’s shit who you are,puss ball.</h3><p>没人在乎你是谁，女里女气的男人，明显的骂人的话。</p>
+<h3 id="13、-That-is-the-outstanding-answer-I’ve-ever-heard"><a href="#13、-That-is-the-outstanding-answer-I’ve-ever-heard" class="headerlink" title="13、 That is the outstanding answer I’ve ever heard."></a>13、 That is the outstanding answer I’ve ever heard.</h3><p>夸奖别人一定要把这句话挂在嘴上。</p>
+<h3 id="14、-Just-like-that-she-was-gone"><a href="#14、-Just-like-that-she-was-gone" class="headerlink" title="14、 Just like that ,she was gone."></a>14、 Just like that ,she was gone.</h3><p>就这样，她走了。阿甘一生最爱的人走了，不知该说什么，一切仅在不言之中，阿甘有一点点的心酸，有一点点的无奈。但是更多的一种感觉是：上帝的存在。</p>
+<h3 id="15、-I-do-not-know-much-about-it-but-I-think-some-of-America’s-best-young-men-served-in-this-war"><a href="#15、-I-do-not-know-much-about-it-but-I-think-some-of-America’s-best-young-men-served-in-this-war" class="headerlink" title="15、 I do not know much about it ,but I think some of America’s best young men served in this war."></a>15、 I do not know much about it ,but I think some of America’s best young men served in this war.</h3><p>阿甘对战争不了解，但他知道美国的新鲜血液都战死在越南的战场了。</p>
+<h3 id="16、-A-little-of-stinging-rain-and-big-old-fat-rain"><a href="#16、-A-little-of-stinging-rain-and-big-old-fat-rain" class="headerlink" title="16、 A little of stinging rain,and big old fat rain."></a>16、 A little of stinging rain,and big old fat rain.</h3><p>牛毛细雨，瓢泊大雨</p>
+<h3 id="17、-There-ain’t-something-you-can-find-just-around-the-corner"><a href="#17、-There-ain’t-something-you-can-find-just-around-the-corner" class="headerlink" title="17、 There ain’t something you can find just around the corner."></a>17、 There ain’t something you can find just around the corner.</h3><p>形容很不容易找到的东西。</p>
+<h3 id="18、-The-secret-to-this-game-is-no-matter-what-happens-never-ever-take-your-eye-off-the-ball"><a href="#18、-The-secret-to-this-game-is-no-matter-what-happens-never-ever-take-your-eye-off-the-ball" class="headerlink" title="18、 The secret to this game is ,no matter what happens ,never ,ever take your eye off the ball."></a>18、 The secret to this game is ,no matter what happens ,never ,ever take your eye off the ball.</h3><p>为了表达“永远”的口气，口语中要每句说得很清楚</p>
+<h3 id="19、-Nothing-just-happens-it’s-all-part-of-a-plan"><a href="#19、-Nothing-just-happens-it’s-all-part-of-a-plan" class="headerlink" title="19、 Nothing just happens,it’s all part of a plan."></a>19、 Nothing just happens,it’s all part of a plan.</h3><p>没有事情随随便便发生，都是计划的一部分。宿命论！</p>
+<h3 id="20、-army’s-value-loyalt-duty-respect-selfless-service-honor-ivtegrity-pessonal-courage"><a href="#20、-army’s-value-loyalt-duty-respect-selfless-service-honor-ivtegrity-pessonal-courage" class="headerlink" title="20、 army’s value=loyalt,duty, respect,selfless,service honor,ivtegrity,pessonal courage ."></a>20、 army’s value=loyalt,duty, respect,selfless,service honor,ivtegrity,pessonal courage .</h3><p>每个单词的首个字母连起来就是LDRSHIP=leadship.美国军人的七项素质。</p>
+<h3 id="21、-There-is-one-small-step-for-a-man-a-giant-leap-for-mankind"><a href="#21、-There-is-one-small-step-for-a-man-a-giant-leap-for-mankind" class="headerlink" title="21、 There is one small step for a man,a giant leap for mankind."></a>21、 There is one small step for a man,a giant leap for mankind.</h3><p>某人的一小步就是人类的一大步。</p>
+<h3 id="22、-A-promise-is-a-promise-made-a-promise-and-keep-a-promise"><a href="#22、-A-promise-is-a-promise-made-a-promise-and-keep-a-promise" class="headerlink" title="22、 A promise is a promise.(made a promise and keep a promise)."></a>22、 A promise is a promise.(made a promise and keep a promise).</h3><p>信守承诺。阿甘信守了承诺，最后也得到了最好的回报。</p>
+<h3 id="23、-I-am-a-man-of-my-word"><a href="#23、-I-am-a-man-of-my-word" class="headerlink" title="23、 I am a man of my word."></a>23、 I am a man of my word.</h3><p>我是信守我承诺的人。</p>
+<h3 id="24、-Where-the-hell-is-this-God-of-yours"><a href="#24、-Where-the-hell-is-this-God-of-yours" class="headerlink" title="24、 Where the hell is this God of yours?"></a>24、 Where the hell is this God of yours?</h3><p>他妈的你的上帝在哪里？</p>
+<h3 id="25、-There-is-only-so-much-of-fortune-a-man-really-neads-and-the-rest-is-just-for-showing-off"><a href="#25、-There-is-only-so-much-of-fortune-a-man-really-neads-and-the-rest-is-just-for-showing-off" class="headerlink" title="25、 There is only so much of fortune a man really neads and the rest is just for showing off."></a>25、 There is only so much of fortune a man really neads and the rest is just for showing off.</h3><p>一个人真正需要财富的就那么一点点，其余的都是用来炫耀的，正应了中国的古话：纵有广厦千间，夜眠三尺之地。</p>
+<h3 id="26、-You-got-to-go-when-you-got-to-go"><a href="#26、-You-got-to-go-when-you-got-to-go" class="headerlink" title="26、 You got to go when you got to go."></a>26、 You got to go when you got to go.</h3><p>不得不去洗手间的时候，不得不去。</p>
+<h3 id="27、-Shit-happens"><a href="#27、-Shit-happens" class="headerlink" title="27、 Shit happens!"></a>27、 Shit happens!</h3><p>不好的事情发生了。</p>
+<h3 id="28、-You-have-got-to-put-the-past-behinde-you-before-you-can-move-on"><a href="#28、-You-have-got-to-put-the-past-behinde-you-before-you-can-move-on" class="headerlink" title="28、 You have got to put the past behinde you before you can move on."></a>28、 You have got to put the past behinde you before you can move on.</h3><p>放下包袱，继续前进。</p>
+<h3 id="29、-It-was-like-just-before-the-sun-goes-to-bed-down-on-the-bayou-There-was-a-million-sparkles-on-the-river"><a href="#29、-It-was-like-just-before-the-sun-goes-to-bed-down-on-the-bayou-There-was-a-million-sparkles-on-the-river" class="headerlink" title="29、 It was like just before the sun goes to bed down on the bayou.There was a million sparkles on the river.."></a>29、 It was like just before the sun goes to bed down on the bayou.There was a million sparkles on the river..</h3><p>就像太阳在落山前映射在河口上，有无数的亮点在闪闪发光。</p>
+<h3 id="30、-If-there-is-anything-you-need-I-will-not-be-far-away"><a href="#30、-If-there-is-anything-you-need-I-will-not-be-far-away" class="headerlink" title="30、 If there is anything you need I will not be far away."></a>30、 If there is anything you need I will not be far away.</h3><p>用情至专！</p>
+<h3 id="31、-It’s-my-time-It’s-just-my-time-Oh-now-don’t-you-be-afraid-sweetheart-Death-is-just-a-part-of-life-something-we’re-all-destined-to-do-I-didn’t-know-it-But-I-was-destined-to-be-your-momma-I-did-the-best-I-could"><a href="#31、-It’s-my-time-It’s-just-my-time-Oh-now-don’t-you-be-afraid-sweetheart-Death-is-just-a-part-of-life-something-we’re-all-destined-to-do-I-didn’t-know-it-But-I-was-destined-to-be-your-momma-I-did-the-best-I-could" class="headerlink" title="31、 It’s my time. It’s just my time. Oh, now, don’t you be afraid sweetheart. Death is just a part of life, something we’re all destined to do. I didn’t know it. But I was destined to be your momma. I did the best I could."></a>31、 It’s my time. It’s just my time. Oh, now, don’t you be afraid sweetheart. Death is just a part of life, something we’re all destined to do. I didn’t know it. But I was destined to be your momma. I did the best I could.</h3><p>母亲:别害怕,死亡是生命的一部分,是我们注定要去做的一件事。我不知道怎么回事,但我注定是你的妈妈,并且我尽我的全力去做好</p>
+<h3 id="32、-I-want-to-reach-people-on-a-personal-level"><a href="#32、-I-want-to-reach-people-on-a-personal-level" class="headerlink" title="32、 I want to reach people on a personal level."></a>32、 I want to reach people on a personal level.</h3><p>我要打动人们的心灵。</p>
+<h3 id="33、-that’s-one-small-step-for-man-one-giant-leap-for-manking"><a href="#33、-that’s-one-small-step-for-man-one-giant-leap-for-manking" class="headerlink" title="33、 that’s one small step for man one giant leap for manking."></a>33、 that’s one small step for man one giant leap for manking.</h3><p>某人的一小步就是人类的一大步。</p>
+<h3 id="34、-I-dont-know-if-we-each-have-a-destiny-or-if-we’re-all-just-floating-around-accidental-like-on-a-breeze-but-I-think-may-be-it’s-both"><a href="#34、-I-dont-know-if-we-each-have-a-destiny-or-if-we’re-all-just-floating-around-accidental-like-on-a-breeze-but-I-think-may-be-it’s-both" class="headerlink" title="34、 I dont know if we each have a destiny ,or if we’re all just floating around accidental like on a breeze ,but I think may be it’s both."></a>34、 I dont know if we each have a destiny ,or if we’re all just floating around accidental like on a breeze ,but I think may be it’s both.</h3><p>我不知道我门每个人是否都有各自的命运，或者只是随意的在风中飘逝但我想或许那都是对的。</p>
+<h3 id="35、-Forrest-Hello-My-name’s-Forrest-Forrest-Gump-You-wanna-Chocolate-I-could-eat-about-a-million-and-a-half-o’these-My-momma-always-said-life-was-like-a-box-o’chocolates-You-never-know-what-you-are-gonna-get-Now-when-I-was-a-baby-momma-named-me-after-the-great-civil-war-hero-General-Nathan-Bedford-Forrest-She-said-we-were-related-to-him-in-some-way-What-he-did-was-he-started-up-this-club-called-the-Ku-Klux-Klan-They’d-all-dress-up-in-their-robes-and-their-bed-sheets-and-act-like-a-bunch-of-ghosts-or-spooks-or-something-They-‘d-even-put-bed-sheets-on-their-horses-and-ride-around-And-anyway-that’s-how-I-got-my-name-Forrest-Gump"><a href="#35、-Forrest-Hello-My-name’s-Forrest-Forrest-Gump-You-wanna-Chocolate-I-could-eat-about-a-million-and-a-half-o’these-My-momma-always-said-life-was-like-a-box-o’chocolates-You-never-know-what-you-are-gonna-get-Now-when-I-was-a-baby-momma-named-me-after-the-great-civil-war-hero-General-Nathan-Bedford-Forrest-She-said-we-were-related-to-him-in-some-way-What-he-did-was-he-started-up-this-club-called-the-Ku-Klux-Klan-They’d-all-dress-up-in-their-robes-and-their-bed-sheets-and-act-like-a-bunch-of-ghosts-or-spooks-or-something-They-‘d-even-put-bed-sheets-on-their-horses-and-ride-around-And-anyway-that’s-how-I-got-my-name-Forrest-Gump" class="headerlink" title="35、 Forrest: Hello! My name’s Forrest. Forrest Gump. You wanna Chocolate? I could eat about a million and a half o’these. My momma always said life was like a box o’chocolates. You never know what you are gonna get. Now, when I was a baby momma named me after the great civil war hero, General Nathan Bedford Forrest. She said we were related to him in some way. What he did was: he started up this club called the Ku Klux Klan. They’d all dress up in their robes and their bed sheets and act like a bunch of ghosts or spooks or something. They ‘d even put bed sheets on their horses and ride around. And anyway, that’s how I got my name: Forrest Gump."></a>35、 Forrest: Hello! My name’s Forrest. Forrest Gump. You wanna Chocolate? I could eat about a million and a half o’these. My momma always said life was like a box o’chocolates. You never know what you are gonna get. Now, when I was a baby momma named me after the great civil war hero, General Nathan Bedford Forrest. She said we were related to him in some way. What he did was: he started up this club called the Ku Klux Klan. They’d all dress up in their robes and their bed sheets and act like a bunch of ghosts or spooks or something. They ‘d even put bed sheets on their horses and ride around. And anyway, that’s how I got my name: Forrest Gump.</h3><p>阿甘：你好！我叫福雷斯特，福雷斯特·甘普。要巧克力吗?我可以吃很多很多。我妈常说：生命就像一盒巧克力, 结果往往出人意料。我出生的时候，妈妈用内战大英雄的名字给我命名，他叫内森·贝德福德·福雷斯特将军。她说我们在某方面跟他有点关系。他所做的是：搞了个帮派，叫三K党。他们穿着白袍披床单，装神弄鬼的，甚至还把床单罩在马上，骑着到处跑。总之，我就是这样叫福雷斯特·甘普了。</p>
+<h3 id="36、-Forrest-And-you-wouldn’t-believe-it-if-I-told-you-that-I-can-run-like-the-wind-blows-That-day-on-if-I-was-going-somewhere-I-was-running"><a href="#36、-Forrest-And-you-wouldn’t-believe-it-if-I-told-you-that-I-can-run-like-the-wind-blows-That-day-on-if-I-was-going-somewhere-I-was-running" class="headerlink" title="36、 Forrest: And you wouldn’t believe it if I told you that I can run like the wind blows ! That day on, if I was going somewhere , I was running."></a>36、 Forrest: And you wouldn’t believe it if I told you that I can run like the wind blows ! That day on, if I was going somewhere , I was running.</h3><p>阿甘：我说出来你也许不信，我可以跑得象风一样快！那天开始，如果我去什么地方，我都跑着去。</p>
+<h3 id="37、-If-God-intended-everybody-to-be-the-same-he’d-have-given-us-all-braces-on-our-legs"><a href="#37、-If-God-intended-everybody-to-be-the-same-he’d-have-given-us-all-braces-on-our-legs" class="headerlink" title="37、 If God intended everybody to be the same, he’d have given us all braces on our legs."></a>37、 If God intended everybody to be the same, he’d have given us all braces on our legs.</h3><p>如果上帝要让人人都一样的话，他会给每人一双脚撑。</p>
+<h3 id="38、-Jesus-loves-you-more-than-you-will-know。"><a href="#38、-Jesus-loves-you-more-than-you-will-know。" class="headerlink" title="38、 Jesus loves you more than you will know。"></a>38、 Jesus loves you more than you will know。</h3><p>“耶稣对你也特别垂青”</p>
+<h3 id="39、-You-said-it-all"><a href="#39、-You-said-it-all" class="headerlink" title="39、 You said it all."></a>39、 You said it all.</h3><p>你说得很好。</p>
+<h3 id="40、-I-paid-my-respect-to-Bubba-himself"><a href="#40、-I-paid-my-respect-to-Bubba-himself" class="headerlink" title="40、 I paid my respect to Bubba himself."></a>40、 I paid my respect to Bubba himself.</h3><p>我也去看望了布巴本人。</p>
+<h3 id="41、-When-I-got-tired-I-slept-When-I-got-hungry-I-ate-When-I-had-to-go-you-know-I-went"><a href="#41、-When-I-got-tired-I-slept-When-I-got-hungry-I-ate-When-I-had-to-go-you-know-I-went" class="headerlink" title="41、 When I got tired,I slept.When I got hungry,I ate.When I had to go,you know, I went."></a>41、 When I got tired,I slept.When I got hungry,I ate.When I had to go,you know, I went.</h3><p>当我累了，我就睡觉。当我饿了，我就吃饭。当我想去,你知道的， 我就去。<br>阿甘：妈妈是自成一派的，只有我能明白她的意思</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2014/%E9%98%BF%E7%94%98%E6%AD%A3%E4%BC%A0-%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%BD%95/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%94%B5%E5%BD%B1/">
+              #电影
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2014/MYSQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/" target="_self">MYSQL数据库优化方法</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2014/%E5%80%9F%E5%88%80%E6%9D%80%E4%BA%BA-%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%BD%95/" target="_self">借刀杀人-经典语录</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>面试题php | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="PHP,面试," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>面试题php</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2017-09-11
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/PHP/">
+            PHP
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="面试题PHP"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <?php
+$people = array("Bill", "Steve", "Mark", "David");
+echo current($people) . "<br>"; // 当前元素是 Bill
+echo next($people) . "<br>"; // Bill 的下一个元素是 Steve
+echo current($people) . "<br>"; // 现在当前元素是 Steve
+echo prev($people) . "<br>"; // Steve 的上一个元素是 Bill
+echo end($people) . "<br>"; // 最后一个元素是 David
+echo prev($people) . "<br>"; // David 之前的元素是 Mark
+echo current($people) . "<br>"; // 目前的当前元素是 Mark
+echo reset($people) . "<br>"; // 把内部指针移动到数组的首个元素，即 Bill
+echo next($people) . "<br>"; // Bill 的下一个元素是 Steve
+print_r (each($people)); // 返回当前元素的键名和键值（目前是 Steve），并向前移动内部指针
+?>
+
+
+
+<p>copy(document.cookie)<br><a target="_blank" rel="noopener" href="http://api.map.baidu.com/geocoder?output=json&amp;location=39.983424,116.322987&amp;key=CM61zagafiNyf67Ha3EsxETD">http://api.map.baidu.com/geocoder?output=json&amp;location=39.983424,116.322987&amp;key=CM61zagafiNyf67Ha3EsxETD</a></p>
+<p>##1.禁用COOKIE 后 SEESION 还能用吗?<br><code>php.ini 中 SESSION 的配置: //开启仅使用cookies存放会话id session.use_only_cookies = 1; //允许SessionID通过URL明文传输 session.use_trans_sid = 1;  在这种情况下虽然已经允许了SessionID通过URL明文传输，担是同时又开启了仅使用cookies存放会话SessionID，所以在URL中明文传输的PHPSESSIONID参数值是无效的，SESSION不能用。 // 禁止SessionID通过URL方式明文传输SESSION 不能用， 这是最这安全的做法，也是php.ini 的默认配置 session.use_trans_sid = 0; </code></p>
+<p>##2.抓取远程图片到本地,你会用什么函数?<br><code>$url = &quot;http://themes/image/logo.png&quot;; $file=file_get_contents($url); $fh=fopen( &#39;cacaca.jpg&#39;, &#39;w&#39;); fwrite($fh,$file); fclose($fh);</code></p>
+<p>##3.utf-8转换成gbk的函数是？<br><code>iconv(&quot;gbk&quot;,&quot;&quot;UTF-8,&quot;我们&quot;);  mb_convert_encoding($str, &quot;GBK&quot;, &quot;UTF-8&quot;)</code></p>
+<p>##4.分割字符串成数组的函数和连接数组成字符串的函分别有哪些？<br><code>explode() split() ; implode() join()</code></p>
+<p>##5.echo(),print(),print_r()的区别<br><code>echo是PHP语句, print和print_r是函数 语句没有返回值,函数可以有返回值(即便没有用) print只能打印出简单类型变量的值(如int,string) print_r可以打印出复杂类型变量的值(如数组,对象)</code></p>
+<p>##6.写一个函数，能够遍历一个文件夹下的所有文件和子文件夹<br>`/**</p>
+<ul>
+<li>遍历目录，结果存入数组。支持php4及以上。php5以后可用scandir()函数代替while循环。</li>
+<li>@param string $dir</li>
+<li>@return array</li>
+<li>/<br>function my_scandir($dir){<br>   $files = array();<br>   if ( $handle = opendir($dir) ) {<pre><code>   while ( ($file = readdir($handle)) !== false ) &#123;
+       if ( $file != “..” &amp;&amp; $file != “.” ) &#123;
+           if ( is_dir($dir . “/” . $file) ) &#123;
+           $files[$file] = rec_scandir($dir . “/” . $file);
+           &#125;else &#123;
+           $files[] = $file;
+           &#125;
+       &#125;
+   &#125;
+   closedir($handle);
+   return $files;</code></pre>
+   }<br>}`</li>
+</ul>
+<p>##7.语句include和require它们的区别是什么？如何避免同一文件被多次加载？<br><code>发生异常时include产生警告require产生致命错误 require_once()/include_once()</code></p>
+<p>##8.解析php中heredoc的使用方法<br>1.以&lt;&lt;&lt;开始标记开始，以End结束标记结束，结束标记必须顶头写，不能有缩进和空格，且在结束标记末尾要有分号 。开始标记和开始标记相同，比如常用大写的EOT、EOD、EOF来表示，但是不只限于那几个，只要保证开始标记和结束标记不在正文中出现即可。<br>2.位于开始标记和结束标记之间的变量可以被正常解析，但是函数则不可以。在heredoc中，变量不需要用连接符.或,来拼接，<br>3.heredoc常用在输出包含大量HTML语法d文档的时候。比如：函数outputhtml()要输出HTML的主页。可以有两种写法。很明显第二种写法比较简单和易于阅读。<br>结束标识符所在的行不能包含任何其它字符除”;”</p>
+<p>`&lt;?php<br>$name = ‘浅水游’;<br>print &lt;&lt;&lt;EOT</p>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Untitled Document</title>
+    </head>
+    <body>
+        Hello,$name!
+    </body>
+</html>
+EOT;
+?>`
+
+<p><code>$v=2; $a= &lt;&lt;&lt;EOF &quot;abc&quot;$v &quot;123&quot; EOF; echo $a; //结果连同双引号一起输出：&quot;abc&quot;2 &quot;123&quot;</code></p>
+<p><code>function outputhtml()&#123; echo &quot;&lt;html&gt;&quot;; echo &quot;&lt;head&gt;&lt;title&gt;主页&lt;/title&gt;&lt;/head&gt;&quot;; echo &quot;&lt;body&gt;主页内容&lt;/body&gt;&quot;; echo &quot;&lt;/html&gt;; &#125; function outputhtml()&#123; echo &lt;&lt;&lt;EOT    &lt;html&gt;    &lt;head&gt;&lt;title&gt;主页&lt;/title&gt;&lt;/head&gt;    &lt;body&gt;主页内容&lt;/body&gt;    &lt;/html&gt; EOT; &#125; outputhtml();</code></p>
+<p>##9.求两个日期的差数，例如2007-2-5 ~ 2007-3-6 的日期差数<br><code>$begin=strtotime(&#39;2007-2-5&#39;); $end=strtotime(&#39;2007-3-6&#39;); echo ($end-$begin)/(24*3600);</code></p>
+<p>##10.请简述数据库设计的范式及应用。<br>    一般第3范式就足以，用于表结构的优化，这样做既可以避免应用程序过于复杂同时也避免了SQL语句过于庞大所造成系统效率低下。<br>ANSWER：<br>    第一范式：若关系模式R的每一个属性是不可再分解的，再属于第一范式<br>    第二范式：若R属于第一范式，且所有的非码属性都完全函数依赖于码属性，则为第二范式。<br>    第三范式：若R属于第二范式，且所有的非码属性没有一个是传递函数依赖于候选码，则属于第三范式。</p>
+<p>##11.简述pOST 和GET传输的最大容量分别是多少?<br>    2MB,1024B</p>
+<p>##12.在开发过程中如果遇到技术问题或其他问题，你是如何进行解决的？<br><code>*理解和分析问题，找出问题的核心与关键所在 *对问题解决的具体方案提出假定和设想。先以假设的方式对问题进行推测、假定和设想问题的结论与问题解决的原则、途径、方法。 *检验假设是对假设进行验证的过程，它是问题解决的最后步骤。检验假设的方法有两种。一种是直接检验，即通过实验和实践活动来检验。 *总结问题，避免类似的问题再次出现</code></p>
+<p>##13.斐波那契数列的格式为:1,1,2,3,5,8…即当前数字为前两个数字之和<br><code>function feibonaqi($num)&#123;      $arr = array(); //定义一个空变量用来存放斐波那契数列的数组     for($i=1;$i&lt;=$num;$i++)&#123;         if($i == 1 || $i == 2)&#123;             $arr[$i-1] = 1;         &#125;else&#123;             $arr[$i-1] = $arr[$i-2] + $arr[$i-3];         &#125;     &#125;     return $arr; &#125;</code></p>
+<h2 id="13-smarty模板的特点"><a href="#13-smarty模板的特点" class="headerlink" title="13.smarty模板的特点"></a>13.smarty模板的特点</h2><p><code>速度快 编译型 缓存技术  插件机制 强大的表现逻辑 可以把模板缓存起来 </code></p>
+<h2 id="14-php-ini中safe-mode，影响哪些函数"><a href="#14-php-ini中safe-mode，影响哪些函数" class="headerlink" title="14.php.ini中safe_mode，影响哪些函数"></a>14.php.ini中safe_mode，影响哪些函数</h2><p>`* mysql的用户名必须与mysql_connection文件的拥有者用户名形同</p>
+<ul>
+<li>加强HTTP认证,启用模式下，不会设置php_auth</li>
+<li>fopen file require 文件的用户必须一致</li>
+<li>创建文件目录的用户</li>
+<li>addslashes  防止注入<br>`</li>
+</ul>
+<h2 id="14-抓取远程图片到本地，使用函数"><a href="#14-抓取远程图片到本地，使用函数" class="headerlink" title="14.抓取远程图片到本地，使用函数"></a>14.抓取远程图片到本地，使用函数</h2><p><code>file_get_contents   curl </code></p>
+<h2 id="15-PHP垃圾回收机制"><a href="#15-PHP垃圾回收机制" class="headerlink" title="15.PHP垃圾回收机制"></a>15.PHP垃圾回收机制</h2><p>`* 自动进行内存管理，清楚不在需要的对象，使用引用计数机制</p>
+<ul>
+<li>每个对象都内含一个引用计数器，每个引用连接到对象时，计数器加1</li>
+<li>当引用离开生存空间或设为null，计数器减1</li>
+<li>当某个对象的引用计数器为0时，释放其所占用的内存空间`</li>
+</ul>
+<h2 id="15-php多用户写入同一个文件"><a href="#15-php多用户写入同一个文件" class="headerlink" title="15.php多用户写入同一个文件"></a>15.php多用户写入同一个文件</h2><p><code>$fp=fopen(&#39;1.txt&#39;,&quot;w+&quot;); if(flock($fp,LOCK_EX))&#123;     fwrite($fp,&#39;hello world&#39;);     flock($fp,LOCK_UN); &#125;else&#123;     echo &quot;file is locking&quot;; &#125; fclose($fp);</code></p>
+<h2 id="16-从URL中取出-php结尾的名字"><a href="#16-从URL中取出-php结尾的名字" class="headerlink" title="16.从URL中取出.php结尾的名字"></a>16.从URL中取出.php结尾的名字</h2><p><code>function getExt($path)&#123;     $arr=parse_url($path);     $file=basename($arr[&#39;path&#39;]);     $ext=explode(&#39;.&#39;,$file);     return $ext[count($ext)-1]; &#125;</code></p>
+<h2 id="17-无限分类原理"><a href="#17-无限分类原理" class="headerlink" title="17.无限分类原理"></a>17.无限分类原理</h2><h2 id="18-MVC-http状态码"><a href="#18-MVC-http状态码" class="headerlink" title="18.MVC   http状态码"></a>18.MVC   http状态码</h2><p><code>模型发出要实现的功能到控制器，控制器接受组织功能传递到视图</code></p>
+<h2 id="19-GD库作用"><a href="#19-GD库作用" class="headerlink" title="19.GD库作用"></a>19.GD库作用</h2><p><code>处理图片的函数，可以处理图片，生成图片，略缩图，加水印，生成数据报表</code></p>
+<h2 id="20-页面跳转"><a href="#20-页面跳转" class="headerlink" title="20.页面跳转"></a>20.页面跳转</h2><p>`<br>header(“Location:网址”)  直接跳转<br>header(“refresh:3;url=网址”)  3秒后跳转</p>
+<meta http-equiv=refresh content='0;url=网址'>
+`
+
+<h2 id="21-验证电子邮件"><a href="#21-验证电子邮件" class="headerlink" title="21.验证电子邮件"></a>21.验证电子邮件</h2><p><code>preg_match(&#39;/^[\w\-\.]+@[\w\-]+(\.\w+)+$/&#39;,$email)</code></p>
+<h2 id="22-命令行运行php代码"><a href="#22-命令行运行php代码" class="headerlink" title="22.命令行运行php代码"></a>22.命令行运行php代码</h2><p><code>php -f 路径.php php -r phpinfo();</code></p>
+<h2 id="23-网站用utf-8编码-怎样防止乱码"><a href="#23-网站用utf-8编码-怎样防止乱码" class="headerlink" title="23.网站用utf-8编码,怎样防止乱码"></a>23.网站用utf-8编码,怎样防止乱码</h2><p>`* 数据库中 库和表都是用utf-8编码</p>
+<ul>
+<li>php链接mysql  mysql_query(‘set names utf8’) </li>
+<li><meta http-equiv="Content-type" content="text/html; charset=utf-8" ></li>
+<li>header(“content-type:text/html;charset=utf-8”)</li>
+<li>网站文件保存为utf-8`</li>
+</ul>
+<h2 id="24-date-gt-unix时间戳"><a href="#24-date-gt-unix时间戳" class="headerlink" title="24.date==&gt;unix时间戳"></a>24.date==&gt;unix时间戳</h2><p><code>date_default_timezone_set(&#39;PRC&#39;); strtotime($time);</code></p>
+<h2 id="25-GB2312-gt-UTF-8"><a href="#25-GB2312-gt-UTF-8" class="headerlink" title="25.GB2312===&gt;UTF-8"></a>25.GB2312===&gt;UTF-8</h2><p><code>iconv(&#39;GB2312&#39;,&#39;UTF-8&#39;,$cont)</code></p>
+<h2 id="26-原样输出用户输入内容，存入数据库前需要"><a href="#26-原样输出用户输入内容，存入数据库前需要" class="headerlink" title="26.原样输出用户输入内容，存入数据库前需要"></a>26.原样输出用户输入内容，存入数据库前需要</h2><p><code>htmlspecialchars   htmlentities</code></p>
+<h2 id="27-常用的php扩展"><a href="#27-常用的php扩展" class="headerlink" title="27.常用的php扩展"></a>27.常用的php扩展</h2><p><code>mb_string  iconv  curl socket mysql xml gd pdo</code></p>
+<h2 id="28-上传文件原理"><a href="#28-上传文件原理" class="headerlink" title="28.上传文件原理"></a>28.上传文件原理</h2><p><code>enctype=&#39;multipart/form-data&#39;   post &lt;input type=hidden name=&#39;max_file_size&#39; value=&#39;&#39;&gt; 上传文件的字节限制，可以被绕开 upload_max_filesize  post_max_size  memory_limit </code></p>
+<h2 id="29-函数调用过程，调试中，判断错误如何发生"><a href="#29-函数调用过程，调试中，判断错误如何发生" class="headerlink" title="29.函数调用过程，调试中，判断错误如何发生"></a>29.函数调用过程，调试中，判断错误如何发生</h2><p><code>debug_print_backtrace</code></p>
+<h2 id="30-smarty-如何获取php的全局环境变量"><a href="#30-smarty-如何获取php的全局环境变量" class="headerlink" title="30.smarty 如何获取php的全局环境变量"></a>30.smarty 如何获取php的全局环境变量</h2><p>`* $smarty.get   </p>
+<ul>
+<li>$smarty.post </li>
+<li>$smarty.request</li>
+<li>$smarty.cookie</li>
+<li>$smarty.session</li>
+<li>$smarty.env.PATH</li>
+<li>$smarty.server.SERVER_NAME`</li>
+</ul>
+<h2 id="31-设置COOKIE"><a href="#31-设置COOKIE" class="headerlink" title="31.设置COOKIE"></a>31.设置COOKIE</h2><p><code>setcookie(&#39;key&#39;,&#39;value&#39;,time()+7*24*3600)</code></p>
+<h2 id="32-七层网络模型的名称-由下到上"><a href="#32-七层网络模型的名称-由下到上" class="headerlink" title="32.七层网络模型的名称,由下到上"></a>32.七层网络模型的名称,由下到上</h2><p><code>物理层，数据链路层，网络层，传输层，会话层，表示层，应用层</code></p>
+<h2 id="33-简述-Tcp协议的三次握手过程"><a href="#33-简述-Tcp协议的三次握手过程" class="headerlink" title="33.简述 Tcp协议的三次握手过程"></a>33.简述 Tcp协议的三次握手过程</h2><p>`* TCP 是主机对主机层的传输控制协议,提供可靠的连接服务,采用三次握手确认建立一个连接:</p>
+<ul>
+<li>第一次握手:建立连接时,客户端发送 syn包(syn=j)到服务器,并进入 SYN_SEND 状态,等待服务器确认;</li>
+<li>第二次握手:服务器收到 syn 包,必须确认客户的SYN(ack=j+1),同时自己也发送一<br>个 SYN 包(syn=k),即 SYN+ACK 包,此时服务器进入SYN_RECV 状态; </li>
+<li>第三次握手:客户端收到服务器的 SYN+ACK包,向服务器发送确认包ACK(ack=k+1),<br>此包发送完毕,客户端和服务器进入 ESTABLISHED状态,完成三次握手。 </li>
+<li>完成三次握手,客户端与服务器开始传送数据。`</li>
+</ul>
+<h2 id="34"><a href="#34" class="headerlink" title="34."></a>34.</h2><p>ps：显示系统进程在瞬间的运行状态<br>find：指定目录下查找文件<br>df：磁盘空间占用情况<br>grep：过滤文本，搜索<br>we ：统计指定文件中的字节数、字数、行数<br>建立软连接的命令:ln -s 源文件 目标链接名<br>find:按照文件名查找,其目标是搜索磁盘中的文件名<br>grep:按照文件内容查找,其目标是搜索出现关键字的文件</p>
+<p>数据库查询,mysql 使用 EXPLAIN 分析查询,启用 slow query log 记录慢查询</p>
+<p>35.对于大流量的网站, 您采用什么样的方法来解决访问量问题<br><code>*服务器的性能 *优化数据库访问，页面静态化，缓存 *禁止外部链接 *控制大文件下载 *多台主机实现业务分流，集群 *采用分布式,多个 apache,多个 mysql,其实就是 dns 负载均衡, dns 根据当前用户解析几个ip的ping值,将用户转移到某一台最快的服务器,或者平均分配 </code></p>
+<h2 id="36-web-开发中的安全性问题"><a href="#36-web-开发中的安全性问题" class="headerlink" title="36.web 开发中的安全性问题"></a>36.web 开发中的安全性问题</h2><p>SQL注入<br>数据库操作权限<br>http请求的验证<br>表单来源，XSS</p>
+<h2 id="37-定时器"><a href="#37-定时器" class="headerlink" title="37.定时器"></a>37.定时器</h2><p><code>ignore_user_abort();  关掉浏览器 set_time_limit(0);    程序无限制 $interval=60*5;       每5分钟执行一次 do&#123;     sleep($interval); &#125;while(true);</code></p>
+<h2 id="38-redis-memcache区别"><a href="#38-redis-memcache区别" class="headerlink" title="38.redis memcache区别"></a>38.redis memcache区别</h2><p>redis 只是用单核  可以当队列<br>memcache 可以多核使用  分布式成熟<br>存储小数据r比m更快，100K以上数据 m快一点<br>kv结构，m内存利用率更高，如果r采用hash结构存储，由于其组合式的压缩，内存利用率更高<br>r有操作日志，可以进行数据恢复<br>r有持久化 数据同步  数据结构更丰富  应用场景广</p>
+<h2 id="39-smarty原理"><a href="#39-smarty原理" class="headerlink" title="39.smarty原理"></a>39.smarty原理</h2><p><code>tpl模板文件由php官方开发的 HYPERLINK &quot;http://smarty.php.net/&quot; smarty模板语言编写。 tpl文件第一次被hbcms系统调用后，将自动编译，并生成php文件，存储在template/system/compile目录里。 以后再次调用tpl文件，smarty系统会自动判断tpl文件是否被修改过，如果没有被修改，就不再重复编译，而是直接读取上一次编译好的php文件。</code></p>
+<ol>
+<li>魔术函数有哪些,分别在什么时候调用?<br>__construct()，类的构造函数<br>__destruct()，类的析构函数<br>__call()，在对象中调用一个不可访问方法时调用<br>__callStatic()，用静态方式中调用一个不可访问方法时调用<br>__get()，获得一个类的成员变量时调用<br>__set()，设置一个类的成员变量时调用<br>__isset()，当对不可访问属性调用isset()或empty()时调用<br>__unset()，当对不可访问属性调用unset()时被调用。<br>__sleep()，执行serialize()时，先会调用这个函数<br>__wakeup()，执行unserialize()时，先会调用这个函数<br>__toString()，类被当成字符串时的回应方法<br>__invoke()，调用函数的方式调用一个对象时的回应方法<br>__set_state()，调用var_export()导出类时，此静态方法会被调用。<br>__clone()，当对象复制完成时调用</li>
+</ol>
+<p>2.isset和empty函数有什么区别?</p>
+<p>PHP的isset()函数 一般用来检测变量是否设置<br>格式：bool isset ( mixed var [, mixed var [, …]] )</p>
+<p>功能：检测变量是否设置</p>
+<p>返回值：</p>
+<p>若变量不存在则返回 FALSE<br>若变量存在且其值为NULL，也返回 FALSE<br>若变量存在且值不为NULL，则返回 TURE<br>同时检查多个变量时，每个单项都符合上一条要求时才返回 TRUE，否则结果为 FALSE<br>版本：PHP 3, PHP 4, PHP 5<br>更多说明：<br>使用 unset() 释放变量之后，它将不再是 isset()。<br>PHP函数isset()只能用于变量，传递任何其它参数都将造成解析错误。<br>检测常量是否已设置可使用 defined() 函数。</p>
+<p>PHP的empty()函数 判断值为否为空</p>
+<p>格式：bool empty ( mixed var )</p>
+<p>功能：检查一个变量是否为空</p>
+<p>返回值：</p>
+<p>若变量不存在则返回 TRUE<br>若变量存在且其值为””、0、”0”、NULL、、FALSE、array()、var $var; 以及没有任何属性的对象，则返回 TURE<br>若变量存在且值不为””、0、”0”、NULL、、FALSE、array()、var $var; 以及没有任何属性的对象，则返回 FALSE<br>版本：PHP 3, PHP 4, PHP 5<br>更多说明：<br>empty()的返回值=!(boolean) var，但不会因为变量未定义而产生警告信息。参见转换为布尔值获取更多信息。<br>empty() 只能用于变量，传递任何其它参数都将造成Paser error而终止运行。<br>检测常量是否已设置可使用 defined() 函数。</p>
+<p>3.PHP的与定义变量有哪些,分别是什么?</p>
+<p>超全局变量 — 超全局变量是在全部作用域中始终可用的内置变量<br>$GLOBALS — 引用全局作用域中可用的全部变量<br>$_SERVER — 服务器和执行环境信息<br>$_GET — HTTP GET 变量<br>$_POST — HTTP POST 变量<br>$_FILES — HTTP 文件上传变量<br>$_REQUEST — HTTP Request 变量<br>$_SESSION — Session 变量<br>$_ENV — 环境变量<br>$_COOKIE — HTTP Cookies<br>$php_errormsg — 前一个错误信息<br>$HTTP_RAW_POST_DATA — 原生POST数据<br>$http_response_header — HTTP 响应头<br>$argc — 传递给脚本的参数数目</p>
+<p>PHP 中的许多预定义变量都是“超全局的”，这意味着它们在一个脚本的全部作用域中都可用。在函数或方法中无需执行 global $variable; 就可以访问它们。</p>
+<p>这些超全局变量是：</p>
+<p>$GLOBALS<br>$_SERVER<br>$_GET<br>$_POST<br>$_FILES<br>$_COOKIE<br>$_SESSION<br>$_REQUEST<br>$_ENV</p>
+<p>4.简述PHP的垃圾回收机制</p>
+<p>php 5.3之前使用的垃圾回收机制是单纯的“引用计数”，也就是每个内存对象都分配一个计数器，当内存对象被变量引用时，计数器+1；当变量引用撤掉后，计数器-1；当计数器=0时，表明内存对象没有被使用，该内存对象则进行销毁，垃圾回收完成。</p>
+<p>“引用计数”存在问题，就是当两个或多个对象互相引用形成环状后，内存对象的计数器则不会消减为0；这时候，这一组内存对象已经没用了，但是不能回收，从而导致内存泄露；</p>
+<p>php5.3开始，使用了新的垃圾回收机制，在引用计数基础上，实现了一种复杂的算法，来检测内存对象中引用环的存在，以避免内存泄露。</p>
+<p>php变量存在一个叫”zval”的变量容器中,”zval”变量容器包括含变量的类型和值，还包括额外的两个字节信息，分别是“is_ref”表示变量是否属于引用，“refcount”指向这个zval变量容器的变量个数。</p>
+<p>5.列举PHP的性能优化方法和技巧</p>
+<p>opcache<br>通讯缓存<br>查询缓存</p>
+<p>6.MySQL存储引擎中,innodb和myisam的区别</p>
+<p>MyISAM 和 InnoDB 讲解</p>
+<p>InnoDB和MyISAM是许多人在使用MySQL时最常用的两个表类型，这两个表类型各有优劣，视具体应用而定。基本的差别为：MyISAM类型不支持事务处理等高级处理，而InnoDB类型支持。MyISAM类型的表强调的是性能，其执行数度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供事务支持已经外部键等高级数据库功能。</p>
+<p>以下是一些细节和具体实现的差别：</p>
+<p>◆1.InnoDB不支持FULLTEXT类型的索引。</p>
+<p>◆2.InnoDB 中不保存表的具体行数，也就是说，执行select count(<em>) from table时，InnoDB要扫描一遍整个表来计算有多少行，但是MyISAM只要简单的读出保存好的行数即可。注意的是，当count(</em>)语句包含 where条件时，两种表的操作是一样的。</p>
+<p>◆3.对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引。</p>
+<p>◆4.DELETE FROM table时，InnoDB不会重新建立表，而是一行一行的删除。</p>
+<p>◆5.LOAD TABLE FROM MASTER操作对InnoDB是不起作用的，解决方法是首先把InnoDB表改成MyISAM表，导入数据后再改成InnoDB表，但是对于使用的额外的InnoDB特性(例如外键)的表不适用。</p>
+<p>另外，InnoDB表的行锁也不是绝对的，假如在执行一个SQL语句时MySQL不能确定要扫描的范围，InnoDB表同样会锁全表，例如update table set num=1 where name like “%aaa%”</p>
+<p>两种类型最主要的差别就是Innodb 支持事务处理与外键和行级锁.而MyISAM不支持.所以MyISAM往往就容易被人认为只适合在小项目中使用。</p>
+<p>我作为使用MySQL的用户角度出发，Innodb和MyISAM都是比较喜欢的，但是从我目前运维的数据库平台要达到需求：99.9%的稳定性，方便的扩展性和高可用性来说的话，MyISAM绝对是我的首选。</p>
+<p>原因如下：</p>
+<p>1、首先我目前平台上承载的大部分项目是读多写少的项目，而MyISAM的读性能是比Innodb强不少的。</p>
+<p>2、MyISAM的索引和数据是分开的，并且索引是有压缩的，内存使用率就对应提高了不少。能加载更多索引，而Innodb是索引和数据是紧密捆绑的，没有使用压缩从而会造成Innodb比MyISAM体积庞大不小。</p>
+<p>3、从平台角度来说，经常隔1，2个月就会发生应用开发人员不小心update一个表where写的范围不对，导致这个表没法正常用了，这个时候MyISAM的优越性就体现出来了，随便从当天拷贝的压缩包取出对应表的文件，随便放到一个数据库目录下，然后dump成sql再导回到主库，并把对应的binlog补上。如果是Innodb，恐怕不可能有这么快速度，别和我说让Innodb定期用导出xxx.sql机制备份，因为我平台上最小的一个数据库实例的数据量基本都是几十G大小。</p>
+<p>4、从我接触的应用逻辑来说，select count(*) 和order by 是最频繁的，大概能占了整个sql总语句的60%以上的操作，而这种操作Innodb其实也是会锁表的，很多人以为Innodb是行级锁，那个只是where对它主键是有效，非主键的都会锁全表的。</p>
+<p>5、还有就是经常有很多应用部门需要我给他们定期某些表的数据，MyISAM的话很方便，只要发给他们对应那表的frm.MYD,MYI的文件，让他们自己在对应版本的数据库启动就行，而Innodb就需要导出xxx.sql了，因为光给别人文件，受字典数据文件的影响，对方是无法使用的。</p>
+<p>6、如果和MyISAM比insert写操作的话，Innodb还达不到MyISAM的写性能，如果是针对基于索引的update操作，虽然MyISAM可能会逊色Innodb,但是那么高并发的写，从库能否追的上也是一个问题，还不如通过多实例分库分表架构来解决。</p>
+<p>7、如果是用MyISAM的话，merge引擎可以大大加快应用部门的开发速度，他们只要对这个merge表做一些select count(*)操作，非常适合大项目总量约几亿的rows某一类型(如日志，调查统计)的业务表。</p>
+<p>当然Innodb也不是绝对不用，用事务的项目如模拟炒股项目，我就是用Innodb的，活跃用户20多万时候，也是很轻松应付了，因此我个人也是很喜欢Innodb的，只是如果从数据库平台应用出发，我还是会首选MyISAM。</p>
+<p>另外，可能有人会说你MyISAM无法抗太多写操作，但是我可以通过架构来弥补，说个我现有用的数据库平台容量：主从数据总量在几百T以上，每天十多亿 pv的动态页面，还有几个大项目是通过数据接口方式调用未算进pv总数，(其中包括一个大项目因为初期memcached没部署,导致单台数据库每天处理 9千万的查询)。而我的整体数据库服务器平均负载都在0.5-1左右。</p>
+<p>7.Mysql的存储类型有哪几种?什么是聚簇索引非聚簇索引?</p>
+<p>1、B+树索引(O(log(n)))：关于B+树索引，可以参考 MySQL索引背后的数据结构及算法原理</p>
+<p>2、hash索引：<br>a 仅仅能满足”=”,”IN”和”&lt;=&gt;”查询，不能使用范围查询<br>b 其检索效率非常高，索引的检索可以一次定位，不像B-Tree 索引需要从根节点到枝节点，最后才能访问到页节点这样多次的IO访问，所以 Hash 索引的查询效率要远高于 B-Tree 索引<br>c 只有Memory存储引擎显示支持hash索引</p>
+<p>3、FULLTEXT索引（现在MyISAM和InnoDB引擎都支持了）</p>
+<p>4、R-Tree索引（用于对GIS数据类型创建SPATIAL索引）</p>
+<p>从物理存储角度</p>
+<p>1、聚集索引（clustered index）</p>
+<p>2、非聚集索引（non-clustered index）</p>
+<p>从逻辑角度</p>
+<p>1、主键索引：主键索引是一种特殊的唯一索引，不允许有空值</p>
+<p>2、普通索引或者单列索引</p>
+<p>3、多列索引（复合索引）：复合索引指多个字段上创建的索引，只有在查询条件中使用了创建索引时的第一个字段，索引才会被使用。使用复合索引时遵循最左前缀集合</p>
+<p>4、唯一索引或者非唯一索引</p>
+<p>5、空间索引：空间索引是对空间数据类型的字段建立的索引，MYSQL中的空间数据类型有4种，分别是GEOMETRY、POINT、LINESTRING、POLYGON。MYSQL使用SPATIAL关键字进行扩展，使得能够用于创建正规索引类型的语法创建空间索引。创建空间索引的列，必须将其声明为NOT NULL，空间索引只能在存储引擎为MYISAM的表中创建</p>
+<p>CREATE TABLE table_name[col_name data type]<br>[unique|fulltext|spatial][index|key]<a href="col_name%5Blength%5D">index_name</a>[asc|desc]<br>1、unique|fulltext|spatial为可选参数，分别表示唯一索引、全文索引和空间索引；</p>
+<p>2、index和key为同义词，两者作用相同，用来指定创建索引</p>
+<p>3、col_name为需要创建索引的字段列，该列必须从数据表中该定义的多个列中选择；</p>
+<p>4、index_name指定索引的名称，为可选参数，如果不指定，MYSQL默认col_name为索引值；</p>
+<p>5、length为可选参数，表示索引的长度，只有字符串类型的字段才能指定索引长度；</p>
+<p>6、asc或desc指定升序或降序的索引值存储</p>
+<p>8.Memcache和Redis的过期机制是什么?什么是一致性哈希?</p>
+<p>数据存储方式：Slab Allocation</p>
+<p>数据过期方式：Lazy Expiration + LRU</p>
+<p>Slab Allocator的基本原理是按照预先规定的大小，将分配的内存分割成特定长度的块，以完全解决内存碎片问题。</p>
+<p>Slab Allocation的原理相当简单。 将分配的内存分割成各种尺寸的块（chuk），并把尺寸相同的块分成组（chunk的集合）</p>
+<p>Page：分配给Slab的内存空间，默认是1MB。分配给Slab之后根据slab的大小切分成chunk。</p>
+<p>Chunk：用于缓存记录的内存空间。</p>
+<p>Slab Class：特定大小的chunk的组。</p>
+<p>memcached根据收到的数据的大小，选择最适合数据大小的slab。</p>
+<p>memcached中保存着slab内空闲chunk的列表，根据该列表选择chunk，然后将数据缓存于其中。</p>
+<p>Slab Alloction 缺点</p>
+<p>这个问题就是，由于分配的是特定长度的内存，因此无法有效利用分配的内存。例如，将100字节的数据缓存到128字节的chunk中，剩余的28字节就浪费了。</p>
+<p>数据过期方式</p>
+<p>Lazy Expiration</p>
+<p>memcached内部不会监视记录是否过期，而是在get时查看记录的时间戳，检查记录是否过期。这种技术被称为lazy（惰性）expiration。因此，memcached不会在过期监视上耗费CPU时间</p>
+<p>LRU</p>
+<p>memcached会优先使用已超时的记录的空间，但即使如此，也会发生追加新记录时空间不足的情况，此时就要使用名为 Least Recently Used（LRU）机制来分配空间。这是删除“最近最少使用”的记录的机制。因此，当memcached的内存空间不足时（无法从slab class 获取到新的空间时），就从最近未被使用的记录中搜索，并将其空间分配给新的记录</p>
+<p>大家常常说 memcached命中率低也是LRU策略引起的。大家可能常常遇到当我的内存足够大的时候，为何还会触发LRU那。因为LRU 是针对SLAB 来说的。</p>
+<p>例如：我存储的数据在100K 左右。内部会选择适合大小的SLAB，这时候他会选择合适他大小的，他会选择上图的SLBA CLASS 2. 如果这时候SLAB CLASS 2 满了或者不足100K。他就会调用LRU机制。会把SLAB CLASS 2 中chunck中最近很少使用的数据清理掉，导致数据被清理掉，即使它没有过期。</p>
+<p>所以使用memcached 时候 一定要注意数据大小匹配模式和增长因子。</p>
+<p>REDIS 过期时间机制</p>
+<p>1.volatile-lru:从设置了过期时间的数据集中，选择最近最久未使用的数据释放</p>
+<p>2.allkeys-lru:从数据集中(包括设置过期时间以及未设置过期时间的数据集中)，选择最近最久未使用的数据释放</p>
+<p>3.volatile-random:从设置了过期时间的数据集中，随机选择一个数据进行释放</p>
+<p>4.allkeys-random:从数据集中(包括了设置过期时间以及未设置过期时间)随机选择一个数据进行入释放</p>
+<p>5.volatile-ttl：从设置了过期时间的数据集中，选择马上就要过期的数据进行释放操作</p>
+<p>6.noeviction：不删除任意数据(但redis还会根据引用计数器进行释放呦~),这时如果内存不够时，会直接返回错误</p>
+<p>默认的内存策略是noeviction，在Redis中LRU算法是一个近似算法，默认情况下，Redis随机挑选5个键，并且从中选取一个最近最久未使用的key进行淘汰，在配置文件中可以通过maxmemory-samples的值来设置redis需要检查key的个数,但是检查的越多，耗费的时间也就越久,但是结构越精确(也就是Redis从内存中淘汰的对象未使用的时间也就越久~), 设置多少，具体业务权衡吧一般都是按照默认。</p>
+<p>REDIS 还有定期策略，定期删除过期的缓存数据，来节省内存。这种方式还是蛮好的。这种策略优先于LRU。</p>
+<p>目前对比MEMCACHED 和REDIS 过期时间机制对比。</p>
+<p>REDIS 命中率明显高于MEMCACHED，对于业务适合哪种场景，大家各自匹配吧！目前来说 我认为REDIS 是 MEMCACHED 补充的一款NOSQL 产品。</p>
+<p>一致性哈希,一种分布式节点key分布算法,可选;</p>
+<p>9.MySQL索引底层数据结构是怎样存储的,为什么使用索引会查询的快?</p>
+<p>数据结构及算法基础</p>
+<p>索引的本质</p>
+<p>B-Tree和B+Tree</p>
+<p>特殊的存储结构,寻道成本低;</p>
+<p>MySQL索引实现</p>
+<p>MyISAM索引实现<br>非聚簇索引</p>
+<p>InnoDB索引实现<br>聚簇索引</p>
+<p>第一个重大区别是InnoDB的数据文件本身就是索引文件。</p>
+<p>第二个与MyISAM索引的不同是InnoDB的辅助索引data域存储相应记录主键的值而不是地址。</p>
+<p>聚集索引这种实现方式使得按主键的搜索十分高效，但是辅助索引搜索需要检索两遍索引：首先检索辅助索引获得主键，然后用主键到主索引中检索获得记录。</p>
+<p>10.优化mysql的方法</p>
+<p>避免复查查询<br>避免模糊查询<br>避免数据库内运算<br>避免大量吞吐</p>
+<p>尽可能缩小检索范围<br>尽可能使用索引,唯一或者接近唯一的索引<br>联查中尽量使用const字段</p>
+<p>11.find 和 grep的区别</p>
+<p>find是查找文件<br>grep是查找文件内的内容</p>
+<p>12.写出下列的服务的用途和默认端口</p>
+<p>FTP： | 21/tcp | 依照FTP协议提供服务,专门用来传输文件的协议。<br>SSH: | 22/tcp | 专为远程登录会话和其他网络服务提供安全性的协议。利用 SSH 协议可以有效防止远程管理过程中的信息泄露问题。<br>HTTP: | 80/tcp | 是互联网上应用最为广泛的一种网络协议。所有的WWW文件都必须遵守这个标准。<br>telnet:| 23/tcp | Telnet协议是TCP/IP协议族中的一员，是Internet远程登陆服务的标准协议和主要方式,它为用户提供了在本地计算机上完成远程主机工作的能力<br>https：| 443/tcp 443/udp | 是以安全为目标的HTTP通道，简单讲是HTTP的安全版。即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL</p>
+<p>13.给text.txt文件除所有者之外增加执行权限,最终以数字写出文件权限</p>
+<p>chmod g+x,o+x text.txt</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2017/%E9%9D%A2%E8%AF%95%E9%A2%98PHP/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E9%9D%A2%E8%AF%95/">
+              #面试
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2017/4%E7%A7%8D%E6%8E%92%E5%BA%8F/" target="_self">PHP4种排序</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2017/PHP-Xdebug/" target="_self">PHP-Xdebug</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

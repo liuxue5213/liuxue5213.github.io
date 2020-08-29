@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>开发规范 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="笔记,笔记," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>开发规范</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2016-09-29
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%AC%94%E8%AE%B0/">
+            笔记
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="开发规范"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h1 id="PHP开发手册"><a href="#PHP开发手册" class="headerlink" title="PHP开发手册"></a>PHP开发手册</h1><ul>
+<li><a href="#%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83">开发环境</a></li>
+<li><a href="#Composer">PHP库安装工具Composer</a></li>
+<li><a href="#IDE">IDE</a></li>
+<li><a href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6">版本控制</a></li>
+<li><a href="#%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83">编码规范</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E6%8A%80%E8%83%BD">使用技能</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%B7%A5%E5%85%B7">使用工具</a></li>
+</ul>
+<h2 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h2><p>开发环境使用windows系统，集成的开发环境使用xampp <a target="_blank" rel="noopener" href="http://192.168.1.36:82/download/xampp-win32-1.8.3-3-VC11-installer.exe">点此下载</a></p>
+<h2 id="Composer"><a href="#Composer" class="headerlink" title="Composer"></a>Composer</h2><p><a target="_blank" rel="noopener" href="http://www.phpcomposer.com/">Composer</a> 是php的库安装工具，<a target="_blank" rel="noopener" href="https://getcomposer.org/Composer-Setup.exe">下载地址</a>，下载后点击安装即可</p>
+<h2 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h2><p>开发的编辑器使用PHPstorm（使用7.1版本，8以上版本需要购买授权）<a target="_blank" rel="noopener" href="http://192.168.1.36:82/download/PhpStorm-7.1.exe">点此下载</a>，PHPstorm的配置 <a target="_blank" rel="noopener" href="http://192.168.1.36:82/download/phpstorm-settings.jar">点此下载</a>，导入该配置<br>注册码：</p>
+<pre><code>EMBRACE
+
+===== LICENSE BEGIN =====
+43136-12042010
+00002UsvSON704l&quot;dILe1PVx3y4&quot;B3
+49AU6oSDJrsjE8nMOQh&quot;8HTDJHIUUh
+gd1BebYc5U&quot;6OxDbVsALB4Eb10PW8&quot;
+===== LICENSE END =====</code></pre>
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>需要安装的plugins如下：</p>
+<ol>
+<li>Symfony2 plugin</li>
+<li>PHP composer.json support</li>
+<li>Markdown</li>
+<li>Symfony2 - Clickable Views</li>
+<li>Twig Support</li>
+<li>YAML</li>
+</ol>
+<h3 id="php-codesniffer配置（代码规范提示）"><a href="#php-codesniffer配置（代码规范提示）" class="headerlink" title="php_codesniffer配置（代码规范提示）"></a>php_codesniffer配置（代码规范提示）</h3><p>打开CMD，进入到需要安装PHP_CodeSniffer的目录，例如E:\xampp\php\phar（可以是任意目录，但是最好选择一个固定的目录，用于安装php的第三方的库文件），执行如下命令</p>
+<pre><code>composer require &quot;squizlabs/php_codesniffer=*&quot;</code></pre>
+<p>该命令会在当前目录下生成vendor目录、composer.json文件、composer.lock文件，安装的库文件在vendor目录下，</p>
+<p>然后下载 <a target="_blank" rel="noopener" href="http://192.168.1.36:82/download/Symfony2.zip">symfony2</a>的标准文件到<code>E:\xampp\php\phar\vendor\squizlabs\php_codesniffer\CodeSniffer\Standards</code>目录下解压</p>
+<p>然后在PHPstorm的settings中搜索sniffer，找到路径配置，将路径设置为<code>E:\xampp\php\phar\vendor\bin\phpcs.bat</code>，点击[Validate]，</p>
+<p>如果提示版本信息则说明配置正确</p>
+<p>在inspections中找到PHP_CodeSniffer validation，将编码规范配置为symfony2即可</p>
+<h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><p>版本控制使用git，在windows下的客户端使用Tortoisegit，安装Tortoisegit之前先安装 <a target="_blank" rel="noopener" href="http://192.168.1.36:82/download/Git-1.9.5-preview20150319.exe">Git for windows</a> ，</p>
+<p>安装完成后安装Tortoisegit <a target="_blank" rel="noopener" href="http://192.168.1.36:82/download/TortoiseGit-1.8.14.0-64bit.msi">点此下载</a>，然后再安装 <a target="_blank" rel="noopener" href="http://192.168.1.36:82/download/TortoiseGit-LanguagePack-1.8.14.0-64bit-zh_CN.msi">中文语言包</a>，</p>
+<p>服务器端使用gitlab，访问地址为<a target="_blank" rel="noopener" href="http://git.wintels.cn/">http://git.wintels.cn</a>，每个人都分配单独的账号登陆，工作流程如下：</p>
+<ol>
+<li>项目经理创建项目的版本库</li>
+<li>fork项目经理创建的版本库到自己的名下</li>
+<li>将自己名下的版本库clone到本地开发环境</li>
+<li>开发完成后先提交到本地，然后推送到自己名下的版本库中</li>
+<li>在自己名下的版本库中创建Merge Requests请求合并到项目经理的版本库对应的分支</li>
+<li>项目经理review代码后选择合并或关闭合并请求</li>
+<li>重复步骤4-6</li>
+</ol>
+<h2 id="编码规范"><a href="#编码规范" class="headerlink" title="编码规范"></a>编码规范</h2><p>该规范只适合于symfony框架，原CI框架可不按照此规范</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>该规范采用自symfony编码规范，该规范在 <a target="_blank" rel="noopener" href="http://www.php-fig.org/psr/psr-1/">PSR-1</a>和 <a target="_blank" rel="noopener" href="http://www.php-fig.org/psr/psr-2/">PSR-2</a> 基础之上，先仔细查看这两个规范，然后再查看如下规范</p>
+<pre><code>&lt;?php
+
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier &lt;fabien@symfony.com&gt;
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Acme;
+
+/**
+ * Coding standards demonstration.
+ */
+class FooBar
+&#123;
+    const SOME_CONST = 42;
+
+    private $fooBar;
+
+    /**
+     * @param string $dummy Some argument description
+     */
+    public function __construct($dummy)
+    &#123;
+        $this-&gt;fooBar = $this-&gt;transformText($dummy);
+    &#125;
+
+    /**
+     * Transform text（说明函数的用途）
+     *（说明和参数之间必须空一行）
+     * @param string $dummy   Some argument description
+     * @param array  $options Some options（参数说明，每个参数都需要说明类型和用途，且多个参数的名称和说明都需要上下对齐）
+     *（参数和@return之间必须空一行）
+     * @return string|null Transformed input（返回值说明）
+     *（@throws和@return之间也必须空一行）
+     * @throws \RuntimeException（抛出异常说明）
+     */
+    private function transformText($dummy, array $options = array())
+    &#123;
+        $mergedOptions = array_merge(
+            array(
+                &#39;some_default&#39; =&gt; &#39;values&#39;,
+                &#39;another_default&#39; =&gt; &#39;more values&#39;,（array中的每个元素后面必须包含逗号，最后一个元素也不例外）
+            ),
+            $options
+        );
+
+        if (true === $dummy) &#123;
+            return;（语句块中如果只有一个return语句则不需要空行）
+        &#125;
+        （多个if等语句块之间最好加空格）
+        if (&#39;string&#39; === $dummy) &#123;
+            if (&#39;values&#39; === $mergedOptions[&#39;some_default&#39;]) &#123;
+                return substr($dummy, 0, 5);
+            &#125;
+
+            return ucwords($dummy);（语句块中存在其他语句的情况下，return之前必须要有一个空行）
+        &#125;
+            （空一行）
+        throw new \RuntimeException(sprintf(&#39;Unrecognized dummy option &quot;%s&quot;&#39;, $dummy));
+    &#125;
+
+    private function reverseBoolean($value = null, $theSwitch = false)
+    &#123;
+        if (!$theSwitch) &#123;
+            return;
+        &#125;
+
+        return !$value;
+    &#125;
+&#125;</code></pre>
+<h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><ul>
+<li>每个逗号后面添加一个<em>空格</em></li>
+<li>操作符（==,&amp;&amp;,…）等两边各添加一个<em>空格</em>，操作符（.）除外</li>
+<li>一元操作符（！，–，。。。）等跟变量之间不加<em>空格</em>，如!$num</li>
+<li>多行数组的每个变量的后面添加一个<em>空格</em>，包括最后一个元素</li>
+<li>return语句上面添加一个<em>空行</em>，除了只有return语句的语句块</li>
+<li>语句块结构必须包含在{}中，不管该语句块结构中包含多少行语句</li>
+<li>每个文件只定义个class</li>
+<li>class中的属性定义在方法前面</li>
+<li>class中方法的定义顺序为public，protected，private</li>
+<li>实例化class时，不管构造函数有多少个参数，都加上花括号()</li>
+<li>异常信息的输出使用sprintf函数来格式化</li>
+</ul>
+<h3 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h3><ul>
+<li>所有的变量、方法、函数、参数名字都以“骆驼命名”方式命名，不使用下划线的方式</li>
+<li>除上面外的数组的下标名、静态变量名（大写）、配置参数等以下划线的方式命名</li>
+<li>所有的class都定义在namespace下</li>
+<li>抽象类命名都以Abstract开头</li>
+<li>接口命名以Interface结尾</li>
+<li>异常类命名以Exception结尾</li>
+<li>对文件名使用字母数字字符以及下划线</li>
+<li>PHPDocs中的变量的类型使用：bool布尔类型、int整数类型、float浮点数类型、array数组类型、stdClass对象类型，如果是某个确定的类的对象，则使用确定的类</li>
+<li>其他的参考PSR-1和PSR-2</li>
+</ul>
+<h3 id="Service名字命名规范"><a href="#Service名字命名规范" class="headerlink" title="Service名字命名规范"></a>Service名字命名规范</h3><ul>
+<li>service名字使用bundle的名字开头，用于分组使用，如icsoc_menu.list</li>
+<li>service名字使用小写字符</li>
+<li>service名字使用下划线分隔</li>
+</ul>
+<h3 id="PHP注释规范"><a href="#PHP注释规范" class="headerlink" title="PHP注释规范"></a>PHP注释规范</h3><ul>
+<li>所有的类、方法、函数都添加PHPDocs，PHPstorm中添加的方法为输入/**后直接按回车会自动生成类、方法的注释</li>
+<li>如果方法没有返回值，则在注释中去掉@return项</li>
+<li>方法注释中所有的参数都需要加上类型和备注说明，具体看上面例子</li>
+<li>方法注释中备注说明必须在最上面（如果是一看就能明白的函数可以不加备注说明，比如构造函数），然后下面空一行，再是参数的说明，@return上添加一个空行</li>
+</ul>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>PHPstorm中添加code_sniffer作为编码规范的自动提示，且将提示设置为Symfony2</li>
+</ul>
+<h2 id="使用技能"><a href="#使用技能" class="headerlink" title="使用技能"></a>使用技能</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://php.net/">PHP</a></li>
+<li>javascript</li>
+<li><a target="_blank" rel="noopener" href="http://jquery.com/">jQuery</a></li>
+<li>css</li>
+<li>html</li>
+<li><a target="_blank" rel="noopener" href="http://www.bootcss.com/">bootstrap</a></li>
+<li><a target="_blank" rel="noopener" href="http://jeasyui.com/">easyui</a></li>
+<li><a target="_blank" rel="noopener" href="http://symfony.com/">symfony</a></li>
+<li><a target="_blank" rel="noopener" href="http://codeigniter.org.cn/user_guide/toc.html">codeigniter</a></li>
+<li>linux</li>
+</ol>
+<h2 id="使用工具"><a href="#使用工具" class="headerlink" title="使用工具"></a>使用工具</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://192.168.1.36:82/download/Notepad_6.5.5.exe">Notepad++</a>：文本编辑器</li>
+<li><a target="_blank" rel="noopener" href="http://192.168.1.36:82/download/winscp_5.5.3.exe">Winscp</a>：sftp连接工具，用于连接Linux服务器</li>
+<li><a target="_blank" rel="noopener" href="http://192.168.1.36:82/download/putty-0.63-installer.exe">putty</a>：ssh连接工具，用于连接Linux服务器，使用命令行模式</li>
+<li><a target="_blank" rel="noopener" href="https://tower.im/">tower</a>：用于项目任务的分配、周报的编写</li>
+<li><a target="_blank" rel="noopener" href="http://192.168.1.36:82/download/markdownpad2-setup.exe">MarkdownPad</a>：markdown编辑器，<a target="_blank" rel="noopener" href="http://192.168.1.36:82/download/markdownpad2%e6%b3%a8%e5%86%8c.txt">注册码</a>，我们一律使用markdown格式编写各种文档，<a target="_blank" rel="noopener" href="http://wowubuntu.com/markdown/">格式说明</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.firefox.com.cn/">Firefox</a>：浏览器，必须安装firebug插件用于调试系统</li>
+<li>chrome：浏览器</li>
+</ol>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2016/%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%AC%94%E8%AE%B0/">
+              #笔记
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2016/PHP%E8%AE%A1%E7%AE%97%E9%A1%B5%E9%9D%A2%E6%89%A7%E8%A1%8C%E6%97%B6%E9%97%B4/" target="_self">PHP计算页面执行时间</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2016/US0P-2009/" target="_self">US0P-2009</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

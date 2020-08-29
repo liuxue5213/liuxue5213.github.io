@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>压缩格式区别 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="笔记,笔记," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>压缩格式区别</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2018-03-16
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%AC%94%E8%AE%B0/">
+            笔记
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="压缩格式区别"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h3 id="PHP解压缩"><a href="#PHP解压缩" class="headerlink" title="PHP解压缩"></a>PHP解压缩</h3><p>PHP ZipArchive是PHP自带的扩展类，可以轻松实现ZIP文件的压缩和解压，使用前首先要确保PHP ZIP 扩展已经开启</p>
+<h4 id="解压缩文件"><a href="#解压缩文件" class="headerlink" title="解压缩文件"></a>解压缩文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*</span><br><span class="line">通过ZipArchive的对象处理zip文件</span><br><span class="line">$zip-&gt;open这个方法的参数表示处理的zip文件名。</span><br><span class="line">如果对zip文件对象操作成功，$zip-&gt;open这个方法会返回TRUE</span><br><span class="line">*&#x2F;</span><br><span class="line">$zip &#x3D; new ZipArchive;&#x2F;&#x2F;新建一个ZipArchive的对象</span><br><span class="line">if ($zip-&gt;open(&#39;test.zip&#39;) &#x3D;&#x3D;&#x3D; TRUE)&#123;</span><br><span class="line">    $zip-&gt;extractTo(&#39;images&#39;);&#x2F;&#x2F;假设解压缩到在当前路径下images文件夹的子文件夹php</span><br><span class="line">    $zip-&gt;close();&#x2F;&#x2F;关闭处理的zip文件</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="将文件压缩成zip文件"><a href="#将文件压缩成zip文件" class="headerlink" title="将文件压缩成zip文件"></a>将文件压缩成zip文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*</span><br><span class="line">$zip-&gt;open这个方法第一个参数表示处理的zip文件名。</span><br><span class="line">第二个参数表示处理模式，ZipArchive::OVERWRITE表示如果zip文件存在，就覆盖掉原来的zip文件。</span><br><span class="line">如果参数使用ZIPARCHIVE::CREATE，系统就会往原来的zip文件里添加内容。</span><br><span class="line">如果不是为了多次添加内容到zip文件，建议使用ZipArchive::OVERWRITE。</span><br><span class="line">使用这两个参数，如果zip文件不存在，系统都会自动新建。</span><br><span class="line">如果对zip文件对象操作成功，$zip-&gt;open这个方法会返回TRUE</span><br><span class="line">*&#x2F;</span><br><span class="line">$zip &#x3D; new ZipArchive;</span><br><span class="line">if ($zip-&gt;open(&#39;test.zip&#39;, ZipArchive::OVERWRITE) &#x3D;&#x3D;&#x3D; TRUE)&#123;</span><br><span class="line">    $zip-&gt;addFile(&#39;image.txt&#39;);&#x2F;&#x2F;假设加入的文件名是image.txt，在当前路径下</span><br><span class="line">    $zip-&gt;close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件追加内容添加到zip文件"><a href="#文件追加内容添加到zip文件" class="headerlink" title="文件追加内容添加到zip文件"></a>文件追加内容添加到zip文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$zip &#x3D; new ZipArchive;</span><br><span class="line">$res &#x3D; $zip-&gt;open(&#39;test.zip&#39;, ZipArchive::CREATE);</span><br><span class="line">if ($res &#x3D;&#x3D;&#x3D; TRUE) &#123;</span><br><span class="line">    $zip-&gt;addFromString(&#39;test.txt&#39;, &#39;file content goes here&#39;);</span><br><span class="line">    $zip-&gt;close();</span><br><span class="line">    echo &#39;ok&#39;;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    echo &#39;failed&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="将文件夹打包成zip文件"><a href="#将文件夹打包成zip文件" class="headerlink" title="将文件夹打包成zip文件"></a>将文件夹打包成zip文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">function addFileToZip($path, $zip) &#123;</span><br><span class="line">    $handler &#x3D; opendir($path); &#x2F;&#x2F;打开当前文件夹由$path指定。</span><br><span class="line">    &#x2F;*</span><br><span class="line">    循环的读取文件夹下的所有文件和文件夹</span><br><span class="line">    其中$filename &#x3D; readdir($handler)是每次循环的时候将读取的文件名赋值给$filename，</span><br><span class="line">    为了不陷于死循环，所以还要让$filename !&#x3D;&#x3D; false。</span><br><span class="line">    一定要用!&#x3D;&#x3D;，因为如果某个文件名如果叫&#39;0&#39;，或者某些被系统认为是代表false，用!&#x3D;就会停止循环</span><br><span class="line">    *&#x2F;</span><br><span class="line">    while (($filename &#x3D; readdir($handler)) !&#x3D;&#x3D; false) &#123;</span><br><span class="line">        if ($filename !&#x3D; &quot;.&quot; &amp;&amp; $filename !&#x3D; &quot;..&quot;) &#123;&#x2F;&#x2F;文件夹文件名字为&#39;.&#39;和‘..’，不要对他们进行操作</span><br><span class="line">            if (is_dir($path . &quot;&#x2F;&quot; . $filename)) &#123;&#x2F;&#x2F; 如果读取的某个对象是文件夹，则递归</span><br><span class="line">                addFileToZip($path . &quot;&#x2F;&quot; . $filename, $zip);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                &#x2F;&#x2F;将文件加入zip对象</span><br><span class="line">                $zip-&gt;addFile($path . &quot;&#x2F;&quot; . $filename);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    @closedir($path);</span><br><span class="line">&#125;</span><br><span class="line">$zip &#x3D; new ZipArchive();</span><br><span class="line">if ($zip-&gt;open(&#39;images.zip&#39;, ZipArchive::OVERWRITE) &#x3D;&#x3D;&#x3D; TRUE) &#123;</span><br><span class="line">    addFileToZip(&#39;images&#x2F;&#39;, $zip); &#x2F;&#x2F;调用方法，对要打包的根目录进行操作，并将ZipArchive的对象传递给方法</span><br><span class="line">    $zip-&gt;close(); &#x2F;&#x2F;关闭处理的zip文件</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="PHP文件打包下载zip"><a href="#PHP文件打包下载zip" class="headerlink" title="PHP文件打包下载zip"></a>PHP文件打包下载zip</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">&#x2F;**</span><br><span class="line"> * 没有写成class 或者 function ，需要的朋友自己写，就这么几行。。</span><br><span class="line"> *&#x2F;</span><br><span class="line">$filename &#x3D; &quot;.&#x2F;test&#x2F;test.zip&quot;; &#x2F;&#x2F;最终生成的文件名（含路径）</span><br><span class="line">if(!file_exists($filename))&#123;</span><br><span class="line">    &#x2F;&#x2F;重新生成文件</span><br><span class="line">    $zip &#x3D; new ZipArchive();&#x2F;&#x2F;使用本类，linux需开启zlib，windows需取消php_zip.dll前的注释</span><br><span class="line">    if ($zip-&gt;open($filename, ZIPARCHIVE::CREATE)!&#x3D;&#x3D;TRUE) &#123;</span><br><span class="line">        exit(&#39;无法打开文件，或者文件创建失败&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">    foreach( $datalist as $val)&#123;</span><br><span class="line">        $attachfile &#x3D; $attachmentDir . $val[&#39;filepath&#39;]; &#x2F;&#x2F;获取原始文件路径</span><br><span class="line">        if(file_exists($attachfile))&#123;</span><br><span class="line">            $zip-&gt;addFile( $attachfile , basename($attachfile));&#x2F;&#x2F;第二个参数是放在压缩包中的文件名称，如果文件可能会有重复，就需要注意一下</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    $zip-&gt;close();&#x2F;&#x2F;关闭</span><br><span class="line">&#125;</span><br><span class="line">if(!file_exists($filename))&#123;</span><br><span class="line">    exit(&quot;无法找到文件&quot;); &#x2F;&#x2F;即使创建，仍有可能失败。。。。</span><br><span class="line">&#125;</span><br><span class="line">header(&quot;Cache-Control: public&quot;);</span><br><span class="line">header(&quot;Content-Description: File Transfer&quot;);</span><br><span class="line">header(&#39;Content-disposition: attachment; filename&#x3D;&#39;.basename($filename)); &#x2F;&#x2F;文件名</span><br><span class="line">header(&quot;Content-Type: application&#x2F;zip&quot;); &#x2F;&#x2F;zip格式的</span><br><span class="line">header(&quot;Content-Transfer-Encoding: binary&quot;); &#x2F;&#x2F;告诉浏览器，这是二进制文件</span><br><span class="line">header(&#39;Content-Length: &#39;. filesize($filename)); &#x2F;&#x2F;告诉浏览器，文件大小</span><br><span class="line">@readfile($filename);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a>下载文件</h4><p>$filename = “document.txt”;<br>header(‘Content-Type: application/octet-stream’);<br>header(‘Content-Disposition: attachment; filename=’ . $filename);<br>print “Hello!”;</p>
+<h4 id="下载文件名-中文乱码"><a href="#下载文件名-中文乱码" class="headerlink" title="下载文件名  中文乱码"></a>下载文件名  中文乱码</h4><?php
+$ua = $_SERVER["HTTP_USER_AGENT"];
+// $_SERVER["HTTP_USER_AGENT"]在IE中显示为：
+// Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
+$filename = "中文 文件名.txt";
+$encoded_filename = urlencode($filename);
+$encoded_filename = str_replace("+", "%20", $encoded_filename);
+header('Content-Type: application/octet-stream');
+//if (preg_match("/MSIE/", $ua)) {
+//兼容IE11
+if(preg_match("/MSIE/", $ua) || preg_match("/Trident\/7.0/", $ua)){
+    header('Content-Disposition: attachment; filename="' . $encoded_filename . '"');
+} else if (preg_match("/Firefox/", $ua)) {
+    header('Content-Disposition: attachment; filename*="utf8\'\'' . $filename . '"');
+} else {
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
+}
+print 'ABC';
+?>
+
+<h4 id="RAR-ZIP区别"><a href="#RAR-ZIP区别" class="headerlink" title="RAR ZIP区别"></a>RAR ZIP区别</h4><p>RAR和ZIP是两种不同的压缩格式，它们使用是不同的压缩算法。<br>ZIP是公开且免费的，很早就有了，可以用于任何用途。RAR是私有的，申请了专利，不公开算法细节，是近年才出来的算法，压缩率比ZIP低，也就是说同一个文件，用RAR比用ZIP得到的文件一般更小。<br>对于多数文件来说，用ZIP和用RAR区别一般是很小的，有极少数文件可能分造成这种区别特别明显，那说明RAR对某些特定的文件作了优化，或者说刚好那个文件对RAR有更好的“亲和力”。<br>已知RAR对某些视频，声音格式文件作了专用的优化算法。</p>
+<p>tar是Linux常见的一种归档文件（原生不包括压缩功能）<br>gzip是gnu/Linux的一种压缩文件工具，算法是基于 DEFLATE，文件是gz，可以和tar组合。<br>zip是一种规范开放的压缩文件，算法不定，但主要是用 DEFLATE<br>rar的算法专有，但发行时附送解码器允许解码器再开发，编码器专有<br>7zip和zip差不多，算法不定，主要用bzip2和lzma，而且完全开源。<br>zip和7z更像是压缩容器，因为算法不是格式固定，允许支持其他压缩算法</p>
+<p>大小与区别<br>tar是无压缩的，比压缩效率，gz的算法最原始，所以较低，其次zip，接着rar，7z两个主要算法基本上略优于rar，基本不相上下。</p>
+<p>优缺点<br>在Linux里面，tar一般和其他没有文件管理的压缩算法文件结合使用，用tar打包整个文件目录结构成一个文件，再用gz，bzip等压缩算法压缩成一次。也是Linux常见的压缩归档的处理方法。</p>
+<p>zip相对比较老，格式规范可知，所以积累了各种加解压实现，有较好的兼容性，不过现有文件格式相对而言比较落后，还有会有文件名乱码问题（因为文件名是用非Unicode编码）</p>
+<p>rar和7z就新些，所用算法压缩效率也好很多，兼容性不及zip，不过rar的编码器有专利，但可以不制作编码器的情况使用或者再开发发行版的解码器（所以其他压缩管理工具可以调用rar的解码器来解压rar，但不能加压，百度云的在线解压rar可能是使用或者再开发过unrar文件），7z的文件和管理程序都是开源的，文件格式也比较好（支持Unicode文件名），两个主要压缩算法的性能都很好，只是差何时能普及而取代zip而已。</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2018/%E5%8E%8B%E7%BC%A9%E6%A0%BC%E5%BC%8F%E5%8C%BA%E5%88%AB/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%AC%94%E8%AE%B0/">
+              #笔记
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2018/EasyUI/" target="_self">EasyUI</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2018/LINUX%E4%B8%8B%E5%AF%BC%E5%85%A5%E3%80%81%E5%AF%BC%E5%87%BAmysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%91%BD%E4%BB%A4/" target="_self">导入、导出mysql数据库命令</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

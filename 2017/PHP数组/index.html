@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>PHP数组 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="PHP,PHP," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>PHP数组</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2017-03-21
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/PHP/">
+            PHP
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="PHP数组"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><h3 id="创建数组"><a href="#创建数组" class="headerlink" title="创建数组"></a>创建数组</h3><p>$arr=array(‘0’=&gt;’1’);<br>$arr=array(‘long’, ‘version’);<br>$arr=[‘short’, ‘version’];</p>
+<p>#增删改</p>
+<p>#合并 分割</p>
+<h3 id="array-chunk-input-size-preserve-keys-false-将一个数组分割成多个"><a href="#array-chunk-input-size-preserve-keys-false-将一个数组分割成多个" class="headerlink" title="array_chunk($input,$size,[$preserve_keys=false ]) 将一个数组分割成多个"></a>array_chunk($input,$size,[$preserve_keys=false ]) 将一个数组分割成多个</h3><p>将一个数组分割成多个数组，其中每个数组的单元数目由size决定<br>最后一个数组的单元数目可能会少于size个<br>$preserve_keys:设为TRUE，可以使PHP保留输入数组中原来的键名,如果你指定了 FALSE，那<code>每个结果数组将用从零开始的新数字索引</code>。默认值是FALSE</p>
+<p>得到的数组是一个多维数组中的单元，其索引从零开始，每一维包含了size个元素。 </p>
+<p>$input_array = array(‘a’, ‘b’, ‘c’, ‘d’, ‘e’);<br>print_r(array_chunk($input_array, 2));<br>print_r(array_chunk($input_array, 2, true));</p>
+<p>Array([0] =&gt; Array([0] =&gt; a[1] =&gt; b)[1] =&gt; Array([0] =&gt; c[1] =&gt; d)[2] =&gt; Array([0] =&gt; e))</p>
+<p>Array([0] =&gt; Array([0] =&gt; a[1] =&gt; b)[1] =&gt; Array([2] =&gt; c[3] =&gt; d)[2] =&gt; Array([4] =&gt; e))</p>
+<h1 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h1><h3 id="arr-change-key-case-input-case-CASE-LOWER-返回字符串键名全为小写或大写的数组"><a href="#arr-change-key-case-input-case-CASE-LOWER-返回字符串键名全为小写或大写的数组" class="headerlink" title="arr_change_key_case($input,[$case=CASE_LOWER])  返回字符串键名全为小写或大写的数组"></a>arr_change_key_case($input,[$case=CASE_LOWER])  返回字符串键名全为小写或大写的数组</h3><p>$input:需要操作的数组<br>$case: CASE_UPPER  大写<br>       CASE_LOWER  小写<br>key相同，会被后面的覆盖</p>
+<h3 id="array-column-input-column-key-index-key-返回数组中指定的一列"><a href="#array-column-input-column-key-index-key-返回数组中指定的一列" class="headerlink" title="array_column($input,$column_key,[$index_key])返回数组中指定的一列"></a>array_column($input,$column_key,[$index_key])返回数组中指定的一列</h3><p>$input:需要取出数组列的多维数组（或结果集）<br>$column_key:需要返回值的列，它可以是索引数组的列索引，或者是关联数组的列的键。 也可以是NULL，此时将返回整个数组（配合index_key参数来重置数组键的时候，非常管用）<br>$index_key:作为返回数组的索引/键的列，它可以是该列的整数索引，或者字符串键值。 </p>
+<p>$last_names = array_column($records, ‘last_name’, ‘id’);<br>Array(<br>    [2135] =&gt; Doe<br>    [3245] =&gt; Smith<br>    [5342] =&gt; Jones<br>    [5623] =&gt; Doe<br>)<br>新数组 array($index_key=&gt;$column_key)</p>
+<h3 id="array-combine-keys-values-创建一个数组，用一个数组的值作为其键名，另一个数组的值作为其值"><a href="#array-combine-keys-values-创建一个数组，用一个数组的值作为其键名，另一个数组的值作为其值" class="headerlink" title="array_combine($keys,$values) 创建一个数组，用一个数组的值作为其键名，另一个数组的值作为其值"></a>array_combine($keys,$values) 创建一个数组，用一个数组的值作为其键名，另一个数组的值作为其值</h3><p>$a = array(‘green’, ‘red’, ‘yellow’);<br>$b = array(‘avocado’, ‘apple’, ‘banana’);<br>$c = array_combine($a, $b);</p>
+<p>Array(<br>    [green]  =&gt; avocado<br>    [red]    =&gt; apple<br>    [yellow] =&gt; banana<br>)<br>两个数组元素个数不一样，报错</p>
+<h3 id="array-count-values-input-统计数组中所有的值出现的次数"><a href="#array-count-values-input-统计数组中所有的值出现的次数" class="headerlink" title="array_count_values($input) 统计数组中所有的值出现的次数"></a>array_count_values($input) 统计数组中所有的值出现的次数</h3><p>返回一个数组，该数组用input数组中的值作为键名，该值在 input 数组中出现的次数作为值。<br>$array = array(1, “hello”, 1, “world”, “hello”);<br>print_r(array_count_values($array));</p>
+<p>Array(<br>    [1] =&gt; 2<br>    [hello] =&gt; 2<br>    [world] =&gt; 1<br>)<br>返回数组的元素个数</p>
+<h3 id="array-diff-assoc-array1-array2-…-带索引检查计算数组的差集"><a href="#array-diff-assoc-array1-array2-…-带索引检查计算数组的差集" class="headerlink" title="array_diff_assoc($array1,$array2[…]) 带索引检查计算数组的差集"></a>array_diff_assoc($array1,$array2[…]) 带索引检查计算数组的差集</h3><p>该数组包括了所有在array1中但是不在任何其它参数数组中的值<br>注意和 array_diff() 不同的是键名也用于比较</p>
+<p>$array1 = array(“a” =&gt; “green”, “b” =&gt; “brown”, “c” =&gt; “blue”, “red”);<br>$array2 = array(“a” =&gt; “green”, “yellow”, “red”);<br>$result = array_diff_assoc($array1, $array2);</p>
+<p>Array(<br>    [b] =&gt; brown<br>    [c] =&gt; blue<br>    [0] =&gt; red<br>)<br>只检查第一维深度，array_diff_assoc($array1[0], $array2[0])更深<br>键值对key=&gt;value中的两个值仅在(string)$elem1 ===(string)$elem2 时被认为相等<br>也就是说使用了严格检查，字符串的表达必须相同</p>
+<p>###　array_diff_key($array1,$array2,…) 使用键名比较计算数组的差集<br>根据 array1 中的键名和 array2 进行比较，返回不同键名的项<br>本函数和 array_diff() 相同只除了比较是根据键名而不是值来进行的<br>返回一个数组，该数组包括了所有出现在 array1 中但是未出现在任何其它参数数组中的键名的值</p>
+<p>array1 = array(‘blue’  =&gt; 1, ‘red’  =&gt; 2, ‘green’  =&gt; 3, ‘purple’ =&gt; 4);<br>$array2 = array(‘green’ =&gt; 5, ‘blue’ =&gt; 6, ‘yellow’ =&gt; 7, ‘cyan’   =&gt; 8);<br>var_dump(array_diff_key($array1, $array2));</p>
+<p>array(<br>    key=&gt;’2’,<br>    purple=&gt;’4’<br>)<br>只比较第一维数组key</p>
+<h3 id="array-diff-uassoc-array1-array2-…-key-compare-func-用用户提供的回调函数做索引检查来计算数组的差集"><a href="#array-diff-uassoc-array1-array2-…-key-compare-func-用用户提供的回调函数做索引检查来计算数组的差集" class="headerlink" title="array_diff_uassoc($array1,$array2,…..,$key_compare_func) 用用户提供的回调函数做索引检查来计算数组的差集"></a>array_diff_uassoc($array1,$array2,…..,$key_compare_func) 用用户提供的回调函数做索引检查来计算数组的差集</h3><p>对比了array1和array2并返回不同之处<br>注意和array_diff()不同的是键名也用于比较<br>和array_diff_assoc()不同的是使用了用户自定义的回调函数，而不是内置的函数</p>
+<h3 id="array-diff-ukey-array1-array2-…-key-compare-func-用回调函数对键名比较计算数组的差集"><a href="#array-diff-ukey-array1-array2-…-key-compare-func-用回调函数对键名比较计算数组的差集" class="headerlink" title="array_diff_ukey($array1,$array2,…..,$key_compare_func)用回调函数对键名比较计算数组的差集"></a>array_diff_ukey($array1,$array2,…..,$key_compare_func)用回调函数对键名比较计算数组的差集</h3><p>该数组包括了所有出现在 array1 中但是未出现在任何其它参数数组中的键名的值<br>注意关联关系保留不变<br>本函数和 array_diff() 相同只除了比较是根据键名而不是值来进行的</p>
+<h3 id="array-diff-array1-array2-…-计算数组的差集"><a href="#array-diff-array1-array2-…-计算数组的差集" class="headerlink" title="array_diff($array1,$array2[…]) 计算数组的差集"></a>array_diff($array1,$array2[…]) 计算数组的差集</h3><p>该数组包括了所有在 array1 中但是不在任何其它参数数组中的值。<br>注意键名保留不变<br>以第一个数组的值为标准</p>
+<h3 id="array-fill-keys-key-value-使用指定的键和值填充数组"><a href="#array-fill-keys-key-value-使用指定的键和值填充数组" class="headerlink" title="array_fill_keys($key,$value)使用指定的键和值填充数组"></a>array_fill_keys($key,$value)使用指定的键和值填充数组</h3><p>使用 value 参数的值作为值，使用 keys 数组的值作为键来填充一个数组</p>
+<p>$keys = array(‘foo’, 5, 10, ‘bar’);<br>$a = array_fill_keys($keys, ‘banana’);</p>
+<p>Array(<br>    [foo] =&gt; banana<br>    [5] =&gt; banana<br>    [10] =&gt; banana<br>    [bar] =&gt; banana<br>)</p>
+<p>$arr1(k1,v1),$arr2(k2,v2)  =&gt;</p>
+<h3 id="array-fill-start-index-num-value-用给定的值填充数组"><a href="#array-fill-start-index-num-value-用给定的值填充数组" class="headerlink" title="array_fill($start_index,$num,$value) 用给定的值填充数组"></a>array_fill($start_index,$num,$value) 用给定的值填充数组</h3><p>用value参数的值将一个数组填充num个条目，键名由 start_index 参数指定的开始<br>$start_index:返回的数组的第一个索引值<br>如果start_index是负数，那么返回的数组的第一个索引将会是start_index，而后面索引则从0开始<br>$num:插入元素的数量，必须大于0<br>$value:用来填充的值</p>
+<p>$a = array_fill(5, 6, ‘banana’);<br>$b = array_fill(-2, 4, ‘pear’);<br>print_r($a);<br>print_r($b);</p>
+<p>Array([5]  =&gt; banana[6]  =&gt; banana[7]  =&gt; banana[8]  =&gt; banana[9]  =&gt; banana[10] =&gt; banana)</p>
+<p>Array([-2] =&gt; pear[0] =&gt; pear[1] =&gt; pear[2] =&gt; pear)</p>
+<h3 id="array-filter-input-callable-callback-“”-用回调函数过滤数组中的单元"><a href="#array-filter-input-callable-callback-“”-用回调函数过滤数组中的单元" class="headerlink" title="array_filter($input,[callable $callback = “” ]) 用回调函数过滤数组中的单元"></a>array_filter($input,[callable $callback = “” ]) 用回调函数过滤数组中的单元</h3><p>依次将input数组中的每个值传递到callback函数<br>如果callback函数返回TRUE，则input数组的当前值会被包含在返回的结果数组中。数组的键名保留不变<br>$input:要循环的数组<br>$callback:使用回调函数，如果没有提供callback函数，将删除input中所有等值为FALSE的条目</p>
+<h3 id="array-flip-trans-交换数组中的键和值"><a href="#array-flip-trans-交换数组中的键和值" class="headerlink" title="array_flip($trans) 交换数组中的键和值"></a>array_flip($trans) 交换数组中的键和值</h3><p>值=&gt;键   同名值作为键会被覆盖<br>$trans = array(“a” =&gt; 1, “b” =&gt; 1, “c” =&gt; 2);<br>$trans = array_flip($trans);<br>print_r($trans);</p>
+<p>Array(<br>    [1] =&gt; b<br>    [2] =&gt; c<br>)</p>
+<h3 id="array-intersect-assoc-array1-array2-…-带索引检查计算数组的交集"><a href="#array-intersect-assoc-array1-array2-…-带索引检查计算数组的交集" class="headerlink" title="array_intersect_assoc($array1,$array2,…) 带索引检查计算数组的交集"></a>array_intersect_assoc($array1,$array2,…) 带索引检查计算数组的交集</h3><p>返回键–值都相同的<br>$array1 = array(“a” =&gt; “green”, “b” =&gt; “brown”, “c” =&gt; “blue”, “red”);<br>$array2 = array(“a” =&gt; “green”, “b” =&gt; “yellow”, “blue”, “red”);<br>$result_array = array_intersect_assoc($array1, $array2);</p>
+<p>Array(<br>    [a] =&gt; green<br>)</p>
+<h3 id="array-intersect-key-array1-array2-…-使用键名比较计算数组的交集"><a href="#array-intersect-key-array1-array2-…-使用键名比较计算数组的交集" class="headerlink" title="array_intersect_key($array1,$array2,…) 使用键名比较计算数组的交集"></a>array_intersect_key($array1,$array2,…) 使用键名比较计算数组的交集</h3><p>该数组包含了所有出现在array1中并同时出现在所有其它参数数组中的键名的值，返回键相同的</p>
+<h3 id="array-intersect-uassoc-array1-array2-…-key-compare-func-带索引检查计算数组的交集，用回调函数比较索引"><a href="#array-intersect-uassoc-array1-array2-…-key-compare-func-带索引检查计算数组的交集，用回调函数比较索引" class="headerlink" title="array_intersect_uassoc($array1,$array2,…,$key_compare_func) 带索引检查计算数组的交集，用回调函数比较索引"></a>array_intersect_uassoc($array1,$array2,…,$key_compare_func) 带索引检查计算数组的交集，用回调函数比较索引</h3><p>该数组包含了所有在array1中也同时出现在所有其它参数数组中的值<br>注意和array_intersect()不同的是键名也用于比较</p>
+<p>$key_compare_func:在第一个参数小于，等于或大于第二个参数时，该比较函数必须相应地返回一个小于，等于或大于0的整数 </p>
+<h3 id="array-intersect-ukey-array1-array2-…-key-compare-func-用回调函数比较键名来计算数组的交集"><a href="#array-intersect-ukey-array1-array2-…-key-compare-func-用回调函数比较键名来计算数组的交集" class="headerlink" title="array_intersect_ukey($array1,$array2,…,$key_compare_func) 用回调函数比较键名来计算数组的交集"></a>array_intersect_ukey($array1,$array2,…,$key_compare_func) 用回调函数比较键名来计算数组的交集</h3><p>该数组包含了所有出现在array1中并同时出现在所有其它参数数组中的键名的值</p>
+<h3 id="array-intersect-array1-array2-…-计算数组的交集"><a href="#array-intersect-array1-array2-…-计算数组的交集" class="headerlink" title="array_intersect($array1,$array2,…) 计算数组的交集"></a>array_intersect($array1,$array2,…) 计算数组的交集</h3><p>该数组包含了所有在 array1 中也同时出现在所有其它参数数组中的值,注意键名保留不变</p>
+<h3 id="key-exists-array-key-exists-key-array-search-检查给定的键名或索引是否存在于数组中"><a href="#key-exists-array-key-exists-key-array-search-检查给定的键名或索引是否存在于数组中" class="headerlink" title="key_exists()  array_key_exists($key,array $search)   检查给定的键名或索引是否存在于数组中"></a>key_exists()  array_key_exists($key,array $search)   检查给定的键名或索引是否存在于数组中</h3><p>key可以是任何能作为数组索引的值,也可用于对象<br>成功时返回TRUE，或者在失败时返回FALSE。</p>
+<p>$search_array = array(‘first’ =&gt; null, ‘second’ =&gt; 4);<br>// returns false<br>isset($search_array[‘first’]);<br>// returns true<br>array_key_exists(‘first’, $search_array);<br>只检测key存在与否，与值无关</p>
+<h3 id="array-keys-array-search-value-strict-false-返回数组中部分的或所有的键名"><a href="#array-keys-array-search-value-strict-false-返回数组中部分的或所有的键名" class="headerlink" title="array_keys($array,[$search_value,[$strict = false]])  返回数组中部分的或所有的键名"></a>array_keys($array,[$search_value,[$strict = false]])  返回数组中部分的或所有的键名</h3><p>如果指定了可选参数 search_value，则只返回该值的键名。否则input数组中的所有键名都会被返回<br>$search_value:如果指定了这个参数，只有包含这些值的键才会返回<br>$strict:判断在搜索的时候是否该使用严格的比较 === </p>
+<p>$array = array(0 =&gt; 100, “color” =&gt; “red”);<br>print_r(array_keys($array));</p>
+<p>$array = array(“blue”, “red”, “green”, “blue”, “blue”);<br>print_r(array_keys($array, “blue”));</p>
+<p>$array = array(“color” =&gt; array(“blue”, “red”, “green”),”size”  =&gt; array(“small”, “medium”, “large”));<br>print_r(array_keys($array));</p>
+<p>Array(<br>    [0] =&gt; 0<br>    [1] =&gt; color<br>)<br>Array(<br>    [0] =&gt; 0<br>    [1] =&gt; 3<br>    [2] =&gt; 4<br>)<br>Array(<br>    [0] =&gt; color<br>    [1] =&gt; size<br>)<br>返回array([数字索引]=&gt;key)</p>
+<h3 id="array-map-callback-arr1-array-将回调函数作用到给定数组的单元上"><a href="#array-map-callback-arr1-array-将回调函数作用到给定数组的单元上" class="headerlink" title="array_map($callback,$arr1,[$array]) 将回调函数作用到给定数组的单元上"></a>array_map($callback,$arr1,[$array]) 将回调函数作用到给定数组的单元上</h3><p>返回一个数组，该数组包含了arr1中的所有单元经过 </p>
+<p>callback作用过之后的单元,callback接受的参数数目应该和传递给array_map()函数的数组数目一致</p>
+<p>通常使用了两个或更多数组时，它们的长度应该相同，因为回调函数是平行作用于相应的单元上的。如果数组的长度不同，则最短的一个将被用空的单元扩充。</p>
+<p>$callback:对每个数组的每个元素作用的回调函数。<br>$arr1:将被回调函数（callback）执行的数组。<br>$array:将被回调函数（callback）执行的数组列表。 </p>
+<p>function cube($n){return($n * $n * $n);}<br>$a = array(1, 2, 3, 4, 5);<br>$b = array_map(“cube”, $a);<br>Array(<br>    [0] =&gt; 1<br>    [1] =&gt; 8<br>    [2] =&gt; 27<br>    [3] =&gt; 64<br>    [4] =&gt; 125<br>)</p>
+<p>$func = function($value){return $value * 2;};<br>array_map($func, range(1, 5));</p>
+<p>Array(<br>    [0] =&gt; 2<br>    [1] =&gt; 4<br>    [2] =&gt; 6<br>    [3] =&gt; 8<br>    [4] =&gt; 10<br>)</p>
+<h3 id="array-merge-recursive-array1-…-递归地合并一个或多个数组"><a href="#array-merge-recursive-array1-…-递归地合并一个或多个数组" class="headerlink" title="array_merge_recursive($array1,[…]) 递归地合并一个或多个数组"></a>array_merge_recursive($array1,[…]) 递归地合并一个或多个数组</h3><p>将一个或者多个数组的单元合并起来，一个数组中的值附加在前一个数组的后面<br>如果输入的数组中有相同的字符串键名，则这些值会被合并到一个数组中去，这将递归下去，因此如果一个值本身是一个数组，本函数将按照相应的条目把它合并为另一个数组。<br>然而，如果数组具有相同的数组键名，后一个值将不会覆盖原来的值，而是附加到后面</p>
+<p>$ar1 = array(“color” =&gt; array(“favorite” =&gt; “red”), 5);<br>$ar2 = array(10, “color” =&gt; array(“favorite” =&gt; “green”, “blue”));<br>$result = array_merge_recursive($ar1, $ar2);</p>
+<p>Array(<br>    [color] =&gt; Array<br>        (<br>            [favorite] =&gt; Array<br>                (<br>                    [0] =&gt; red<br>                    [1] =&gt; green<br>                )</p>
+<pre><code>        [0] =&gt; blue
+    )
+
+[0] =&gt; 5
+[1] =&gt; 10</code></pre>
+<p>)</p>
+<h3 id="array-merge-array1-array2-合并一个或多个数组"><a href="#array-merge-array1-array2-合并一个或多个数组" class="headerlink" title="array_merge($array1,[$array2]) 合并一个或多个数组"></a>array_merge($array1,[$array2]) 合并一个或多个数组</h3><p>将一个或多个数组的单元合并起来，一个数组中的值附加在前一个数组的后面</p>
+<p>如果数组中有相同的字符串键名，则该键名后面的值将覆盖前一个值<br>如果数组包含数字键名，后面的值将不会覆盖原来的值，而是附加到后面<br>如果只给了一个数组并且该数组是数字索引的，则键名会以连续方式重新索引</p>
+<h3 id="array-multisort-arr-arg-SORT-ASC-arg-SORT-REGULAR-…-将多个数组或多维数组进行排序"><a href="#array-multisort-arr-arg-SORT-ASC-arg-SORT-REGULAR-…-将多个数组或多维数组进行排序" class="headerlink" title="array_multisort($arr,[$arg = SORT_ASC,[$arg = SORT_REGULAR,[$… ]]]) 将多个数组或多维数组进行排序"></a>array_multisort($arr,[$arg = SORT_ASC,[$arg = SORT_REGULAR,[$… ]]]) 将多个数组或多维数组进行排序</h3><p>可以用来一次对多个数组进行排序，或者根据某一维或多维对多维数组进行排序<br>关联（string）键名保持不变，但数字键名会被重新索引</p>
+<p>排序顺序标志：<br>SORT_ASC - 按照上升顺序排序<br>SORT_DESC - 按照下降顺序排序 </p>
+<p>排序类型标志：<br>SORT_REGULAR - 将项目按照通常方法比较<br>SORT_NUMERIC - 将项目按照数值比较<br>SORT_STRING - 将项目按照字符串比较 </p>
+<p>每个数组之后不能指定两个同类的排序标志<br>每个数组后指定的排序标志仅对该数组有效–在此之前为默认值 SORT_ASC 和 SORT_REGULAR</p>
+<p>$ar1 = array(10, 100, 100, 0);<br>$ar2 = array(1, 3, 2, 4);<br>array_multisort($ar1, $ar2);</p>
+<h3 id="array-pad-input-pad-size-pad-value-用值将数组填补到指定长度"><a href="#array-pad-input-pad-size-pad-value-用值将数组填补到指定长度" class="headerlink" title="array_pad($input,$pad_size,$pad_value) 用值将数组填补到指定长度"></a>array_pad($input,$pad_size,$pad_value) 用值将数组填补到指定长度</h3><p>$input:需要被填充的原始数组<br>$pad_size:新数组的长度<br>$pad_value:将被填充的值，只有在 input 的现有长度小于pad_size的长度时才有效</p>
+<p>返回input的一个拷贝，并用pad_value将其填补到 pad_size指定的长度<br>如果pad_size为正，则填补到数组的右侧，如果为负则从左侧开始填补<br>如果pad_size的绝对值小于或等于input数组的长度则没有任何填补</p>
+<p>数组长度为pad_size，填充值为pad_value</p>
+<p>$input = array(12, 10, 9);<br>$result = array_pad($input, 5, 0);<br>// result is array(12, 10, 9, 0, 0)<br>$result = array_pad($input, -7, -1);<br>// result is array(-1, -1, -1, -1, 12, 10, 9)</p>
+<h3 id="array-pop-array-将数组最后一个单元弹出-出栈"><a href="#array-pop-array-将数组最后一个单元弹出-出栈" class="headerlink" title="array_pop($array) 将数组最后一个单元弹出(出栈)"></a>array_pop($array) 将数组最后一个单元弹出(出栈)</h3><p>弹出并返回array数组的最后一个单元，并将数组 array 的长度减一</p>
+<p>$stack = array(“orange”, “banana”, “apple”, “raspberry”);<br>$fruit = array_pop($stack);<br>array(“orange”, “banana”, “apple”)</p>
+<h3 id="array-push-array-var-…-将一个或多个单元压入数组的末尾（入栈）"><a href="#array-push-array-var-…-将一个或多个单元压入数组的末尾（入栈）" class="headerlink" title="array_push($array,$var,[$…]) 将一个或多个单元压入数组的末尾（入栈）"></a>array_push($array,$var,[$…]) 将一个或多个单元压入数组的末尾（入栈）</h3><p>将array当成一个栈，并将传入的变量压入array的末尾array的长度将根据入栈变量的数目增加</p>
+<p>如果用array_push()来给数组增加一个单元，还不如用 $array[]=，因为这样没有调用函数的额外负担</p>
+<h3 id="array-shift-array-将数组开头的单元移出数组"><a href="#array-shift-array-将数组开头的单元移出数组" class="headerlink" title="array_shift($array) 将数组开头的单元移出数组"></a>array_shift($array) 将数组开头的单元移出数组</h3><p>将array的第一个单元移出并作为结果返回，将array的长度减一并将所有其它单元向前移动一位<br>所有的数字键名将改为从零开始计数，文字键名将不变</p>
+<h3 id="array-unshift-array-var-…-在数组开头插入一个或多个单元"><a href="#array-unshift-array-var-…-在数组开头插入一个或多个单元" class="headerlink" title="array_unshift($array,$var,[$…]) 在数组开头插入一个或多个单元"></a>array_unshift($array,$var,[$…]) 在数组开头插入一个或多个单元</h3><p>将传入的单元插入到array数组的开头<br>注意单元是作为整体被插入的，因此传入单元将保持同样的顺序<br>所有的数值键名将修改为从零开始重新计数，所有的文字键名保持不变</p>
+<p>$queue = array(“orange”, “banana”);<br>array_unshift($queue, “apple”, “raspberry”);</p>
+<p>Array(<br>    [0] =&gt; apple<br>    [1] =&gt; raspberry<br>    [2] =&gt; orange<br>    [3] =&gt; banana<br>)</p>
+<h3 id="array-product-array-计算数组中所有值得乘积"><a href="#array-product-array-计算数组中所有值得乘积" class="headerlink" title="array_product($array) 计算数组中所有值得乘积"></a>array_product($array) 计算数组中所有值得乘积</h3><p>$a = array(2, 4, 6, 8);<br>product(a) = 384    2<em>4</em>6*8</p>
+<h3 id="array-rand-input-num-req-1-从数组中随机取出一个或多个单元"><a href="#array-rand-input-num-req-1-从数组中随机取出一个或多个单元" class="headerlink" title="array_rand($input,[$num_req=1]) 从数组中随机取出一个或多个单元"></a>array_rand($input,[$num_req=1]) 从数组中随机取出一个或多个单元</h3><p>从数组中取出一个或多个随机的单元，并返回随机条目的一个或多个键</p>
+<p>$input = array(“Neo”, “Morpheus”, “Trinity”, “Cypher”, “Tank”);<br>$rand_keys = array_rand($input, 2);<br>从数组中 随机取出2个元素</p>
+<h3 id="shuffle-array-将数组打乱"><a href="#shuffle-array-将数组打乱" class="headerlink" title="shuffle($array) 将数组打乱"></a>shuffle($array) 将数组打乱</h3><p>打乱（随机排列单元的顺序）一个数组</p>
+<h3 id="array-reduce-input-function-initial-NULL-用回调函数迭代地将数组简化为单一的值"><a href="#array-reduce-input-function-initial-NULL-用回调函数迭代地将数组简化为单一的值" class="headerlink" title="array_reduce($input,$function,[$initial = NULL]) 用回调函数迭代地将数组简化为单一的值"></a>array_reduce($input,$function,[$initial = NULL]) 用回调函数迭代地将数组简化为单一的值</h3><p>将回调函数 function 迭代地作用到 input 数组中的每一个单元中，从而将数组简化为单一的值</p>
+<h3 id="array-replace-array1-array2-…-使用传递的数组替换第一个数组的元素"><a href="#array-replace-array1-array2-…-使用传递的数组替换第一个数组的元素" class="headerlink" title="array_replace($array1,$array2,[…]) 使用传递的数组替换第一个数组的元素"></a>array_replace($array1,$array2,[…]) 使用传递的数组替换第一个数组的元素</h3><p>使用后面数组元素相同key的值替换array1数组的值</p>
+<p>如果一个键存在于第一个数组同时也存在于第二个数组，它的值将被第二个数组中的值替换<br>如果一个键存在于第二个数组，但是不存在于第一个数组，则会在第一个数组中创建这个元素<br>如果一个键仅存在于第一个数组，它将保持不变<br>如果传递了多个替换数组，它们将被按顺序依次处理，后面的数组将覆盖之前的值</p>
+<p>非递归函数,它将第一个数组的值进行替换而不管第二个数组中是什么类型</p>
+<h3 id="array-reverse-array-preserve-keys-false-返回一个单元顺序相反的数组"><a href="#array-reverse-array-preserve-keys-false-返回一个单元顺序相反的数组" class="headerlink" title="array_reverse($array,[$preserve_keys = false]) 返回一个单元顺序相反的数组"></a>array_reverse($array,[$preserve_keys = false]) 返回一个单元顺序相反的数组</h3><p>接受数组array作为输入并返回一个单元为相反顺序的新数组</p>
+<p>$input=array(“php”, 4.0, array(“green”, “red”));<br>$result = array_reverse($input);</p>
+<p>Array(<br>    [0] =&gt; Array<br>        (<br>            [0] =&gt; green<br>            [1] =&gt; red<br>        )</p>
+<pre><code>[1] =&gt; 4
+[2] =&gt; php</code></pre>
+<p>)</p>
+<h3 id="array-search-needle-haystack-strict-false-在数组中搜索给定的值，如果成功则返回相应的键名"><a href="#array-search-needle-haystack-strict-false-在数组中搜索给定的值，如果成功则返回相应的键名" class="headerlink" title="array_search($needle,$haystack,[$strict = false]) 在数组中搜索给定的值，如果成功则返回相应的键名"></a>array_search($needle,$haystack,[$strict = false]) 在数组中搜索给定的值，如果成功则返回相应的键名</h3><p>needle搜索的值<br>Note:如果needle是字符串，则比较以区分大小写的方式进行<br>haystack数组<br>strict如果可选的第三个参数strict为TRUE,array_search()将在haystack中检查完全相同的元素<br>这意味着同样检查haystack里needle的类型，并且对象需是同一个实例<br>在haystack中搜索needle参数,如果找到了needle则返回它的键，否则返回FALSE </p>
+<p>如果needle在haystack中出现不止一次，则返回第一个匹配的键<br>要返回所有匹配值的键，应该用array_keys()加上可选参数search_value来代替</p>
+<h3 id="array-slice-array-offer-length-NULL-preserve-keys-false-从数组中取出一段"><a href="#array-slice-array-offer-length-NULL-preserve-keys-false-从数组中取出一段" class="headerlink" title="array_slice($array,$offer,[$length = NULL,[$preserve_keys = false]]) 从数组中取出一段"></a>array_slice($array,$offer,[$length = NULL,[$preserve_keys = false]]) 从数组中取出一段</h3><p>返回根据offset和length参数所指定的array数组中的一段序列<br>$array:输入的数组<br>$offset:如果offset非负，则序列将从array中的此偏移量开始，如果offset为负，则序列将从array中距离末端这么远的地方开始<br>$length:如果给出了length并且为正，则序列中将具有这么多的单元。如果给出了length并且为负，则序列将终止在距离数组末端这么远的地方。如果省略，则序列将从offset 开始一直到array的末端<br>$preserve_keys:注意array_slice()默认会重新排序并重置数组的数字索引。你可以通过将preserve_keys设为TRUE 来改变此行为</p>
+<h3 id="array-splice-input-offset-length-0-replacement-把数组中的一部分去掉并用其它值取代"><a href="#array-splice-input-offset-length-0-replacement-把数组中的一部分去掉并用其它值取代" class="headerlink" title="array_splice($input,$offset,[$length=0,[$replacement]]) 把数组中的一部分去掉并用其它值取代"></a>array_splice($input,$offset,[$length=0,[$replacement]]) 把数组中的一部分去掉并用其它值取代</h3><p>把input数组中由offset和length指定的单元去掉，如果提供了replacement参数，则用其中的单元取代<br>input中的数字键名不被保留 </p>
+<p>$input:输入的数组<br>$offset:如果offset为正，则从input数组中该值指定的偏移量开始移除。如果offset为负，则从input末尾倒数该值指定的偏移量开始移除<br>$length:如果省略length，则移除数组中从offset到结尾的所有部分。<br>如果指定了length并且为正值，则移除这么多单元。<br>如果指定了length并且为负值，则移除从offset到数组末尾倒数 length 为止中间所有的单元。<br>小窍门：当给出了replacement时要移除从offset到数组末尾所有单元时，用count($input)作为length<br>$replacement:如果给出了replacement数组，则被移除的单元被此数组中的单元替代<br>如果offset和length的组合结果是不会移除任何值，则 replacement数组中的单元将被插入到offset指定的位置。 注意替换数组中的键名不保留。<br>如果用来替换replacement只有一个单元，那么不需要给它加上 array()，除非该单元本身就是一个数组、一个对象或者 NULL</p>
+<p>$input = array(“red”, “green”, “blue”, “yellow”);<br>array_splice($input, 2);<br>// $input is now array(“red”, “green”)</p>
+<p>$input = array(“red”, “green”, “blue”, “yellow”);<br>array_splice($input, 1, -1);<br>// $input is now array(“red”, “yellow”)</p>
+<p>$input = array(“red”, “green”, “blue”, “yellow”);<br>array_splice($input, 1, count($input), “orange”);<br>// $input is now array(“red”, “orange”)</p>
+<p>$input = array(“red”, “green”, “blue”, “yellow”);<br>array_splice($input, -1, 1, array(“black”, “maroon”));<br>// $input is now array(“red”, “green”,<br>// “blue”, “black”, “maroon”)</p>
+<p>$input = array(“red”, “green”, “blue”, “yellow”);<br>array_splice($input, 3, 0, “purple”);<br>// $input is now array(“red”, “green”,<br>// “blue”, “purple”, “yellow”);</p>
+<h3 id="array-sum-array-计算数组中所有值的和"><a href="#array-sum-array-计算数组中所有值的和" class="headerlink" title="array_sum($array) 计算数组中所有值的和"></a>array_sum($array) 计算数组中所有值的和</h3><p>将数组中的所有值的和以整数或浮点数的结果返回<br>$a = array(2, 4, 6, 8);<br>array_sum($a)    2+4+6+8=20</p>
+<h3 id="array-udiff-array1-array2-…-data-compare-func-用回调函数比较数据来计算数组的差集"><a href="#array-udiff-array1-array2-…-data-compare-func-用回调函数比较数据来计算数组的差集" class="headerlink" title="array_udiff($array1,$array2,[…],$data_compare_func ) 用回调函数比较数据来计算数组的差集"></a>array_udiff($array1,$array2,[…],$data_compare_func ) 用回调函数比较数据来计算数组的差集</h3><p>返回一个数组，该数组包括了所有在array1中但是不在任何其它参数数组中的值。注意键名保持不变。<br>数据的比较是用data_compare_func进行的<br>如果认为第一个参数小于，等于，或大于第二个参数时必须分别返回一个小于零，等于零，或大于零的整数。<br>这和array_diff()不同，后者使用了内部函数来比较数据</p>
+<h3 id="array-uintersect-array1-array2-…-callable-data-compare-func-计算数组的交集，用回调函数比较数据"><a href="#array-uintersect-array1-array2-…-callable-data-compare-func-计算数组的交集，用回调函数比较数据" class="headerlink" title="array_uintersect($array1,$array2,[…], callable $data_compare_func) 计算数组的交集，用回调函数比较数据"></a>array_uintersect($array1,$array2,[…], callable $data_compare_func) 计算数组的交集，用回调函数比较数据</h3><p>返回一个数组，该数组包含了所有在array1中也同时出现在所有其它参数数组中的值。数据比较是用回调函数进行的<br>此比较是通过用户提供的回调函数来进行的<br>如果认为第一个参数小于，等于，或大于第二个参数时必须分别返回一个小于零，等于零，或大于零的整数</p>
+<p>$array1 = array(“a” =&gt; “green”, “b” =&gt; “brown”, “c” =&gt; “blue”, “red”);<br>$array2 = array(“a” =&gt; “GREEN”, “B” =&gt; “brown”, “yellow”, “red”);<br>array_uintersect($array1, $array2,”strcasecmp”);</p>
+<p>Array(<br>    [a] =&gt; green<br>    [b] =&gt; brown<br>    [0] =&gt; red<br>)</p>
+<h3 id="array-values-input-返回所有的值"><a href="#array-values-input-返回所有的值" class="headerlink" title="array_values($input) 返回所有的值"></a>array_values($input) 返回所有的值</h3><p>返回input数组中所有的值并给其建立数字索引</p>
+<p>$array=array(“size”=&gt;”XL”,”color”=&gt;”gold”);<br>array_values($array);</p>
+<p>Array(<br>    [0] =&gt; XL<br>    [1] =&gt; gold<br>)</p>
+<h3 id="array-walk-array-funcname-userdata-NULL-使用用户自定义函数对数组中的每个元素做回调处理"><a href="#array-walk-array-funcname-userdata-NULL-使用用户自定义函数对数组中的每个元素做回调处理" class="headerlink" title="array_walk($array,$funcname,[$userdata=NULL]) 使用用户自定义函数对数组中的每个元素做回调处理"></a>array_walk($array,$funcname,[$userdata=NULL]) 使用用户自定义函数对数组中的每个元素做回调处理</h3><p>将用户自定义函数funcname应用到array数组中的每个单元<br>array_walk()不会受到array内部数组指针的影响array_walk()会遍历整个数组而不管指针的位置</p>
+<h3 id="sizeof-count-功能相同"><a href="#sizeof-count-功能相同" class="headerlink" title="sizeof()   count()  功能相同"></a>sizeof()   count()  功能相同</h3><h3 id="current-pos-返回数组中的当前单元"><a href="#current-pos-返回数组中的当前单元" class="headerlink" title="current()  pos()  返回数组中的当前单元"></a>current()  pos()  返回数组中的当前单元</h3><p>每个数组中都有一个内部的指针指向它”当前的”单元，初始指向插入到数组中的第一个单元<br>current()函数返回当前被内部指针指向的数组单元的值，并不移动指针<br>如果内部指针指向超出了单元列表的末端，current()返回 FALSE</p>
+<h3 id="prev-将数组的内部指针倒回一位"><a href="#prev-将数组的内部指针倒回一位" class="headerlink" title="prev() 将数组的内部指针倒回一位"></a>prev() 将数组的内部指针倒回一位</h3><p>上一个</p>
+<h3 id="next-将数组中的内部指针向前移动一位"><a href="#next-将数组中的内部指针向前移动一位" class="headerlink" title="next() 将数组中的内部指针向前移动一位"></a>next() 将数组中的内部指针向前移动一位</h3><p>下一个</p>
+<h3 id="reset-将数组的内部指针指向第一个单元"><a href="#reset-将数组的内部指针指向第一个单元" class="headerlink" title="reset() 将数组的内部指针指向第一个单元"></a>reset() 将数组的内部指针指向第一个单元</h3><p>返回第一个</p>
+<h3 id="end-将数组的内部指针指向最后一个单元"><a href="#end-将数组的内部指针指向最后一个单元" class="headerlink" title="end() 将数组的内部指针指向最后一个单元"></a>end() 将数组的内部指针指向最后一个单元</h3><p>最后一个</p>
+<h3 id="key-从关联数组中取得键名"><a href="#key-从关联数组中取得键名" class="headerlink" title="key() 从关联数组中取得键名"></a>key() 从关联数组中取得键名</h3><p>返回数组中内部指针指向的当前单元的键名，但它不会移动指针<br>如果内部指针超过了元素列表尾部，或者数组是空的，key() 会返回NULL</p>
+<p>$transport = array(‘foot’, ‘bike’, ‘car’, ‘plane’);<br>$mode = current($transport); // $mode = ‘foot’;<br>$mode = next($transport);    // $mode = ‘bike’;<br>$mode = current($transport); // $mode = ‘bike’;<br>$mode = prev($transport);    // $mode = ‘foot’;<br>$mode = end($transport);     // $mode = ‘plane’;<br>$mode = current($transport); // $mode = ‘plane’;</p>
+<p>$arr = array();<br>var_dump(current($arr)); // bool(false)</p>
+<p>$arr = array(array());<br>var_dump(current($arr)); // array(0) { }</p>
+<h3 id="each-返回数组中当前的键／值对并将数组指针向前移动一步"><a href="#each-返回数组中当前的键／值对并将数组指针向前移动一步" class="headerlink" title="each() 返回数组中当前的键／值对并将数组指针向前移动一步"></a>each() 返回数组中当前的键／值对并将数组指针向前移动一步</h3><p>$foo = array(“Robert”=&gt;”Bob”,”Seppo” =&gt;”Sepi”);<br>$bar = each($foo);</p>
+<p>Array(<br>    [1] =&gt; Bob<br>    [value] =&gt; Bob<br>    [0] =&gt; Robert<br>    [key] =&gt; Robert<br>)</p>
+<p>$fruit=array(‘a’=&gt;’apple’,’b’=&gt;’banana’,’c’ =&gt;’cranberry’);<br>reset($fruit);<br>while(list($key, $val)=each($fruit)){<br>    echo “$key =&gt; $val\n”;<br>}</p>
+<p>a =&gt; apple<br>b =&gt; banana<br>c =&gt; cranberry</p>
+<h3 id="in-array-needle-haystack-strict-FALSE-检查数组中是否存在某个值"><a href="#in-array-needle-haystack-strict-FALSE-检查数组中是否存在某个值" class="headerlink" title="in_array($needle,$haystack[$strict = FALSE]) 检查数组中是否存在某个值"></a>in_array($needle,$haystack[$strict = FALSE]) 检查数组中是否存在某个值</h3><p>$os = array(“Mac”, “NT”, “Irix”, “Linux”);<br>if (in_array(“Irix”, $os)) {<br>    echo “Got Irix”;<br>}</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2017/PHP%E6%95%B0%E7%BB%84/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/PHP/">
+              #PHP
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2017/PHP%E8%AF%BB%E5%8F%96excel%E6%95%B0%E6%8D%AE%E8%BD%AC%E4%B8%BA%E6%95%B0%E7%BB%84/" target="_self">php读取excel数据转为数组</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2017/GIT-BASH%E4%BD%BF%E7%94%A8/" target="_self">GIT-BASH使用</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>redis笔记 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="笔记,笔记," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>redis笔记</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2019-08-31
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%AC%94%E8%AE%B0/">
+            笔记
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="Redis笔记"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h3 id="获取"><a href="#获取" class="headerlink" title="获取"></a>获取</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 获取info</span><br><span class="line">$interface_info &#x3D; $_GET[&#39;info&#39;];</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 存入redis队列</span><br><span class="line">$redis &#x3D; new Redis();</span><br><span class="line">$redis-&gt;connect(&#39;xx&#39;, 6379);</span><br><span class="line">$redis-&gt;auth(&quot;password&quot;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 加上时间戳存入队列</span><br><span class="line">$now_time &#x3D; date(&quot;Y-m-d H:i:s&quot;);</span><br><span class="line">$redis-&gt;rPush(&quot;call_log&quot;, $interface_info . &quot;%&quot; . $now_time);</span><br><span class="line">$redis-&gt;close();</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置密码"><a href="#设置密码" class="headerlink" title="设置密码"></a>设置密码</h3><p><code>CONFIG SET requirepass &quot;123456&quot;</code></p>
+<h3 id="批量入库"><a href="#批量入库" class="headerlink" title="批量入库"></a>批量入库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; init redis</span><br><span class="line">$redis_xx &#x3D; new Redis();</span><br><span class="line">$redis_xx-&gt;connect(&#39;ip&#39;, port);</span><br><span class="line">$redis_xx-&gt;auth(&quot;password&quot;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取现有消息队列的长度</span><br><span class="line">$count &#x3D; 0;</span><br><span class="line">$max &#x3D; $redis_xx-&gt;lLen(&quot;call_log&quot;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取消息队列的内容，拼接sql</span><br><span class="line">$insert_sql &#x3D; &quot;insert into fb_call_log (&#96;interface_name&#96;, &#96;createtime&#96;) values &quot;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 回滚数组</span><br><span class="line">$roll_back_arr &#x3D; array();</span><br><span class="line"></span><br><span class="line">while ($count &lt; $max) &#123;</span><br><span class="line">    $log_info &#x3D; $redis_cq01-&gt;lPop(&quot;call_log&quot;);</span><br><span class="line">    $roll_back_arr &#x3D; $log_info;</span><br><span class="line">    if ($log_info &#x3D;&#x3D; &#39;nil&#39; || !isset($log_info)) &#123;</span><br><span class="line">        $insert_sql .&#x3D; &quot;;&quot;;</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 切割出时间和info</span><br><span class="line">    $log_info_arr &#x3D; explode(&quot;%&quot;,$log_info);</span><br><span class="line">    $insert_sql .&#x3D; &quot; (&#39;&quot;.$log_info_arr[0].&quot;&#39;,&#39;&quot;.$log_info_arr[1].&quot;&#39;),&quot;;</span><br><span class="line">    $count++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 判定存在数据，批量入库</span><br><span class="line">if ($count !&#x3D; 0) &#123;</span><br><span class="line">    $link_2004 &#x3D; mysql_connect(&#39;ip:port&#39;, &#39;user&#39;, &#39;password&#39;);</span><br><span class="line">    if (!$link_2004) &#123;</span><br><span class="line">        die(&quot;Could not connect:&quot; . mysql_error());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $crowd_db &#x3D; mysql_select_db(&#39;fb_log&#39;, $link_2004);</span><br><span class="line">    $insert_sql &#x3D; rtrim($insert_sql,&quot;,&quot;).&quot;;&quot;;</span><br><span class="line">    $res &#x3D; mysql_query($insert_sql);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 输出入库log和入库结果;</span><br><span class="line">    echo date(&quot;Y-m-d H:i:s&quot;).&quot;insert &quot;.$count.&quot; log info result:&quot;;</span><br><span class="line">    echo json_encode($res);</span><br><span class="line">    echo &quot;&lt;&#x2F;br&gt;\n&quot;;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 数据库插入失败回滚</span><br><span class="line">    if(!$res)&#123;</span><br><span class="line">       foreach($roll_back_arr as $k)&#123;</span><br><span class="line">           $redis_xx-&gt;rPush(&quot;call_log&quot;, $k);</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    &#x2F;&#x2F; 释放连接</span><br><span class="line">    mysql_free_result($res);</span><br><span class="line">    mysql_close($link_2004);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 释放redis</span><br><span class="line">$redis_cq01-&gt;close();</span><br></pre></td></tr></table></figure>
+
+<h3 id="离线天级统计和清理数据脚本"><a href="#离线天级统计和清理数据脚本" class="headerlink" title="离线天级统计和清理数据脚本"></a>离线天级统计和清理数据脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 离线统计</span><br><span class="line">$link_2004 &#x3D; mysql_connect(&#39;ip:port&#39;, &#39;user&#39;, &#39;pwd&#39;);</span><br><span class="line">if (!$link_2004) &#123;</span><br><span class="line">    die(&quot;Could not connect:&quot; . mysql_error());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$crowd_db &#x3D; mysql_select_db(&#39;fb_log&#39;, $link_2004);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 统计昨天的数据</span><br><span class="line">$day_time &#x3D; date(&quot;Y-m-d&quot;, time() - 60 * 60 * 24 * 1);</span><br><span class="line">$static_sql &#x3D; &quot;get sql&quot;;</span><br><span class="line"></span><br><span class="line">$res &#x3D; mysql_query($static_sql, $link_2004);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取结果入库略</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 清理15天之前的数据</span><br><span class="line">$before_15_day &#x3D; date(&quot;Y-m-d&quot;, time() - 60 * 60 * 24 * 15);</span><br><span class="line">$delete_sql &#x3D; &quot;delete from xxx where createtime &lt; &#39;&quot; . $before_15_day . &quot;&#39;&quot;;</span><br><span class="line">try &#123;</span><br><span class="line">    $res &#x3D; mysql_query($delete_sql);</span><br><span class="line">&#125;catch(Exception $e)&#123;</span><br><span class="line">    echo json_encode($e).&quot;\n&quot;;</span><br><span class="line">    echo &quot;delete result:&quot;.json_encode($res).&quot;\n&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mysql_close($link_2004);</span><br></pre></td></tr></table></figure>
+
+<p>REDIS<br>支持strings, hashes, lists, sets, sorted sets </p>
+<p>启动 redis-server.exe redis.conf</p>
+<p>连接 redis-cli.exe -h 192.168.10.156 -p 6379</p>
+<p>$redis-&gt;flushdb();  # 删除当前数据库所有key<br>$redis-&gt;flushdb()</p>
+<p>$redis-&gt;expire(‘name’,30);  # 设置生存时间为30秒 </p>
+<p>$redis-&gt;ttl(‘name’);             #返回生存时间</p>
+<p>返回给定key的剩余生存时间(time to live)(以秒为单位)。</p>
+<p>$redis-&gt;exists(‘db’)     检查给定key是否存在。<br>返回值：若key存在，返回1，否则返回0。</p>
+<p>$redis-&gt;SELECT(0); # redis默认使用数据库0<br>$redis-&gt;SET(‘song’,”secret base - Zone”); //OK<br>var_dump ($redis-&gt;MOVE(‘song’,1)); # 将song移动到数据库1 //bool(true)</p>
+<p>不存在  返回false      1库中  有相同的key    都不会做改变</p>
+<p>KEYS <em>命中数据库中所有key。<br>KEYS h?llo命中hello， hallo and hxllo等。<br>KEYS h</em>llo命中hllo和heeeeello等。<br>KEYS h[ae]llo命中hello和hallo，但不命中hillo。<br>特殊符号用”&quot;隔开</p>
+<p>$redis-&gt;RENAME(‘message’,’greeting’)    修改key</p>
+<p>$redis-&gt;SET(‘pc’,”lenovo”);<br>$redis-&gt;SET(‘personal_computer’,”dell”);<br>var_dump($redis-&gt;RENAME(‘pc’,’personal_computer’)); //bool(true)<br>var_dump($redis-&gt;GET(‘pc’)); //(nil) bool(false)<br>var_dump($redis-&gt;GET(‘personal_computer’)); # dell“没有”了 //</p>
+<p>2个key    将key改名为newkey。</p>
+<p>当key和newkey相同或者key不存在时，返回一个错误。</p>
+<p>当newkey已经存在时，RENAME命令将覆盖旧值。</p>
+<p>$redis-&gt;type(‘name’)    获取到存储的类型  </p>
+<p>$redis-&gt;SET(‘weather’,”sunny”); # 构建一个字符串 string</p>
+<p>$redis-&gt;SADD(‘pat’,”dog”); # 构建一个集合 //set </p>
+<p>$redis-&gt;LPUSH(‘book_list’,”programming in scala”); # 构建一个列表//list </p>
+<p>$redis-&gt;ZADD(‘pats’,1,’cat’); # 构建一个zset (sorted set)<br>$redis-&gt;ZADD(‘pats’,2,’dog’);<br>$redis-&gt;ZADD(‘pats’,3,’pig’);<br>var_dump($redis-&gt;zRange(‘pats’,0,-1)); // array(3)</p>
+<p>{ [0]=&gt; string(3) “cat” [1]=&gt; string(3) “dog” [2]=&gt; string(3) “pig” }<br>var_dump($redis-&gt;TYPE(‘pats’)); //zset / int(4)<br>$redis-&gt;HSET(‘website’,’google’,’<a target="_blank" rel="noopener" href="http://www.g.cn&/#39;">www.g.cn&#39;</a>); # 一个新域<br>var_dump($redis-&gt;HGET(‘website’,’google’)); //string(8) “<a target="_blank" rel="noopener" href="http://www.g.cn&quot;/">www.g.cn&quot;</a><br>var_dump($redis-&gt;TYPE(‘website’)); //hash /int(5)</p>
+<p>EXPIREAT   unix时间戳时间     设置过期时间</p>
+<p>$redis-&gt;SET(‘cache’,’<a target="_blank" rel="noopener" href="http://www.google.com&/#39;">www.google.com&#39;</a>);<br>echo $redis-&gt;EXPIREAT(‘cache’,’1355292000’); # 这个key将在2012.12.12过期</p>
+<p>echo ($redis-&gt;TTL(‘cache’)); //return 124345085</p>
+<p>PERSIST    移除给定key的生存时间。</p>
+<p>$redis-&gt;PERSIST(‘time_to_say_goodbye’)</p>
+<p>sort  排序</p>
+<p>$redis-&gt;LPUSH(‘today_cost’, 30);<br>$redis-&gt;LPUSH(‘today_cost’, 1.5);<br>$redis-&gt;LPUSH(‘today_cost’, 10);<br>$redis-&gt;LPUSH(‘today_cost’, 8);</p>
+<p>var_dump($redis-&gt;SORT(‘salary’));<br>var_dump($redis-&gt;SORT(‘website’, array(‘ALPHA’=&gt;TRUE)));   字符串</p>
+<p>$redis-&gt;LPUSH(‘salary’, 11); //(integer) 6<br>$redis-&gt;LPUSH(‘salary’, 32); //(integer) 7<br>$redis-&gt;LPUSH(‘salary’, 67); //(integer) 8<br>$redis-&gt;LPUSH(‘salary’, 50); //(integer) 9<br>$redis-&gt;LPUSH(‘salary’, 44); //(integer) 10<br>$redis-&gt;LPUSH(‘salary’, 55); //(integer) 11</p>
+<h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><p>$redis_sort_option=array(‘LIMIT’=&gt;array(0,5));       取出0—-5的数据<br>var_dump($redis-&gt;SORT(‘salary’,$redis_sort_option));      排序</p>
+<p>$redis_sort_option=array(‘LIMIT’=&gt;array(0,5),’SORT’=&gt;’DESC’);   降序</p>
+<p>var_dump($redis-&gt;SORT(‘salary’,$redis_sort_option));</p>
+<p>BY排序    GET获取 </p>
+<p>使用user_level_<em>降序    返回user_level_</em>的*     id</p>
+<p>$redis_sort_option=array(‘BY’=&gt;’user_level_*’,’SORT’=&gt;’DESC’);<br>var_dump($redis-&gt;SORT(‘user_id’,$redis_sort_option));</p>
+<p>使用user_level_<em>降序    返回user_name_</em>的*    name<br>$redis_sort_option=array(‘BY’=&gt;’user_level_*’,’SORT’=&gt;’DESC’,’GET’=&gt;’user_name_*’);<br>var_dump($redis-&gt;SORT(‘user_id’, $redis_sort_option));</p>
+<p>set（）    当key 存在时，会对原数据进行覆盖</p>
+<p>SETNX     SET Not eXists”(如果不存在，则SET)的简写。</p>
+<p>将key的值设为value，当且仅当key不存在。</p>
+<p>若给定的key已经存在，则SETNX不做任何动作。</p>
+<p>setex   关联值和设置生存时间两个动作会在同一时间内完成<br>将值value关联到key，并将key的生存时间设为seconds(以秒为单位)。</p>
+<p>如果key 已经存在，SETEX命令将覆写旧值。</p>
+<p>这个命令类似于以下两个命令：</p>
+<p>$redis-&gt;SET(‘key’, ‘value’);<br>$redis-&gt;EXPIRE(‘key’,’seconds’); # 设置生存时间</p>
+<p>设置cache_user_id=10086    60秒  </p>
+<p>$redis-&gt;SETEX(‘cache_user_id’, 60,10086);//bool(true)<br>echo $redis-&gt;GET(‘cache_user_id’); # 值 //“10086”<br>sleep(4);<br>echo $redis-&gt;TTL(‘cache_user_id’);     //56</p>
+<p>mset（）   一次设置多个值</p>
+<p>msetnx（）   没有key时  才会设置</p>
+<p>#用MSET一次储存多个值    结果为多条记录</p>
+<p>$array_mset_keys=array(‘one’=&gt;’1’,<br>‘two’=&gt;’2’,<br>‘three ‘=&gt;’3’,<br>‘four’=&gt;’4’);<br>$redis-&gt;mset($array_mset_keys); </p>
+<p>$redis-&gt;APPEND(‘myphone’,”nokia”)     存在就追加到最后   没有就直接设置</p>
+<p>$redis-&gt;get()       只能获取字符串的值</p>
+<p>$redis-&gt;mget()    返回所有(一个或多个)给定key的值。</p>
+<p>GETSET       设置新值，返回旧的值</p>
+<p>将给定key的值设为value，并返回key的旧值。</p>
+<p>当key存在但不是字符串类型时，返回一个错误。</p>
+<p>STRLEN      返回key所储存的字符串值的长度。</p>
+<p>当key储存的不是字符串值时，返回一个错误。</p>
+<p>INCR/DECR    将key中储存的数字值+1  /-1。</p>
+<p>如果key不存在，以0为key的初始值，然后执行INCR操作。</p>
+<p>如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误。</p>
+<p>INCRBY/DECRBY     将key所储存的值加上增量increment/减去。  </p>
+<p>如果key不存在，以0为key的初始值，然后执行INCRBY命令。</p>
+<p>哈希表(Hash)<br>HSET     将哈希表key中的域field的值设为value。<br>如果field是哈希表中的一个新建域，并且值设置成功，返回1。<br>如果哈希表中域field已经存在且旧值已被新值覆盖，返回0。</p>
+<p>HSETNX     将哈希表key中的域field的值设置为value，当且仅当域field不存在。<br>设置成功，返回1。如果给定域已经存在且没有操作被执行，返回0。</p>
+<p>HMSET     同时将多个field - value(域-值)对设置到哈希表key中。会覆盖哈希表中已存在的域。</p>
+<p>如果key不存在，一个空哈希表被创建并执行HMSET操作。<br>如果命令执行成功，返回OK。当key不是哈希表(hash)类型时，返回一个错误。</p>
+<p>HGET    返回哈希表key中给定域field的值。<br>当给定域不存在或是给定key不存在时，返回nil。</p>
+<p>HMGET    如果给定的域不存在于哈希表，那么返回一个nil值。</p>
+<p>因为不存在的key被当作一个空哈希表来处理，所以对一个不存在的key进行HMGET操作将返回一个只带有nil值的表。<br>一个包含多个给定域的关联值的表，表值的排列顺序和给定域参数的请求顺序一样。</p>
+<p>HGETALL 返回哈希表key中，所有的域和值。<br>在返回值里，紧跟每个域名(field name)之后是域的值(value)，所以返回值的长度是哈希表大小的两倍。<br>返回值：以列表形式返回哈希表的域和域的值。 若key不存在，返回空列表。</p>
+<p>HDEL 删除哈希表key中的一个或多个指定域，不存在的域将被忽略。</p>
+<p>HLEN 哈希表中域的数量。当key不存在时，返回0。</p>
+<p>HINCRBY 为哈希表key中的域field的值加上增量increment。<br>增量也可以为负数，相当于对给定域进行减法操作。<br>如果key不存在，一个新的哈希表被创建并执行HINCRBY命令。<br>如果域field不存在，那么在执行命令前，域的值被初始化为0。</p>
+<p>HKEYS 返回哈希表key中的所有域。当key不存在时，返回一个空表。</p>
+<p>HVALS 一个包含哈希表中所有值的表。当key不存在时，返回一个空表。</p>
+<p>`$redis = new Redis();</p>
+<p>//php客户端设置的ip及端口</p>
+<p>$redis-&gt;connect(“192.168.138.2”,”6379”);</p>
+<p>//存储一个 值</p>
+<p>$redis-&gt;set(“say”,”Hello World”);</p>
+<p>echo $redis-&gt;get(“say”);</p>
+<p>//应输出Hello World</p>
+<p>//存储多个值</p>
+<p>$array = array(‘first_key’=&gt;’first_val’, ‘second_key’=&gt;’second_val’, ‘third_key’=&gt;’third_val’); $array_get = array(‘first_key’,’second_key’,’third_key’);</p>
+<p>$redis-&gt;mset($array);</p>
+<p>var_dump($redis-&gt;mget($array_get));`</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2019/Redis%E7%AC%94%E8%AE%B0/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%AC%94%E8%AE%B0/">
+              #笔记
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2019/LINUX%E5%91%BD%E4%BB%A4/" target="_self">Linux命令</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2019/%E9%AD%94%E6%96%B9/" target="_self">魔方</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

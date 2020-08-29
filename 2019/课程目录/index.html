@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>至善文化-课程目录 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="笔记,传统文化," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>至善文化-课程目录</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2019-03-07
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%AC%94%E8%AE%B0/">
+            笔记
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="课程目录"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h3 id="一、传统文化篇"><a href="#一、传统文化篇" class="headerlink" title="一、传统文化篇"></a>一、传统文化篇</h3><p>中国传统文化核心价值的解析<br>儒释道三家文化的核心概念</p>
+<h4 id="1、儒家之说"><a href="#1、儒家之说" class="headerlink" title="1、儒家之说"></a>1、儒家之说</h4><p>儒家之说-仁义礼智信<br>儒家之说【仁】详解<br>儒家之说【义】详解<br>儒家之说【礼】详解<br>儒家之说【智】详解<br>儒家之说【信】详解<br>儒家之说【春秋】之【春】详解<br>儒家之说【春秋】之【秋】详解<br>戒律详解<br>天道详解<br>儒学是如何教我们做人的<br>儒学里的君子小人是指的什么<br>儒学里的圣人、贤人、读书人<br>儒学讲的入世修行与佛学讲的出世区别<br>三纲详解<br>三省详解<br>三从详解<br>忠孝详解<br>性命详解<br>女德讲解-温良恭俭让<br>六艺讲解-诗书礼乐驾射</p>
+<h4 id="2、佛家之说"><a href="#2、佛家之说" class="headerlink" title="2、佛家之说"></a>2、佛家之说</h4><p>佛家之说<br>佛家之说【有漏皆苦】详解<br>佛家之说【六根】详解<br>佛家之说【六尘】详解<br>佛家之说【六识】详解<br>学佛的误区<br>佛学的出世修行与解脱<br>学佛先从学做人开始<br>学佛不是学了与众不同<br>学佛的人，是越学越让人喜欢的人<br>学佛的人，如何正确与家人相处<br>如何正确看待一些不守戒的僧人<br>佛学讲的扬善不扬恶的科学道理<br>佛学中吃素的意义<br>佛学中的假我和我执、我见是什么<br>学佛是学给自己的，不是学给自我标榜的<br>因果详解<br>三皈详解<br>五戒详解<br>三世详解<br>三毒详解<br>缘起详解<br>色与空的详解<br>有漏皆苦详解<br>见地详解<br>修正详解<br>行愿详解<br>学佛从哪里学起<br>念佛念的是什么<br>如何拜佛才有益</p>
+<h4 id="3、道家之说"><a href="#3、道家之说" class="headerlink" title="3、道家之说"></a>3、道家之说</h4><p>道家之说<br>阴阳详解<br>道德详解<br>行愿详解<br>三界详解<br>五行详解<br>三星详解<br>炼丹详解<br>三清详解<br>三仙详解<br>道家文化衰落的根由<br>道家的阴阳论<br>道学的道德论详解<br>道家文化的核心概念-三界<br>道家最讲性心身同修，而非只修身<br>道家炼丹的误解，内丹和外丹<br>道家的降妖捉鬼与佛学的超度<br>道家的自我约束与道家戒律<br>道医<br>道家的普世修行<br>道士的救世之功</p>
+<h3 id="二、家庭幸福篇"><a href="#二、家庭幸福篇" class="headerlink" title="二、家庭幸福篇"></a>二、家庭幸福篇</h3><p>什么是六合家庭<br>当代人最需要的家规<br>当代人最需要的家教<br>当代人最需要的家风<br>六合家庭之父亲、母亲<br>六合家庭之丈夫、妻子<br>六合家庭之儿子、女儿<br>亲人的缺点是我拥有他（她）的条件<br>我们该学习隐忍吗<br>与人相处到底该怎样沟通<br>如何做到放下<br>什么样的人是懂得感恩<br>生存的含义是什么<br>学习做人我们为什么要学会认错<br>不发牢骚、不抱怨、不与烦恼结缘<br>如何给自己积福<br>美丽的容颜，是如何得来的<br>生命的经历，是你成长的年轮<br>生命的历程，如何幸福的行走<br>快速获得财富和幸福的的秘密方法<br>活着、生活、干活、活动、做活<br>如何让自己的心保持善意的快乐<br>幸福是追求来的？还是你附身捡起来的？<br>说话给你生活带来什么<br>心的计较，让你的生命多么灰暗<br>欢喜不放假，欢喜不关机<br>降伏其心详解<br>婚姻中的名与命-什么是妻子、老婆、太太、媳妇、女人<br>婚姻中的名与命-什么是丈夫、老公、先生、相公、官人<br>夫妻该如何相敬相宾<br>让你失去婚姻幸福的根源在哪里？<br>夫妻之间的平常心<br>婚姻中的家庭舞台、谁是主角<br>你们夫妻之间“爱”的虚伪吗？<br>为什么你的男人不上进、吃软饭<br>丈夫不良行为（出轨、赌博、酗酒）的根源在哪里？如何铲除？<br>破坏婚姻幸福的行为有哪些<br>丈夫为什么和老婆说谎<br>妻子的哪些言语行为打压丈夫的运气<br>家庭与事业的关系<br>对子女七不责<br>对父母五不想</p>
+<h4 id="1、孩子篇"><a href="#1、孩子篇" class="headerlink" title="1、孩子篇"></a>1、孩子篇</h4><p>养儿女三步教育-幼儿养性<br>养儿女三步教育-童蒙养正<br>养儿女三步教育-少年养志<br>学习与家务哪个重要<br>为什么说儿子要难养、富养<br>为什么说女儿要素养、贵养<br>父母该用怎样的态度、语言、行为对待孩子<br>孩子读书，用身学和用心学的区别<br>为什么说家庭舞台是孩子社会舞台的缩影<br>孩子要接受哪些苦-读书学习<br>孩子要接受哪些苦-批评<br>孩子要接受哪些苦-不公平<br>孩子要接受哪些苦-分离<br>孩子要接受哪些苦-变迁<br>孩子要接受哪些苦-失败<br>孩子要接受哪些苦-残缺<br>孩子要接受哪些苦-遗憾<br>孩子要接受哪些苦-不被理解<br>孩子要接受哪些苦-教养<br>怎样做一个好的父母<br>如何教育孩子用心学习<br>孩子学习精神不集中好动的原因？如何才能避免？<br>孩子不爱学习、不好读书的原因<br>孩子为什么叛逆、不听话，该如何解决<br>父母如何做才能让孩子理解和体贴<br>孩子婚姻吉凶与父母心态的关系<br>富人家的孩子穷养，越来越富<br>穷人家的孩子富养，越来越穷<br>十种溺爱孩子的表现<br>孩子为什么要做好家务，才能学好做人</p>
+<h4 id="2、恋爱婚姻篇"><a href="#2、恋爱婚姻篇" class="headerlink" title="2、恋爱婚姻篇"></a>2、恋爱婚姻篇</h4><p>恋爱，恋的是什么？爱的是什么？<br>爱和情的关系<br>男孩如何恋个好妻子<br>女孩如何恋个好丈夫<br>恋爱的误区<br>大龄青年该如何恋爱<br>为什么会有大龄青年<br>恋爱的浪漫和婚姻的痛苦<br>婚姻的定数与变数<br>离异再婚男女恋爱应该注意什么<br>吉祥的婚礼与吉祥的婚姻<br>离婚的女人如何找回自己的幸福<br>男女在爱情中的错位<br>爱情的浪漫与婚姻的无奈为什么会纠缠在一起<br>恋爱时同居与流产对婚姻和未来幸福有什么伤害<br>爱情真是的内涵是什么<br>大龄的剩男剩女成就婚姻的秘诀是什么<br>为什么老妻子爱唠叨<br>配偶的对错对自己意味着什么<br>相亲的技巧<br>恋爱的误区与试婚痛苦<br>离异再婚男女恋爱应该注意什么<br>什么样的婚礼才吉祥<br>恋爱的理智冷静，婚姻的糊涂浪漫<br>婚姻是糊涂，恋爱是精明<br>儿女不孝的悲哀<br>婚姻与恋爱的区别<br>婚姻中的遭遇与伤害<br>配偶的错对自己意味着什么<br>婚姻的价值是尊重不是要求<br>夫妻之间谁克谁，如何克的</p>
+<h4 id="3、女人篇"><a href="#3、女人篇" class="headerlink" title="3、女人篇"></a>3、女人篇</h4><p>如何做一个幸福的女人<br>与丈夫相处的技巧是什么<br>如何有个好的婚姻<br>母亲在家庭里起到哪些作用<br>什么样的才是好女人<br>孩子疾病与母亲的关系<br>女人什么样的言行让丈夫远离你<br>婚姻里令女人痛苦的根源是什么<br>做个好女人有多难<br>如何做个幸福女人<br>女人事业有成而无家庭幸福的痛苦与悲哀<br>如何做个事业家庭双丰收的女人<br>女人活好自己的秘密再哪里<br>如何做一个降服男人的女人<br>如何抓住男人的软肋<br>为什么说男人像翡翠、女人像棉花<br>女人学会柔和后会有哪些好处<br>幸福女人是如何活出来的<br>女人如何展现自己的美丽<br>女人保持魅力迷人的秘密<br>贫穷女人是如何说话的<br>女人对丈夫说话的态度语气内容与丈夫的运气<br>出轨女人心理分析<br>独身女人的苦楚<br>女人的痛苦是从哪里来的<br>伤女人心的罪魁祸首是谁<br>浪漫女人的喜与悲<br>事业有成强女人的脆弱<br>辛苦一生而无人体贴的女人<br>女人的幸福是谁给你的<br>如何活出女人自己的精彩<br>家庭事业双丰收的女人<br>赌博女人的才能<br>爱美的女人错在哪里<br>懒惰女人的福气<br>霸道女人的可爱与悲哀<br>懦弱受气女人出苦的方法<br>家暴女人的原因<br>忍辱女人的结果<br>做情人们的女人<br>女人的累<br>未婚人流对生命的伤害<br>男人眼里的女人是什么<br>好女人是什么样子的<br>坏女人是什么样子的<br>女人的三个等级，三个身份<br>女人为何被古人说是小人<br>女人被认可的伟大是什么<br>女人辛苦付出而又不受待见的原因<br>什么样的女人是福薄命薄的<br>孤独女人的样子<br>怨恨给女人带来了什么<br>有情绪女人的悲哀<br>生气上火上女人得到了什么<br>旺家旺夫旺子的女人<br>败家娘们的言语行为<br>优秀女人喜欢什么样的男人<br>男人心中最宠爱的女人<br>女人的七寸<br>如何纠正丈夫常常说谎的问题<br>女人需要的爱，其实很廉价<br>女人做一本男人读不懂的书<br>女人的三个等级<br>为什么说女人是弱者<br>女人喜欢坏男人的原因<br>女人对性的认知<br>女人好强的幸福和悲哀<br>女人如何养了一个变心的男人<br>打造优雅幸福的女人，幸福优雅女人是如何活出来的<br>什么样的女人克夫克子又败家<br>教你如何做一个旺夫旺子又旺家的女人<br>婚姻中女人是如何受伤的<br>女人如何跳出自己划出的情感的牢狱<br>是喜福是喜星<br>谁让你成了媳妇，儿媳妇<br>媳妇的苦和累<br>媳妇是成就女人幸福和伟大必须经历的风景<br>媳妇如水，如花如风如大地<br>媳妇该做的是什么？不该做的是什么？</p>
+<h4 id="4、男人篇"><a href="#4、男人篇" class="headerlink" title="4、男人篇"></a>4、男人篇</h4><p>男人是什么<br>男人的心胸与吉凶<br>痛苦和失败对男人意味着什么<br>好男人好在哪里<br>人生的经历给男人带来了什么<br>大男人大的是什么<br>男人的脆弱与堕落<br>男人的孤独<br>男人的浪漫<br>男人为什么需要安慰<br>女人眼里的男人<br>赌博男人的心理分析<br>男人对性的理解<br>嫖娼男人的心理<br>情人给男人带来了什么<br>男人的需求是什么<br>小男人的样子<br>酗酒男人的悲哀<br>夜不归宿的男人去了哪里？<br>男人的谎言告诉了你什么<br>男人是难人的含义<br>父亲在家庭里起到哪些作用？<br>男人对妻子以外的女人动心的原因是什么<br>爱妻子的男人为什么还出轨<br>嗜酒男人的苦恼<br>男人如何读懂自己的老婆<br>男人想要驾驭老婆必须要做到的两个方面<br>三个等级的男人你是那个等级<br>好男人需要做些什么<br>如何赢得妻子对自己的崇敬<br>优秀的女人喜欢什么样的男人<br>男人心中最爱的女人是什么样子的<br>丈夫为什么与妻子说谎<br>老婆的唠叨是什么<br>男人的特性<br>如何爱出一个好女人<br>读不懂自己的老婆，做不好丈夫<br>驾驭老婆要做到什么</p>
+<h4 id="5、婆媳关系篇"><a href="#5、婆媳关系篇" class="headerlink" title="5、婆媳关系篇"></a>5、婆媳关系篇</h4><p>饮水思源<br>婆婆在生活中有什么做用<br>婆婆像妈一样爱你的秘密<br>做婆婆的误区<br>做媳妇的误区<br>为什么要做个明理的好媳妇<br>婆婆和儿媳内在命里的因果关系<br>婆婆和媳妇误会和自律<br>为什么说婆媳是恩人也是仇人<br>婆婆刁难和不公平说明了什么<br>和婆婆相处的智慧和方法<br>如何了解婆婆，降服婆婆<br>你和婆婆的关系，对你孩子和丈夫的影响<br>如何与婆婆相处<br>让婆婆像妈妈一样爱你的秘密</p>
+<h4 id="6、胎教篇"><a href="#6、胎教篇" class="headerlink" title="6、胎教篇"></a>6、胎教篇</h4><p>什么是胎教胎教的科学道理<br>胎教与孩子未来的健康<br>胎教给孩子的未来奠定了一切基础<br>如何生一个健康又天才的宝宝<br>孕妇如何养胎<br>怀孕困难女人的问题在哪<br>孕妇顺利生产的窍门<br>妻子怀孕时丈夫该怎么做<br>妻子怀孕时父母和公婆该怎么做<br>怀孕时周边环境对胎儿的影响<br>孕妇的注意事项</p>
+<h3 id="三、命运吉凶篇"><a href="#三、命运吉凶篇" class="headerlink" title="三、命运吉凶篇"></a>三、命运吉凶篇</h3><p>命的内涵是什么<br>命与运的关系<br>命与名的关系<br>命与心的关系<br>命的变数与定数<br>命与事业的关系<br>命与金钱的关系<br>命与婚姻的关系<br>命与健康的关系<br>命与父母的关系<br>命与子女的关系<br>个体命运与社会价值<br>八字与命运的吉凶关系<br>五行与命运的吉凶关系<br>算命算的是什么<br>扭转改变命运从哪做起<br>夭折之人的命是什么状态<br>意外死亡的人是什么命运状态<br>命里的灾难如何化解<br>转变贫穷命运的方法<br>富贵命运的三组合<br>影响命运好坏的因素-说话<br>影响命运好坏的因素-听话<br>影响命运好坏的因素-吃饭<br>影响命运好坏的因素-走路<br>影响命运好坏的因素-表情<br>影响命运好坏的因素-穿着<br>影响命运好坏的因素-爱好<br>七把改变命运金钥匙-说<br>七把改变命运金钥匙-听<br>七把改变命运金钥匙-表情<br>七把改变命运金钥匙-习惯<br>七把改变命运金钥匙-心性<br>七把改变命运金钥匙-爱好<br>七把改变命运金钥匙-习惯<br>七把改变命运金钥匙-听<br>改变命运靠什么<br>各种算命术的原理<br>举止行为与命运吉凶<br>网名与命运吉凶<br>微信头像与命运吉凶<br>命好命坏与你心态的关系<br>好坏十种人<br>宿命的定数<br>命运的变数<br>改变命运的原理<br>改变命运的具体方法<br>祈福改命法<br>习惯改命法<br>心性改命法<br>五行改命法<br>礼貌礼仪改命法<br>体面相改命法<br>属相和命运的吉凶关系<br>属相相冲、相合与命运的吉凶<br>属相六冲六合中的科学和哲学之理<br>天干与命运解密<br>十二属相内涵外延<br>流年太岁与命运吉凶的关系<br>太岁化解揭秘<br>逐年吉祥色<br>家庭五行因果关系与命运吉凶<br>手把件核桃、手串、玉石等与心性修养命运吉凶的关系</p>
+<h3 id="四、社会价值篇"><a href="#四、社会价值篇" class="headerlink" title="四、社会价值篇"></a>四、社会价值篇</h3><p>事业成功的十种人之一有福的人<br>事业成功的十种人之一富贵的人<br>事业成功的十种人之一慈悲的人<br>事业成功的十种人之一上进的人<br>事业成功的十种人之一善良的人<br>事业成功的十种人之一高尚的人<br>事业成功的十种人之一快乐的人<br>事业成功的十种人之一自在的人<br>事业成功的十种人之一自律的人<br>事业成功的十种人之一豁达的人<br>面试成功的秘密<br>如何通过面试找到满意的工作<br>在工作中如何放大自身的价值<br>如何获得满意的收入<br>成为打工皇帝梦想的秘密<br>工作中重要的三种人际关系一领导同事,客户<br>打工与做活<br>你不理解金钱,如何能容易获得金钱<br>快乐幸福轻松工作的窍门在哪里<br>创业路上阻碍成功的因素是什么三观)<br>如何化掉生活和工作中遇到的困难<br>选工作该考虑的因素是什么<br>做好工作的因素是什么<br>失败给人什么启迪是什么<br>如何面对失败怎样才能反败为胜<br>如何摆正自己与企业的位置<br>遵守公共道德秩序与我们获得财富的关系<br>对工作的态度与收入的关系<br>对工作的态度与家庭幸福的关系<br>做客服是给自己积累财富来源最好的机会<br>工作中财富和幸福的不足和有余<br>成功要从从哪里做起<br>做工事给谁做<br>工作中的不公平是从哪里体现出来的<br>吃亏与价值的关系<br>占便宜与贫穷<br>智慧的运用<br>员工与企业和老板关系吉凶<br>企业财富来源于那几个方面<br>老板的修养与企业的成败<br>如何做好企业中层管理者<br>如何做一个高收入的好员工<br>员工普遍存在的问题是什么<br>企业里的三等人<br>企业的核心凝聚力是什么<br>企业经营的灵魂是什么<br>企业亏损都是什么原因<br>企业管理存在的误区<br>打破企业瓶颈靠的是什么<br>企业领导层应具备什么样的能力<br>企业员工的管理最佳方法<br>企业客户和市场好维护和扩大<br>企业文化与企业效益的关系<br>如何运用周易对企业综合策划和指导<br>姓名学对企业人事管理的妙用<br>奇门遁甲对企业市场和产品推广定位的指导意义<br>企业流年预测对企业经营管理的帮助</p>
+<h3 id="五、灵修智慧篇"><a href="#五、灵修智慧篇" class="headerlink" title="五、灵修智慧篇"></a>五、灵修智慧篇</h3><p>如何开启我们的智慧<br>如何做一个智慧的女人<br>智慧的四个层次-智商、情商、灵商、德商<br>我们的智慧来源于哪里<br>什么是心性<br>灵魂与心性的关系<br>起心动念与命运的吉凶<br>什么是人心唯危<br>什么是道心唯微<br>人生的三种境界之一见自己<br>人生的三种境界之二见众生<br>人生的三种境界之三见天地<br>生命力与本我的链接<br>信念与喜悦恐惧的关系<br>评判别人给自己带来的烦恼<br>歧视他人他事给自己带来霉运<br>失去别人的信任的后果<br>不听没烦恼<br>不讲没灾难<br>不买入他人故事没有磨难<br>接纳越多富贵越多<br>为谁选择<br>“生气”是我们自己创造出来的<br>优越的生命是付出得来的<br>给对方留有余地是对他最好的付出<br>善用其心<br>你的观点创造了你的实相<br>放手释放才能医治内在创伤<br>放下面子<br>机会与平民,困难与精英<br>水满则溢,月满则亏<br>欲望生机会,欲望生灾难<br>自我的意识由何而来<br>人好是心好<br>财富是什么<br>得财之法<br>身心分离,身心合一<br>心性免疫力提升能量频率的方法<br>如何屏蔽污染源<br>意识与思维的关系<br>心与性的关系<br>活在当下需要的能量<br>凡是你不喜欢的都被你创造出来<br>人生三种境界<br>生命力与本我的连接<br>人生十种智慧人<br>人生三个遗憾<br>不会选择是不辩是非不自知<br>不会坚持是选择自卑懦夫<br>不断的选择是盲目好高骛远<br>三个不斗<br>三个修炼<br>三个陷阱</p>
+<h3 id="六、健康长寿篇"><a href="#六、健康长寿篇" class="headerlink" title="六、健康长寿篇"></a>六、健康长寿篇</h3><p>让你如何不得病<br>得病后该怎么调<br>病是怎么得的<br>如何做到治标又治本<br>病是如何得的<br>什么原因是让自己的病治不好<br>治愈疾病的最佳方法<br>病的生存需要什么养分<br>五章六腑的疾病与人际关系的因果<br>体内体外的疾病不同的原理<br>十二岁之内的儿童疾病与母亲的关系<br>妇科各种疾病起因<br>女人不同年龄段的疾因<br>失眠,抑郁,郁闷,的心理和物理疗法<br>老年血压高,和腿脚笨拙的调理<br>女人腰疼和颈椎问题的原因<br>中年妇女小腿浮肿的生理和命里的关系<br>各种慢性病的调理方法<br>中医治病的优势和不足<br>什么病最好看中医,什么病看西医<br>中西医看病的区别在哪里<br>西医的利弊和现代医生的理念<br>疾病和自己心情的关系<br>什么样的医生才是治病救人的<br>什么样的医生是要命索钱的<br>如何根据自己的命里选择医生和医院<br>大病恶病,产生的原因和不好治愈的根子在哪里<br>人精神系统的疾病需要精神方面的调整<br>什么是心理治疗?心理疗愈,与疗愈生理的关系<br>疾病与人的命运的关系<br>人的生命阶段不同,疾病表现也不同<br>造成生理病变的几大原因<br>养生口诀</p>
+<h3 id="七、易经文化篇"><a href="#七、易经文化篇" class="headerlink" title="七、易经文化篇"></a>七、易经文化篇</h3><p>易经的概念<br>易经对做人做事的指导<br>易经文化对生活的运用<br>易经文化所揭示的自然之理<br>易经文化所揭示的人文之理<br>先天八卦讲儒家的伦理道德<br>什么是太极图的奥秘<br>什么是古河图的奥秘<br>易经与周易的区别<br>算命与易经的关系</p>
+<h3 id="八、节目民俗禁忌篇"><a href="#八、节目民俗禁忌篇" class="headerlink" title="八、节目民俗禁忌篇"></a>八、节目民俗禁忌篇</h3><p>烧纸钱的科学与迷信<br>庙里拜佛的禁忌<br>如何拜佛让自己吉祥<br>为什么有人倒着写“福”字<br>祭祖的益处<br>节的讲究<br>节气与生命的关系<br>阴历阳历公历三种历法的区别和使用方法<br>冬至祭天、夏至祭地、春分秋分祭社稷解析<br>腊月趣说<br>小年祭灶<br>腊月大扫除的吉凶<br>家里有老人去逝后的禁忌,守孝<br>取媳嫁女的禁忌<br>二十四节气,与命运<br>物的吉凶篇<br>文玩的文明玩法<br>红白喜事时辰吉凶的选择的原理</p>
+<h3 id="九、解字说辞篇"><a href="#九、解字说辞篇" class="headerlink" title="九、解字说辞篇"></a>九、解字说辞篇</h3><p>我们该怎么说话<br>我们该如何听话<br>什么是讲理<br>如何做到尊重<br>感恩的益处有哪些<br>包容的含义是什么<br>为什么会怨恨<br>天理的含义是什么<br>道理的含义是什么<br>情理的含义是什么<br>什么是天道<br>人性详解<br>什么是天命<br>什么是宿命<br>什么是阴命<br>知天知的是什么<br>信天信的是什么<br>问天问的是什么<br>亏天亏的是什么<br>生死的含义是什么<br>夺志的含义是什么<br>夫妻有别到底是哪里不同<br>心意详解<br>鬼神是什么<br>红尘的含义是什么<br>缘分详解<br>人道的含义是什么<br>还债的含义是什么<br>什么是定数<br>什么是夺数<br>什么是出数<br>孝顺到底该怎么做<br>恋爱的含义<br>什么是男人<br>什么是女人<br>尊重该怎么做到<br>谦让的含义<br>错落有致的含义<br>心性详解<br>怨恨详解<br>烦恼详解<br>愤怒详解<br>担心详解<br>盼望详解<br>惦记详解<br>相思详解<br>悲伤详解<br>恐惧详解<br>压力详解<br>激动详解<br>贪欲详解<br>平静详解<br>包容详解<br>宽容详解<br>忍辱详解<br>淡定详解<br>豁达详解<br>坦然详解<br>潇洒详解<br>自然是什么<br>天道是什么</p>
+<h3 id="十、易经术数篇"><a href="#十、易经术数篇" class="headerlink" title="十、易经术数篇"></a>十、易经术数篇</h3><h4 id="1、姓名学"><a href="#1、姓名学" class="headerlink" title="1、姓名学"></a>1、姓名学</h4><p>姓名学基础入门<br>姓名与生命的内涵逻辑<br>姓名学高级课程<br>商品名称与人的关系<br>城市、小区、街道与人自身名字的吉凶关系<br>自身姓名与数字的能量吉关系<br>企业名称的能量吉凶关系<br>姓名学预测的原理<br>姓名学的原理</p>
+<h4 id="2、汉字预测学"><a href="#2、汉字预测学" class="headerlink" title="2、汉字预测学"></a>2、汉字预测学</h4><p>汉字预测学基础入门<br>汉字预测学高级课程<br>汉字能量学<br>汉字预测的方法</p>
+<h4 id="3、奇门遁甲"><a href="#3、奇门遁甲" class="headerlink" title="3、奇门遁甲"></a>3、奇门遁甲</h4><p>奇门遁甲基础入门<br>奇门遁甲高级课程<br>奇门遁甲预测原理</p>
+<h4 id="4、太乙阴阳盘"><a href="#4、太乙阴阳盘" class="headerlink" title="4、太乙阴阳盘"></a>4、太乙阴阳盘</h4><p>太乙阴阳盘是什么<br>太乙阴阳盘基础入门<br>太乙阴阳盘高级课程</p>
+<h4 id="5、快速预测（灵性预测）"><a href="#5、快速预测（灵性预测）" class="headerlink" title="5、快速预测（灵性预测）"></a>5、快速预测（灵性预测）</h4><p>快速预测基础入门<br>快速预测高级课程</p>
+<h4 id="6、体相、面相、手相预测"><a href="#6、体相、面相、手相预测" class="headerlink" title="6、体相、面相、手相预测"></a>6、体相、面相、手相预测</h4><p>体相、面相、手相基础入门<br>体相、面相、手相高级课程<br>看手相看的是什么<br>看面相的原理<br>体相与命运吉凶<br>体相、面相、手相所揭示出人性美丑善恶</p>
+<h4 id="7、数字能量学"><a href="#7、数字能量学" class="headerlink" title="7、数字能量学"></a>7、数字能量学</h4><p>数字能量学基础入门<br>数字能量学高级课程<br>数字能量预测命运吉凶<br>数字能量预测原理</p>
+<h4 id="8、八卦预测（卦象时空学）"><a href="#8、八卦预测（卦象时空学）" class="headerlink" title="8、八卦预测（卦象时空学）"></a>8、八卦预测（卦象时空学）</h4><p>八卦预测基础入门<br>八卦预测高级课程<br>五行八卦预测生活各个方面的吉凶祸福<br>卦像体系<br>天干地支体系<br>卦象干支混合体系<br>八卦算命原理<br>八卦详解<br>先天八卦人文之理<br>八卦详解<br>先天八卦人文之理<br>太乙阴阳盘高级课程<br>先天八卦的天道自然<br>后天八卦与命运详解<br>九宫八卦与命运详解<br>五行的含义是什么<br>某人缺某一种五行的谬论<br>中医里对五行最科学的运用<br>五行在肉身和灵魂中是如何表现的<br>自身五行运转的顺逆与吉凶<br>人生四季五行与灵魂提升和堕落、幸福与痛苦的关系<br>五行、五色、五味、五方、五观、五音、五脏详解<br>五行生克的科学和人文之理<br>与天地合其德<br>与日月合其明<br>与四季合其序<br>与鬼神合其吉凶</p>
+<h4 id="9、梅花易术"><a href="#9、梅花易术" class="headerlink" title="9、梅花易术"></a>9、梅花易术</h4><p>梅花易术基础入门<br>梅花易术高级课程<br>梅花易术算命揭秘<br>梅花预测原理</p>
+<h4 id="10、方位能量学"><a href="#10、方位能量学" class="headerlink" title="10、方位能量学"></a>10、方位能量学</h4><p>方位能量预测命运<br>方位方向预测法<br>出门旅行时间和方位吉凶选择的科学意义</p>
+<h4 id="11、色泽能量学"><a href="#11、色泽能量学" class="headerlink" title="11、色泽能量学"></a>11、色泽能量学</h4><p>色泽能量学基础入门<br>色泽能量学高级课程<br>色泽能量预测命运<br>服装和饰品的搭配与自身能量的预测吉凶<br>服装颜色、款式的搭配与自身能量的吉凶关系<br>各种颜色预测方法<br>穿戴预测方法</p>
+<h4 id="12、四柱预测学"><a href="#12、四柱预测学" class="headerlink" title="12、四柱预测学"></a>12、四柱预测学</h4><p>四柱预测学基础入门<br>四柱预测学高级课程<br>四柱预测学的原理</p>
+<h4 id="13、六爻预测学"><a href="#13、六爻预测学" class="headerlink" title="13、六爻预测学"></a>13、六爻预测学</h4><p>六爻预测学基础入门<br>六爻预测学高级课程<br>六爻预测原理<br>六爻预测学中的时间和空间的科学</p>
+<h4 id="14、风水学"><a href="#14、风水学" class="headerlink" title="14、风水学"></a>14、风水学</h4><p>风水基础入门<br>风水高级课程<br>风水所阐述的人与自然环境的因果关系<br>风水吉凶与人心性的关系<br>风水吉凶与环境气场的关系<br>天风水调的是什么<br>天道和谐与风水吉凶关系<br>河图洛书所揭示的天道和谐的秘密</p>
+<h4 id="15、家庭风水"><a href="#15、家庭风水" class="headerlink" title="15、家庭风水"></a>15、家庭风水</h4><p>家居如何布局才吉祥<br>卧室布置与夫妻感情<br>客厅摆设与事业顺逆<br>餐厅与卫生间装修和收入的关系<br>孩子卧室与父母卧室如何匹配才吉祥<br>房子大人少,人多房小吉凶的揭秘<br>与老人同住布局吉凶<br>获得爱情的卧室布局<br>丈夫事业顺利的居家布局<br>健康吉凶与卧室的关系<br>心情抑郁寡欢与住房的关系<br>卧室和客厅布局相冲夫妻矛盾重重</p>
+<h4 id="16、企业风水"><a href="#16、企业风水" class="headerlink" title="16、企业风水"></a>16、企业风水</h4><p>企业风水布局的原理<br>企业总经理办公室的吉凶<br>企业大门坐向好坏如何看<br>企业管理不善与企业风水的关系<br>企业经营苦难与企业风水的关系</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2019/%E8%AF%BE%E7%A8%8B%E7%9B%AE%E5%BD%95/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E4%BC%A0%E7%BB%9F%E6%96%87%E5%8C%96/">
+              #传统文化
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2019/%E5%BF%83%E7%BB%8F/" target="_self">心经</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2019/%E8%AF%BE%E7%A8%8B%E7%9B%AE%E5%BD%95-%E7%AE%80%E5%8C%96%E7%89%88/" target="_self">课程目录-简化版</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>IMAP和POP3的区别 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="PHP,笔记," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>IMAP和POP3的区别</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2017-01-22
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/PHP/">
+            PHP
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="IMAP和POP3的区别"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>条件 说明 ALL 返回所有合乎标准的信件<br>ANSWERED 信件有配置 \ANSWERED<br>标志者 BCC “字符串”<br>Bcc 栏中有指定 “字符串” 的信件<br>BEFORE “日期” 指定 “日期” 以前的信件<br>BODY “字符串” 内文字段中有指定 “字符串” 的信件<br>CC “字符串” Cc 栏中有指定 “字符串” 的信件<br>DELETED 合乎已删除的信件<br>FLAGGED 信件有配置 \FLAGGED 标志者<br>FROM “字符串” From 栏中有指定 “字符串” 的信件<br>KEYWORD “字符串” 关键字为指定 “字符串” 者<br>NEW 新的信件<br>OLD 旧的信件 ON “日期” 指定 “日期” 的信件<br>RECENT 信件有配置 \RECENT 标志者<br>SEEN 信件有配置 \SEEN 标志者<br>SINCE “日期” 指定 “日期” 之后的信件<br>SUBJECT “字符串” Subject 栏中有指定 “字符串” 的信件<br>TEXT “字符串” Text 栏中有指定 “字符串” 的信件<br>TO “字符串” To 栏中有指定 “字符串” 的信件<br>UNANSWERED 未回应的信件 UNDELETED 未删除的信件<br>UNFLAGGED 未配置标志的信件 UNKEYWORD “字符串” 未配置关键 “字符串” 的信件<br>UNSEEN 未读取的信件</p>
+<h3 id="POP3"><a href="#POP3" class="headerlink" title="POP3"></a>POP3</h3><p>POP3是Post Office Protocol 3的简称，即邮局协议的第3个版本，是TCP/IP协议族中的一员（默认端口是110）。本协议主要用于支持使用客户端远程管理在服务器上的电子邮件。<br>POP与POP3<br>POP协议支持“离线”邮件存储转发处理：客户端程序连接服务器，下载所有未阅读的电子邮件；一旦将邮件从邮件服务器端送到客户端上，邮件服务器上的邮件将会被删除。目前的POP3邮件服务器大都可以“只下载邮件，服务器端并不删除”，也就是改进的POP协议。<br>POP3协议允许电子邮件客户端下载服务器上的邮件，但是在客户端的操作（如移动邮件、标记已读等），不会反馈到服务器上，比如通过客户端收取了邮箱中的3封邮件并移动到其他文件夹，邮箱服务器上的这些邮件是没有同时被移动的 。</p>
+<h3 id="IMAP"><a href="#IMAP" class="headerlink" title="IMAP"></a>IMAP</h3><p>IMAP全称是Internet Mail Access Protocol，即交互式邮件访问协议，是一个应用层协议（端口是143）。用来从本地邮件客户端（Outlook Express、Foxmail、Mozilla Thunderbird等）访问远程服务器上的邮件。</p>
+<h3 id="IMAP和POP3的区别"><a href="#IMAP和POP3的区别" class="headerlink" title="IMAP和POP3的区别"></a>IMAP和POP3的区别</h3><p>IMAP像POP3那样提供了方便的邮件下载服务，让用户能进行离线阅读。IMAP和POP3是邮件访问最为普遍的Internet标准协议。不同的是：<br>1、IMAP提供Webmail 与电子邮件客户端之间的双向通信，客户端收取的邮件仍然保留在服务器上，同时在客户端上的操作都会反馈到服务器上（如：删除邮件，标记已读等，服务器上的邮件也会做相应的动作。所以无论从浏览器登录邮箱或者客户端软件登录邮箱，看到的邮件以及状态都是一致的。）。而POP3在客户端的操作不会反馈到服务器上。<br>2、IMAP更好地支持了从多个不同设备中随时访问新邮件。<br>IMAP提供的摘要浏览功能可以让你在阅读完所有的邮件到达时间、主题、发件人、大小等信息后才作出是否下载的决定。<br>IMAP可以不用把所有的邮件全部下载，而是通过客户端直接对服务器上的邮件进行操作。所有通过IMAP传输的数据都会被加密，从而保证通信的安全性。<br>IMAP 整体上为用户带来更为便捷和可靠的体验。POP3 更易丢失邮件或多次下载相同的邮件。<br>　<br>SMTP的全称是“Simple Mail Transfer Protocol”，即简单邮件传输协议（25号端口）。它是一组用于从源地址到目的地址传输邮件的规范，通过它来控制邮件的中转方式。SMTP 协议属于 TCP/IP 协议簇，它帮助每台计算机在发送或中转信件时找到下一个目的地。<br>　　SMTP是一个“推”的协议，它不允许根据需要从远程服务器上“拉”来消息。SMTP服务器就是遵循SMTP协议的发送邮件服务器，SMTP认证就是要求必须在提供了账户名和密码之后才可以登录 SMTP 服务器，这就使得那些垃圾邮件的散播者无可乘之机。<br>　　<br>通过实例加深对IMAP、POP3、SMTP协议的理解<br>我用的是Foxmail的客户端，使用的Email有QQ（Foxmail也是它，因为Foxmail早就被腾讯收购了，可以认为是一个人有两个名字）、Gmail、Sina、163。一下的图是我的客户端的设置。Gmail、Foxmail和163的我都是用IMAP/STMP。从设置上可以知道，IMAP协议是用来接收邮件用的，使用IMAP还可以同步客户端和服务器之间的操作。SMTP都是用来发送邮件的时候用的，上面也提到，SMTP是一种“推”的协议，不允许从服务器“拿”消息。<br>SSL = 465 TLS = 587</p>
+<p>imap_append: 附加字符串到指定的邮箱中。<br>imap_base64: 解 BASE64 编码。<br>imap_body: 读信的内文。<br>imap_check: 返回邮箱信息。<br>imap_close: 关闭 IMAP 链接。<br>imap_createmailbox: 建立新的信箱。<br>imap_delete: 标记欲删除邮件。<br>imap_deletemailbox: 删除既有信箱。<br>imap_expunge: 删除已标记的邮件。<br>imap_fetchbody: 从信件内文取出指定部分。<br>imap_fetchstructure: 获取某信件的结构信息。<br>imap_header: 获取某信件的标头信息。<br>imap_headers: 获取全部信件的标头信息。<br>imap_listmailbox: 获取邮箱列示。<br>imap_listsubscribed: 获取订阅邮箱列示。<br>imap_mail_copy: 复制指定信件到它处邮箱。<br>imap_mail_move: 移动指定信件到它处邮箱。<br>imap_num_msg: 取得信件数。<br>imap_num_recent: 取得新进信件数。<br>imap_open: 打开 IMAP 链接。<br>imap_ping: 检查 IMAP 是否连接。<br>imap_renamemailbox: 更改邮箱名字。<br>imap_reopen: 重开 IMAP 链接。<br>imap_subscribe: 订阅邮箱。<br>imap_undelete: 取消删除邮件标记。<br>imap_unsubscribe: 取消订阅邮箱。<br>imap_qprint: 将 qp 编码转成八位。<br>imap_8bit: 将八位转成 qp 编码。<br>imap_binary: 将八位转成 base64 编码。<br>imap_scanmailbox: 寻找信件有无特定字符串。<br>imap_mailboxmsginfo: 取得目前邮箱的信息。<br>imap_rfc822_write_address: 电子邮件位址标准化。<br>imap_rfc822_parse_adrlist: 解析电子邮件位址。<br>imap_setflag_full: 配置信件标志。<br>imap_clearflag_full: 清除信件标志。<br>imap_sort: 将信件标头排序。<br>imap_fetchheader: 取得原始标头。<br>imap_uid: 取得信件 UID。<br>imap_getmailboxes: 取得全部信件详细信息。<br>imap_getsubscribed: 列出所有订阅邮箱。<br>imap_msgno: 列出 UID 的连续信件。<br>imap_search: 搜寻指定标准的信件。<br>imap_last_error: 最后的错误信息。<br>imap_errors: 所有的错误信息。<br>imap_alerts: 所有的警告信息。<br>imap_status: 目前的状态信息。</p>
+<p>常用邮箱提供的发、收服务器<br>网易邮箱支持POP3/SMTP/IMAP服务，可以通过电脑客户端软件更好地收发邮件，网易邮箱已经默认开启POP3/SMTP/IMAP服务。QQ邮箱和Gmail邮箱内的「POP3/SMTP服务」和「IMAP/SMTP服务」一般都是关闭的，需要您手动开启。<br>新浪免费邮箱发信（smtp）服务器的地址为：smtp.sina.com<br>新浪免费邮箱收信（pop3）服务器的地址为：pop.sina.com</p>
+<p>SSL（Secure Sockets Layer 安全套接层），及其继任者传输层安全（Transport Layer Security，TLS）是为网络通信提供安全及数据完整性的一种安全协议。TLS与SSL在传输层对网络连接进行加密，客户与服务器应用之间的通信不被攻击者窃听。如果您的电子邮件客户端支持SSL，可以在设置中选择使用SSL。当选择了使用SSL协议时，需要修改相应的服务器端口号。QQ邮箱使用SSL的通用配置如下：<br>接收邮件服务器：pop.qq.com，使用SSL，端口号995<br>发送邮件服务器：smtp.qq.com，使用SSL，端口号465或587</p>
+<p>国内外主要邮箱的POP3/SMTP/IMAP的客户端设置<br>POP3是指接收邮件的服务器。有的邮件服务是POP3，而有的叫POP。<br>不同邮箱，各自的POP服务器地址也是不同的。</p>
+<p>QQ邮箱<br>    POP3：pop.qq.com<br>    SMTP：smtp.qq.com<br>    IMAP：imap.qq.com<br>    端口：143</p>
+<p>Foxmail<br>    POP3：pop.foxmail.com<br>    SMTP：smtp.foxmail.com</p>
+<p>移动139邮箱<br>    POP3：pop.139.com<br>    SMTP：smtp.139.com</p>
+<p>天翼189邮箱<br>    POP3：pop.189.cn<br>    SMTP：smtp.189.cn</p>
+<p>163邮箱<br>    POP3：pop.163.com<br>    SMTP：smtp.163.com</p>
+<p>163Vip邮箱<br>    POP3：pop.vip.163.com<br>    SMTP：smtp.vip.163.com</p>
+<p>126邮箱<br>    POP3：pop3.126.com<br>    SMTP：smtp.126.com</p>
+<p>Gmail<br>    POP3：pop.gmail.com<br>    SMTP：smtp.gmail.com<br>    IMAP：imap.gmail.com<br>    端口：995 465 993</p>
+<p>Yahoo邮箱<br>    POP3：pop.mail.yahoo.com<br>    SMTP：smtp.mail.yahoo.com</p>
+<p>Hotmail<br>    POP3：pop3.live.com<br>    SMTP：smtp.live.com<br>    端口：995</p>
+<p>Sogou邮箱<br>    POP3：pop3.mail.sogou.com<br>    SMTP：smtp.mail.sogou.com</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2017/IMAP%E5%92%8CPOP3%E7%9A%84%E5%8C%BA%E5%88%AB/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%AC%94%E8%AE%B0/">
+              #笔记
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2017/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E8%BD%AF%E4%BB%B6/" target="_self">压力测试软件</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2017/%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8B/" target="_self">权限模型</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>
