@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>刷题 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="公考,公考," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>刷题</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2020-09-09
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E5%85%AC%E8%80%83/">
+            公考
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="刷题"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="1、-互联网技术的发展，为许多管理变得更加便捷。现在，有一些公司通过利用手机软件，用手机定位监控员工，能够实时发现员工上班时间时间不在岗位的情况。对于企业这种管理，有人说是管理方式的创新，也有人说太不人性化，你怎么看-（复合-现象-观点）"><a href="#1、-互联网技术的发展，为许多管理变得更加便捷。现在，有一些公司通过利用手机软件，用手机定位监控员工，能够实时发现员工上班时间时间不在岗位的情况。对于企业这种管理，有人说是管理方式的创新，也有人说太不人性化，你怎么看-（复合-现象-观点）" class="headerlink" title="1、 互联网技术的发展，为许多管理变得更加便捷。现在，有一些公司通过利用手机软件，用手机定位监控员工，能够实时发现员工上班时间时间不在岗位的情况。对于企业这种管理，有人说是管理方式的创新，也有人说太不人性化，你怎么看 （复合  现象+观点）"></a>1、 互联网技术的发展，为许多管理变得更加便捷。现在，有一些公司通过利用手机软件，用手机定位监控员工，能够实时发现员工上班时间时间不在岗位的情况。对于企业这种管理，有人说是管理方式的创新，也有人说太不人性化，你怎么看 （复合  现象+观点）</h2><p>是什么<br>    题目中的这个情况，我认为即是管理方式的创新，同时也暴露出不人性化的问题，应该得到我们的重视<br>为什么<br>    首先，随着互联网的普及和飞速发展，带来了以下几点好处<br>        公司 促进公司管理，为日常工作带来便利，减少消息沟通的成本，通过软件发现员工偷懒，有利于管理，效益，良好的工作氛围<br>        员工 可以通过手机软件进行打卡 审批 汇报工作，日常工作的处理，自我规范，促进自身成长<br>        网络 随着公司和员工大范围使用 对互联网的技术发展 有更大的需求<br>        社会 遏制消极怠工的不良风气，是大家都热爱工作，有利于社会发展<br>        其他的行业 树立了使用科技的榜样<br>    同时，因为技术发展，也存在一些使用上的弊端，应该值得我们重视<br>        公司 利用软件监控员工，侵犯了员工个人的隐私，法律意识不强，同员工产生矛盾，是不信任的体现，不利于公司发展<br>        员工 法律意识淡薄的体现，存在使用虚拟定位 进行打卡 外出报备的情况，情绪化严重，<br>怎么办<br>    保持互联网飞快发展，更多的公司可以使用多终端平台办公，脱离传统的管理，<br>    同样也是有所担忧，<br>        国家 加大法律宣传，让更多的人懂法，守法，如何正确使用新时代的科学技术，<br>        员工 通过不断的学习 依靠知识来改变自己的命运，而不是不在工作岗位偷懒的情况，树立认真工作的态度<br>        公司 应该通过鼓励员工多学习，不断成长，加大工作绩效的奖励，提升员工工作积极性，坚持以人为本的观念，人才是公司发展的根本，管理更加人性化、灵活化；为员工创造和谐的工作环境<br>总结升华<br>    最后，科技要以人为本，互联网的发展，既为大家带来了生活上的便利，促进社会发展有很大的作用，但同时，也要注重防范高科技违法违规的行为，加大管理，全民监督，发现违法行为及时举报，只有这样，我们才能获得更多的幸福感、获得感，社会才能更加和谐，国家才能更好的发展</p>
+<h2 id="2、-全国各地掀起人才抢夺战，然而很多人才引得进，却留不住。请问你怎么看-（复合-转折）"><a href="#2、-全国各地掀起人才抢夺战，然而很多人才引得进，却留不住。请问你怎么看-（复合-转折）" class="headerlink" title="2、 全国各地掀起人才抢夺战，然而很多人才引得进，却留不住。请问你怎么看  （复合 转折）"></a>2、 全国各地掀起人才抢夺战，然而很多人才引得进，却留不住。请问你怎么看  （复合 转折）</h2><p>是什么<br>    。。。客观看待这个问题<br>为什么<br>    吸引人才<br>        通过引进大批量人才，公司发展更加迅速<br>        个人价值的体现，有利于个人成长<br>    缺点<br>        公司 损失，人才职位空缺，需要重新招聘培养，新引进的人才 可能会造成老人的排挤；公司的平台限制，待遇问题<br>        个人 从其他地域、公司抢夺来的人才 长时间缺少家的感觉<br>        社会 盲目或者跟风去抢夺人才，造成不良的社会风气，<br>            抢夺人才互相竞价，导致投入的价值 != 个人价值<br>怎么看<br>    保持合理引进人才</p>
+<pre><code>政府或者相关部门，加大管理，制止乱象，
+留不住人才，公司应该保持发展，不断创新</code></pre>
+<p>总结升华<br>    公司要不断发展，发挥人才的作用，提供更好的发展平台，使其成为未来的领袖</p>
+<h2 id="3、各大平台如喜马拉雅、知乎等，都出现了许多付费课程，然而这些课程中只有前三章免费试听的内容点击率比较高，剩下的付费内容则点击率比较低，请问如何看待？-（复合-转折）"><a href="#3、各大平台如喜马拉雅、知乎等，都出现了许多付费课程，然而这些课程中只有前三章免费试听的内容点击率比较高，剩下的付费内容则点击率比较低，请问如何看待？-（复合-转折）" class="headerlink" title="3、各大平台如喜马拉雅、知乎等，都出现了许多付费课程，然而这些课程中只有前三章免费试听的内容点击率比较高，剩下的付费内容则点击率比较低，请问如何看待？ （复合  转折）"></a>3、各大平台如喜马拉雅、知乎等，都出现了许多付费课程，然而这些课程中只有前三章免费试听的内容点击率比较高，剩下的付费内容则点击率比较低，请问如何看待？ （复合  转折）</h2><p>是什么<br>    。。。广大网民对付费知识购买的意愿还不是很高<br>为什么<br>    互联网 越来越普遍，促进网络的应用和发展，技术的创新<br>    前三章收听，代表很多用户，有对知识求知的意愿<br>    平台 带来巨大的流量和关注度、用户活跃度 有利于自己平台的影响、广告的利润、市场的影响、用户的增加、以后融资的资本<br>    用户 可以通过试听，验证这个课程是否对自己有用，能否带来收获，避免出现直接购买，不理想退货的麻烦和纠纷<br>    其他的软件、行业纷纷效仿，通过免费带动VIP付费的课程</p>
+<pre><code>我国国情，大量免费软件的分享，知识版权的不重视，导致网民都不愿意去付费，都想免费获得
+不良的社会风气，助长白拿主意
+平台 营收受到影响，平台发展需要大量的资金，没有收入最终会倒闭
+网民 因为不愿付费 造成知识学习少了，长久下来，不利于个人成长</code></pre>
+<p>怎么看<br>    创造一个学习知识的氛围，通过付费购买学习的社会风气，更加注重知识版权，<br>    平台 可以定限价优惠，免费书籍，带来更多的用户活跃<br>    用户 不要因为眼前的利益，而失去了学习，改变命运的机会<br>总结升华<br>    养成更好的社会风气，通过知识改变命运</p>
+<h2 id="4、很多人拍摄网络短视频来炫技，有的人说是记录生活，也有人说不好，会出现内容无底线的情况，对此，你怎么看-（复合-现象-观点）"><a href="#4、很多人拍摄网络短视频来炫技，有的人说是记录生活，也有人说不好，会出现内容无底线的情况，对此，你怎么看-（复合-现象-观点）" class="headerlink" title="4、很多人拍摄网络短视频来炫技，有的人说是记录生活，也有人说不好，会出现内容无底线的情况，对此，你怎么看  （复合 现象 观点）"></a>4、很多人拍摄网络短视频来炫技，有的人说是记录生活，也有人说不好，会出现内容无底线的情况，对此，你怎么看  （复合 现象 观点）</h2><p>是什么<br>    我是持反对意见的，虽然有这个现象存在，但是我们要以辩证的观点来看待，同样也有传播正能量的视频，分享知识、介绍生活文化、个人视频博客的存在<br>为什么<br>    长视频，没有耐心去看，分享困难，短视频传播快，时间短，更符合年轻人的，在各种等车、地铁候车时观看<br>    传播速度更快，主流，有技术的人可以制作效果更加绚丽的视频</p>
+<pre><code>内容无底线的情况，也是因为制作视频者素质低的问题
+网民的观看，利于他们的传播、生存，不利于自己个人的成长
+国家在这方面的法规不健全、网络平台监管不严格
+社会风气影响</code></pre>
+<p>怎么看<br>    国家已经加大打击力度，48位黑名单，警示效果<br>    网民自身的发展</p>
+<p>总结升华<br>    通过这些不断丰富生活，学习更多的知识，长期才能有利于自身的发展</p>
+<h2 id="5、-互联网-政务模式广泛应用，对于政务网上办理，有人说这样可以提高办事效率，也有人说见不到-面审批时间过长-反而降低低效率，你怎么看-（复合）"><a href="#5、-互联网-政务模式广泛应用，对于政务网上办理，有人说这样可以提高办事效率，也有人说见不到-面审批时间过长-反而降低低效率，你怎么看-（复合）" class="headerlink" title="5、 互联网+ 政务模式广泛应用，对于政务网上办理，有人说这样可以提高办事效率，也有人说见不到 面审批时间过长 反而降低低效率，你怎么看 （复合）"></a>5、 互联网+ 政务模式广泛应用，对于政务网上办理，有人说这样可以提高办事效率，也有人说见不到 面审批时间过长 反而降低低效率，你怎么看 （复合）</h2><p>是什么<br>    。。。正是国家全新全意为人民服务的体现，<br>为什么</p>
+<pre><code>提高了政务部门的工作效率、之前排队的问题，丰富办理政务的方式
+群众可以使用互联网来操作，减少了自己现场办理消耗的时间，
+
+面审时间过长 任务量大 处理慢 效率有待提高</code></pre>
+<p>怎么看<br>    扩大处理效率 解决这个情况</p>
+<p>总结升华</p>
+<h2 id="6、"><a href="#6、" class="headerlink" title="6、"></a>6、</h2><p>是什么<br>    。。。正是实现社会主义现代的体现，让农民使用手机，可以提高效率、利益<br>为什么<br>    互联网 扩大覆盖率，利于在各个行业的应用，促进移动互联网发展<br>    手机 手机对生活中占比、使用方式<br>    农民    使用科技替代传统的农具，提升效率，收益<br>    其他的行业 纷纷效仿使用手机来办公</p>
+<pre><code>农民对手机的使用 存在困难
+开发手机成为农民的新工具 需要成本</code></pre>
+<p>怎么看<br>    加大科技开发，将农业现代化<br>    农民 学习如何使用手机来操作新农具<br>    农具生产厂家 要生产简单易用、实用的农具<br>总结升华</p>
+<h2 id="7、"><a href="#7、" class="headerlink" title="7、"></a>7、</h2><p>是什么<br>    网约车的火爆，给大家出行带来了便利，也暴露了网约车乱象的这一社会问题，值得我们重点关注<br>为什么<br>    网约车优惠，相比传统的出租车，可以根据用户实时进行预约，方便用户<br>    缓解就业压力，给一些家用车车主，带来收益，缓解养车、油费上的支出<br>    网约车平台的发展</p>
+<pre><code>国家法律法规不健全
+网约车火爆之后，车主的素质有待验证，平台不能全面监管
+对传统出租行业的影响，导致出租车主收益减少
+影响社会风气</code></pre>
+<p>怎么看<br>    对网约车平台的资质审查和管控<br>    平台通过辅助手段，保障乘客安全</p>
+<p>总结升华<br>    随着国家政策和相关法律的补充，平台的管理控制越加严格，网约车司机素质的提高，我们相信网约车这个行业会越来越好</p>
+<h2 id="8、"><a href="#8、" class="headerlink" title="8、"></a>8、</h2><p>是什么<br>    。。。虽然低头会带来事故，但是还可以给大家带来生活上的便利，移动互联网时代之所以来临，就是智能手机的普及所改变的，辩证<br>为什么<br>    促进手机技术、新功能不断发展<br>    促进移动互联网的发展<br>    用户带来便利，智能手机功能越来越多，可以实现工作</p>
+<pre><code>电脑办公带来影响
+低头，分神，严重影响安全，导致事故</code></pre>
+<p>怎么看<br>    保持智能手机发展</p>
+<pre><code>宣传低头玩手机的危害，让更多的人意识到危险
+大家对低头玩手机互相提醒，
+手机生产者，设置走路运动时，禁止手机部分功能</code></pre>
+<p>总结升华</p>
+<h2 id="9、"><a href="#9、" class="headerlink" title="9、"></a>9、</h2><p>是什么</p>
+<p>为什么<br>    互联网发展<br>    消息传播、获取到全世界的实时新闻</p>
+<pre><code>负面消息
+造谣
+虚假诈骗</code></pre>
+<p>怎么看<br>    法律对造谣、网上传播的管理</p>
+<pre><code>宣传识别
+网络平台监管，过滤
+网民素质</code></pre>
+<p>总结升华</p>
+<h2 id="10、"><a href="#10、" class="headerlink" title="10、"></a>10、</h2><p>是什么<br>    既有好的。。。。又有。。。我们要发挥快速送货的好处，通我是也要避免因为赶时间造成的不良影响<br>为什么<br>    外卖的市场影响<br>    商家 销量，销售模式<br>    骑手 更多的订单，利益<br>    客户 更准时收到外卖</p>
+<pre><code>骑手 赶时间，危险，无视交通规则
+商家 
+社会风气</code></pre>
+<p>怎么看<br>    骑手培训，重视生命安全<br>    普通群众，也要多注意骑手，交通安全<br>    平台<br>总结升华</p>
+<h2 id="11、"><a href="#11、" class="headerlink" title="11、"></a>11、</h2><p>是什么<br>    我对家长的做法是支持的，可以帮助锻炼孩子发挥自己的特长，与人交流沟通的能力，同时，离不开家长的正确引导，才能使孩子不走弯路，快乐地成长<br>为什么<br>    确定孩子未来成长的方向，兴趣爱好，自身的成长<br>    对孩子的心理素质 有极大的提升</p>
+<pre><code>孩子过早沾染社会气氛，不利于童年成长
+孩子走秀，拍广告，很容易造成骄傲 
+可能会出现网络的负面评论，可能会影响孩子的心理，值得我们重视</code></pre>
+<p>怎么看<br>    孩子应该关注其他的培训 增强自身技能<br>    正确帮助孩子避免受到负面评价的影响<br>    社会的影响 应该积极 帮助孩子成长<br>    养成学习的良好风气<br>总结升华<br>    家长要正确引导孩子，不要因为一些</p>
+<h2 id="12、"><a href="#12、" class="headerlink" title="12、"></a>12、</h2><p>是什么<br>    。。。很恶劣的行为，应该引起我们足够的重视<br>为什么<br>    真正需要捐助的人 没有获得到帮助<br>    是募捐者受损，没有达到自己献爱心的目的<br>    社会风气影响<br>    其他的行业也纷纷效仿</p>
+<p>怎么看<br>    政府部门加强对募捐的监管，打击力度，全民举报<br>    过滤虚假、重复募捐的信息<br>    募捐消息实名制<br>    募捐者 通过正规的机构进行募捐 可以真正起到效果的<br>    除了募捐 生活中还有很多其他的事情 也可以进行献爱心<br>总结升华<br>    不要让做好事 献爱心的人收到虚假募捐影响，让社会重新充满爱</p>
+<h2 id="13、"><a href="#13、" class="headerlink" title="13、"></a>13、</h2><p>是什么</p>
+<p>为什么<br>    有利于对选拔合格的公务员，工作认真负责的表现<br>    有利于限制公务员的日常行为<br>    报考的公务员 全面展示自己</p>
+<pre><code>工作上的内容 不应爱进行分享
+会出现刻意去进行朋友圈的装饰 </code></pre>
+<p>怎么看<br>    选择性考察<br>    使用其他方式进行考察<br>总结升华</p>
+<h2 id="14、"><a href="#14、" class="headerlink" title="14、"></a>14、</h2><p>是什么<br>    创新的网络销售方式，促进销售行业发展<br>    微信 用户活跃<br>    微商 利益，足不出户即可销售<br>    其他行业的效仿</p>
+<pre><code>其他的朋友 广告过多
+微信朋友圈的环境
+质量、不发货、骗子
+法规政策管控</code></pre>
+<p>为什么<br>    微信已经有屏蔽朋友圈的功能、举报<br>    国家政策<br>怎么看</p>
+<p>总结升华</p>
+<h2 id="15、"><a href="#15、" class="headerlink" title="15、"></a>15、</h2><p>是什么<br>    。。。消极的社会影响<br>为什么<br>    学校教育有问题<br>    不利于国家文化<br>    不利于自身发展<br>    社会风气<br>怎么看<br>    宣传传统文化<br>    父母教育<br>    学校教育<br>总结升华</p>
+<h2 id="16、"><a href="#16、" class="headerlink" title="16、"></a>16、</h2><p>是什么<br>    辩证<br>为什么<br>    。。。支持，公务员为国家发展贡献<br>    。。。支持，教师可以教导子女</p>
+<pre><code>导致很多人盲目跟风选择职业、公务员和教师报名火爆、社会风气
+职业也只是暂时的一个工作方向，会随时变化的</code></pre>
+<p>怎么看</p>
+<p>总结升华</p>
+<h2 id="17、"><a href="#17、" class="headerlink" title="17、"></a>17、</h2><p>是什么<br>    。。。消极<br>为什么<br>    不良社会风气<br>    年轻人没有节约 合理理财的意识<br>    父母没有教育孩子 节约的精神，合理理财，反而不断的给予支持<br>怎么看<br>    父母 教导孩子<br>    孩子 控制消费 不必要的支出<br>    信用卡、软件加强控制<br>总结升华</p>
+<h2 id="18、"><a href="#18、" class="headerlink" title="18、"></a>18、</h2><p>是什么<br>    。。。消极<br>为什么<br>    没有目标，只求随意<br>    不利于个人成长，没有目标追求<br>    社会风气<br>怎么看<br>    树立正确价值观</p>
+<p>总结升华</p>
+<h2 id="19、"><a href="#19、" class="headerlink" title="19、"></a>19、</h2><p>是什么<br>    。。。消极<br>为什么<br>    盲目跟风<br>    主播 不劳而获 致富<br>    社会不良风气<br>    违法违规<br>怎么看<br>    平台监管<br>    法律法规<br>    全民举报<br>    宣传正能量<br>总结升华</p>
+<h2 id="20、"><a href="#20、" class="headerlink" title="20、"></a>20、</h2><p>是什么<br>    。。。辩证，理性思维<br>为什么<br>    就业方向 可以之途而返，避免更多的成本消耗<br>    只有不断坚持，到最后才有成功的可能</p>
+<pre><code>一种不坚持的表现，可能会错过机会
+长期下去，不利于个人发展，做事都是半途而废</code></pre>
+<p>怎么看<br>    选择正确的目标努力，提早发现是否适合就业方向<br>总结升华</p>
+<h2 id="21、"><a href="#21、" class="headerlink" title="21、"></a>21、</h2><p>是什么<br>    。。。消极的<br>为什么<br>    工作996，生病ICU<br>    员工 身体 工作长时间 效率 积极性 员工抱怨<br>    公司 不利于发展 产生冲突<br>    社会风气 行业影响<br>怎么看<br>    公司对员工 关怀<br>    提高工作效率 不应通过时间来弥补<br>    员工要视自己身体来选择是否继续工作<br>总结升华</p>
+<h2 id="22、"><a href="#22、" class="headerlink" title="22、"></a>22、</h2><p>是什么<br>    正是通过知识来改变命运的体现，值得我们学习的<br>为什么<br>    正因为这样的环境 才促使她努力学习 只有这样才能改变自己的命运</p>
+<pre><code>家庭优越的孩子，反而不会珍惜美好的条件，没有尽最大的努力来学习</code></pre>
+<p>怎么看<br>    国家已经设置了奖学金 帮助家庭困难的学生<br>    倡导学习风气</p>
+<p>总结升华</p>
+<h2 id="23、"><a href="#23、" class="headerlink" title="23、"></a>23、</h2><p>是什么<br>    辩证<br>为什么<br>    见义勇为是好的事情  我们应该加以宣传<br>    避免让更多的小孩子去模仿</p>
+<pre><code>家庭 没有为女儿争取到一个名誉
+国家在规定设置上 可能没有考虑到儿童</code></pre>
+<p>怎么看<br>    多加关怀，申请抚恤金<br>    具体情况 具体分析 帮助其申请特殊称号<br>总结升华</p>
+<h2 id="24、"><a href="#24、" class="headerlink" title="24、"></a>24、</h2><p>是什么<br>    。。。积极<br>为什么<br>    可以节约资源，纸的原材料树木<br>    让大众养成节约的意识</p>
+<pre><code>可能不够用
+科技 如果程序出现问题 导致无法使用
+ai技术应该使用与更加高级的场景</code></pre>
+<p>怎么看<br>    适当去使用科技<br>    宣传节约的精神 培养良好的社会风气<br>总结升华</p>
+<h2 id="25、"><a href="#25、" class="headerlink" title="25、"></a>25、</h2><p>是什么<br>    引起我们重视，加大管理<br>为什么<br>    污染环境 消化200年<br>    原材料石油 不是可持续的资源<br>怎么看<br>    政府政策，法律法规<br>    全名监督 全民举报<br>    生产者 不敢生产 不敢使用=&gt;不愿使用 不愿生产<br>    消费者 保护环境的意识 不使用<br>    研发新型材料 可重复使用 环保的<br>    商场 零售 餐饮  使用纸袋<br>总结升华</p>
+<h2 id="26、"><a href="#26、" class="headerlink" title="26、"></a>26、</h2><p>是什么<br>    辩证<br>为什么<br>    促进大学生成长发展，不断适应社会发展<br>    企业招聘到更优秀的人才</p>
+<pre><code>就业问题，找工作压力大
+社会不稳定</code></pre>
+<p>怎么看<br>    社区培训、宣传<br>    大学生不断学习，自身发展</p>
+<p>总结升华</p>
+<h2 id="27、"><a href="#27、" class="headerlink" title="27、"></a>27、</h2><p>是什么<br>    辩证<br>为什么<br>    学校 多关注学生学习<br>    学生 认识到自己的成绩不足<br>    家长 多关注孩子的学习成绩</p>
+<pre><code>学生 自暴自弃
+学校 条件比较差 差异化对待
+其他的学校效仿</code></pre>
+<p>怎么看<br>    学校 鼓励学生学习 老师多关心学生<br>    学生 直到自己成绩不好 发奋学习<br>总结升华</p>
+<h2 id="28、"><a href="#28、" class="headerlink" title="28、"></a>28、</h2><p>是什么<br>    辩证<br>为什么<br>    有利于学校管理，监督<br>    学生按时上课<br>    老师应该多关怀学生<br>    科技发展和生活的应用</p>
+<pre><code>学生积极性 产生负面情绪 虚假打卡 定位
+其他学校效仿</code></pre>
+<p>怎么看<br>    学校应树立良好的风气 学生应该以学习为主  主动学习 </p>
+<p>总结升华</p>
+<h2 id="29、"><a href="#29、" class="headerlink" title="29、"></a>29、</h2><p>是什么<br>    辩证<br>为什么<br>    转发 拉票 实现了自己的目的<br>    孩子获得评选 鼓励 自信 </p>
+<pre><code>最后的结果 可能也是假的
+虚假拉票、宣传的活动
+造成信息骚扰 
+社会风气</code></pre>
+<p>怎么看<br>    虚假信息的举报<br>    评选结果要公平、公正</p>
+<p>总结升华</p>
+<h2 id="30、"><a href="#30、" class="headerlink" title="30、"></a>30、</h2><p>是什么<br>    环卫工人是城市的清洁工<br>为什么<br>    环卫工人 解决吃饭的问题 节省一笔开销<br>    馒头店老板 带来更多的关注 客流量 利益<br>    献爱新的表现<br>    社会风气</p>
+<pre><code>越来越多的人 造成馒头店老板经济压力过大
+冒充环卫工人领用 
+不需要馒头的环卫工人 也去领用
+环卫工人工资低</code></pre>
+<p>怎么看<br>    社会募捐 机构举办活动<br>    国家对环卫工人增加补助<br>    为真正需要的人提供<br>总结升华</p>
+<h2 id="31、"><a href="#31、" class="headerlink" title="31、"></a>31、</h2><p>是什么<br>    。。。越来越被重视，良好的社会风气<br>为什么<br>    博物馆 利益，维持生存<br>    参观者 学习到丰富的知识<br>    社会风气 越来越好 参观博物馆受到重视<br>怎么看<br>    人多时 做好安全防范<br>    分时间段 分批次入场 错开客流量多的情况<br>总结升华</p>
+<h2 id="32、"><a href="#32、" class="headerlink" title="32、"></a>32、</h2><p>是什么</p>
+<p>为什么<br>    演出 锻炼的机会<br>    丰富当地生活</p>
+<pre><code>文艺演出 不收重视 关注群体少</code></pre>
+<p>怎么看<br>    加大宣传 提前对演出区域进行调研 选择更适合的区域<br>    网络直播演出</p>
+<p>总结升华</p>
+<h2 id="33、"><a href="#33、" class="headerlink" title="33、"></a>33、</h2><p>是什么<br>    辩证<br>为什么<br>    学习国外的文化，多文化传播<br>    中西文化结合</p>
+<pre><code>学校课程的教育
+父母对孩子的教育
+太过于关注国外的文化
+社会对国外的文化传播过多</code></pre>
+<p>怎么看<br>    父母 学校，应该多对孩子教导学习<br>    大力发展弘扬传统文化教育 历史知识的学习<br>    宣传传统民间故事<br>总结升华</p>
+<h2 id="34、"><a href="#34、" class="headerlink" title="34、"></a>34、</h2><p>是什么<br>    消极<br>为什么<br>    互联网普及 造成消息传播的迅速 虚假信息<br>    网民素质 消息没有进行辨认 就进行转发<br>    使不明真相的人受到误解 以此谣传越来越严重<br>    社会风气<br>怎么看<br>    国家已经出台法规 对网络造谣进行监管<br>    平台加大监管控制，及时举报<br>    提高网民素质 对虚假造谣信息加以辨认<br>    不造谣 不传谣 不信谣<br>总结升华</p>
+<h2 id="35、"><a href="#35、" class="headerlink" title="35、"></a>35、</h2><p>是什么<br>    辩证<br>为什么<br>    互联网发展 很多基层工作可以通过计算机实现解决 解决问题的效率</p>
+<pre><code>缺少了实际下基层的真实感 没有切身实际体会到基层人民群众的问题 
+人民群众的问题 可能未能得到及时的反馈</code></pre>
+<p>怎么看<br>    定期举行下基层的活动 </p>
+<p>总结升华</p>
+<h2 id="36、"><a href="#36、" class="headerlink" title="36、"></a>36、</h2><p>是什么<br>    辩证<br>为什么<br>    利于国家对快递，违法物品的的管理<br>    快递公司的实名管理<br>    有问题发生时 可以追踪到用户</p>
+<pre><code>隐私泄露，被盗用，骚扰电话</code></pre>
+<p>怎么看<br>    对号码进行部门隐藏<br>    隐号拨打用户电话<br>    用户收到货 撕掉隐私信息</p>
+<p>总结升华</p>
+<h2 id="37、"><a href="#37、" class="headerlink" title="37、"></a>37、</h2><p>是什么<br>    。。。积极<br>为什么<br>    法律法规更加全面<br>    子女 可以增加看望父母的次数，赡养老人是义务<br>    父母 增加和子女之间的沟通<br>    社会风气<br>怎么看<br>    由于工作忙 子女迫于规定 可以适当具体情况 具体执行<br>总结升华</p>
+<h2 id="38、"><a href="#38、" class="headerlink" title="38、"></a>38、</h2><p>是什么<br>    。。。积极<br>为什么<br>    法律法规的健全<br>    对拐卖儿童打击<br>    丢失孩子的家庭 有更大的希望找到孩子<br>怎么看<br>    拐卖的婴儿 其父母同样也很担心 应该由相应的机关负责<br>总结升华</p>
+<h2 id="39、"><a href="#39、" class="headerlink" title="39、"></a>39、</h2><p>是什么<br>    。。。严查乱用远光是好的，但是体验式惩罚是值得商榷的<br>为什么<br>    司机 有效制止乱用灯光<br>    交警 为了人民群众服务，更好的管理乱用的情况<br>    社会风气</p>
+<pre><code>眼睛受损
+惩罚过度</code></pre>
+<p>怎么看<br>    交警 教育，罚款，计分<br>    司机 正确使用灯光<br>    宣传正确使用的方法<br>总结升华</p>
+<h2 id="40、"><a href="#40、" class="headerlink" title="40、"></a>40、</h2><p>是什么</p>
+<p>为什么<br>    工作认真负责<br>    可以方便以后的查询</p>
+<pre><code>事事留痕 效率不高
+可能会存在完成工作 造假的情况</code></pre>
+<p>怎么看<br>    有选择，对关键的内容留痕<br>总结升华</p>
+<h2 id="41、"><a href="#41、" class="headerlink" title="41、"></a>41、</h2><p>是什么<br>    辩证<br>为什么<br>    为人民服务的体现<br>    创新的执法方式<br>    更多的人学习到酒驾的危害<br>    其他执法机关效仿</p>
+<pre><code>过度曝光个人隐私
+直播作秀</code></pre>
+<p>怎么看<br>    宣传法律法规，对违反规定的人，可以加以模糊处理</p>
+<p>总结升华</p>
+<h2 id="42、"><a href="#42、" class="headerlink" title="42、"></a>42、</h2><p>是什么</p>
+<p>为什么<br>    人性化的体现<br>    充满爱的社会风气</p>
+<pre><code>公职人员 不能因为特殊情况而放弃工作原则
+罚单是有法律效应的 不应该写字</code></pre>
+<p>怎么看</p>
+<p>总结升华</p>
+<h3 id="43"><a href="#43" class="headerlink" title="43."></a>43.</h3><p>是什么<br>    认同，告诉所有的青年学子应该树立一个正确的从政理念，要有一个正确的事业观，更应该将重心放在如何将工作做好，如何将大事完成好，而不是将重心放在如何将官位越做越大<br>为什么<br>    做大事不一定要是大官，小官也可以干大事，做好了大事比做大官的价值更大<br>    淡泊名利<br>怎么办</p>
+<p>小众升华</p>
+<h3 id="44"><a href="#44" class="headerlink" title="44."></a>44.</h3><p>是什么<br>    依法治国和以德治国相辅相成，才能更好的治理国家<br>为什么<br>    朝代末期<br>    社会治理 依法治国<br>怎么办</p>
+<p>小众升华</p>
+<h3 id="45"><a href="#45" class="headerlink" title="45."></a>45.</h3><p>是什么<br>    不经历风雨<br>为什么</p>
+<p>怎么办</p>
+<p>小众升华</p>
+<h3 id="46"><a href="#46" class="headerlink" title="46."></a>46.</h3><p>是什么<br>    精准扶贫，针对不同贫困区域环境、不同贫困农户状况，运用科学有效程序对扶贫对象实施精确识别、精确帮扶、精确管理的治贫方式<br>为什么<br>    最贫穷的地区 率先脱贫<br>    为什么贫穷<br>    因贫施策 扶贫先扶志，扶贫先扶智<br>怎么办</p>
+<p>小众升华</p>
+<h3 id="47"><a href="#47" class="headerlink" title="47."></a>47.</h3><p>是什么<br>    坚持 拼搏<br>为什么<br>    2.5w长征<br>    三顾茅庐<br>怎么办</p>
+<p>小众升华</p>
+<h3 id="48"><a href="#48" class="headerlink" title="48."></a>48.</h3><p>是什么<br>    水能载舟 也能覆舟<br>    为人民服务<br>为什么</p>
+<p>怎么办</p>
+<p>小众升华</p>
+<h3 id="49"><a href="#49" class="headerlink" title="49."></a>49.</h3><p>是什么<br>    贯彻落实<br>为什么</p>
+<p>怎么办</p>
+<p>小众升华</p>
+<h3 id="50"><a href="#50" class="headerlink" title="50."></a>50.</h3><p>是什么<br>    老吾老，以及人之老；幼吾幼，以及人之幼<br>    尊重他人，才能得到他人的尊重<br>为什么<br>    传说张良闲暇时在桥上散步，有一位老年人，身穿粗布短衣，走到张良呆的地方，把鞋子扔到桥下，对张良说：“小子，下去拾鞋。”张良猛然一惊，真想揍他，一见如此大的年纪，就给他拾了鞋。老人要张良替他穿上，张良既已为他拾鞋了，也就跪下来为他穿鞋。穿好后，老人笑着走了。走了1里远，又返回对张良说：“你这个孩子很可以培养，过5天，天一亮你来等我。”</p>
+<pre><code>过了5天，张良来时，老人已先到，批评他说：“和老人约会，怎么能迟到？过5天，你再来等我。”第二次，张良又迟到了。第三次，他半夜就去了。老人很高兴，送给张良一部书，并且告诉他说：“读了这部书，就可做帝王的老师了。后10年你会发迹。13年后，你会在济北遇到我，谷城山下有块黄石就是我。”
+
+天亮后，张良一看，原来是一本兵书，叫《太公兵法》。张良得到这本书后。认真阅读，终于学到了运筹帷幄，决胜千里的本领，据传说，13年后，张良跟随高祖路过济北，果真在谷城山下看见一块黄石，张良取回它，并把它当做珍宝供奉、张良死后，就和这块黄石合葬在一起</code></pre>
+<p>怎么办</p>
+<p>小众升华</p>
+<h3 id="51"><a href="#51" class="headerlink" title="51."></a>51.</h3><p>是什么<br>    踏踏实实在做一件事情<br>为什么</p>
+<p>怎么办</p>
+<p>小众升华</p>
+<h3 id="52"><a href="#52" class="headerlink" title="52."></a>52.</h3><p>是什么<br>    不能一味的模仿，创新<br>    大国工匠，精益求精<br>为什么</p>
+<p>怎么办</p>
+<p>小众升华</p>
+<h3 id="53"><a href="#53" class="headerlink" title="53."></a>53.</h3><p>是什么<br>    懒惰-骄傲<br>为什么<br>    佛系青年<br>    关羽<br>    杨修<br>怎么办</p>
+<p>小众升华</p>
+<h3 id="54"><a href="#54" class="headerlink" title="54."></a>54.</h3><p>是什么<br>    有目标 理想<br>为什么<br>    佛系青年<br>    陈胜吴广<br>怎么办</p>
+<p>小众升华</p>
+<h3 id="55"><a href="#55" class="headerlink" title="55."></a>55.</h3><p>是什么<br>    有目标，不断学习</p>
+<p>为什么<br>    钱学森<br>    诸葛亮<br>怎么办</p>
+<p>小众升华</p>
+<h3 id="56"><a href="#56" class="headerlink" title="56."></a>56.</h3><p>是什么</p>
+<p>为什么</p>
+<p>怎么办</p>
+<p>小众升华</p>
+<h3 id="57"><a href="#57" class="headerlink" title="57."></a>57.</h3><p>是什么</p>
+<p>为什么</p>
+<p>怎么办</p>
+<p>小众升华</p>
+<h3 id="58"><a href="#58" class="headerlink" title="58."></a>58.</h3><p>是什么</p>
+<p>为什么</p>
+<p>怎么办</p>
+<p>小众升华</p>
+<h3 id="59"><a href="#59" class="headerlink" title="59."></a>59.</h3><p>是什么</p>
+<p>为什么</p>
+<p>怎么办</p>
+<p>小众升华</p>
+<h3 id="60"><a href="#60" class="headerlink" title="60."></a>60.</h3><p>是什么</p>
+<p>为什么</p>
+<p>怎么办</p>
+<p>小众升华</p>
+<h3 id="77"><a href="#77" class="headerlink" title="77."></a>77.</h3><p>是什么<br>    各位考官，考生开始答题，这则寓言说的是。。。，从故事告诉我们<br>    前进的道路上，不要受到他人言语的影响，要坚持自己的信念；<br>为什么<br>    邯郸学步<br>    佛系青年<br>怎么办</p>
+<h3 id="78"><a href="#78" class="headerlink" title="78."></a>78.</h3><p>是什么<br>    不经历风雨怎么见彩虹，只有经过困难险阻，才能成功<br>为什么<br>    爱迪生<br>    佛系青年<br>怎么办</p>
+<h3 id="79"><a href="#79" class="headerlink" title="79."></a>79.</h3><p>是什么<br>    想和做<br>    万事俱备 只欠东风 把握机会<br>为什么<br>    空城计<br>    草船借箭<br>    毛遂自荐<br>    赵括</p>
+<h3 id="80"><a href="#80" class="headerlink" title="80."></a>80.</h3><p>是什么<br>    不能只关注外表，看中内心<br>    透过现象看本质<br>    坚持自己的想法<br>为什么<br>    陈景润<br>    华为<br>    爱迪生</p>
+<p>怎么办</p>
+<h3 id="81"><a href="#81" class="headerlink" title="81."></a>81.</h3><p>是什么<br>    扬长避短，选择更适合的<br>    团队合作的力量是强大的<br>为什么<br>    马拉松<br>    廉颇和蔺相如<br>    赤壁之战<br>    三个臭皮匠<br>怎么办</p>
+<h3 id="82"><a href="#82" class="headerlink" title="82."></a>82.</h3><p>是什么<br>    上限不取决于容量，取决于短板<br>    取长补短<br>为什么</p>
+<p>怎么办</p>
+<h3 id="83"><a href="#83" class="headerlink" title="83."></a>83.</h3><p>是什么<br>    换位思考<br>    不切实际、好高骛远<br>    没有坚持的信念<br>    竹篮打水一场空<br>为什么</p>
+<p>怎么办</p>
+<h3 id="84"><a href="#84" class="headerlink" title="84."></a>84.</h3><p>是什么<br>    身正不破影子斜<br>为什么<br>    鲁迅<br>怎么办</p>
+<h3 id="85"><a href="#85" class="headerlink" title="85."></a>85.</h3><p>是什么<br>    坚持<br>    成功是在不断的探索当中而成的<br>为什么<br>    爱迪生<br>怎么办</p>
+<p>漫画题</p>
+<h3 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h3><p>看图说画<br>    100 和 55<br>    98 和 61<br>    不断以高目标来要求自己<br>看图说事</p>
+<p>看图说理</p>
+<h3 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h3><p>看图说画<br>    正确方法的重要性<br>    多思考多想解决办法<br>    多做一点点改变 就会比之前的效率更高<br>看图说事</p>
+<p>看图说理</p>
+<h3 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h3><p>看图说画<br>    耗资8E的广场 政府要求推到重来<br>    合理规划<br>看图说事<br>    发挥价值<br>看图说理</p>
+<h3 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h3><p>看图说画<br>    精准扶贫<br>看图说事</p>
+<p>看图说理</p>
+<h3 id="5"><a href="#5" class="headerlink" title="5."></a>5.</h3><p>看图说画<br>    占用老弱病残专座 旁边需要的没有座位 被年轻人占用  道德不足的地方 法律来弥补<br>看图说事</p>
+<p>看图说理</p>
+<h3 id="6"><a href="#6" class="headerlink" title="6."></a>6.</h3><p>看图说画<br>    水龙头 小水流 缓慢增长；大水流 则会溢出；同样做一件事 欲速则不达<br>看图说事</p>
+<p>看图说理</p>
+<h3 id="7"><a href="#7" class="headerlink" title="7."></a>7.</h3><p>看图说画<br>    外来户口 输在起跑线上 一开始就处于不平等地位<br>看图说事</p>
+<p>看图说理</p>
+<h3 id="8"><a href="#8" class="headerlink" title="8."></a>8.</h3><p>看图说画<br>    数木条，一个说3一个4 实际上是1个木条出现了瑕疵；<br>    不同的角度看问题不同 自己的角度都是对的 没有换位思考 互相进行指责、抱怨；<br>看图说事</p>
+<p>看图说理</p>
+<h3 id="9"><a href="#9" class="headerlink" title="9."></a>9.</h3><p>看图说画<br>    通过无数个梯子爬墙 但是不会正确使用梯子 最后通过错误的方法 也很难实现；<br>    给予了工具 不会使用也是没有效果的 起不到提升效率的作用；<br>    合理利用现有的资源<br>看图说事<br>    田忌赛马<br>看图说理</p>
+<h3 id="10"><a href="#10" class="headerlink" title="10."></a>10.</h3><p>看图说画<br>    乐观和悲观 只在一念之间<br>看图说事</p>
+<p>看图说理</p>
+<p>矛盾处理</p>
+<h3 id="1-1"><a href="#1-1" class="headerlink" title="1."></a>1.</h3><p>目的+心态<br>    解决酗酒，骂人的事情  平复自己心情 不被激怒<br>找到矛盾<br>    自己做的不好<br>    他有其他的事情 喝酒之后 没有控制<br>    沟通少，以后多交流，及时反省修改<br>    让同事送其回家<br>解决矛盾<br>    多关心 解决问题<br>    自己要做的更好<br>多想一步<br>    跟进小赵后续的问题<br>    以后的沟通、相处<br>总结启示</p>
+<h3 id="2-1"><a href="#2-1" class="headerlink" title="2."></a>2.</h3><p>目的+心态<br>    解决批评，找到原因，平复心情<br>找到矛盾<br>    自己做的不好<br>    解决自己不够好的缺点<br>    有问题 多沟通<br>解决矛盾</p>
+<p>多想一步<br>    以后工作上<br>总结启示</p>
+<h3 id="3-1"><a href="#3-1" class="headerlink" title="3."></a>3.</h3><p>目的+心态<br>    和老王的意见分歧 缓解关系<br>找到矛盾<br>    老领导很照顾<br>    意见有分歧<br>解决矛盾<br>    老王的见解 会不会有问题<br>    自己的见解 是不是有问题，道歉，反思<br>    多交流 多沟通<br>多想一步<br>    以后工作上<br>总结启示</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2020/%E5%88%B7%E9%A2%98/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E5%85%AC%E8%80%83/">
+              #公考
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2020/one-day/" target="_self">第一天</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2020/%E7%AD%94%E9%A2%98%E6%B5%81%E7%A8%8B/" target="_self">答题流程</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>
