@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>101个实用性网站你知道多少？ | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="笔记,笔记," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>101个实用性网站你知道多少？</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2014-10-24
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%AC%94%E8%AE%B0/">
+            笔记
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="101个实用性网站你知道多少"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>01、 yangqq.com —— 一个站在web前端设计之路的女技术员个人博客网站，提供免费源码下载<br>02、 bounceapp.com —— 能够将一个网页进行完整的截图<br>03、 goo.gl —— 将网站地址进行缩写并可以将网址转换成二维码<br>04、 untiny.me —— 找到缩写网址的原始域名<br>05、 localti.me —— 能查询不只一个城市的当地时间<br>06、 copypastecharacter.com —— 复制你键盘上没有的特殊字符<br>07、 topsy.com —— Twitter专用搜索引擎<br>08、 fb.me/AppStore —— 无需运行iTunes就可以搜索iOS的手机应用<br>09、 iconfinder.com ——在这里可以找到图标的所有尺寸<br>10、 office.com —— 下载办公文件的模板、剪贴画以及图片<br>11、 woorank.com —— 你想知道的关于一个网站的所有信息都可以在这里找到<br>12、 virustotal.com —— 对任何可疑的文件或者邮件附件进行病毒扫描<br>13、 wolframalpha.com —— 不用搜索就可以知道问题的答案 —— 更多信息，请阅读Wolfram提示<br>14、 printwhatyoulike.com —— 完整的打印网页<br>15、 joliprint.com —— 将新闻和博客内容重新整合为报纸<br>16、 isnsfw.com —— 当你想要分享18X网页时为你做警示标记<br>17、 e.ggtimer.com —— 一个居家常备的简易在线计时器<br>18、 coralcdn.org —— 如果某网站由于服务器太繁忙而无法访问的话，试试通过CDN来进入网站吧<br>19、 random.org —— 帮你随机挑选数字，抛硬币～<br>20、 mywot.com —— 测试任意网站的可信任指数<br>21、 viewer.zoho.com —— 帮你用浏览器来预览PDF文件和PPT<br>22、 tubemogul.com —— 能同时向多个视频网站上传视频<br>23、 truveo.com —— 最佳网络视频搜索<br>24、 scr.im —— 不用担心垃圾邮件困扰，安全无忧地分享你的邮件地址<br>25、 spypig.com —— 从今往后在你的邮箱里查看收据吧～<br>26、 sizeasy.com —— 将任一产品进行视觉化并进行尺寸比较<br>27、 whatfontis.com —— 迅速通过图片来确定字体名称<br>28、 fontsquirrel.com —— 优质的字体大集合 —— 免费自用与商用<br>29、 regex.info —— 查出你照片中的隐藏数据<br>30、 tineye.com —— 就像谷歌图片搜索应用的网页版<br>31、 iwantmyname.com —— 帮助你在所有TLD中找到你想要的域名<br>32、 tabbloid.com —— 将你最喜欢的博客转换成PDF<br>33、 join.me —— 与网络上任何一个人分享你的桌面<br>34、 onlineocr.net —— 从扫描的PDF和图片中识别出其他文字<br>35、 flightstats.com —— 随时查看世界各地机场的航班实况<br>36、 wetransfer.com —— 用来在线分享大型文件<br>37、 pastebin.com —— 一个临时的在线剪切板，方便你的文字编辑与记录编码片段<br>38、 polishmywriting.com —— 检查你文字中的拼写和语法错误<br>39、 awesomehighlighter.com —— 轻松标记网页中的重点部分<br>40、 typewith.me —— 与多人同时在一个文件上进行修改<br>41、 whichdateworks.com —— 正在计划什么活动吗？选一个合适的日期吧<br>42、 everytimezone.com —— 清晰易懂的世界时区表<br>43、 warrick.cs.odu.edu —— 当你收藏的网页被删除时，你就需要用到这个了<br>44、 gtmetrix.com —— 一个完美的在线工具，可以帮助你计算网页性能<br>45、 imo.im —— 可以在一个网页上使用多个聊天工具，Skype, Google Talk,等等<br>46、 translate.google.com —— 翻译网页、PDF以及办公文档<br>47、 youtube.com/leanback —— 享受无尽头的全屏Youtube视频吧<br>48、 similarsites.com —— 帮你发现与你喜欢的网站类似的其他网站<br>49、 wordle.net —— 使用标签云图快速总结长篇文字<br>50、 bubbl.us —— 用浏览器来做思维导图和头脑风暴<br>51、 kuler.adobe.com —— 获取配色的灵感，也可以从照片中提取颜色<br>52、 followupthen.com —— 通过邮件设置快速提醒<br>53、 lmgtfy.com —— 当你的朋友懒到不愿意自己用谷歌搜索时……<br>54、 tempalias.com —— 临时邮箱用户名生成器，比一次性邮箱实用<br>55、 pdfescape.com —— 使用浏览器快速修改PDF文件<br>56、 faxzero.com —— 免费发送在线传真 —— 参加其他传真服务<br>57、 feedmyinbox.com —— 将RSS更新以邮件新闻的方式发送给你<br>58、 isendr.com —— 无需上传到服务器就可以传送文件<br>59、 tinychat.com —— 快速创建一个私人聊天室<br>60、 privnote.com —— 创建一个在阅读过后会自行毁灭的便条<br>61、 flightaware.com —— 实况转播世界各地机场航班动态<br>62、 boxoh.com —— 在谷歌地图上追踪任何运输信息<br>63、 chipin.com —— 当你需要为一个项目或者活动进行筹款时……<br>64、 downforeveryoneorjustme.com —— 查出你的喜欢的网站是否下线了<br>65、 example.com —— 这个网站可以当做文档的范例来使用<br>66、 whoishostingthis.com —— 找到任何一个网站的网站主机<br>67、 google.com/history —— 是不是忘记曾经搜索过的某些关键词？用这个网站来找回吧<br>68、 errorlevelanalysis.com —— 辨识一张照片是否被PS过<br>69、 google.com/dictionary —— 查出一个单词的含义、发音以及例句用法<br>70、 urbandictionary.com —— 告诉你俚语和俗语的含义<br>71、 seatguru.com —— 在你为下一次航班选择座位时参考一下这个网站吧<br>72、 sxc.hu —— 免费下载库存图片<br>73、 imo.im —— 可以同时使用多个聊天工具跟朋友聊天，Skype, Google Talk,等等<br>74、 wobzip.org —— 在线解压压缩文件<br>75、 vocaroo.com —— 只需轻轻一点就可以记录下自己的声音<br>76、 scribblemaps.com —— 轻松创建自定义谷歌地图<br>77、 buzzfeed.com —— 绝不让你错过任何网络走红图片或视频<br>78、 alertful.com —— 快速设定重大日程的邮件提醒<br>79、 encrypted.google.com —— 防止网络供应商或者你的老板查看你的搜索记录<br>80、 formspring.me —— 你可以在这里提出和回答私人问题<br>81、 snopes.com —— 查出你收到的邮件是真实的或是诈骗邮件<br>82、 typingweb.com —— 通过这些练习环节变成打字大师吧<br>83、 mailvu.com —— 通过你的摄像头给其他人发送视频邮件吧<br>84、 ge.tt —— 神速传送文件，接收的人还可以在下载前进行预览哦<br>85、 timerime.com —— 使用音频、视频和图片来创建时间表<br>86、 stupeflix.com —— 利用自己的图片、录音和视频来制作一部小电影吧<br>87、 aviary.com/myna —— 一个能够编辑录音和混音的在线音频编辑器<br>88、 noteflight.com —— 打印五线谱，在线创作自己的音乐<br>89、 disposablewebpage.com —— 创建一个会自动销毁的临时网站<br>90、 namemytune.com —— 当你想知道这段旋律的名字时……<br>91、 homestyler.com —— 从零开始进行室内设计，或者重新为你的家建模<br>92、 snapask.com —— 在手机上通过邮件查询球赛分数，或者查阅维基百科<br>93、 teuxdeux.com —— 长得像手写日记的日程应用<br>94、 livestream.com —— 在线直播任何活动和项目，包括你的电脑桌面<br>95、 bing.com/images —— 自动为你的移动设备找到合适的壁纸<br>96、 historio.us —— 将任何格式的网页完整保存<br>97、 dabbleboard.com —— 你的虚拟白板<br>98、 whisperbot.com —— 不需要使用自己的邮箱账户就可以发送邮件<br>99、 sumopaint.com —— 一个超棒的在线图片编辑器（图层编辑方式）<br>100、 lovelycharts.com —— 在线创建流程图、网络图表、网站地图等<br>101、 nutshellmail.com ——在你的收件箱中获取Facebook与Twitter最新消息。</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2014/101%E4%B8%AA%E5%AE%9E%E7%94%A8%E6%80%A7%E7%BD%91%E7%AB%99%E4%BD%A0%E7%9F%A5%E9%81%93%E5%A4%9A%E5%B0%91/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%AC%94%E8%AE%B0/">
+              #笔记
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2014/%E4%BD%A0%E7%9A%84%E5%A4%A7%E5%AD%A6%EF%BC%8C%E6%9C%89%E5%A4%9A%E5%B0%91%E9%81%97%E6%86%BE%EF%BC%9F/" target="_self">你的大学，有多少遗憾？</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2014/%E7%BD%91%E9%A1%B5%E5%B8%83%E5%B1%80%E7%B1%BB%E5%9E%8B/" target="_self">网页布局类型</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

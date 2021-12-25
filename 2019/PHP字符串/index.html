@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>PHP字符串 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="PHP,PHP," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>PHP字符串</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2019-04-21
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/PHP/">
+            PHP
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="PHP字符串"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>#URL</p>
+<h3 id="http-build-query-array-string-numeric-prefix-string-arg-separator-int-enc-type-PHP-QUERY-RFC1738-生成URL-encode之后的请求字符串"><a href="#http-build-query-array-string-numeric-prefix-string-arg-separator-int-enc-type-PHP-QUERY-RFC1738-生成URL-encode之后的请求字符串" class="headerlink" title="http_build_query($array,[string $numeric_prefix,[string $arg_separator,[int $enc_type=PHP_QUERY_RFC1738 ]]])  生成URL-encode之后的请求字符串"></a>http_build_query($array,[string $numeric_prefix,[string $arg_separator,[int $enc_type=PHP_QUERY_RFC1738 ]]])  生成URL-encode之后的请求字符串</h3><p>numeric_prefix 前缀<br>arg_separator 分隔参数<br>enc_type 默认使用PHP_QUERY_RFC1738<br>PHP_QUERY_RFC1738：urlencoded媒体类型进行编码，空格会被编码成加号（+）<br>PHP_QUERY_RFC3986：空格会被百分号编码（%20）</p>
+<h3 id="get-hearder-url-int-format-0-取得服务器响应一个-HTTP-请求所发送的所有标头"><a href="#get-hearder-url-int-format-0-取得服务器响应一个-HTTP-请求所发送的所有标头" class="headerlink" title="get_hearder($url,[int $format = 0 ]) 取得服务器响应一个 HTTP 请求所发送的所有标头"></a>get_hearder($url,[int $format = 0 ]) 取得服务器响应一个 HTTP 请求所发送的所有标头</h3><p>$format：如果参数设为1，则get_headers()会解析相应的信息并设定数组的键名<br>[Content-Length] =&gt; 438<br>[Content-Type] =&gt; text/html</p>
+<h3 id="get-meta-tags-filename，-bool-use-include-path-false-从一个文件中提取所有的meta标签content属性，返回一个数组"><a href="#get-meta-tags-filename，-bool-use-include-path-false-从一个文件中提取所有的meta标签content属性，返回一个数组" class="headerlink" title="get_meta_tags($filename，[bool $use_include_path=false]) 从一个文件中提取所有的meta标签content属性，返回一个数组"></a>get_meta_tags($filename，[bool $use_include_path=false]) 从一个文件中提取所有的meta标签content属性，返回一个数组</h3><p>$filename：HTML文件的路径字符串。此参数可以是本地文件也可以是一个URL<br>$use_include_path:设置为TRU 将使PHP尝试按照include_path标准包含路径中的每个指向去打开文件。这只用于本地文件，不适用于URL </p>
+<h3 id="base64-encode-设计此种编码是为了使二进制数据可以通过非纯-8-bit-的传输层传输"><a href="#base64-encode-设计此种编码是为了使二进制数据可以通过非纯-8-bit-的传输层传输" class="headerlink" title="base64_encode() 设计此种编码是为了使二进制数据可以通过非纯 8-bit 的传输层传输"></a>base64_encode() 设计此种编码是为了使二进制数据可以通过非纯 8-bit 的传输层传输</h3><p>Base64-encoded 数据要比原始数据多占用33%左右的空间</p>
+<h3 id="base64-decode"><a href="#base64-decode" class="headerlink" title="base64_decode()"></a>base64_decode()</h3><h3 id="urlencode-此函数便于将字符串编码并将其用于URL的请求部分，同时它还便于将变量传递给下一页"><a href="#urlencode-此函数便于将字符串编码并将其用于URL的请求部分，同时它还便于将变量传递给下一页" class="headerlink" title="urlencode() 此函数便于将字符串编码并将其用于URL的请求部分，同时它还便于将变量传递给下一页"></a>urlencode() 此函数便于将字符串编码并将其用于URL的请求部分，同时它还便于将变量传递给下一页</h3><p>空格=&gt;+  -_不变  其余% 16进制</p>
+<h3 id="urldecode"><a href="#urldecode" class="headerlink" title="urldecode()"></a>urldecode()</h3><h3 id="rawurlencode-按照RFC1738对URL进行编码"><a href="#rawurlencode-按照RFC1738对URL进行编码" class="headerlink" title="rawurlencode() 按照RFC1738对URL进行编码"></a>rawurlencode() 按照RFC1738对URL进行编码</h3><h3 id="rawurldecode"><a href="#rawurldecode" class="headerlink" title="rawurldecode()"></a>rawurldecode()</h3><h3 id="explode-‘’-arr-拆分"><a href="#explode-‘’-arr-拆分" class="headerlink" title="explode(‘’,$arr) 拆分"></a>explode(‘’,$arr) 拆分</h3><h3 id="implode-‘’-arr-john-合并"><a href="#implode-‘’-arr-john-合并" class="headerlink" title="implode(‘’,$arr) john 合并"></a>implode(‘’,$arr) john 合并</h3><h3 id="parse-str-str-arr-将字符串解析成多个变量"><a href="#parse-str-str-arr-将字符串解析成多个变量" class="headerlink" title="parse_str($str,[$arr]) 将字符串解析成多个变量"></a>parse_str($str,[$arr]) 将字符串解析成多个变量</h3><p>URL传递入的查询字符串（query string），则将它解析为变量并设置到当前作用域<br>当前的QUERY_STRING:可以使用$_SERVER[‘QUERY_STRING’]<br>$arr:变量将会以数组元素的形式存入到这个数组，作为替代</p>
+<h3 id="parse-url-url-component-1-解析URL，返回其组成部分"><a href="#parse-url-url-component-1-解析URL，返回其组成部分" class="headerlink" title="parse_url($url,[$component = -1]) 解析URL，返回其组成部分"></a>parse_url($url,[$component = -1]) 解析URL，返回其组成部分</h3><p>$url:要解析的URL,无效字符将使用 _ 来替换<br>$url = ‘<a target="_blank" rel="noopener" href="http://username:password@hostname/path?arg=value#anchor&#39;">http://username:password@hostname/path?arg=value#anchor&#39;</a>;<br>print_r(parse_url($url));<br>echo parse_url($url, PHP_URL_PATH);</p>
+<p>#编码</p>
+<h3 id="ord-string-返回字符串的ascii值-单字符"><a href="#ord-string-返回字符串的ascii值-单字符" class="headerlink" title="ord($string) 返回字符串的ascii值  单字符"></a>ord($string) 返回字符串的ascii值  单字符</h3><h3 id="chr-ascii-返回指定的字符"><a href="#chr-ascii-返回指定的字符" class="headerlink" title="chr($ascii) 返回指定的字符"></a>chr($ascii) 返回指定的字符</h3><h3 id="convert-uuencode-str-使用-uuencode-编码一个字符串"><a href="#convert-uuencode-str-使用-uuencode-编码一个字符串" class="headerlink" title="convert_uuencode($str)  使用 uuencode 编码一个字符串"></a>convert_uuencode($str)  使用 uuencode 编码一个字符串</h3><h3 id="convert-uudecode-str-解码一个-uuencode-编码的字符串"><a href="#convert-uudecode-str-解码一个-uuencode-编码的字符串" class="headerlink" title="convert_uudecode($str)  解码一个 uuencode 编码的字符串"></a>convert_uudecode($str)  解码一个 uuencode 编码的字符串</h3><p>#加密解密</p>
+<h3 id="crypt-str-salt-单向字符串散列"><a href="#crypt-str-salt-单向字符串散列" class="headerlink" title="crypt($str,[$salt]) 单向字符串散列"></a>crypt($str,[$salt]) 单向字符串散列</h3><h3 id="md5-str，-raw-output-false-计算字符串的-MD5-散列值"><a href="#md5-str，-raw-output-false-计算字符串的-MD5-散列值" class="headerlink" title="md5($str，[$raw_output=false]) 计算字符串的 MD5 散列值"></a>md5($str，[$raw_output=false]) 计算字符串的 MD5 散列值</h3><h3 id="md5-file-filename，-raw-output-false-计算文件散列值"><a href="#md5-file-filename，-raw-output-false-计算文件散列值" class="headerlink" title="md5_file($filename，[$raw_output=false]) 计算文件散列值"></a>md5_file($filename，[$raw_output=false]) 计算文件散列值</h3><p>true 则返回16进制格式</p>
+<h3 id="sha1-str，-raw-output-false-计算字符串的sha1散列值"><a href="#sha1-str，-raw-output-false-计算字符串的sha1散列值" class="headerlink" title="sha1($str，[$raw_output = false]) 计算字符串的sha1散列值"></a>sha1($str，[$raw_output = false]) 计算字符串的sha1散列值</h3><p>TRUE，将以20字符长度的原始格式返回<br>否则返回值是一个40字符长度的十六进制数字</p>
+<h3 id="sha1-file-str，-raw-output-false-计算文件的-sha1-散列值"><a href="#sha1-file-str，-raw-output-false-计算文件的-sha1-散列值" class="headerlink" title="sha1_file($str，[$raw_output = false]) 计算文件的 sha1 散列值"></a>sha1_file($str，[$raw_output = false]) 计算文件的 sha1 散列值</h3><p>#大小写</p>
+<h3 id="ucword-str-每个单词首字符大写"><a href="#ucword-str-每个单词首字符大写" class="headerlink" title="ucword($str) 每个单词首字符大写"></a>ucword($str) 每个单词首字符大写</h3><h3 id="ucfirst-str-使第一个字符大写"><a href="#ucfirst-str-使第一个字符大写" class="headerlink" title="ucfirst($str) 使第一个字符大写"></a>ucfirst($str) 使第一个字符大写</h3><h3 id="lcfirst-str-使第一个字符小写"><a href="#lcfirst-str-使第一个字符小写" class="headerlink" title="lcfirst($str) 使第一个字符小写"></a>lcfirst($str) 使第一个字符小写</h3><h3 id="strtoupper-将字符串转化为大写"><a href="#strtoupper-将字符串转化为大写" class="headerlink" title="strtoupper() 将字符串转化为大写"></a>strtoupper() 将字符串转化为大写</h3><h3 id="strtolower-将字符串转化为小写"><a href="#strtolower-将字符串转化为小写" class="headerlink" title="strtolower() 将字符串转化为小写"></a>strtolower() 将字符串转化为小写</h3><h3 id="metaphone-str，-int-phonemes-0-为发音接近的单词-创建相同的键"><a href="#metaphone-str，-int-phonemes-0-为发音接近的单词-创建相同的键" class="headerlink" title="metaphone($str，[int $phonemes = 0]) 为发音接近的单词  创建相同的键"></a>metaphone($str，[int $phonemes = 0]) 为发音接近的单词  创建相同的键</h3><p>metaphone(‘programming’);<br>metaphone(‘programmer’);<br>“PRKRMNK”  “PRKRMR”</p>
+<h3 id="similar-text-first-second，-float-amp-percent-计算两个字符的相似度"><a href="#similar-text-first-second，-float-amp-percent-计算两个字符的相似度" class="headerlink" title="similar_text($first,$second，[float &amp;$percent]) 计算两个字符的相似度"></a>similar_text($first,$second，[float &amp;$percent]) 计算两个字符的相似度</h3><p>$percent:通过引用方式传递第三个参数，similar_text()将计算相似程度百分数。 </p>
+<h3 id="str-replace-search-replace-str-count-替换"><a href="#str-replace-search-replace-str-count-替换" class="headerlink" title="str_replace($search,$replace,$str,[$count])  替换"></a>str_replace($search,$replace,$str,[$count])  替换</h3><p>$count:被替换的次数</p>
+<h3 id="str-ireplace-search-replace-str-count-忽略大小写版本"><a href="#str-ireplace-search-replace-str-count-忽略大小写版本" class="headerlink" title="str_ireplace($search,$replace,$str,[$count]) 忽略大小写版本"></a>str_ireplace($search,$replace,$str,[$count]) 忽略大小写版本</h3><h3 id="str-repeat-input，-multipiler-重复字符串多少次"><a href="#str-repeat-input，-multipiler-重复字符串多少次" class="headerlink" title="str_repeat($input，$multipiler) 重复字符串多少次"></a>str_repeat($input，$multipiler) 重复字符串多少次</h3><h3 id="str-pad-str-pad-length-pad-string-pad-type-STR-PAD-RIGHT-使用另一个字符串填充到指定长度"><a href="#str-pad-str-pad-length-pad-string-pad-type-STR-PAD-RIGHT-使用另一个字符串填充到指定长度" class="headerlink" title="str_pad($str,$pad_length,[$pad_string,[$pad_type = STR_PAD_RIGHT ]] ]]) 使用另一个字符串填充到指定长度"></a>str_pad($str,$pad_length,[$pad_string,[$pad_type = STR_PAD_RIGHT ]] ]]) 使用另一个字符串填充到指定长度</h3><p>从左端、右端或者同时两端被填充到制定长度后的结果<br>pad_length的值是负数，小于或者等于输入字符串的长度，不会发生任何填充</p>
+<h3 id="str-rot13-str-rot13转换"><a href="#str-rot13-str-rot13转换" class="headerlink" title="str_rot13($str) rot13转换"></a>str_rot13($str) rot13转换</h3><p>ROT13编码简单地使用字母表中后面第13个字母替换当前字母，同时忽略非字母表中的字符<br>编码和解码都使用相同的函数，传递一个编码过的字符串作为参数，将得到原始字符串 </p>
+<p>//构造字符串<br>$str = “ABCDEFGHIJKLMNOPQRSTUVWXYZ”;<br>echo “原字符串：”.$str.””;</p>
+<p>//按各种方式进行截取<br>$str1 = substr($str,5);<br>echo “从第5个字符开始取至最后：”.$str1.””;</p>
+<p>$str2 = substr($str,9,4);<br>echo “从第9个字符开始取4个字符：”.$str2.””;</p>
+<p>$str3 = substr($str,-5);<br>echo “取倒数5个字符：”.$str3.””;</p>
+<p>$str4 = substr($str,-8,4);<br>echo “从倒数第8个字符开始向后取4个字符：”.$str4.””;</p>
+<p>$str5 = substr($str,-8,-2);<br>echo “从倒数第8个字符开始取到倒数第2个字符为止：”.$str5.””;<br>?&gt;</p>
+<p>支持中英文混合截取。<br>$str_cut    需要截断的字符串<br>$length     允许字符串显示的最大长度</p>
+<p>程序功能：截取全角和半角（汉字和英文）混合的字符串以避免乱码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function substr_cut($str_cut,$length)</span><br><span class="line">&#123;</span><br><span class="line">    if (strlen($str_cut) &gt; $length)</span><br><span class="line">    &#123;</span><br><span class="line">        for($i&#x3D;0; $i &lt; $length; $i++)</span><br><span class="line">        if (ord($str_cut[$i]) &gt; 128)    $i++;</span><br><span class="line">        $str_cut &#x3D; substr($str_cut,0,$i).&quot;..&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    return $str_cut;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2019/PHP%E5%AD%97%E7%AC%A6%E4%B8%B2/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/PHP/">
+              #PHP
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2019/Vim%E6%89%93%E5%BC%80%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" target="_self">VIM打开多个文件操作</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2019/PHP%E6%B1%89%E5%AD%97%E8%BD%AC%E6%8B%BC%E9%9F%B3/" target="_self">PHP汉字转拼音</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

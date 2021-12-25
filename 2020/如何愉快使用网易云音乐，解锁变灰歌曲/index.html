@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>如何愉快使用网易云音乐，解锁变灰歌曲 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="日记,其他," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>如何愉快使用网易云音乐，解锁变灰歌曲</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2020-05-03
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E6%97%A5%E8%AE%B0/">
+            日记
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="如何愉快使用网易云音乐，解锁变灰歌曲"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>目前听音乐主要使用网易云音乐和虾米音乐，由于好多音乐涉及版权问题无法收听，多个软件使用又比较麻烦，今天无意中发现了这个文章，亲测有效</p>
+<p>之前每次遇到这样的歌曲，我都是下载下来收听的</p>
+<h3 id="一、网易云音乐下载方法（不适用需要VIP下载的歌曲）"><a href="#一、网易云音乐下载方法（不适用需要VIP下载的歌曲）" class="headerlink" title="一、网易云音乐下载方法（不适用需要VIP下载的歌曲）"></a>一、网易云音乐下载方法（不适用需要VIP下载的歌曲）</h3><p>用浏览器随意找一首歌曲，查看地址链接获取到当前歌曲的ID</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;song?id&#x3D;1362144500</span><br></pre></td></tr></table></figure>
+
+<p>将歌曲的ID替换下面地址的ID，再用浏览器打开这个地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;music.163.com&#x2F;song&#x2F;media&#x2F;outer&#x2F;url?id&#x3D;1362144500.mp3</span><br></pre></td></tr></table></figure>
+<p>然后复制当前浏览器地址，使用下载软件下载</p>
+<h3 id="二、在线收听"><a href="#二、在线收听" class="headerlink" title="二、在线收听"></a>二、在线收听</h3><p>提供可以测试的服务器地址 端口都是8000</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">34.80.231.31</span><br><span class="line">34.80.112.7</span><br><span class="line">34.97.209.250</span><br></pre></td></tr></table></figure>
+
+<p>项目地址 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;nondanee&#x2F;UnblockNeteaseMusic</span><br></pre></td></tr></table></figure>
+
+<h4 id="1、功能特点"><a href="#1、功能特点" class="headerlink" title="1、功能特点"></a>1、功能特点</h4><p>解锁网易云音乐客户端变灰歌曲！<br>使用网易云旧链 / QQ / 虾米 / 百度 / 酷狗 / 酷我 / 咕咪 / JOOX 音源替换变灰歌曲链接 (默认仅启用前四)<br>为请求增加 X-Real-IP 参数解锁海外限制，支持指定网易云服务器 IP，支持设置上游 HTTP / HTTPS 代理<br>完整的流量代理功能 (HTTP / HTTPS)，可直接作为系统代理 (同时支持 PAC)</p>
+<h4 id="2、安装部署"><a href="#2、安装部署" class="headerlink" title="2、安装部署"></a>2、安装部署</h4><p>服务器部署可以多个终端一起使用，Windows部署只可以单机使用，或者同局域网下通过IP访问，二者选一即可</p>
+<h4 id="3、服务器部署（二选一）"><a href="#3、服务器部署（二选一）" class="headerlink" title="3、服务器部署（二选一）"></a>3、服务器部署（二选一）</h4><p><a target="_blank" rel="noopener" href="https://nodejs.org/dist/v12.16.3">https://nodejs.org/dist/v12.16.3</a> 下载对应的安装包<br>先安装node</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wget https:&#x2F;&#x2F;nodejs.org&#x2F;dist&#x2F;v12.16.3&#x2F;node-v12.16.3-linux-x64.tar.gz </span><br><span class="line">tar zxvf node-v12.16.3-linux-x64.tar.gz   </span><br><span class="line">cd node-v12.16.3-linux-x64</span><br><span class="line">vim &#x2F;etc&#x2F;profile</span><br><span class="line">export NODE_HOME&#x3D;&#x2F;home&#x2F;node-v12.16.3-linux-x64</span><br><span class="line">export PATH&#x3D;$NODE_HOME&#x2F;bin:$PATH</span><br><span class="line">source &#x2F;etc&#x2F;profile</span><br><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p>下载项目之后 启动即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;nondanee&#x2F;UnblockNeteaseMusic.git</span><br><span class="line">cd UnblockNeteaseMusic</span><br><span class="line">npm install </span><br><span class="line">node app.js -p 8000:8043</span><br></pre></td></tr></table></figure>
+
+<h4 id="4、Windows部署（二选一）"><a href="#4、Windows部署（二选一）" class="headerlink" title="4、Windows部署（二选一）"></a>4、Windows部署（二选一）</h4><p>下载安装<code>nodejs</code> （官方地址：<a target="_blank" rel="noopener" href="https://nodejs.org/en/%EF%BC%89">https://nodejs.org/en/）</a><br>安装完成后检查是否成功<br>开始-运行-输入<code>cmd</code>-回车<br>输入<code>node -v</code> 看到输出版本号，说明安装成功<br>下载项目压缩包 <code>https://github.com/nondanee/UnblockNeteaseMusic/archive/master.zip</code><br>解压后进入目录<br>打开一个终端窗口 <code>npm install</code></p>
+<h4 id="5、启动服务"><a href="#5、启动服务" class="headerlink" title="5、启动服务"></a>5、启动服务</h4><p>服务器端和Windows端的命令窗口不能关闭，关闭之后服务就停止了<br><code>node app.js -p 8000:8043</code></p>
+<h4 id="6、可以利用一些服务还让他后台运行"><a href="#6、可以利用一些服务还让他后台运行" class="headerlink" title="6、可以利用一些服务还让他后台运行"></a>6、可以利用一些服务还让他后台运行</h4><h5 id="pm2（目前还有问题）"><a href="#pm2（目前还有问题）" class="headerlink" title="pm2（目前还有问题）"></a>pm2（目前还有问题）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install pm2 -g</span><br><span class="line">pm2 start app.js -p 8000:8043</span><br><span class="line">pm2 list 查看当前pm2所有的list</span><br><span class="line">pm2 stop all 停止所有应用</span><br><span class="line">pm2 restart app 重启 app为list里面的name</span><br></pre></td></tr></table></figure>
+
+<h5 id="forever（待测试）"><a href="#forever（待测试）" class="headerlink" title="forever（待测试）"></a>forever（待测试）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g forever</span><br><span class="line">forever start app.js -p 8000:8043</span><br></pre></td></tr></table></figure>
+
+<h5 id="Screen-linux-后台"><a href="#Screen-linux-后台" class="headerlink" title="Screen-linux 后台"></a>Screen-linux 后台</h5><p>Screen是一款由GNU计划开发的用于命令行终端切换的自由软件。用户可以通过该软件同时连接多个本地或远程的命令行会话，并在其间自由切换。GNU Screen可以看作是窗口管理器的命令行界面版本。它提供了统一的管理多个会话的界面和相应的功能。</p>
+<p>在Screen环境下，所有的会话都独立的运行，并拥有各自的编号、输入、输出和窗口缓存。用户可以通过快捷键在不同的窗口下切换，并可以自由的重定向各个窗口的输入和输出<br><a target="_blank" rel="noopener" href="http://www.gnu.org/software/screen/">http://www.gnu.org/software/screen/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">screen -S yourname -&gt; 新建一个叫yourname的session</span><br><span class="line">screen -ls         -&gt; 列出当前所有的session</span><br><span class="line">screen -r yourname -&gt; 回到yourname这个session</span><br><span class="line">screen -d yourname -&gt; 远程detach某个session</span><br><span class="line">screen -d -r yourname -&gt; 结束当前session并回到yourname这个session</span><br><span class="line">screen -X -S yourname -&gt; 关闭会话</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="三、软件设置"><a href="#三、软件设置" class="headerlink" title="三、软件设置"></a>三、软件设置</h3><p><img src="https://picabstract-preview-ftn.weiyun.com/ftn_pic_abs_v3/2665d2fcc6c0d30533d0e85b80d69280a310e47fe2c69f1561997c84307adfa8489b8f2ad8bfb0479126e3b2de556368?pictype=scale&from=30113&version=3.3.3.3&uin=956149307&fname=20200503114854.png&size=750" alt="avatar"></p>
+<p>下载安装网易云音乐客户端<br>点击右上角的【设置】-【工具】-【Http代理】-【自定义代理】-下拉框选择【HTTP代理】<br>服务器<br>本机输入 127.0.0.1<br>局域网可以选择本机的IP地址<br>端口就是上面的8000 可以自行更改<br>最后重启客户端，即可收听灰色的歌曲</p>
+<h3 id="四、mac客户端使用（亲测有效）"><a href="#四、mac客户端使用（亲测有效）" class="headerlink" title="四、mac客户端使用（亲测有效）"></a>四、mac客户端使用（亲测有效）</h3><p>Proxifier 是 mac 下的辅助代理软件，可以指定程序指定域名端口走指定代理协议，比如让系统自带的邮件同步 gmail 邮箱，比如屏蔽某个 app 的联网权限</p>
+<p>1、 需要先下载Proxifier mac版本的软件，并激活使用</p>
+<p>2、 添加一个目标代理（proxy）<br>address 127.0.0.1<br>protocol选择 https<br>authentication不需要填写</p>
+<p>3、 代理规则（rule）<br>name NeteaseMusic<br>Applications NeteaseMusic;com.apple.WebKit.Networking</p>
+<p>4、 Action 选择上一步添加的 HTTPS 代理</p>
+<p>5、 保存</p>
+<p>自签证书<br>新版通过自签证书直接代理 https 流量能够解决此问题 (同时支持 hosts 模式和代理模式)<br>1、 生成 CA 私钥<br><code>openssl genrsa -out ca.key 2048</code></p>
+<p>2、 生成 CA 证书 (“YOURNAME” 处填上你自己的名字)<br><code>openssl req -x509 -new -nodes -key ca.key -sha256 -days 1825 -out ca.crt -subj &quot;/C=CN/CN=UnblockNeteaseMusic Root CA/O=YOURNAME&quot;</code></p>
+<p>3、 生成服务器私钥<br><code>openssl genrsa -out server.key 2048</code></p>
+<p>4、 生成证书签发请求<br><code>openssl req -new -sha256 -key server.key -out server.csr -subj &quot;/C=CN/L=Hangzhou/O=NetEase (Hangzhou) Network Co., Ltd/OU=IT Dept./CN=*.music.163.com&quot;</code></p>
+<p>5、 使用 CA 签发服务器证书<br><code>openssl x509 -req -extfile &lt;(printf &quot;extendedKeyUsage=serverAuth\nsubjectAltName=DNS:music.163.com,DNS:*.music.163.com&quot;) -sha256 -days 365 -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt</code></p>
+<p>6、 将服务器私钥 (server.key) 和服务器证书 (server.crt) 拷贝到仓库中覆盖原有文件</p>
+<p>7、 最后双击安装 CA 证书，需要手动将证书配置为始终信任</p>
+<h3 id="五、-IOS手机端配置（待测试）"><a href="#五、-IOS手机端配置（待测试）" class="headerlink" title="五、 IOS手机端配置（待测试）"></a>五、 IOS手机端配置（待测试）</h3><p>此时你的电脑或者 VPS 作为服务端，你的 iOS 设备是客户端</p>
+<p>1、 安装服务端目录里 ca.crt 证书，需要在 iOS 设置-通用-描述文件与设备管理，安装 UnblockNeteaseMusic Root CA 证书。然后回到 通用-关于本机-证书信任设置，勾选启用刚刚添加的证书</p>
+<p>2、 添加节点，类型选择 HTTP（注意不是HTTPS）服务器填写服务端的 IP（你作为服务器的电脑的局域网地址或者你的 VPS 的 IP/域名），端口填写你启动服务的端口号，就是 port1 ，填写一个备注名比如 UnblockNetease</p>
+<p>3、 编辑配置，点击本地文件 -&gt; default.conf（你当前使用的配置文件）-&gt; 编辑配置 -&gt; 添加规则，类型 USER-AGENT 选项 UNBLOCKNETEASE 用户代理 NeteaseMusic*</p>
+<p>添加下面三条规则，选项都选择刚添加的 UnblockNetease 节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">USER-AGENT: NeteaseMusic*</span><br><span class="line">DOMAIN-SUFFIX: music.163.com</span><br><span class="line">DOMAIN-SUFFIX: music.126.net</span><br></pre></td></tr></table></figure>
+
+<p>4、 保存并启动</p>
+<h3 id="六、-参考文章"><a href="#六、-参考文章" class="headerlink" title="六、 参考文章"></a>六、 参考文章</h3><p><a href="https://github.com/nondanee/UnblockNeteaseMusic">https://github.com/nondanee/UnblockNeteaseMusic</a><br><a target="_blank" rel="noopener" href="https://www.sheyilin.com/2019/06/unblockneteasemusic/#comments">https://www.sheyilin.com/2019/06/unblockneteasemusic/#comments</a><br><a href="https://github.com/nondanee/UnblockNeteaseMusic/issues/48#issuecomment-477870013">https://github.com/nondanee/UnblockNeteaseMusic/issues/48#issuecomment-477870013</a></p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2020/%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E4%BD%BF%E7%94%A8%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%EF%BC%8C%E8%A7%A3%E9%94%81%E5%8F%98%E7%81%B0%E6%AD%8C%E6%9B%B2/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E5%85%B6%E4%BB%96/">
+              #其他
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2020/Python%E9%A1%B9%E7%9B%AE%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90requirements/" target="_self">Python项目如何生成requirements</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2020/%E5%A4%9C%E8%89%B2/" target="_self">夜色-唐朝乐队、黑豹乐队、Again、1989、臧天朔、郑钧</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

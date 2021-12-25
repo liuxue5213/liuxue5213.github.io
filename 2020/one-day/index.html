@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>第一天 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="公考,公考," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>第一天</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2020-09-09
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E5%85%AC%E8%80%83/">
+            公考
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="one-day"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="一、-自我介绍"><a href="#一、-自我介绍" class="headerlink" title="一、 自我介绍"></a>一、 自我介绍</h2><p>大家好，先自我介绍一下，我是面试讲师@@，<br>首先恭喜大家通过笔试，进入面试环节；<br>在上岸的道路上，只差最后一步，<br>接下来几天，我将陪同大家 一起迈过这最后一步；</p>
+<p>大家之所以到这里来，都是为了学习面试的，有一个问题 大家有没有想过</p>
+<h3 id="1-1-国家为什么要设置面试环节呢-为什么不直接通过笔试选拔呢"><a href="#1-1-国家为什么要设置面试环节呢-为什么不直接通过笔试选拔呢" class="headerlink" title="1.1 国家为什么要设置面试环节呢 为什么不直接通过笔试选拔呢"></a>1.1 国家为什么要设置面试环节呢 为什么不直接通过笔试选拔呢</h3><p>通过面试，国家可以选拔到 更符合工作岗位要求的人才，<br>其次，也是通过面对面的方式 直接考察考生的基本素养、语言表达、个人综合能力，<br>从而判断考生是否与岗位匹配的流程，不然只考笔试就可以了</p>
+<!--  ### 1.2 如何看待面试答题内容和答题形式
+答题内容 自己回答问题说的话
+答题形式 回答问题时的精气神、重音、断句
+### 1.3 你要给考官留下什么样的印象   -->
+
+<h3 id="1-3-心态"><a href="#1-3-心态" class="headerlink" title="1.3 心态"></a>1.3 心态</h3><p>在学习之前 我们大家要先有一个好的心态，这个心态很重要，如果想学到更多的知识，就要先把自己想象成“一个空的杯子”，这样才能学习到更多的知识；</p>
+<p>在学习的过程中，大多数考生都会遇到以下几个瓶颈期 </p>
+<p>思维和思维的碰撞<br>1-2天 明白思路但不会用，无法开口答题<br>首先要增加自己的知识储备，名人名言，时事热点的了解；其次多说多答，尝试多写一些题，理解思路</p>
+<p>思维和内容的碰撞<br>1-4天 感觉自己没有进步，不想答题，自我否定<br>每一道题可以增加知识储备，听其他人答题取长补短，引入金句</p>
+<p>内容精进的瓶颈期<br>4天之后随时出现 答题内容过于冗长，有时会出现跑题的情况<br>通过录音，反复对比，不断提高答题质量</p>
+<p>考场状态的瓶颈期<br>题量在300-400左右 答题没有问题，但是情感和自如度有影响<br>使用一语道破思路，观点前置，答题时增加感情投入，要有自己的见解，表达出自己的真情实感</p>
+<h2 id="二-课程安排"><a href="#二-课程安排" class="headerlink" title="二 课程安排"></a>二 课程安排</h2><p>大家把讲义翻到第一页，课程安排<br>前4天讲理论 后3天都是刷题和模拟演练</p>
+<p>今天我们的安排是<br>上午讲考情和社会认知类题型<br>下午社会认知复合类题型<br>晚上带大家刷题  回顾今天白天所讲的知识</p>
+<p>我们来学习面试，<br>首先要知道面试考什么，考试方式是什么，题型是什么，<br>看一起看咱们河北省考情介绍</p>
+<h2 id="三、-考情介绍"><a href="#三、-考情介绍" class="headerlink" title="三、 考情介绍"></a>三、 考情介绍</h2><h3 id="1-考试形式"><a href="#1-考试形式" class="headerlink" title="1. 考试形式"></a>1. 考试形式</h3><p>结构化面试  半结构化面试  无领导小组讨论  结构化小组讨论  稍后会具体来讲</p>
+<h3 id="2-历年考试时间情况"><a href="#2-历年考试时间情况" class="headerlink" title="2. 历年考试时间情况"></a>2. 历年考试时间情况</h3><p>16年 5月底6月初<br>17年 5月底6月初<br>18年 5月中旬6月初<br>19年 6月底7月初</p>
+<h3 id="3-考试时间及地点"><a href="#3-考试时间及地点" class="headerlink" title="3. 考试时间及地点"></a>3. 考试时间及地点</h3><p>预测20年的考试时间 5-7月之间<br>地点：学校、宾馆、机关单位</p>
+<h3 id="4-面试题量"><a href="#4-面试题量" class="headerlink" title="4. 面试题量"></a>4. 面试题量</h3><p>从近几年咱们河北省公务员的面试情况来看，基本上都是每天2套题，上下午各一套，每套里面有3道题；<br>但值得我们大家注意的是，从2016年开始，<br>首次减少了面试题目的数量，4道题=3道题；<br>答题时间也随之相应改变，20分钟=》10分钟；<br>但相较于其他的省份，答题时间是较短，<br>所以大家在备考的时候 一定要注意控制好时间，这个是十分重要的；<br>如果答题时 接近超时了 立即收尾总结 ，超时会扣分的，</p>
+<h3 id="5-面试时间"><a href="#5-面试时间" class="headerlink" title="5. 面试时间"></a>5. 面试时间</h3><p>10分钟3道题，包括听题或者看题、思考、回答的总时间</p>
+<h3 id="6-考试方式"><a href="#6-考试方式" class="headerlink" title="6. 考试方式"></a>6. 考试方式</h3><h4 id="6-1-题目"><a href="#6-1-题目" class="headerlink" title="6.1 题目"></a>6.1 题目</h4><p>看题 念题 看题和念题</p>
+<h4 id="6-2-笔纸"><a href="#6-2-笔纸" class="headerlink" title="6.2 笔纸"></a>6.2 笔纸</h4><p>部分（看情况），如果没有，需要通过思考来分析</p>
+<h4 id="6-3-考官"><a href="#6-3-考官" class="headerlink" title="6.3 考官"></a>6.3 考官</h4><p>考官普遍在5-7人之间，正中央大概率是主考官，<br>或者谁说话，谁为主考官；<br>考官两边会有记分员、计时员、监督员和摄像机；</p>
+<p>考官的组成：<br>    任职5年以上的在职官员<br>    来自各个单位人事、纪检部门的骨干<br>    副教授职称以上的老师（党校居多） </p>
+<pre><code>主考官：来自组织、人事部门、科研院所等
+在职官员：
+    国考省考：副处级及以上
+    事业编制：副科级及以上
+
+在考试过程中 一定要与每一位考官 眼神交流1句话以上的时间    </code></pre>
+<h4 id="6-5-钟表"><a href="#6-5-钟表" class="headerlink" title="6.5 钟表"></a>6.5 钟表</h4><p>这是几乎所有考生都会问的问题</p>
+<p>只允许携带机械手表，电子产品类型的一律不可以携带，<br>而且之前的考生也反映过，在答题过程中 没有时间去看</p>
+<p>1、考生桌子<br>2、墙上挂表<br>3、考官桌子上有倒计时屏幕/电脑<br>4、没有表</p>
+<p>不过大家也不用太过于担心时间问题，我们会在后续的课程中，<br>    通过大量的刷题，养成一个快速思考的习惯，其他的机构一个课程下来，也就20-30道题，我们后面会进行至少200道题的锻炼，不断提高大家的答题能力，不要认为这样有很大的压力，这样的好处是 将来在上考场时 可能遇到一道题 就有一种似曾相识的感觉 可以更好的帮助大家上岸</p>
+<p>同样刷题是针对每一种题型的，还有我们特有的十分八遍的方法和脱敏训练，更好地帮助大家敢于开口说话；</p>
+<h3 id="7-面试成绩"><a href="#7-面试成绩" class="headerlink" title="7. 面试成绩"></a>7. 面试成绩</h3><p>打分方式：去掉最高分和最低分 计算平均值<br>出分：<br>    考完试，直接走，成绩网上公示，<br>    考完试，直接走，每半天考场外张贴，<br>    考完试，直接到等候室，等工作人员念分或者张贴成绩<br>    考完试，考场内听完再立场；下一个考完试，上一个回去看分，签字</p>
+<h2 id="四、-考试形式"><a href="#四、-考试形式" class="headerlink" title="四、 考试形式"></a>四、 考试形式</h2><p>结构化面试、半结构化面试、无领导小组讨论、结构化小组讨论（三人小组）</p>
+<h3 id="1-结构化面试"><a href="#1-结构化面试" class="headerlink" title="1. 结构化面试"></a>1. 结构化面试</h3><p>也叫面谈，每个人面对的考官组成、考题、评分标准、面试流程都是一样的，好处是可以保证考试公平公正</p>
+<p>特点：标准化 结构化  优点 规范性 缺点 模式化 互动性不足（考官说的）</p>
+<p>反模式化<br>    互动性不足=》表现 动作 眼神 声音 加大交流<br>    内容贴近 真实情感</p>
+<h3 id="2-半结构化面试"><a href="#2-半结构化面试" class="headerlink" title="2. 半结构化面试"></a>2. 半结构化面试</h3><p>在结构化的基础上，加入随机提问(银行、企业)</p>
+<h3 id="3-无领导小组讨论（国考-省考-银行-个别地方法院、检察院、事业单位）"><a href="#3-无领导小组讨论（国考-省考-银行-个别地方法院、检察院、事业单位）" class="headerlink" title="3. 无领导小组讨论（国考 省考 银行 个别地方法院、检察院、事业单位）"></a>3. 无领导小组讨论（国考 省考 银行 个别地方法院、检察院、事业单位）</h3><p>5-12位考生临时分为一组，同时进入考场，大家分别讨论对一个话题的看法，或者制定一个计划，<br>解决一个问题，提出一个方案，旁边有评分员进行打分</p>
+<p>好处是可以考察到笔试不易观察的维度，对实际行为的考察，考生不容易演示，<br>考察的能力比较广</p>
+<p>不足：题目设计难（有争议的题目） 对考官要求大（过程中很难判断考生的品性） 考生会受到其他人的影响（比如自己的观点被否定） 考生仍有装好的可能（吸引他人意见 考官无法识别） </p>
+<h3 id="4-结构化小组讨论（三人小组）"><a href="#4-结构化小组讨论（三人小组）" class="headerlink" title="4. 结构化小组讨论（三人小组）"></a>4. 结构化小组讨论（三人小组）</h3><p>国税在延用，三人一组，进入考场后先进行结构化面试提问，轮流回答并点评</p>
+<h2 id="五、-考试题型"><a href="#五、-考试题型" class="headerlink" title="五、 考试题型"></a>五、 考试题型</h2><p>怎么看<br>对社会现象、道理的认知和理解、感受<br>    绝大多数必考，偏向于想象类【时政】、哲理类【习总书记的讲话】、漫画类<br>        谈谈你对佛系青年的认识<br>        互联网发展，网公安机关打击网络谣言，你怎么看</p>
+<p>怎么办<br>日常生活中的人际交往，事务、情况和处理<br>    矛盾处理偏多【人与人】、组织流程【宣传】组织处理较少<br>        领导安排任务，同事不愿配合，你怎么办<br>        组织预防电信诈骗的活动，你怎么办</p>
+<p>怎么说<br>以演讲、讲故事、情景模拟等方式回答问题<br>    演讲题【一般性主题，如创新、团结、坚持】【漫画演讲或者结合时政】、情景模拟较少<br>    以一个词语进行演讲、旁边的邻居因为吵闹有投诉，你如何说服邻居，请现场模拟</p>
+<p>你是谁<br>对个人情况、求职动机的表述<br>    自己对岗位的看法、优势特长</p>
+<p>上下午题型都是类似的，2019年漫画题突出</p>
+<p>2019 国家发展阶段、领导干部用权 人才引进 老城改造<br>2018 名人名言、真理类、习总书记讲话、工作效率、人际处理、短视频、网络问题、终身学习、传统文化、互联网、乡村振兴、扶贫问题、群众沟通、青年、廉政、大学生就业、政策落实、基层工作<br>2017 老年人保健品骗局、标题党、减政便民、遛娃经济、共享单车、脱贫攻坚、自主招生、高离婚率、出轨率、限塑令 </p>
+<h2 id="考试流程"><a href="#考试流程" class="headerlink" title="考试流程"></a>考试流程</h2><h3 id="国家为什么要设置面试环节呢-为什么不直接通过笔试选拔呢"><a href="#国家为什么要设置面试环节呢-为什么不直接通过笔试选拔呢" class="headerlink" title="国家为什么要设置面试环节呢 为什么不直接通过笔试选拔呢"></a>国家为什么要设置面试环节呢 为什么不直接通过笔试选拔呢</h3><p>通过面试，国家可以选拔到 更符合工作岗位要求的人才，<br>其次，也是通过面对面的方式 直接考察考生的基本素养、语言表达、个人综合能力，<br>从而判断考生是否与岗位匹配的流程，不然只考笔试就可以了</p>
+<h3 id="如何看待面试答题内容和答题形式"><a href="#如何看待面试答题内容和答题形式" class="headerlink" title="如何看待面试答题内容和答题形式"></a>如何看待面试答题内容和答题形式</h3><p>答题内容  针对题目回答的内容<br>答题形式  答题的精气神、重音、断句  —脱敏训练：学员拉到户外进行练习，来达到克服心理紧张的目的</p>
+<h3 id="想给考官留下怎样的印象"><a href="#想给考官留下怎样的印象" class="headerlink" title="想给考官留下怎样的印象"></a>想给考官留下怎样的印象</h3><h3 id="考官在看什么"><a href="#考官在看什么" class="headerlink" title="考官在看什么"></a>考官在看什么</h3><p>语言表达能力<br>表达准确 简洁 流畅得体 无语病</p>
+<p>综合分析能力<br>层次清晰 主次分明 条理清晰 善于综合分析 逻辑性强 思维面广（答题时 要多个角度去论述）</p>
+<p>求职动机<br>诚实负责，自信而又务实，既有进取意识而又踏实、谦逊、回答极有分寸</p>
+<p>计划组织能力<br>有极强的设计能力，计划能力，计划周密可行，组织能力极强，有极强的合作意识，合作技巧高，协调沟通方法得当<br>协调应变能力</p>
+<p>举止仪表<br>文化素养高，举止文雅，穿着得体，无多余动作（<br>一些小动作，转笔、抖腿等会扣分<br>）</p>
+<p>面试特点-逆面试</p>
+<p>逆 不一样，和其他同学的答题思路、方式不一样、有自己的特点</p>
+<p>一逆 逆授课风格<br>气势 答 讲 听<br>二逆 逆思路<br>答题思路 大众答法 短时间开口；一语道破 一个核心内容；<br>三逆 逆内容<br>仰望星空（背诵资料、语句）   脚踏实地（挖掘发现身边的故事，背诵例子 没有感情 背的东西都是一样的 自己的东西才是最好的）<br>四逆 逆训练方式<br>性格测试 决定以后答题的瓶颈<br>脱敏训练-脸皮厚<br>十分八遍-开口难 不自信 对内容过于依赖的  不一定要将所有点都想明白 面试的时候 没有时间弄明白<br>    第一遍 一句话 第二遍  一点一点增加  说的话就是有理 每个人理解的观念不同 总会有表达不全的 不要太过于纠结<br>五逆 逆状态<br>表演式答题 真诚<br>背答案  自己会的没说  不会的说不好</p>
+<p>尽量说自己说的好的 让别人听懂<br>而不是背诵的高大上 别人听不明白</p>
+<p>确定面试对象<br>    攻擂 岗位招1个 笔试前3名进面 自己成绩在2-3<br>    守擂 岗位招2个 笔试前6名进面 自己成绩在1-2<br>资格审核<br>    报名信息是否真实，如果报名信息和提供的材料不符合，被淘汰，不能参加，根据笔试排名补录<br>    面审、网上邮寄<br>面试报道<br>    提前准备好服装、证件、材料</p>
+<p>抽签<br>    抽考场签，同一岗位都是同一组，从组内选择一个考生 代表全组抽考场签<br>    考生序号签 在考场抽完之后<br>候考</p>
+<p>入场</p>
+<p>答题</p>
+<p>退场</p>
+<p>成绩计算</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2020/one-day/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E5%85%AC%E8%80%83/">
+              #公考
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2020/%E8%BF%87%E6%B8%A1%E8%AF%8D/" target="_self">过渡词</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2020/%E5%88%B7%E9%A2%98/" target="_self">118刷题</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

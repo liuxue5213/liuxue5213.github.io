@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>有一个诗人 他叫贺炜 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="经典语句,读书," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>有一个诗人 他叫贺炜</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2020-01-21
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%8F%A5/">
+            经典语句
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="有一个诗人-他叫贺炜"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>体育，不仅仅是一种爱好，不仅仅是一种竞赛。更多方面的，他是一种精神，一种荣誉，一种享受。</p>
+<p>怀揣着对足球的热爱，让我们用心中关于足球的美好想法激励自己吧。强大自己的内心，强大自己的实力。</p>
+<p>1、布冯似乎5年前就知道他要往外趟。</p>
+<p>2、足球就是这样，没有强者赢只有赢者生。</p>
+<p>3、你最擅长什么，就一定会执着于什么，你最执着于什么，就一定会为其所伤。</p>
+<p>4、詹姆斯可以挡住对方一次射门，挡住对方两次射门，但是挡不住对方总是射门。</p>
+<p>5、生活可以过得像戏，但绝不能过成戏。像，会极有情趣；成，由于其他演员的不配合，你一定会演砸。</p>
+<p>6、若只有恨，那就不配有爱；若只会拿刺刀，那就不配闻到花香。——给所有恨不得对方球迷下地狱的人。</p>
+<p>7、英格兰左路的两个阿什利配合不错。阿什利-科尔的年纪比较大，所以另一个阿什利叫做扬（Young）。</p>
+<p>8、按照中国人的说法，皮尔洛是一个标准的富二代，但是这个富二代，完全是靠自己的努力，获得了个人价值的认同。</p>
+<p>9、90分钟的比赛结束，场上队员们忙于放松肌肉，巴洛特利需要放松一下他的神经，对他来说，肌肉还不是什么问题。</p>
+<p>10、从博卡队的技术型前腰，到皇马的阻击型后腰，这个故事告诉我们，加戈是怎么从一个文艺青年演变成了一个劳动模范的。</p>
+<p>11、鲁尼还在前场不知疲倦的奔跑，如果说鲁尼是不列颠的亚瑟王的话，现在他身边并没有兰斯洛特、高文、格拉海德这些圆桌骑士。</p>
+<p>12、当他们述说你现在的潦倒，我唯有报以淡然：“你们只是没有见过他风华正茂的日子。陪着他越过人生的高峰，这是我私藏的幸福。”</p>
+<p>13、对法国的队员来说，苏黎世的这个雨夜是让人伤心的，就像193年以前在比利时的滑铁卢镇，拿破仑所面对的那个伤心的雨夜一样。</p>
+<p>14、要说皮尔洛的父亲是意大利的钢铁大亨，他完全没有努力的必要，但是，皮尔洛靠着自己的努力，在足球这个他热爱的领域做到了最好</p>
+<p>15、爱尔兰队0-4落后，爱尔兰球迷们整齐的歌声甚至比开场球迷自娱自乐的时候更加响亮更加整齐，这样的歌声是对球场上战士们最好的褒奖。</p>
+<p>16、人无法打败时间，但是人的作为可以站在时间之上，留在我们心中。继续前进，在我这里你永远是王子，哪怕有一天你牙齿掉光，老得走也走不动。</p>
+<p>17、我亲爱的祖国，现在就像一大锅煮开的水，热气腾腾，但静不下来；我们则像锅里翻滚的饺子，起起伏伏，但不知方向。什么，让中国失去了耐心？</p>
+<p>18、观众朋友们在以后自己老去的时候坐在壁炉边上，抱着自己的孙子给他讲世界杯故事的时候，一定不会错过2010年南非世界杯的这场1/8决赛。</p>
+<p>19、足球是爱，而不是恨。支持你所喜欢队伍，无论他在高峰还是低谷；欣赏你强大的对手，你正是因为他的存在而更强。这就是足球教给我们最大的哲理。</p>
+<p>20、每次的大赛，每年的联赛，就像是人生的一天一样，当一天结束的时候一定会有人开心，有人悲伤，但是无论如何，无论你是开心还是悲伤，明天都依然会来！</p>
+<p>21、体育比赛中仅从精神角度考量的话是没有失败者的！格但斯克现场嘹亮的歌声让每一个经历的人都印象深刻。它代表着顽强到底的体育精神以及不论输赢都和你在一起的团队精神。</p>
+<p>22、足球就是如此，一方的欢喜衬托着另外一方的忧伤。人类的极端情感，在小小的绿茵场上，在90分钟的时间内，就能够得到充分的体现。这就是足球！这也是我们爱足球的原因！</p>
+<p>23、谁说这个世界是冰冷而残酷的，像乌拉圭人一样，只要你胸怀坚定的信仰，做好充分的准备，保持高昂的斗志，这个世界说不定，说不定就会揭开它冰冷的面纱，向你露出灿烂的微笑！</p>
+<p>24、喜欢一个人，不一定要和TA相识，或者是做朋友，就像你喜欢一种花，并不一定要买上一盆摆在家里一样。远远的关注，默默的欣赏，享受心有灵犀的快乐。保持的这段距离，就是留给自尊的空间。</p>
+<p>25、不过，让我内心感到温暖的是，在生命如此有意义的一个时间节点，在今天晚上，电视机前的亿万球迷能够，我们大家一起来经历，共同分享，这是我的幸福，也是大家的幸福。我是贺炜，观众朋友们，再见！</p>
+<p>26、爱本并没有错，爱谁都是自由，爱强者更是人类的天性。不过因为自己所爱的事物强大，就幻想自己也强大了，甚至觉得爱其他事物的人都已经被踩在脚下了，这就是病态，一种弱者的病态。此道理，适合所有人。</p>
+<p>27、其实随着中国国力的增强，国内现在肯定也有很多富二代，‘富二代’只是你的自然属性，不是你的基因，一个人个人价值的实现，还是看他为别人、为这个社会留下了什么样的财富，无论是物质财富还是精神财富。</p>
+<p>28、我们想想吧，在此时此刻，在柏林，在慕尼黑，在汉堡，在科隆大教堂，肯定有无数的德国球迷为之欢欣鼓舞。而在伦敦，在利物浦，在曼彻斯特，在泰晤士河边的小酒馆，肯定也有无数的英格兰球迷为之黯然神伤。</p>
+<p>29、这是本届世界杯开始之后最为紧张、最为牵动人心的40分钟，虽然从理论上来讲，本场比赛之后总有一支球队要离开本届世界杯，但是从比赛开始的第一秒，这两个多小时的时间将成为我们记忆当中永恒的精神财富。</p>
+<p>30、由于多种客观原因你的实力比你对手弱，但你的战斗精神一定要保持住。作为球队的支持者，不一定球队胜利取的好成绩你支持他，球队逆境的时候你更要支持他。爱尔兰球迷全场响亮的歌声就是对体育精神最好的诠释。</p>
+<p>31、之所以换下帕帕斯塔索普洛斯，一来因为他是三中卫之一的后卫，换上前锋换下后卫加强进攻；二来帕帕斯塔索普洛斯身上有一张黄牌……把他换下去对解说员来说也是一种解脱，因为帕帕斯塔索普洛斯的名字是场上球员中名字最长的……</p>
+<p>32、94年的时候，我还是个中学生，听到马拉多纳禁赛的消息，我当时认为马拉多纳有一天还会回来的。但是，生活当中往往就是这样，一件不经意的小事，经常就是命运的转折，一次看似普通的再见，其实就是永别！缘分就在那一个瞬间戛然而止。</p>
+<p>33、足球与其他很多运动不同的地方在于，中途没有暂停。人生也是如此，如果你在人生中遇到了困难，日子是不会停下来让你处理的，接下来的生活还在继续，你必须在面对新的困难的同时来解决上一个困难，你必须在面对下一个挑战的时候来解决上一个错误。</p>
+<p>34、总有一支锚，能拴住我们飘泊在人海里的心。那支锚或许就是某个人，能让其他人都变成背景，能让内心充满温暖与安宁，能让艰辛都变得有意义。每个人都应该有这支锚，TA会帮我们了解，即使人潮熙攘，缘分生灭，过客如云，我们仍能守住良善，锁住心魔，保存信仰。</p>
+<p>35、中国足球世界排名86，强过中国许多事物的世界排名。足球不给力，别的事情更不给力，足球能骂，别的事情骂了就要被跨省，所以足球是那个替死鬼。但我爱它，我会一直支持它，希望它好起来，为它的每一次小小进步而高兴。足球即使是再多人的痰盂，也永远是我的圣杯。</p>
+<p>36、公民社会的建立，任重而道远。前往理想公民社会的道路上，最大的阻力其实就是我们自己。价值体系的沉沦，基本素养的崩溃，我们不是主因，我们是温床；我们不是罪魁，我们是最大的帮凶；我们不是前进方向的决定者，我们却是苦痛的承受者。有什么样的人民，就有什么样的社会。</p>
+<p>37、深感当下中国最危险的对立，不是富与贫，不是左与右，不是庙堂与江湖，而是有底线与无底线，有信仰与无信仰，有共识与无共识之间的对立。因所处社会地位不同而作出不同选择可以理解，但底线、信仰和共识则是不分贫富左右官民均赖以生存的公约数。毁之则众人互害，保之则多元并存。</p>
+<p>38、这个时候我想起了法国文豪福楼拜的一句话，‘我们在人的一生中最为辉煌的一天，并不是功成名就的那一天，而是从悲叹和绝望中产生对人生挑战的欲望，并且勇敢地迈向这种挑战的那一天’，我们拿这句话和失败的、回家的法国队队员们共勉，我们送别法国，我们祝贺意大利，观众朋友们，再见。</p>
+<p>39、三个人，分别坐在左中右三个位置上，对左边那人来说，另外两个人的共同点是：都在他右边。对于右边那个人来说，同理。所以如果你不能跳出这一排旁观这三个人，而只是站在同一排来看的话，对你来说就只有左右而没有中间。很有类比意义的是，对于左右双方球迷来说，解说员就是那个坐在中间的人。</p>
+<p>40、每一个人，因其成长环境，教育背景，过往经历，性格特点的不同，面对问题必然有个性化的处理方式。人生的方向，就植根于这每一次判断，选择和决定中，它完全由自己造就，旁人既无法掠美，更无法代受，而这无数微观的选项，汇聚成一条道路，引领你走向自己的未来，人们专门有一个词来形容它：命运。</p>
+<p>41、这是一个离别的季节，空气里都是忧伤的味道。每个人都有这样的年纪，那时我们相信这世上有永远，我们觉得时间很长，再见很远。但成长的代价，就是面对各种离别；成长的残忍，就是学到根本没有永远。天下没有不散的筵席，孤独的人不是可耻的，离别是没有人躲得掉的。忧伤，只是或许碰巧这次击中了你。</p>
+<p>42、这两只球队初次相约，是在本次欧洲杯的小组首轮，在波罗地海海滨的格但斯坦，两只球队打成1比1，随后两只球队通过不同的道路开始了奔向决赛的艰辛旅程。整整三个星期，这两只球队走了不同的道路，都是充满荆棘和坎坷。但是两只球队最终还是没有迟到一步，没有早到一步，在基辅碰面了。或许他们队员见面的时候，会轻轻地问一句：哦原来你也在这里！</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2020/%E6%9C%89%E4%B8%80%E4%B8%AA%E8%AF%97%E4%BA%BA-%E4%BB%96%E5%8F%AB%E8%B4%BA%E7%82%9C/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E8%AF%BB%E4%B9%A6/">
+              #读书
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2020/Python%E7%AC%94%E8%AE%B0/" target="_self">Python3笔记</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2020/7%E7%A7%8DPHP%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D%E7%9A%84%E6%96%B9%E6%B3%95/" target="_self">7种PHP获取文件扩展名的方法</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>JQuery笔记 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="前端,JQuery," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>JQuery笔记</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2019-06-18
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E5%89%8D%E7%AB%AF/">
+            前端
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="JQuery笔记"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h3 id="检查-jQuery-是否加载"><a href="#检查-jQuery-是否加载" class="headerlink" title="检查 jQuery 是否加载"></a>检查 jQuery 是否加载</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (typeof jQuery &#x3D;&#x3D; &#39;undefined&#39;) &#123;</span><br><span class="line">  console.log(&#39;jQuery hasn\&#39;t loaded&#39;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  console.log(&#39;jQuery has loaded&#39;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="返回顶部按钮"><a href="#返回顶部按钮" class="headerlink" title="返回顶部按钮"></a>返回顶部按钮</h3><p>利用 jQuery 中的 animate 和 scrollTop 方法，你无需插件就可以创建简单的 scroll up 效果<br>调整 scrollTop 的值即可改变滚动着陆位置。你实际所做的是在 800 毫秒内不断设置文档主体的位置，直到它滚动到顶部。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 返回顶部</span><br><span class="line">$(&#39;a.top&#39;).click(function (e) &#123;</span><br><span class="line">  e.preventDefault();</span><br><span class="line">  $(document.body).animate(&#123;scrollTop: 0&#125;, 800);</span><br><span class="line">&#125;);</span><br><span class="line">&lt;!-- 设置锚 --&gt;</span><br><span class="line">&lt;a class&#x3D;&quot;top&quot; href&#x3D;&quot;#&quot;&gt;Back to top&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="预加载图片"><a href="#预加载图片" class="headerlink" title="预加载图片"></a>预加载图片</h3><p>如果你的网页使用了大量并非立即可见的图片（例如悬停鼠标触发的图片），那么预加载这些图片就显得很有意义了:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$.preloadImages &#x3D; function () &#123;</span><br><span class="line">  for (var i &#x3D; 0; i &lt; arguments.length; i++) &#123;</span><br><span class="line">    $(&#39;&lt;img&gt;&#39;).attr(&#39;src&#39;, arguments[i]);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">$.preloadImages(&#39;img&#x2F;hover-on.png&#39;, &#39;img&#x2F;hover-off.png&#39;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="判断图片是否加载完成"><a href="#判断图片是否加载完成" class="headerlink" title="判断图片是否加载完成"></a>判断图片是否加载完成</h3><p>在有些情况下，为了继续执行脚本，你需要检查图片是否已经完全加载:<br>同样，换用一个带有 id 或者 class 属性的 img 标签，你也可以检查特定图片是否加载完成。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;img&#39;).load(function () &#123;</span><br><span class="line">  console.log(&#39;image load successful&#39;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="自动修复失效图片"><a href="#自动修复失效图片" class="headerlink" title="自动修复失效图片"></a>自动修复失效图片</h3><p>如果你在你的网站上发现了失效的图片链接，逐个去替换它们将会是个苦差。这段简单的代码可以很大程度地减轻痛苦：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;img&#39;).on(&#39;error&#39;, function () &#123;</span><br><span class="line">  if(!$(this).hasClass(&#39;broken-image&#39;)) &#123;</span><br><span class="line">    $(this).prop(&#39;src&#39;, &#39;img&#x2F;broken.png&#39;).addClass(&#39;broken-image&#39;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="鼠标悬停切换-class"><a href="#鼠标悬停切换-class" class="headerlink" title="鼠标悬停切换 class"></a>鼠标悬停切换 class</h3><p>如果你希望在用户将鼠标悬停在某个可点击元素上时改变它的视觉效果，你可以在该元素被悬停时给它添加一个 class，当鼠标不再悬停时，移除这个 class：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;.btn&#39;).hover(function () &#123;</span><br><span class="line">  $(this).addClass(&#39;hover&#39;);</span><br><span class="line">&#125;, function () &#123;</span><br><span class="line">  $(this).removeClass(&#39;hover&#39;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>如果你还寻求更简单的途径，可以使用 toggleClass 方法，仅需添加必要的 CSS：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;.btn&#39;).hover(function () &#123;</span><br><span class="line">  $(this).toggleClass(&#39;hover&#39;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>注：在这种情况下，使用 CSS 或许是一个更快速的解决方案，但这种方法仍然值得稍作了解。</p>
+<h3 id="禁用输入字段"><a href="#禁用输入字段" class="headerlink" title="禁用输入字段"></a>禁用输入字段</h3><p>有时，你可能希望在用户完成特定操作（例如，勾选“我已阅读条例”的确认框）前禁用表单的提交按钮或禁用其中某个输入框。</p>
+<p>你可以在你的输入字段上添加 disabled 属性，而后你能在需要时启用它：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;input[type&#x3D;&quot;submit&quot;]&#39;).prop(&#39;disabled&#39;, true);</span><br></pre></td></tr></table></figure>
+
+<p>你只需在输入字段上再次运行 prop 方法, 但是这一次把 disabled 值改为 false：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;input[type&#x3D;&quot;submit&quot;]&#39;).prop(&#39;disabled&#39;, false);</span><br></pre></td></tr></table></figure>
+
+<h3 id="阻止链接加载"><a href="#阻止链接加载" class="headerlink" title="阻止链接加载"></a>阻止链接加载</h3><p>有时你不希望链接到指定页面或者重载当前页面，而是想让它们干些别的，例如触发其它脚本。这需要在阻止默认动作上做些文章：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;a.no-link&#39;).click(function (e) &#123;</span><br><span class="line">  e.preventDefault();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="缓存-jQuery-选择器"><a href="#缓存-jQuery-选择器" class="headerlink" title="缓存 jQuery 选择器"></a>缓存 jQuery 选择器</h3><p>想想你在项目中一次又一次地写了多少相同的选择器吧。每个 $(‘.element’) 都必须查询一次整个 DOM,不管它是否曾这样执行过。作为代替，我们只运行一次选择器，并把结果储存在一个变量中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var blocks &#x3D; $(&#39;#blocks&#39;).find(&#39;li&#39;);</span><br></pre></td></tr></table></figure>
+<p>现在你能在任何地方使用 blocks 变量而无需每次查询 DOM 了:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#hideBlocks&#39;).click(function () &#123;</span><br><span class="line">  blocks.fadeOut();</span><br><span class="line">&#125;);</span><br><span class="line">$(&#39;#showBlocks&#39;).click(function () &#123;</span><br><span class="line">  blocks.fadeIn();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>缓存 jQuery 的选择器是种简单的性能提升。</p>
+<h3 id="切换淡出-滑动"><a href="#切换淡出-滑动" class="headerlink" title="切换淡出 / 滑动"></a>切换淡出 / 滑动</h3><p>淡出和滑动都是我们在 jQuery 中大量使用的效果。你可能只想在用户点击后展现某个元素，此时用 fadeIn 和 slideDown 方法就很完美。</p>
+<p>但是如果你希望这个元素在首次点击时出现，在再次点击时消失，这段代码就很有用了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 淡出</span><br><span class="line">$(&#39;.btn&#39;).click(function () &#123;</span><br><span class="line">  $(&#39;.element&#39;).fadeToggle(&#39;slow&#39;);</span><br><span class="line">&#125;);</span><br><span class="line">&#x2F;&#x2F; 切换</span><br><span class="line">$(&#39;.btn&#39;).click(function () &#123;</span><br><span class="line">  $(&#39;.element&#39;).slideToggle(&#39;slow&#39;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="简单的手风琴效果"><a href="#简单的手风琴效果" class="headerlink" title="简单的手风琴效果"></a>简单的手风琴效果</h3><p>通过添加这段脚本，你实际要做的只是提供必要的 HTML 元素以便它正常运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 关闭所有面板</span><br><span class="line">$(&#39;#accordion&#39;).find(&#39;.content&#39;).hide();</span><br><span class="line">&#x2F;&#x2F; 手风琴效果</span><br><span class="line">$(&#39;#accordion&#39;).find(&#39;.accordion-header&#39;).click(function () &#123;</span><br><span class="line">  var next &#x3D; $(this).next();</span><br><span class="line">  next.slideToggle(&#39;fast&#39;);</span><br><span class="line">  $(&#39;.content&#39;).not(next).slideUp(&#39;fast&#39;);</span><br><span class="line">  return false;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="使两个-div-等高"><a href="#使两个-div-等高" class="headerlink" title="使两个 div 等高"></a>使两个 div 等高</h3><p>有时你希望无论两个 div 各自包含什么内容，它们总有相同的高度：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;.div&#39;).css(&#39;min-height&#39;, $(&#39;.main-div&#39;).height());</span><br></pre></td></tr></table></figure>
+
+<p>这个例子设置了 min-height，意味着高度可以大于主 div 而不能小于它。然而，更灵活的方法是遍历一组元素，然后将高度设置为最高元素的高度：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var $columns &#x3D; $(&#39;.column&#39;);</span><br><span class="line">var height &#x3D; 0;</span><br><span class="line">$columns.each(function () &#123;</span><br><span class="line">  if ($(this).height() &gt; height) &#123;</span><br><span class="line">    height &#x3D; $(this).height();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">$columns.height(height);</span><br></pre></td></tr></table></figure>
+<p>如果你希望所有列高度相同：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var $rows &#x3D; $(&#39;.same-height-columns&#39;);</span><br><span class="line">$rows.each(function () &#123;</span><br><span class="line">  $(this).find(&#39;.column&#39;).height($(this).height());</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="在新标签页-新窗口打开外部链接"><a href="#在新标签页-新窗口打开外部链接" class="headerlink" title="在新标签页 / 新窗口打开外部链接"></a>在新标签页 / 新窗口打开外部链接</h3><p>在一个新的浏览器标签页或窗口中打开外部链接，并确保相同来源的链接在同一个标签页或者窗口中打开：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;a[href^&#x3D;&quot;http&quot;]&#39;).attr(&#39;target&#39;, &#39;_blank&#39;);</span><br><span class="line">$(&#39;a[href^&#x3D;&quot;&#x2F;&#x2F;&quot;]&#39;).attr(&#39;target&#39;, &#39;_blank&#39;);</span><br><span class="line">$(&#39;a[href^&#x3D;&quot;&#39; + window.location.origin + &#39;&quot;]&#39;).attr(&#39;target&#39;, &#39;_self&#39;);</span><br></pre></td></tr></table></figure>
+<p>注： window.location.origin 在 IE10 中不可用. 这个修复方案 正是关注于该问题。</p>
+<h3 id="通过文本查找元素"><a href="#通过文本查找元素" class="headerlink" title="通过文本查找元素"></a>通过文本查找元素</h3><p>通过使用 jQuery 的 contains() 选择器，你能够查找元素内容中的文本。若文本不存在，该元素将被隐藏：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var search &#x3D; $(&#39;#search&#39;).val();</span><br><span class="line">$(&#39;div:not(:contains(&quot;&#39; + search + &#39;&quot;))&#39;).hide();</span><br></pre></td></tr></table></figure>
+
+<h3 id="在-visibility-属性变化时触发"><a href="#在-visibility-属性变化时触发" class="headerlink" title="在 visibility 属性变化时触发"></a>在 visibility 属性变化时触发</h3><p>当用户的焦点离开或者重新回到某个标签页时，触发 Javasrcipt：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$(document).on(&#39;visibilitychange&#39;, function (e) &#123;</span><br><span class="line">  if (e.target.visibilityState &#x3D;&#x3D;&#x3D; &quot;visible&quot;) &#123;</span><br><span class="line">    console.log(&#39;Tab is now in view!&#39;);</span><br><span class="line">  &#125; else if (e.target.visibilityState &#x3D;&#x3D;&#x3D; &quot;hidden&quot;) &#123;</span><br><span class="line">    console.log(&#39;Tab is now hidden!&#39;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Ajax-调用错误处理"><a href="#Ajax-调用错误处理" class="headerlink" title="Ajax 调用错误处理"></a>Ajax 调用错误处理</h3><p>当一个 Ajax 调用返回 404 或 500 错误时，错误处理程序将被执行。若错误处理未被定义，其它 jQuery 代码可能不再有效。所以定义一个全局的 Ajax 错误处理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(document).ajaxError(function (e, xhr, settings, error) &#123;</span><br><span class="line">  console.log(error);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="链式插件调用"><a href="#链式插件调用" class="headerlink" title="链式插件调用"></a>链式插件调用</h3><p>jQuery 允许通过“链式”插件调用的方法，来缓解反复查询 DOM 和创建多个 jQuery 对象的过程。例如，下面的代码代表着你的插件调用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#elem&#39;).show();</span><br><span class="line">$(&#39;#elem&#39;).html(&#39;bla&#39;);</span><br><span class="line">$(&#39;#elem&#39;).otherStuff();</span><br></pre></td></tr></table></figure>
+
+<p>通过使用链式操作，有了显著的改善:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#elem&#39;)</span><br><span class="line">  .show()</span><br><span class="line">  .html(&#39;bla&#39;)</span><br><span class="line">  .otherStuff();</span><br></pre></td></tr></table></figure>
+
+<p>另一种方法是在变量（以 $ 为前缀）中，对元素进行缓存：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var $elem &#x3D; $(&#39;#elem&#39;);</span><br><span class="line">$elem.hide();</span><br><span class="line">$elem.html(&#39;bla&#39;);</span><br><span class="line">$elem.otherStuff();</span><br></pre></td></tr></table></figure>
+<p>无论是链式操作，还是缓存元素，都是 jQuery 中用以简化和优化代码的最佳实践。</p>
+<h3 id="禁用右键"><a href="#禁用右键" class="headerlink" title="禁用右键"></a>禁用右键</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">body&#123; -moz-user-select:none; hutia:expression(this.onselectstart&#x3D;function()&#123;return(false)&#125;);&#125;</span><br><span class="line"></span><br><span class="line">&lt;script language&#x3D;&quot;JavaScript&quot;&gt; document.oncontextmenu&#x3D;function(e)&#123;return false;&#125;&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">$(document).ready(function() &#123;</span><br><span class="line">    $(document).bind(&quot;contextmenu&quot;, function(e) &#123;</span><br><span class="line">        alert(&quot;sorry! No right-clicking!&quot;);</span><br><span class="line">        return false;?</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="禁止选中文字"><a href="#禁止选中文字" class="headerlink" title="禁止选中文字"></a>禁止选中文字</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">body&#123;</span><br><span class="line">&#x2F;*moz-user-select: -moz-none;*&#x2F;</span><br><span class="line">-o-user-select:none;</span><br><span class="line">-moz-user-select: none; &#x2F;*火狐*&#x2F;</span><br><span class="line">-webkit-user-select: none; &#x2F;*webkit浏览器,chrome浏览器*&#x2F;</span><br><span class="line">-ms-user-select: none; &#x2F;*IE10*&#x2F;</span><br><span class="line">-khtml-user-select: none; &#x2F;*早期浏览器*&#x2F;</span><br><span class="line">&#x2F;*user-select: none;*&#x2F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="禁用刷新-屏蔽F5刷新键"><a href="#禁用刷新-屏蔽F5刷新键" class="headerlink" title="禁用刷新 屏蔽F5刷新键"></a>禁用刷新 屏蔽F5刷新键</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$(document).bind(&quot;keydown&quot;, function(e) &#123;</span><br><span class="line">    e &#x3D; window.event || e;</span><br><span class="line">    if (e.keyCode &#x3D;&#x3D; 116) &#123;</span><br><span class="line">        e.keyCode &#x3D; 0;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="禁用提交"><a href="#禁用提交" class="headerlink" title="禁用提交"></a>禁用提交</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function checkValid(form)</span><br><span class="line">&#123;</span><br><span class="line">    document.getElementById(&quot;submitbutton&quot;).disabled&#x3D;true;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置选中方法"><a href="#设置选中方法" class="headerlink" title="设置选中方法"></a>设置选中方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;input[name&#x3D;&#39;名字&#39;]&quot;).get(0).checked&#x3D;true; </span><br><span class="line">$(&quot;input[name&#x3D;&#39;名字&#39;]&quot;).attr(&#39;checked&#39;,&#39;true&#39;);</span><br><span class="line">$(&quot;input[name&#x3D;&#39;名字&#39;]:eq(0)&quot;).attr(&quot;checked&quot;,&#39;checked&#39;);</span><br><span class="line">$(&quot;input[name&#x3D;&#39;radio_name&#39;][checked]&quot;).val();  &#x2F;&#x2F;获取被选中Radio的Value值</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置选中和不选中示例"><a href="#设置选中和不选中示例" class="headerlink" title="设置选中和不选中示例"></a>设置选中和不选中示例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type&#x3D;&quot;radio&quot; value&#x3D;&quot;0&quot; name&#x3D;&quot;jizai&quot; id&#x3D;&quot;0&quot;&#x2F;&gt;否</span><br><span class="line">&lt;input type&#x3D;&quot;radio&quot; value&#x3D;&quot;1&quot; name&#x3D;&quot;jizai&quot;  id&#x3D;&quot;1&quot;&#x2F;&gt;是</span><br><span class="line">#jquery中，radio的选中与否是这么设置的。</span><br><span class="line">$(&quot;#rdo1&quot;).attr(&quot;checked&quot;,&quot;checked&quot;);</span><br><span class="line">$(&quot;#rdo1&quot;).removeAttr(&quot;checked&quot;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="通过name"><a href="#通过name" class="headerlink" title="通过name"></a>通过name</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;input:radio[name&#x3D;&quot;analyfsftype&quot;]&quot;).eq(0).attr(&quot;checked&quot;,&#39;checked&#39;);</span><br><span class="line">$(&quot;input:radio[name&#x3D;&quot;analyshowtype&quot;]&quot;).attr(&quot;checked&quot;,false);</span><br></pre></td></tr></table></figure>
+
+<h4 id="通过id"><a href="#通过id" class="headerlink" title="通过id"></a>通过id</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;#tradeType0&quot;).attr(&quot;checked&quot;,&quot;checked&quot;);</span><br><span class="line">$(&quot;#tradeType1&quot;).attr(&quot;checked&quot;,false);</span><br></pre></td></tr></table></figure>
+
+<h3 id="另一种设置选中方法"><a href="#另一种设置选中方法" class="headerlink" title="另一种设置选中方法"></a>另一种设置选中方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type&#x3D;&quot;text&#x2F;javascript&quot;&gt; </span><br><span class="line">$(document).ready(function()&#123;</span><br><span class="line">    $(&quot;input[@type&#x3D;radio][name&#x3D;sex][@value&#x3D;1]&quot;).attr(&quot;checked&quot;,true);  </span><br><span class="line">&#125;);</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="根据值设置radio选中"><a href="#根据值设置radio选中" class="headerlink" title="根据值设置radio选中"></a>根据值设置radio选中</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;input[name&#x3D;&#39;radio_name&#39;][value&#x3D;&#39;要选中Radio的Value值&#39;]&quot;).attr(&quot;checked&quot;,true);  &#x2F;&#x2F;根据Value值设置Radio为选中状态</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用prop方法操作示例"><a href="#使用prop方法操作示例" class="headerlink" title="使用prop方法操作示例"></a>使用prop方法操作示例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;input&#39;).removeAttr(&#39;checked&#39;); </span><br><span class="line">$($(&#39;#&#39;+id+&#39;input&#39;).eq(0)).prop(&#39;checked&#39;,false);</span><br><span class="line">$($(&#39;#&#39;+id+&#39; input&#39;).eq(0)).prop(&#39;checked&#39;,true);</span><br></pre></td></tr></table></figure>
+
+<h3 id="select2"><a href="#select2" class="headerlink" title="select2"></a>select2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;获取selectid</span><br><span class="line">var ddd &#x3D; $(&quot;#ddd&quot;).select2();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;设置 value 为four的 option 为选中状态</span><br><span class="line">ddd.val(&quot;four&quot;).trigger(&quot;change&quot;);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;告诉select2代码已经更新，需要重载  默认选择有值得第一个</span><br><span class="line">ddd.change();</span><br><span class="line"></span><br><span class="line">var aim_type &#x3D; $(&#39;input[name&#x3D;&quot;aim_type&quot;]:checked&#39;).val();​</span><br><span class="line">$(&quot;td[field&#x3D;&#39;操作&#39;] &gt; div &gt; input&quot;).attr(&#39;disabled&#39;,&#39;disabled&#39;);​</span><br><span class="line">$(&quot;#tb tr&quot;).length)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;获取被选中Radio的Value值</span><br><span class="line">var value  &#x3D; $(&#39;input[name&#x3D;&quot;radioName&quot;]:checked&#39;).val(); </span><br></pre></td></tr></table></figure>
+
+<h3 id="全选-清空选中"><a href="#全选-清空选中" class="headerlink" title="全选 清空选中"></a>全选 清空选中</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">$(function() &#123; </span><br><span class="line">    $(&quot;#checkall&quot;).click(function() &#123;</span><br><span class="line"></span><br><span class="line">        $(&quot;input[@name&#x3D;&#39;checkname[]&#39;]&quot;).each(function() &#123;</span><br><span class="line"></span><br><span class="line">            $(this).attr(&quot;checked&quot;, true); </span><br><span class="line">        &#125;); </span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    $(&quot;#delcheckall&quot;).click(function() &#123; </span><br><span class="line">        $(&quot;input[@name&#x3D;&#39;checkname[]&#39;]&quot;).each(function() &#123; </span><br><span class="line">            $(this).attr(&quot;checked&quot;, false); </span><br><span class="line">        &#125;); </span><br><span class="line">    &#125;); </span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line">$(&quot;#checkall&quot;).click( </span><br><span class="line">    function()&#123; </span><br><span class="line">        if(this.checked)&#123; </span><br><span class="line">            $(&quot;input[name&#x3D;&#39;checkname&#39;]&quot;).each(function()&#123;this.checked&#x3D;true;&#125;); </span><br><span class="line">        &#125;else&#123; </span><br><span class="line">            $(&quot;input[name&#x3D;&#39;checkname&#39;]&quot;).each(function()&#123;this.checked&#x3D;false;&#125;); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">); </span><br></pre></td></tr></table></figure>
+
+<h3 id="修改select选中值"><a href="#修改select选中值" class="headerlink" title="修改select选中值"></a>修改select选中值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;#userorder2 option[value&#x3D;&#39;userorder2&#39;]&quot;).attr(&quot;selected&quot;,true); </span><br><span class="line"></span><br><span class="line">$(&#39;#account_in2&#39;).find(&quot;option[value&#x3D;&#39;123123&#39;]&quot;).trigger(&quot;change&quot;).attr(&#39;selected&#39;, true);​</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取select选择的文本与值"><a href="#获取select选择的文本与值" class="headerlink" title="获取select选择的文本与值"></a>获取select选择的文本与值</h3><h3 id="获取select-选中的-text"><a href="#获取select-选中的-text" class="headerlink" title="获取select 选中的 text :"></a>获取select 选中的 text :</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;#ddlregtype&quot;).find(&quot;option:selected&quot;).text();</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取select选中的-value"><a href="#获取select选中的-value" class="headerlink" title="获取select选中的 value:"></a>获取select选中的 value:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;#ddlregtype &quot;).val();</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取select选中的索引"><a href="#获取select选中的索引" class="headerlink" title="获取select选中的索引:"></a>获取select选中的索引:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;#ddlregtype &quot;).get(0).selectedindex;</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置select"><a href="#设置select" class="headerlink" title="设置select:"></a>设置select:</h3><h3 id="设置select-选中的索引："><a href="#设置select-选中的索引：" class="headerlink" title="设置select 选中的索引："></a>设置select 选中的索引：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;#ddlregtype &quot;).get(0).selectedindex&#x3D;index;&#x2F;&#x2F;index为索引值</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置select-选中的value："><a href="#设置select-选中的value：" class="headerlink" title="设置select 选中的value："></a>设置select 选中的value：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;#ddlregtype &quot;).attr(&quot;value&quot;,&quot;normal“);</span><br><span class="line">$(&quot;#ddlregtype &quot;).val(&quot;normal&quot;);</span><br><span class="line">$(&quot;#ddlregtype &quot;).get(0).value &#x3D; value;</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置select-选中的text"><a href="#设置select-选中的text" class="headerlink" title="设置select 选中的text:"></a>设置select 选中的text:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var count&#x3D;$(&quot;#ddlregtype option&quot;).length;</span><br><span class="line">  for(var i&#x3D;0;i&lt;count;i++)</span><br><span class="line">     &#123;           if($(&quot;#ddlregtype &quot;).get(0).options[i].text &#x3D;&#x3D; text)</span><br><span class="line">        &#123;</span><br><span class="line">            $(&quot;#ddlregtype &quot;).get(0).options[i].selected &#x3D; true;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">$(&quot;#select_id option[text&#x3D;&#39;jquery&#39;]&quot;).attr(&quot;selected&quot;, true);</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置select-option项"><a href="#设置select-option项" class="headerlink" title="设置select option项:"></a>设置select option项:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;#select_id&quot;).append(&quot;&lt;option value&#x3D;&#39;value&#39;&gt;text&lt;&#x2F;option&gt;&quot;);  &#x2F;&#x2F;添加一项option</span><br><span class="line">$(&quot;#select_id&quot;).prepend(&quot;&lt;option value&#x3D;&#39;0&#39;&gt;请选择&lt;&#x2F;option&gt;&quot;); &#x2F;&#x2F;在前面插入一项option</span><br><span class="line">$(&quot;#select_id option:last&quot;).remove(); &#x2F;&#x2F;删除索引值最大的option</span><br><span class="line">$(&quot;#select_id option[index&#x3D;&#39;0&#39;]&quot;).remove();&#x2F;&#x2F;删除索引值为0的option</span><br><span class="line">$(&quot;#select_id option[value&#x3D;&#39;3&#39;]&quot;).remove(); &#x2F;&#x2F;删除值为3的option</span><br><span class="line">$(&quot;#select_id option[text&#x3D;&#39;4&#39;]&quot;).remove(); &#x2F;&#x2F;删除text值为4的option</span><br></pre></td></tr></table></figure>
+
+<h3 id="清空-select"><a href="#清空-select" class="headerlink" title="清空 select:"></a>清空 select:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;#ddlregtype &quot;).empty();</span><br></pre></td></tr></table></figure>
+
+<h3 id="调用动态填充Select的option选项"><a href="#调用动态填充Select的option选项" class="headerlink" title="调用动态填充Select的option选项"></a>调用动态填充Select的option选项</h3><pre><code>//绑定ClassLevel1单击事件
+$(&quot;#ClassLevel1&quot;).change(function () &#123;
+    var id = $(&quot;#ClassLevel1&quot;).val();
+    var level2 = $(&quot;#ClassLevel2&quot;);
+    level2.empty();
+    $(&quot;#ClassLevel3&quot;).hide();
+    $.ajax(&#123;
+        url: &quot;./askCommon.ashx?action=getclasslevel&amp;pid=&quot; + id,
+        data: &#123; &quot;type&quot;: &quot;ajax&quot; &#125;,
+        datatype: &quot;json&quot;,
+        type: &quot;get&quot;,
+        success: function (data) &#123;
+            var json = eval_r(data);
+            for (var ind in json) &#123;
+                level2.append($(&quot;&lt;option value=&#39;&quot; + json[ind].id + &quot;&#39;&gt;&quot; + json[ind].typename + &quot;&lt;/option&gt;&quot;));
+            &#125;
+
+        &#125;
+    &#125;);
+&#125;)</code></pre>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2019/JQuery%E7%AC%94%E8%AE%B0/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/JQuery/">
+              #JQuery
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2019/PHP%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E6%95%B0%E5%AD%97/" target="_self">PHP提取字符串中的数字</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2019/LINUX%E5%91%BD%E4%BB%A4/" target="_self">Linux命令</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>至善文化简介 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="笔记,传统文化," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>至善文化简介</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2019-03-07
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%AC%94%E8%AE%B0/">
+            笔记
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="至善文化简介"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h3 id="一、至善文化企业宗旨"><a href="#一、至善文化企业宗旨" class="headerlink" title="一、至善文化企业宗旨"></a>一、至善文化企业宗旨</h3><p>致力于传承、弘扬、发展、普及中国传统文化深入浅出的剖析传统文化，把玄奥莫测的传统文化以现代人最容易理解的方式展示给大众，并服务于大众。<br>让每一个人都能运用传统文化的智慧获得自尊、自强、自爱的独立人格，还您一个简单、快乐、健康、富足的幸福人生。</p>
+<h3 id="二、易之老师简介"><a href="#二、易之老师简介" class="headerlink" title="二、易之老师简介"></a>二、易之老师简介</h3><p>易学文化研究会副会长<br>高级语言命名策划师<br>高级易医策划师<br>精神和心理分析治疗师<br>“汉字全息”专家<br>易经易术专家<br>人生易数咨询师<br>中国元文化高级讲师<br>易经与伏羲文化高级讲师<br>家庭伦理道德资深辅导师</p>
+<p>易之老师对命运有着超越常人的深刻感悟和精辟论述。他潜心静悟儒释道三家文<br>化的精髓，结合量子物理学的原理,精辟提出,”行为改命法””心态改命法””健<br>康改命法”、”五行性理改命法”、”礼仪改命法”、”体面相改命法”为每一位追求优<br>秀生命品质的人，找到了一种可行又有效的方法。他的每一种方法，都对人生有着深<br>刻的指导。对每一个人如何掌握自己、了解自己、明白自己在这个社会中的生命价值，<br>都有着勿庸置疑的指导意义。</p>
+<p>尤其是对“易经”阴阳的感悟，运用汉字学、奇门时空学，符号灵动学、伦理因果学，<br>太乙思维学，性心身三界学，给每一个命运失衡的人做了深刻细致的精神与心理分析。</p>
+<h3 id="三、心理咨询及预测、辅导、策划服务简介"><a href="#三、心理咨询及预测、辅导、策划服务简介" class="headerlink" title="三、心理咨询及预测、辅导、策划服务简介"></a>三、心理咨询及预测、辅导、策划服务简介</h3><p>心理咨询及预测服务是对您的事业、财运、婚姻、健康等全方位的预测与指导知己知彼，了解命运，更好的规划好人生。在不利于自己的年景里不妄加投资，在好的时机大胆做事，充分享受成功的乐趣。至善文化致力于用易经阴阳的思维，综合周易古老预测的方法，全面预测人生命运的吉凶祸福。</p>
+<h4 id="1、心理咨询及预测、辅导、策划的重要性"><a href="#1、心理咨询及预测、辅导、策划的重要性" class="headerlink" title="1、心理咨询及预测、辅导、策划的重要性"></a>1、心理咨询及预测、辅导、策划的重要性</h4><p>生活中我们常会被这样一些问题困扰：我的事业会怎样？我的财运如何？我经营什么能发财？我能升迁吗？我的爱情、婚姻会是什么状况？我的子女能考上大学吗？我怎样才能度过目前的困境？这件事的结果是什么?</p>
+<p>人一生中要经历的风浪坎坷不计其数，要面对的关键选择不胜枚举，有的选择关乎全局，稍有不慎，就可能与时机失之交臂，影响一生的发展。所以我们需要预测。综合预测能帮助您防患于未然，避凶趋吉，开启幸运之门。</p>
+<h4 id="2、心理咨询及预测、辅导、策划服务内容"><a href="#2、心理咨询及预测、辅导、策划服务内容" class="headerlink" title="2、心理咨询及预测、辅导、策划服务内容"></a>2、心理咨询及预测、辅导、策划服务内容</h4><p>学业考试预测和辅导策划<br>工作事业预测和辅导策划<br>恋爱的时间、方向、长相、性格预测<br>恋爱的策划和辅导<br>婚姻的预测和辅导策划(婚姻吉凶的化解和规避)<br>财运的预测和辅导策划<br>事业的预测和辅导策划<br>身体健康疾病的预测和化解治疗辅导<br>人际关系的预测和化解<br>意外灾害的预测和化解<br>困难危机的预测和化解<br>流年运势的预测和化解<br>二十年运势整体把握预测和策划<br>姓名终生预测(事业、婚姻、健康、子女)<br>出门、开业、婚礼择吉选日<br>奇门遁甲对人命运的全面解析<br>奇门遁甲对婚姻吉凶的预测和策划</p>
+<h3 id="四、风水简介"><a href="#四、风水简介" class="headerlink" title="四、风水简介"></a>四、风水简介</h3><p>风水其实是一种传统文化现象，一种广泛流传的民俗，一种择吉避凶的术数，这跟建筑学和心理学有很大关系，中国风水文化它能够算得上是我们中国的一种传统文化，所谓风水其实是人们长期实践经验的积淀。但是从现代科学理论来看，风水学是地球物理学、水文地质学、环境景观学、生态建筑学、宇宙星体学、地球磁场方位学、气象学和人体信息学合一的综合性科学。</p>
+<h4 id="1、风水服务介绍"><a href="#1、风水服务介绍" class="headerlink" title="1、风水服务介绍"></a>1、风水服务介绍</h4><p>正确的选址与风水规划，兴旺的风水布局能造就一个吉祥幸福、舒适、和谐、财源广进的环境。在这样的选址与风水布局中，就会财源大开、趋吉避凶、事业兴旺、家庭和睦、健康长寿、丁财两旺。相反，错误的选址与风水布局就会将周边环境弄坏，违反风水布局原则，不能纳天地之旺气，反会受衰退之气与煞气等的影响，给相关者的财运事业、家庭、健康等都会带来不顺，甚至有可能带来灾祸。因此，在正确的选址确定后，合理的装修与家居布局同样重要。</p>
+<h4 id="2、风水服务内容"><a href="#2、风水服务内容" class="headerlink" title="2、风水服务内容"></a>2、风水服务内容</h4><h5 id="2-1、家居风水策划服务"><a href="#2-1、家居风水策划服务" class="headerlink" title="2.1、家居风水策划服务"></a>2.1、家居风水策划服务</h5><p>房屋建设前风水阵法摆放<br>住房的周边环境<br>装修改变不适合的住房内部各功能房间的格局<br>各种命理神位、煞位的确定<br>房间装饰颜色的选择家装材料的选择<br>镇宅、辟邪等吉祥物品的摆设布局</p>
+<h5 id="2-2、商铺风水策划服务"><a href="#2-2、商铺风水策划服务" class="headerlink" title="2.2、商铺风水策划服务"></a>2.2、商铺风水策划服务</h5><p>商铺坐向选址<br>周边环境外局风水的影响与化解<br>商铺内部布局(收银台位置财位等)<br>招财、破煞等吉祥物品的摆设布局</p>
+<h5 id="2-3、公司风水策划服务"><a href="#2-3、公司风水策划服务" class="headerlink" title="2.3、公司风水策划服务"></a>2.3、公司风水策划服务</h5><p>公司、工厂建设前风水阵法摆放<br>公司、工厂坐向选址<br>周边环境外局风水的影响与化解<br>公司、工厂内部布局(各办公室位置财位等)<br>招财、破煞等吉祥物品的摆设布局</p>
+<h3 id="五、起名、改名服务简介"><a href="#五、起名、改名服务简介" class="headerlink" title="五、起名、改名服务简介"></a>五、起名、改名服务简介</h3><p>至善文化致力于弘扬民族传统文化，大力倡导与播命名艺术及应用，改变名字单调庸俗，美化名称，推动和普及命名文化。至善文化起名、改名服务由著名姓名学专家易之老师亲自坐镇。</p>
+<h4 id="1、名字的重要性"><a href="#1、名字的重要性" class="headerlink" title="1、名字的重要性"></a>1、名字的重要性</h4><p>对于个人。“名如其人，人如其名”，人的姓名不仅传承了人的情、意、志，蕴含了人的精、气、神，还在很大程度上影响着一个人的运势。从命理改运的角度讲，人的名字不仅仅是一个符号，它还包含着各种信息，就像咒语，好名越叫越吉，凶名越叫越凶，从而影响着一个人的学业、事业、感情和婚姻。</p>
+<p>对于企业。孔子曰:“名不正，则言不顺;言不顺，则事不成。”可想企业名称是如此的重要。企业名字不仅需要根据企业主人的命理来设计，且还需与企业产品相合。因此，除了靠企业的先天运气和后天努力，更需要取一个好名，为企业的繁荣昌盛锦上添花。</p>
+<h3 id="六、心灵疏导服务内容"><a href="#六、心灵疏导服务内容" class="headerlink" title="六、心灵疏导服务内容"></a>六、心灵疏导服务内容</h3><p>急躁、情绪激动的精神分析和疗愈<br>人生困惑心理疏导和疗愈<br>暴躁发怒的精神分析和心理疏导疗愈<br>情感危机的疏导和策划<br>重度失眠的精神疏导和疗愈<br>忧郁、抑郁、无价值感的心理疏导和策划<br>自闭内向的心理疏导和化解<br>恐惧、强迫症的精神分析和疗愈<br>胆怯、自卑的心理疗愈</p>
+<h3 id="七、企业顾问-企业服务"><a href="#七、企业顾问-企业服务" class="headerlink" title="七、企业顾问(企业服务)"></a>七、企业顾问(企业服务)</h3><h4 id="1、六爻预测学对企业指导的科学原理"><a href="#1、六爻预测学对企业指导的科学原理" class="headerlink" title="1、六爻预测学对企业指导的科学原理"></a>1、六爻预测学对企业指导的科学原理</h4><p>对企业人事管理、人际关系的吉凶分析和化解<br>对企业市场诸多方面的定位和把握<br>对企业产品档次的定位和推广<br>对企业逐年经营思想的指导<br>对企业逐年吉凶状况的详细分析<br>对企业未来计划的指导和预测</p>
+<h4 id="2、奇门遁甲对企业科学的指导原理"><a href="#2、奇门遁甲对企业科学的指导原理" class="headerlink" title="2、奇门遁甲对企业科学的指导原理"></a>2、奇门遁甲对企业科学的指导原理</h4><p>企业员工和领导层人事安排的科学鉴定<br>对企业重要岗位人员素质的吉凶的分析<br>对企业风水布局的指导<br>对企业市场各个方面的预测<br>对企业市场和产品的预测和策划<br>对企业逐年吉凶的预测以及指导思路</p>
+<h4 id="3、用姓名学对企业服务的内容"><a href="#3、用姓名学对企业服务的内容" class="headerlink" title="3、用姓名学对企业服务的内容"></a>3、用姓名学对企业服务的内容</h4><p>企业员工和领导层的管理和合理安排<br>对客户的深入了解和维护<br>对企业市场产品方位档次的吉凶预测<br>对企业每一年的吉凶预测<br>对企业内部领导层思路的预测<br>对企业内部人际关系吉凶预测<br>企业名称、产品名称吉凶的预测</p>
+<h3 id="八、国学讲师培训"><a href="#八、国学讲师培训" class="headerlink" title="八、国学讲师培训"></a>八、国学讲师培训</h3><p>易经文化的道统<br>易经、易术的种类和具体使用方法<br>精神和心理与命的详解<br>儒释道三家文化的核心概念</p>
+<h4 id="1、易经预测篇"><a href="#1、易经预测篇" class="headerlink" title="1、易经预测篇"></a>1、易经预测篇</h4><p>易经基础入门预测学<br>姓名学<br>汉字预测学<br>奇门遁甲<br>太乙阴阳盘<br>快速预测(灵性预测)<br>体相、面相、手相预测<br>数字能量学<br>卦象时空学<br>梅花易数<br>方位能量学<br>色泽能量学<br>四柱预测学<br>六爻预测学<br>风水学<br>八字命理学</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2019/%E8%87%B3%E5%96%84%E6%96%87%E5%8C%96%E7%AE%80%E4%BB%8B/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E4%BC%A0%E7%BB%9F%E6%96%87%E5%8C%96/">
+              #传统文化
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2019/%E8%AF%BE%E7%A8%8B%E7%9B%AE%E5%BD%95-%E7%AE%80%E5%8C%96%E7%89%88/" target="_self">课程目录-简化版</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2019/PHP%E6%96%87%E6%A1%A3/" target="_self">PHP文档</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

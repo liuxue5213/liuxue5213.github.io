@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>后会无期-经典语录 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="经典语录,电影," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>后会无期-经典语录</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2014-10-17
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%BD%95/">
+            经典语录
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="后会无期-经典语录"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="后会无期-经典语录"><a href="#后会无期-经典语录" class="headerlink" title="后会无期-经典语录"></a>后会无期-经典语录</h2><h3 id="我们听过无数的道理，却仍旧过不好这一生。"><a href="#我们听过无数的道理，却仍旧过不好这一生。" class="headerlink" title="我们听过无数的道理，却仍旧过不好这一生。"></a>我们听过无数的道理，却仍旧过不好这一生。</h3><h3 id="喜欢就会放肆，但爱就是克制。"><a href="#喜欢就会放肆，但爱就是克制。" class="headerlink" title="喜欢就会放肆，但爱就是克制。"></a>喜欢就会放肆，但爱就是克制。</h3><p>To like someone is to run wild, but to love someone is to restrain</p>
+<h3 id="每一次告别，最好用力一点。多说一句，可能是最后一句。多看一眼，可能是最后一眼。"><a href="#每一次告别，最好用力一点。多说一句，可能是最后一句。多看一眼，可能是最后一眼。" class="headerlink" title="每一次告别，最好用力一点。多说一句，可能是最后一句。多看一眼，可能是最后一眼。"></a>每一次告别，最好用力一点。多说一句，可能是最后一句。多看一眼，可能是最后一眼。</h3><h3 id="有时候，你想证明给一万个人看，到后来，你发现只得到了一个明白的人，那就够了。"><a href="#有时候，你想证明给一万个人看，到后来，你发现只得到了一个明白的人，那就够了。" class="headerlink" title="有时候，你想证明给一万个人看，到后来，你发现只得到了一个明白的人，那就够了。"></a>有时候，你想证明给一万个人看，到后来，你发现只得到了一个明白的人，那就够了。</h3><h3 id="小孩子才分对错，成年人只看利弊"><a href="#小孩子才分对错，成年人只看利弊" class="headerlink" title="小孩子才分对错，成年人只看利弊"></a>小孩子才分对错，成年人只看利弊</h3><h3 id="带不走的留不下，留不下的莫牵挂。"><a href="#带不走的留不下，留不下的莫牵挂。" class="headerlink" title="带不走的留不下，留不下的莫牵挂。"></a>带不走的留不下，留不下的莫牵挂。</h3><h3 id="当一艘船沉入海底，当一个人成了谜，你不知道，他们为何离去，那声再见竟是他最后一句。当一辆车消失天际，当一个人成了谜，你不知道，他们为何离去，就像你不知道这竟是结局。"><a href="#当一艘船沉入海底，当一个人成了谜，你不知道，他们为何离去，那声再见竟是他最后一句。当一辆车消失天际，当一个人成了谜，你不知道，他们为何离去，就像你不知道这竟是结局。" class="headerlink" title="当一艘船沉入海底，当一个人成了谜，你不知道，他们为何离去，那声再见竟是他最后一句。当一辆车消失天际，当一个人成了谜，你不知道，他们为何离去，就像你不知道这竟是结局。"></a>当一艘船沉入海底，当一个人成了谜，你不知道，他们为何离去，那声再见竟是他最后一句。当一辆车消失天际，当一个人成了谜，你不知道，他们为何离去，就像你不知道这竟是结局。</h3><h3 id="你不用对每个过客负责，也不用对每个路人说教。"><a href="#你不用对每个过客负责，也不用对每个路人说教。" class="headerlink" title="你不用对每个过客负责，也不用对每个路人说教。"></a>你不用对每个过客负责，也不用对每个路人说教。</h3><h3 id="小伙子，你应该多出来走走的。"><a href="#小伙子，你应该多出来走走的。" class="headerlink" title="-小伙子，你应该多出来走走的。"></a>-小伙子，你应该多出来走走的。</h3><p>-可我的世界观和你的不一样！<br>-你连世界都没观过，哪来的世界观。</p>
+<h3 id="她们都是你漫漫长路上，只配错过的好姑娘。"><a href="#她们都是你漫漫长路上，只配错过的好姑娘。" class="headerlink" title="她们都是你漫漫长路上，只配错过的好姑娘。"></a>她们都是你漫漫长路上，只配错过的好姑娘。</h3><h3 id="这条狗你留着吧，老了可以做个伴，狗的寿命只有14年-不足以陪伴我们一生-但是却比人的情义要长。"><a href="#这条狗你留着吧，老了可以做个伴，狗的寿命只有14年-不足以陪伴我们一生-但是却比人的情义要长。" class="headerlink" title="这条狗你留着吧，老了可以做个伴，狗的寿命只有14年,不足以陪伴我们一生;但是却比人的情义要长。"></a>这条狗你留着吧，老了可以做个伴，狗的寿命只有14年,不足以陪伴我们一生;但是却比人的情义要长。</h3><h3 id="最讨厌别人劝我从良了，从小到大，年年都是优，你叫我怎么从良？"><a href="#最讨厌别人劝我从良了，从小到大，年年都是优，你叫我怎么从良？" class="headerlink" title="最讨厌别人劝我从良了，从小到大，年年都是优，你叫我怎么从良？"></a>最讨厌别人劝我从良了，从小到大，年年都是优，你叫我怎么从良？</h3><h3 id="告别一定要用力一点，因为任何多看一眼，都有可能成为最后一眼，多说一句，都可能是最后一句。"><a href="#告别一定要用力一点，因为任何多看一眼，都有可能成为最后一眼，多说一句，都可能是最后一句。" class="headerlink" title="告别一定要用力一点，因为任何多看一眼，都有可能成为最后一眼，多说一句，都可能是最后一句。"></a>告别一定要用力一点，因为任何多看一眼，都有可能成为最后一眼，多说一句，都可能是最后一句。</h3><h3 id="我曾经像你像他像那野草野花，直到看见平凡才是唯一的答案。"><a href="#我曾经像你像他像那野草野花，直到看见平凡才是唯一的答案。" class="headerlink" title="我曾经像你像他像那野草野花，直到看见平凡才是唯一的答案。"></a>我曾经像你像他像那野草野花，直到看见平凡才是唯一的答案。</h3><h3 id="我哪来的身和名，让我去败与裂。"><a href="#我哪来的身和名，让我去败与裂。" class="headerlink" title="我哪来的身和名，让我去败与裂。"></a>我哪来的身和名，让我去败与裂。</h3><h3 id="你一事无成-还在那里傻乐"><a href="#你一事无成-还在那里傻乐" class="headerlink" title="你一事无成 还在那里傻乐"></a>你一事无成 还在那里傻乐</h3><h3 id="我不怕被骗，我怕刚刚相信一个人就被骗！"><a href="#我不怕被骗，我怕刚刚相信一个人就被骗！" class="headerlink" title="我不怕被骗，我怕刚刚相信一个人就被骗！"></a>我不怕被骗，我怕刚刚相信一个人就被骗！</h3><h3 id="有些人，一辈子缩在一个角落里，更别说踏出门。"><a href="#有些人，一辈子缩在一个角落里，更别说踏出门。" class="headerlink" title="有些人，一辈子缩在一个角落里，更别说踏出门。"></a>有些人，一辈子缩在一个角落里，更别说踏出门。</h3><h3 id="他这样孤独地漂流，只为去未知的世界看一眼。"><a href="#他这样孤独地漂流，只为去未知的世界看一眼。" class="headerlink" title="他这样孤独地漂流，只为去未知的世界看一眼。"></a>他这样孤独地漂流，只为去未知的世界看一眼。</h3><h3 id="世界上有这么多人，可是没有人愿意听我说话。"><a href="#世界上有这么多人，可是没有人愿意听我说话。" class="headerlink" title="世界上有这么多人，可是没有人愿意听我说话。"></a>世界上有这么多人，可是没有人愿意听我说话。</h3><h3 id="路遥知马力，力不足。日久见人心，心不古。"><a href="#路遥知马力，力不足。日久见人心，心不古。" class="headerlink" title="路遥知马力，力不足。日久见人心，心不古。"></a>路遥知马力，力不足。日久见人心，心不古。</h3><h3 id="从小听了很多大道理，可依旧过不好我的生活。"><a href="#从小听了很多大道理，可依旧过不好我的生活。" class="headerlink" title="从小听了很多大道理，可依旧过不好我的生活。"></a>从小听了很多大道理，可依旧过不好我的生活。</h3><h3 id="我以为你不是个好人，没想到你连个坏人都不是。"><a href="#我以为你不是个好人，没想到你连个坏人都不是。" class="headerlink" title="我以为你不是个好人，没想到你连个坏人都不是。"></a>我以为你不是个好人，没想到你连个坏人都不是。</h3><h3 id="忠于自己，和你喜欢的一切在一起，让自己无可取代！"><a href="#忠于自己，和你喜欢的一切在一起，让自己无可取代！" class="headerlink" title="忠于自己，和你喜欢的一切在一起，让自己无可取代！"></a>忠于自己，和你喜欢的一切在一起，让自己无可取代！</h3><h3 id="有时候你想证明给一万个人看，但最后你发现只有一个人懂，那就够了。"><a href="#有时候你想证明给一万个人看，但最后你发现只有一个人懂，那就够了。" class="headerlink" title="有时候你想证明给一万个人看，但最后你发现只有一个人懂，那就够了。"></a>有时候你想证明给一万个人看，但最后你发现只有一个人懂，那就够了。</h3><h3 id="你们的偶像是明星，我的偶像是卫星。"><a href="#你们的偶像是明星，我的偶像是卫星。" class="headerlink" title="你们的偶像是明星，我的偶像是卫星。"></a>你们的偶像是明星，我的偶像是卫星。</h3><h3 id="无论我在哪里拉屎，都有人给我送纸。"><a href="#无论我在哪里拉屎，都有人给我送纸。" class="headerlink" title="无论我在哪里拉屎，都有人给我送纸。"></a>无论我在哪里拉屎，都有人给我送纸。</h3><h3 id="有机会，我把我的故事都讲给你听。可惜没有这个机会了！"><a href="#有机会，我把我的故事都讲给你听。可惜没有这个机会了！" class="headerlink" title="有机会，我把我的故事都讲给你听。可惜没有这个机会了！"></a>有机会，我把我的故事都讲给你听。可惜没有这个机会了！</h3><h3 id="旅行者1号，1977年发射，经历了36年，终于冲出了太阳系，进入了外太空的星际空间。他这样孤独的漂流，只为了去未知的世界看一眼。有些人，一辈子缩在一个角落里，连窗外都懒得看，更别说踏出门。"><a href="#旅行者1号，1977年发射，经历了36年，终于冲出了太阳系，进入了外太空的星际空间。他这样孤独的漂流，只为了去未知的世界看一眼。有些人，一辈子缩在一个角落里，连窗外都懒得看，更别说踏出门。" class="headerlink" title="旅行者1号，1977年发射，经历了36年，终于冲出了太阳系，进入了外太空的星际空间。他这样孤独的漂流，只为了去未知的世界看一眼。有些人，一辈子缩在一个角落里，连窗外都懒得看，更别说踏出门。"></a>旅行者1号，1977年发射，经历了36年，终于冲出了太阳系，进入了外太空的星际空间。他这样孤独的漂流，只为了去未知的世界看一眼。有些人，一辈子缩在一个角落里，连窗外都懒得看，更别说踏出门。</h3><h3 id="从直上云霄的一道粉色开始，我们告别黑白。"><a href="#从直上云霄的一道粉色开始，我们告别黑白。" class="headerlink" title="从直上云霄的一道粉色开始，我们告别黑白。"></a>从直上云霄的一道粉色开始，我们告别黑白。</h3><h3 id="听过了很多道理，却依然过不好这一生。"><a href="#听过了很多道理，却依然过不好这一生。" class="headerlink" title="听过了很多道理，却依然过不好这一生。"></a>听过了很多道理，却依然过不好这一生。</h3><h3 id="要先学会分辨，然后再去信任"><a href="#要先学会分辨，然后再去信任" class="headerlink" title="要先学会分辨，然后再去信任"></a>要先学会分辨，然后再去信任</h3><h3 id="有些人，一辈子缩在一个角落里。连窗外都懒得看，更别说踏出门。"><a href="#有些人，一辈子缩在一个角落里。连窗外都懒得看，更别说踏出门。" class="headerlink" title="有些人，一辈子缩在一个角落里。连窗外都懒得看，更别说踏出门。"></a>有些人，一辈子缩在一个角落里。连窗外都懒得看，更别说踏出门。</h3><h3 id="借钱就是骗朋友的钱！"><a href="#借钱就是骗朋友的钱！" class="headerlink" title="借钱就是骗朋友的钱！"></a>借钱就是骗朋友的钱！</h3><h3 id="小伙子，我要给你一个忠告，我也要给你一个忠告，你这是在跟我抬杠，你想好没有？就要给我忠告。我给你的忠告倒是真心的：汽油车不能加柴油！"><a href="#小伙子，我要给你一个忠告，我也要给你一个忠告，你这是在跟我抬杠，你想好没有？就要给我忠告。我给你的忠告倒是真心的：汽油车不能加柴油！" class="headerlink" title="小伙子，我要给你一个忠告，我也要给你一个忠告，你这是在跟我抬杠，你想好没有？就要给我忠告。我给你的忠告倒是真心的：汽油车不能加柴油！"></a>小伙子，我要给你一个忠告，我也要给你一个忠告，你这是在跟我抬杠，你想好没有？就要给我忠告。我给你的忠告倒是真心的：汽油车不能加柴油！</h3><h3 id="虽然我爸妈把我生得很草率，但这不是我叫胡生的主要原因。"><a href="#虽然我爸妈把我生得很草率，但这不是我叫胡生的主要原因。" class="headerlink" title="虽然我爸妈把我生得很草率，但这不是我叫胡生的主要原因。"></a>虽然我爸妈把我生得很草率，但这不是我叫胡生的主要原因。</h3><h3 id="再混蛋的人也可以局部信任。"><a href="#再混蛋的人也可以局部信任。" class="headerlink" title="再混蛋的人也可以局部信任。"></a>再混蛋的人也可以局部信任。</h3><h3 id="没有毫无道理的横空出世，没有大量的积累和感悟，是不会吧事情做好的。"><a href="#没有毫无道理的横空出世，没有大量的积累和感悟，是不会吧事情做好的。" class="headerlink" title="没有毫无道理的横空出世，没有大量的积累和感悟，是不会吧事情做好的。"></a>没有毫无道理的横空出世，没有大量的积累和感悟，是不会吧事情做好的。</h3><h3 id="只有不停的进取，才能够不丢人。’"><a href="#只有不停的进取，才能够不丢人。’" class="headerlink" title="只有不停的进取，才能够不丢人。’"></a>只有不停的进取，才能够不丢人。’</h3><h3 id="今天我上了这个台，就不怕让自己下不来台"><a href="#今天我上了这个台，就不怕让自己下不来台" class="headerlink" title="今天我上了这个台，就不怕让自己下不来台"></a>今天我上了这个台，就不怕让自己下不来台</h3><h3 id="在大城市，有关系有势力，就会比别人更公平"><a href="#在大城市，有关系有势力，就会比别人更公平" class="headerlink" title="在大城市，有关系有势力，就会比别人更公平"></a>在大城市，有关系有势力，就会比别人更公平</h3><h3 id="当一辆车消失天际，当一个人成了谜，你不知道，他们为何离去，就像你不知道这竟是结局，在每个繁星抛弃银河的夜里，我会告别-告别我自己，因为我不知道-我也不想知道，和相聚之间的距离"><a href="#当一辆车消失天际，当一个人成了谜，你不知道，他们为何离去，就像你不知道这竟是结局，在每个繁星抛弃银河的夜里，我会告别-告别我自己，因为我不知道-我也不想知道，和相聚之间的距离" class="headerlink" title="当一辆车消失天际，当一个人成了谜，你不知道，他们为何离去，就像你不知道这竟是结局，在每个繁星抛弃银河的夜里，我会告别 告别我自己，因为我不知道 我也不想知道，和相聚之间的距离"></a>当一辆车消失天际，当一个人成了谜，你不知道，他们为何离去，就像你不知道这竟是结局，在每个繁星抛弃银河的夜里，我会告别 告别我自己，因为我不知道 我也不想知道，和相聚之间的距离</h3><p>；当一辆车消失天际，当一个人成了谜，你不知道，他们为何离去，就像你不知道这竟是结局，在每个银河坠入山谷的梦里，我会醒来 也忘记梦境，因为你不知道 你也不会知道，逝去的就已经失去</p>
+<h3 id="人晕了要掐人中-狗晕了要掐狗中"><a href="#人晕了要掐人中-狗晕了要掐狗中" class="headerlink" title="人晕了要掐人中; 狗晕了要掐狗中!"></a>人晕了要掐人中; 狗晕了要掐狗中!</h3><h3 id="我为了自由，而你却是为了生活。"><a href="#我为了自由，而你却是为了生活。" class="headerlink" title="我为了自由，而你却是为了生活。"></a>我为了自由，而你却是为了生活。</h3><h3 id="我被交配到最西边的地方发书。"><a href="#我被交配到最西边的地方发书。" class="headerlink" title="我被交配到最西边的地方发书。"></a>我被交配到最西边的地方发书。</h3><h3 id="我哪来的身与名，让我去败和裂"><a href="#我哪来的身与名，让我去败和裂" class="headerlink" title="我哪来的身与名，让我去败和裂"></a>我哪来的身与名，让我去败和裂</h3><h3 id="我最恨的不是被骗了，而是刚开始信任一个人就被骗了"><a href="#我最恨的不是被骗了，而是刚开始信任一个人就被骗了" class="headerlink" title="我最恨的不是被骗了，而是刚开始信任一个人就被骗了"></a>我最恨的不是被骗了，而是刚开始信任一个人就被骗了</h3><h3 id="他这样孤独的漂流，只是想去未知的世界看一眼。有些人，一辈子都只会缩在一个角落里，连窗外都懒得看，更别说踏出门。"><a href="#他这样孤独的漂流，只是想去未知的世界看一眼。有些人，一辈子都只会缩在一个角落里，连窗外都懒得看，更别说踏出门。" class="headerlink" title="他这样孤独的漂流，只是想去未知的世界看一眼。有些人，一辈子都只会缩在一个角落里，连窗外都懒得看，更别说踏出门。"></a>他这样孤独的漂流，只是想去未知的世界看一眼。有些人，一辈子都只会缩在一个角落里，连窗外都懒得看，更别说踏出门。</h3><h3 id="既然大家都没本事，各走各路，这才是现实。"><a href="#既然大家都没本事，各走各路，这才是现实。" class="headerlink" title="既然大家都没本事，各走各路，这才是现实。"></a>既然大家都没本事，各走各路，这才是现实。</h3><h3 id="“天无绝人之路”，“我觉得这句话没什么道理，不然怎会有‘走投无路’一说！”，混得不好就要留个念想"><a href="#“天无绝人之路”，“我觉得这句话没什么道理，不然怎会有‘走投无路’一说！”，混得不好就要留个念想" class="headerlink" title="“天无绝人之路”，“我觉得这句话没什么道理，不然怎会有‘走投无路’一说！”，混得不好就要留个念想!"></a>“天无绝人之路”，“我觉得这句话没什么道理，不然怎会有‘走投无路’一说！”，混得不好就要留个念想!</h3><h3 id="不是所有的债，都可以还的"><a href="#不是所有的债，都可以还的" class="headerlink" title="不是所有的债，都可以还的"></a>不是所有的债，都可以还的</h3><h3 id="生是你的老百姓，死是你的小精灵"><a href="#生是你的老百姓，死是你的小精灵" class="headerlink" title="生是你的老百姓，死是你的小精灵"></a>生是你的老百姓，死是你的小精灵</h3>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2014/%E5%90%8E%E4%BC%9A%E6%97%A0%E6%9C%9F-%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%BD%95/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%94%B5%E5%BD%B1/">
+              #电影
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2014/%E6%9B%BC%E5%BE%B7%E6%8B%89-%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%BD%95/" target="_self">曼德拉-经典语录</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2014/%E5%A6%82%E4%BD%95%E5%9C%A8wordpress%E6%96%87%E7%AB%A0%E4%B8%AD%E6%8F%92%E5%85%A5%E6%AD%8C%E6%9B%B2/" target="_self">如何在wordpress文章中插入歌曲</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

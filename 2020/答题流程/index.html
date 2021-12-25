@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>答题流程 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="公考,公考," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>答题流程</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2020-09-12
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E5%85%AC%E8%80%83/">
+            公考
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="答题流程"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h1 id="一、-怎么看"><a href="#一、-怎么看" class="headerlink" title="一、 怎么看"></a>一、 怎么看</h1><h2 id="1-怎么看-社会认知"><a href="#1-怎么看-社会认知" class="headerlink" title="1. 怎么看-社会认知"></a>1. 怎么看-社会认知</h2><p>第一题 分数影响大</p>
+<p>积极类</p>
+<p>是什么-表明观点<br>    针对题目中的这个观点做价值判断+观点，判断他是好还是坏，还是辩证的观点去看，让考官对我们的答题有一个宏观性（如果说不出观点，做出好坏判断也可以）<br>为什么-影响/原因（重点说影响，说原因也可以）<br>    这是咱们思路的特点，我们导氮一直是教的思路，而不是模板，所以说这里我们大家要灵活的去掌握<br>    共性是政府政策、法律法规、处罚力度、推广宣传、个人意识等；<br>    个性：如何想到更多的影响，主体法，分为动作的发起者，动作的承受者，动作的相关者<br>怎么办<br>    担心什么（<br>    为了体现我们的辩证思维，辩证思维是怎么看题型中，重点考察的思维方式；<br>    所以说虽然是好事，积极的社会现象，但是我们依然要考虑里面有什么担忧，这是答题的亮点，只有通过这样的方式，才能突出答题思路新颖）<br>怎么办<br>    保持好的（持久性、影响力、时效性）解决问题（<br>    就是要保持好的解决问题，这一点就是我们的对策，有哪些积极的影响；<br>    然后刚才分析的，有什么担忧，接下来就是把好的继续保持，把坏的加以解决，<br>    针对上面的问题，提出几条对策）<br>总结升华<br>    常规（再次与观点呼应）<br>    提升（学到了什么，可以结合自身，如果能够升华，这是最好的，可以给我们加分，但是他有一定的难度，涉及到知识储备，所以说我们每天晚上都会给大家安排一些背诵的内容，为以后答题时升华使用做准备；<br>    如果升华的部分想不到，那我们就是常规的总结，呼应我们前面表明的观点，<br>    简单做一个总结，让考官觉得我们不是突然结束，就可以了）</p>
+<p>消极类</p>
+<p>从题干中分析-消极的社会事件-不良的社会影响<br>    比如诈骗、网络谣言</p>
+<p>是什么-表明观点<br>    表态方式，每个人的思考问题方式，自己的想法、观点都是不一样的<br>        感情感受 情感的变化，生气、痛心、惋惜，心情心态<br>        类似事件 以前看新闻，类似题目中情况的，观点相似<br>        名言警句 需要知识储备，用这种方式开头，更具有亮点<br>        数据 事件=&gt;现象，数据的增长、降低，来反映社会的发展、趋势<br>        政策 事件引起了关注，政府肯定也在关注，也会不断完善政策制度<br>        本质 通过现象看本质，事件是一个现象，找到本质，当做论点<br>为什么-影响/原因<br>    消极类的社会事件=&gt;影响<br>    对事件出现的原因，进行分析<br>    共性原因(法律法规、处罚力度、宣传推广、个人意识)<br>    个性（<br>        发起者<br>        承受者 一件事情有因有果 受牵连、波及的<br>        隐形参与者 只管没有发现的，通过主体找关联，与直接参与者相关的<br>            人，特定的时间段，相关的物品、物件，发生的地域，背景趋势<br>    ）<br>怎么办<br>    已经做了什么<br>怎么办<br>    解决问题<br>    （既然已经分析了影响和原因，我们发现了问题，不能只依靠国家来解决，只有大家共同努力，才能更好的解决问题，再具体的做法之前，可以看到，针对消极事件，国家肯定早就已经进行处理改善，当我们在面试考试时，基本都是已经处理结束的事件，所以这样回答可以体现我们看待问题的全面性，辩证看待问题）<br>总结升华<br>    常规（最后回答完之后，我们要再次与观点呼应，首尾呼应，并不是非常突兀的结束，）</p>
+<pre><code>提升（学到了什么，可以结合自身，如果能够升华，这是最好的，可以给我们加分，但是他有一定的难度，涉及到知识储备，所以说我们每天晚上都会给大家安排一些背诵的内容，为以后答题时升华使用做准备；
+如果升华的部分想不到，那我们就是常规的总结，呼应我们前面表明的观点，
+简单做一个总结，让考官觉得我们不是突然结束了，就可以了）</code></pre>
+<p>一语道破<br>是什么-表明观点<br>统筹概括<br>    一个字（几个字）<br>    一个词（几个词）<br>    一句话（几句话）<br>贯穿始终<br>    以词为主线，可以结合主题或者其他，分层次论述<br>整体升华<br>    可关联道破的词进行升华</p>
+<p>导航总结的部分重点是说两个，一个是再次梳理一下我们答题的思路，第二个总结的是我们学到了什么知识</p>
+<h2 id="2-怎么看-社会认知-复合类（好-坏）"><a href="#2-怎么看-社会认知-复合类（好-坏）" class="headerlink" title="2. 怎么看-社会认知-复合类（好+坏）"></a>2. 怎么看-社会认知-复合类（好+坏）</h2><p>是什么-亮明观点<br>    倾向于赞同/好的一方面<br>    倾向于反对/坏的一方面<br>    既能看到认同（或接受）一方，也能发现问题所在<br>    （3选1表赞同）<br>为什么-分析<br>    依据主体：可以认同/获得支持/能够理解/带来好处的一方面包括，123<br>    依据主体：不能认同/不被支持/无法接受/带来问题的一方面包括，123<br>    （先说好 在说怀）<br>怎么办-趋利避害<br>    好的一方面继续保持（政府已经做了什么，使用辩证的思维，积极类的说1-2条即可）<br>    存在问题的地方努力解决 （复合类的 好坏尽量差不多）<br>总结升华<br>    常规 扣题<br>    升华    上升高度</p>
+<p>怎么看待社会认知体这个大类还是考的比较多，学习了社会认知之后，复合类的题型稍微简单一点，<br>第二步是思路，我们看一下这个思维导图，思维导图，3选1<br>第二部是分析分析的时候，依据主体啊，可以认同什么获得支持什么能够理解什么带来好处的，一方面，包括123，再一个就是依据主体不认同什么不被支持，什么无法支持什么带来问题包括什么123，这是两两个层次，这是两个层次，在答题的时候，两个部分我们都需要去说，因为它属于复合类，那家具的分类，说明是大部分的题是有好有坏的，既然是有好有坏，有好的一面，需要说坏的一面也需要做，所以说，第二部分，我们要依据主体说一下我们认同的，再依据主体，我们说一下不认同的分成两个层次<br>我们是思路啊，思路这个东西就是学过车，不要被他限制住，不要模版化<br>积极类的 担忧可以少说一点</p>
+<h2 id="怎么看-社会认知-复合类"><a href="#怎么看-社会认知-复合类" class="headerlink" title="怎么看-社会认知-复合类"></a>怎么看-社会认知-复合类</h2><p>有好有坏</p>
+<p>是什么-表明观点</p>
+<h2 id="3-怎么看-哲理认知-单观点"><a href="#3-怎么看-哲理认知-单观点" class="headerlink" title="3. 怎么看-哲理认知-单观点"></a>3. 怎么看-哲理认知-单观点</h2><p>相比较社会认知 难一点<br>题目看不懂，字面意思来解决</p>
+<p>题型特点：<br>    有人说/一个人 说了一句话。。。你的看法（古人、陌生人）<br>    国家领导人或习总书记的（领导人说的）</p>
+<p>是什么-理解+观点<br>    题干中的话传递的什么意思+是否认同<br>    （解释+观点<br>    古人的讲话、诗词 可以翻译出来大概意思，不需要太具体<br>    亮明观点：道理赞同还是不赞同）<br>为什么-论证（得到观点原因  与社会认知题型的区别-不需要进行举例论证）<br>    举例论证：古今中外 名人轶事 发展史 个人事例（<br>    为了更好的论证我们的观点：<br>        最好正反事例 最多不要超过3个 体现辩证思维<br>        尽量不要使用企业家的事例，公务职位不是以盈利为目的，利民为主，不能沾染金钱<br>        华为可以 国家支持的企业 任正非 并没有太过于炫耀 朴素 低调 有社会责任感）<br>    道理论证：（想不到具体的例子）<br>        正反道理<br>        中心论点+意义（名人名言 传统文化的道理 文化俗成道德 通俗道理）<br>怎么办-如何践行道理<br>    在哪方面+具体如何做（给我们带来的启示，结合自身，应该去怎样做）<br>小众升华<br>    什么时候不适用（习总书记的话不可以升华，100%支持正确的）<br>    适度（证明我们的独立思考能力，体现辩证思维，考官所关注的）</p>
+<h2 id="4-怎么看-哲理认知-双观点"><a href="#4-怎么看-哲理认知-双观点" class="headerlink" title="4. 怎么看-哲理认知-双观点"></a>4. 怎么看-哲理认知-双观点</h2><p>题型特点：<br>    有人说。。。有人说。。。 “两个有人说” 观点不矛盾的<br>    一句话，有人说。。。“两个观点”。。。你的看法</p>
+<p>是什么-理解+观点<br>    题干中观点建立联系（并行不悖，相辅相成，阶段性等）<br>        （并行不悖：两个观点都有道理，不冲突、不矛盾<br>        相辅相成：两个观点互相配合，互相补充，缺一不可<br>        阶段性：分阶段、分步骤的，有一定的顺序性）<br>    选择其一表赞同（观点二选一赞同，并解释不选择另外一个的原因，避免让考官认为我们只看到了半道题）<br>为什么-论证<br>    两个观点都选，可以分别论证，也可以整体论证<br>    选择其中一个观点，选择哪个论证哪个，同单观点<br>怎么办-如何践行道理<br>    两个都选，可以先说观点1怎么做，在说观点2怎么做，最后再结合<br>    只选择其中一个观点，同单观点（解释为什么选择这个观点，举例+论述）<br>小众升华<br>    题干中没给出的选项</p>
+<p>避免<br>    践行道理-不要说空话，结合自己<br>    两个观点都要论证<br>    一定要贴题，论证要贴近论点<br>    论证-不要盲目追求高大上，亲身经历也可以</p>
+<h2 id="5-怎么看-哲理认知-寓言故事"><a href="#5-怎么看-哲理认知-寓言故事" class="headerlink" title="5. 怎么看-哲理认知-寓言故事"></a>5. 怎么看-哲理认知-寓言故事</h2><p>简单 出现率低<br>没有对错，观点越小众越好<br>哲理观点越多越好</p>
+<p>是什么-解释<br>    寓言故事告诉我们什么意思<br>为什么-论证<br>    只有一个寓意时，同哲理认知单观点；举例论证<br>    如果有多个寓意；分别论证+做法（寓意越多越好，使用主体法、关键词法来思考）<br>怎么办-如何践行道理<br>    一个寓意同哲理认知单观点<br>    多个寓意不用重复再说一遍（上一步已经说过）</p>
+<h2 id="6-怎么看-哲理认知-漫画"><a href="#6-怎么看-哲理认知-漫画" class="headerlink" title="6. 怎么看-哲理认知-漫画"></a>6. 怎么看-哲理认知-漫画</h2><p>用画来替换题目内容，反映社会现象</p>
+<p>漫画所表达意思的类型：哲理/寓言、社会认知</p>
+<p>漫画下面有配字，围绕这个话题；没有就看图</p>
+<p>看图说画<br>    描述漫画上的内容（有宏观性，关注细节）<br>看图说事<br>    如果是社会事件，同社会认知思路<br>    如果是哲理道理，同哲理认知思路（可以多个启示）<br>看图说理</p>
+<h1 id="二、-怎么办"><a href="#二、-怎么办" class="headerlink" title="二、 怎么办"></a>二、 怎么办</h1><h2 id="1-怎么办-矛盾处理"><a href="#1-怎么办-矛盾处理" class="headerlink" title="1. 怎么办-矛盾处理"></a>1. 怎么办-矛盾处理</h2><p>公务员考试，工作原则，贴题，价值理念</p>
+<p>遵循原则: 以人为本 工作为先 公私分明 阳光心态 轻重缓急</p>
+<p>以人为本：全心全意为人民服务，任何事情，都要以人民群众为主<br>工作为上：这个是对待工作的态度，如果生活和工作有冲突时，身为公职人员，一定要以工作为主<br>公私分明：工作的事情和私人的事情要做好，<br>    比如有朋友来找你办事<br>阳光心态：在解决矛盾时，我们分析问题的原因，要积极方向<br>    比如工作中被人投诉了，一定要想因为哪里做的不好，着急的事情没有被解决，不要去认为群众在找事<br>轻重缓急：多个矛盾的排序，<br>    群众利益 &gt; 本职工作 &gt; 生活；公 &gt; 私；简单 &gt; 困难 </p>
+<p>矛盾分析题，很多是实际工作上，遇到的一些问题，考察考生如何看待这件事情，处理这个问题，用来判断考生是否可以胜任公务员的岗位</p>
+<p>目的+心态：最终要达到的目的和实现的效果+心情心态的调整 （这里没有对错之分，想到什么说什么，考官最想听到真实的情感，只有这样才能打动考官，虚假的回答听多了没有新颖）<br>找到矛盾：明确有几个问题需要处理，多个矛盾按轻重环境来排序（1个矛盾 不需要说这点）<br>解决矛盾：找到矛盾逐一针对解决<br>    1. 只有结果，假设情况发生（假设3种情况，从简单到困难）<br>    2. 已知情况，逐一解决问题（题目中描述的很清楚，逐一解决）<br>    3. 解决问题A，需要做到。。。<br>       解决问题B，需要做到。。。<br>       需要解决问题C，可以。。。<br>   （我们将矛盾分为3种小题型，使用这个思路，可以解决考生无话可说的情况，考官也是特别想听到考生拥有独特个人见解的；<br>   如果遇到自己不能独立解决的矛盾，一定要发挥团队合作精神，联络其他部门一同办理<br>   ）<br>多想一步：<br>    1. 持续跟进：题目中的问题有没有解决，后续的跟进情况<br>    2. 以点带面：吃一线长一智<br>总结启示<br>    1. 就事论事：解决矛盾中，得到了什么启示<br>    2. 方向性总结：在解决矛盾过程中，信心、换位思考，（和上面内容重合，就可以忽略，或者一起说）</p>
+<h2 id="2-怎么办-组织流程"><a href="#2-怎么办-组织流程" class="headerlink" title="2. 怎么办-组织流程"></a>2. 怎么办-组织流程</h2><p>难度低，考的少，最多考1道</p>
+<p>考官主要考察考生 组织策划、布局、构思、应变的能力，能否按照领导的意思做好一件事情，这个能力不只是工作中用到，生活中也同样很重要，这个就是流程题；</p>
+<p>流程题主要是对一件事情能否真正做到 人尽其用、物尽其用、材尽人用</p>
+<p>组织流程-基础</p>
+<p>准备阶段<br>    明确活动目的，做好调整学习工作，写好计划书，交给领导审批<br>    计划通过后，对人、财、物、地、时、宣传通知、活动形式和内容进行准备，设置应急方案</p>
+<p>执行阶段<br>    执行阶段做好沟通，协调，监督工作，及时应对解决突发情况，注意影像资料的拍摄搜集<br>总结阶段<br>    进行总结，回访，积累经验，吸取教训，相关物资、物料回收，资金花费报账，将影像资料整理进行二次宣传</p>
+<p>组织流程-导氮<br>    活动目的<br>        围绕活动主题，切题表达（根据题目，找到组织活动的目的）<br>    活动重点<br>        重点一，主要阶段挑选一个内容；<br>            选什么+为什么选+怎么做；<br>        重点二，主要阶段挑选一个内容；<br>            选什么+为什么选+怎么做；（从基础思路挑两个点来说，要有逻辑顺序）<br>        重点三，活动形式+内容<br>    概括综述</p>
+<pre><code>通过这个思路，让考官知道我们不只会123重点，也知道模板的思路，知道宏观的组织流程，每一句话都和题目紧密联系，没有模板那样这么多套话</code></pre>
+<h2 id="3-怎么办-重难点"><a href="#3-怎么办-重难点" class="headerlink" title="3. 怎么办-重难点"></a>3. 怎么办-重难点</h2><pre><code>结构化面试中很少会考到，题目问重点就回答重点，难点就回答难点，总共2-3个最好
+
+把组织流程去掉活动目的和概括综述去掉即可
+
+（重点是什么 + 为什么是重点 + 怎么解决） * N
+
+（难点是什么 + 为什么是难点 + 怎么解决） * N</code></pre>
+<h2 id="4-怎么办-调研"><a href="#4-怎么办-调研" class="headerlink" title="4. 怎么办-调研"></a>4. 怎么办-调研</h2><pre><code>概率低，出现也是最后一题，分数影响小
+
+目的明确
+    明确调查目的和需要保证的效果（核实。。。调查内容）
+对象广泛
+    调查对象样本的确定，范围广，组成人员多样（怎么看主体法，专家，媒体，网络等）
+人员专业
+    参加调查工作的人员专业性；有经验 有专业 有培训
+    （合作意识，成立调查小组；
+    超出权限，找相关部门同事组成；
+    简单的情况，个人来独立完成，人员专业可忽略）
+形式多样（形式内容）
+    调查形式多样，内容合理
+    （问卷：人群多，抽象调查，线上线下结合；
+    走访：针对部门、企业（位置固定的）；
+    座谈会：专家、记者、重要的人）
+数据筛选
+    去伪存真，消错留对，整理汇总</code></pre>
+<h1 id="三、-怎么说"><a href="#三、-怎么说" class="headerlink" title="三、 怎么说"></a>三、 怎么说</h1><h2 id="1-怎么说-情景模拟"><a href="#1-怎么说-情景模拟" class="headerlink" title="1. 怎么说-情景模拟"></a>1. 怎么说-情景模拟</h2><pre><code>简单，出现率小（结合当地考情）
+
+近几年越来越多，整体占比小
+
+回答时要体现考生真实的一面，动作要和场景设置的一致
+
+类型：比如；劝住户吵架
+请把考官当成住户，现场模拟
+情景模拟；
+劝住户吵架，你如何进行劝说
+
+注意：
+一个人完成模拟，问答形式；
+生活化，生活中怎么说，答题时怎样说，阳光方向；
+受众群体，
+    劝同事（帮他人解决问题），
+    劝朋友（关系好的那种说话方式），
+    公职人员（树立一个好的政府形象）
+
+
+场景设置
+    具体场景，为后续说话内容做铺垫（一句话就可以了，让考官了解我们的场景）
+身份、来意
+    向陌生人介绍自己是谁，说明沟通目的（面对群众，自己是**单位的工作人员，不能泄露具体的个人信息）
+    是非必要环节（熟人、认识的可以不用介绍）
+沟通内容
+    情：同情心、同理心、戴高帽（让对方感觉我们懂他，可以听进去我们的讲话，为后面目的做铺垫）
+    理：讲道理，还原事实（通过道理，将自己的观点讲述出来）
+    利：利己利他（对对方有什么好处，对方需要什么，讲道理是说教，缓解气氛）
+    法：法律法规，规章制度（看具体场景来决定是否说，或者改进的一些方法）
+自然淡出
+    你忙、我忙、他忙（找借口离开、进入下一步环节、下一个场景
+    比如，到吃饭时间了，我先走了； 你工作也挺忙的 我也就不打扰了； 中午了，大家一块去吃法吧
+    ）</code></pre>
+<h2 id="2-怎么说-演讲"><a href="#2-怎么说-演讲" class="headerlink" title="2. 怎么说-演讲"></a>2. 怎么说-演讲</h2><pre><code>简单 比较少，前几年河北省相对多一点，整体还是少
+
+演讲题 自信 大胆 把话说出来就可以
+
+演 动作 眼神 表情
+讲 内容
+
+演讲时，可站可坐，建议站着，气场好，状态好；如果坐着更适合，也可以
+
+答题思路：同哲理认知基本一致
+
+举例子：可以用自己的、自己身边的
+
+可以看看超级演说家
+
+演讲的题目
+    给定题目（直接抄）
+    自拟题目（要凸显核心主题词）
+演讲的结构架构
+    首段
+        开门见山 + 分析论证 + 呼吁号召 （类似于一语道破）
+        连续排比
+        过去 + 现在 + 未来
+        开场（段子、数据、问号、金句等）
+    正文
+        情节（扎心）、泪点（真诚）、笑点（笑点）
+        举例论证                   故事一 + 论点一；故事二 + 论点二；
+            自己的故事              （说故事长短，控制在两个为宜，最多不超过3个）
+            他人的故事（时政）
+        道理论证
+            围绕主题进行原因/影响 + 对策
+    尾段
+        呼应主题：金句、口号等有冲击力的话语
+        结合自身升华</code></pre>
+<h2 id="3-怎么说-串词讲故事"><a href="#3-怎么说-串词讲故事" class="headerlink" title="3. 怎么说-串词讲故事"></a>3. 怎么说-串词讲故事</h2><pre><code>除了2017年长春考过一次，近14年一直没有考过，几乎不考
+
+把所有的词，串联起来，起到承上启下的作用；实际上也是串词造句
+
+明确中心主题
+确定选词
+    固定词组：给定的必须都用，可重复出现
+    多选词组：多个里面选定几个，需要告知考官
+    （一般情况下，全部都用上即可）
+内容设置
+    阳光、正能量、有情节
+    时间、地点、人物、起因、经过、结果（转折、高潮）
+
+总结：结合自身，自己的成长</code></pre>
+<h1 id="四、-你是谁"><a href="#四、-你是谁" class="headerlink" title="四、 你是谁"></a>四、 你是谁</h1><h2 id="1-你是谁-自我认知"><a href="#1-你是谁-自我认知" class="headerlink" title="1. 你是谁-自我认知"></a>1. 你是谁-自我认知</h2><pre><code>类似于演讲题
+
+以前银行系统会考，会有考生的个人简历，几年减少
+
+需要让大家写一篇自我介绍，准备一个缺点（岗位匹配用），并且是可以通过努力改正的
+
+
+经历带能力
+    能力1（词语概括） + 经历论述
+    能力2（词语概括） + 经历论述
+    能力3（词语概括） + 经历论述
+    备注：毕业生谈学习、学校、实践经历 
+        社会人读阅历体现能力
+
+论述最好是跟工作挨边的，实习经历等；没有经历 只能自己编一个，反复练习
+
+主要是结合自己的真情实感，经历越详细越好，有说服力</code></pre>
+<h2 id="2-你是谁-岗位匹配"><a href="#2-你是谁-岗位匹配" class="headerlink" title="2. 你是谁-岗位匹配"></a>2. 你是谁-岗位匹配</h2><pre><code>岗位需要什么，我们自己就要有哪些优点，最好是通过经历得到的
+
+了解岗位需求及优势 
+    岗位需求 + 匹配能力（词语概括） + 经历论述
+    岗位优势 + 自身需求
+    备注：刚好你需，正好我有，正好你有，恰好我有</code></pre>
+<h2 id="3-你是谁-压力应对"><a href="#3-你是谁-压力应对" class="headerlink" title="3. 你是谁-压力应对"></a>3. 你是谁-压力应对</h2><pre><code>极其少，除非是企业面试
+
+转危为安
+    表达真情实感
+    正面应对压力
+    表明调整方向
+    提出未来期许</code></pre>
+<h2 id="4-你是谁-复合类"><a href="#4-你是谁-复合类" class="headerlink" title="4. 你是谁-复合类"></a>4. 你是谁-复合类</h2><pre><code>题目 + 我
+    明确题干
+    事件类
+        理解分析 + 我怎么想 会怎么做   （自我介绍的特点选一个）
+    道理类
+        理解分析 + （过去现在对比）事例，明白且践行   （对策，结合自身特点 要匹配岗位）
+
+要求结合自身        </code></pre>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2020/%E7%AD%94%E9%A2%98%E6%B5%81%E7%A8%8B/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E5%85%AC%E8%80%83/">
+              #公考
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2020/%E5%88%B7%E9%A2%98/" target="_self">118刷题</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2020/one-days/" target="_self">第一天-副本</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>行测-数量关系 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="公考,公考," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>行测-数量关系</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2020-10-10
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E5%85%AC%E8%80%83/">
+            公考
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="行测"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>数学运算主要考察 考生理解、把握事物间量化关系和解决数量关系问题的能力。</p>
+<p>主要涉及数据关系的分析、理解、判断、运算等。</p>
+<p>常见的题型：数学运算</p>
+<h2 id="一、数学规律"><a href="#一、数学规律" class="headerlink" title="一、数学规律"></a>一、数学规律</h2><h3 id="1-1-数字特性"><a href="#1-1-数字特性" class="headerlink" title="1.1 数字特性"></a>1.1 数字特性</h3><p>数字特性思想是指不直接求得最终结果，儿只需要考虑最终计算结果的某种“数字特性”，从而达到排除错误选项的方法。</p>
+<p>掌握数字特性思想的关键，是掌握一些最基本的数字特性规律（仅限自然数内讨论）</p>
+<h4 id="奇偶性"><a href="#奇偶性" class="headerlink" title="奇偶性"></a>奇偶性</h4><p>基础<br>    奇数 + 奇数 = 偶数<br>    偶数 + 偶数 = 偶数<br>    奇数 + 偶数 = 奇数</p>
+<pre><code>奇数 * 奇数 = 奇数
+奇数 * 偶数 = 偶数
+偶数 * 偶数 = 偶数</code></pre>
+<p>推论<br>    两数的和与差 奇偶性相同，求和找差，求差找和<br>    若干数相乘，一偶则偶，全奇才奇</p>
+<pre><code>总数 * (1 / N) = 整数  =&gt; 总数为N的倍数
+总数 = 部分 * (N / M) 或 (部分 / 总数) = (N / M) =&gt; 部分为N的倍数 总数为M的倍数
+
+多位数问题，优先考虑3或9的倍数
+
+、
+例江苏2008 五个一位正整数之和为30，其中两个数是1和8，而这五个数的乘积为2520，其余的三个数为
+A.6、6、9  B.4、6、9  C.5、7、9  D.5、8、8</code></pre>
+<h4 id="倍数关系"><a href="#倍数关系" class="headerlink" title="倍数关系"></a>倍数关系</h4><pre><code>常用的倍数 2、3、5、9  11、25
+2的倍数：个位数是2/4/6/8/0
+3的倍数：所有数字之和可以被3整除
+5的倍数：个位数是0/5
+9的倍数：所有数字之和可以被9整除 注意：9的倍数比3的倍数范围更小
+
+11的倍数：奇数项的数字和 - 偶数项的数字和 = |0/11|
+25的倍数：末两位是25/50/75/00
+
+注意：2或5整除看末位 4或25整除看末两位 8或125整除看末3位
+
+如果 a:b = m:n (m和n是最简整数比，也就是互质，没有公约数)
+则以下结论成立
+    a是m的倍数，b是n的倍数
+    a+b 是 m+n 的倍数，a-b 是 m-n 的倍数
+推论：
+    a:b:c... = m:n:p...  则 a+b+c... 是 m+n+p... 的倍数
+总结：
+    出现比例、分数、百分数、倍数、余数问题，优先考虑倍数关系；
+    a,b 均为整数时(人数、件数等)，上述结论一定成立；
+    a,b 不一定为整数时，上述结论大概率成立
+
+合数：有2个以上因子的数 最小从4开始；
+质数：只有2个因子，只能被自身整除的数；
+    质数的平方数有且只有3个因子
+
+100以内的质数    
+    2 3 5 7 
+    11 13 17 19 
+    23 29
+    31 37
+    41 43 47
+    53 59
+    61 67
+    71 73 79
+    83 89 
+    97
+
+任意3个连续自然数的和为3的倍数；
+如果遇到大于10的倍数，分解成多个；
+被除数 / 除数 = 商 和 余数；
+
+拆数问题
+    拆两个数时，越靠近平均数，乘积越大；
+    尽可能拆成多个3，1个2，这样乘积最大；</code></pre>
+<h3 id="1-2-直接带入法"><a href="#1-2-直接带入法" class="headerlink" title="1.2 直接带入法"></a>1.2 直接带入法</h3><pre><code>适用：使用带入法简单，不使用很难找到答案的情况
+常考3位数，4位数很少
+
+求某个多位数
+选项是一组数(选项罗列、选项信息充分) 不定方程 
+    选项罗列 选项信息充分、问什么、题目中都会有关系
+余数问题
+常识带入：符合日常生活的常识
+
+同余问题
+    同一个题中，同余问题思路：和同加和，差同减差，余同加余
+    除数和余数的和/差相同
+升降问题
+    1、期初赋值
+    2、间隔增长率 r1+r2+r1*r2
+    3、口诀:等比例升降，总体略亏，不会不多
+    4、连续下降，总体下降幅度 比 简单求和略小；
+       连续上升，总体上升幅度略大于简单求和</code></pre>
+<h3 id="1-3-不定方程"><a href="#1-3-不定方程" class="headerlink" title="1.3 不定方程"></a>1.3 不定方程</h3><pre><code>特点：未知数的个数 大于 方程的个数
+解题方法：带入法 + 奇偶性、尾数法、倍数关系
+题型特点：
+    尾数法：未知数的系数为5、10的倍数
+    奇偶性：未知数的系数 奇偶性不同
+    倍数关系：等式两边出现相同的因子</code></pre>
+<h3 id="1-4-鸡兔同笼法"><a href="#1-4-鸡兔同笼法" class="headerlink" title="1.4 鸡兔同笼法"></a>1.4 鸡兔同笼法</h3><pre><code>公式
+    鸡 = (兔脚数 * 总头数 - 总脚数) / (兔脚数 - 鸡脚数)
+    兔 = (总脚数 - 鸡脚数 * 总头数) / (兔脚数 - 鸡脚数)
+
+总结：使用题型特点
+    两种元素，两种属性，给出元素总数和属性总数，问元素个数
+    鸡A和兔B    2脚4脚       50只    140只
+
+核心思路：
+    假设法 求鸡设兔(属性)  求兔设鸡(属性)
+    求A元素的数量，假设A的属性是b(B元素的属性)
+
+TODO</code></pre>
+<h3 id="1-5-等差数列"><a href="#1-5-等差数列" class="headerlink" title="1.5 等差数列"></a>1.5 等差数列</h3><pre><code>An = a1 + (n-1)d
+Sn = (a1+An / 2 ) * n
+n = ((An - a1) / d) + 1
+中位数项数 = (n + 1) / 2
+
+常用的性质
+    1、平均数 = 中位数 = (a1 + An) / 2
+    2、An = Am + (n - m) * d
+    3、等差数列中 等距离取出若干项 也是等差数列
+    4、项数为奇数 或者 公差是偶数，和是项数的倍数
+
+首项为1的连续奇数等差数列，和为项数的平方
+
+使用罗列，带入公比，10项左右可以使用，超过找规律
+
+等比数列
+    Sn = a1 * (1-q n次方 / 1 - q)
+    An = a1 * q n-1次方 = Am * q n-m次方
+
+    一般情况下，常考公比为2、3、5的情况
+
+    1、等比数列 等间隔取项 仍为等比数列
+    2、(后项 - 前项) 所组成的新数列 也是等比数列，公比不变，仍未q</code></pre>
+<h2 id="二、比例相关问题"><a href="#二、比例相关问题" class="headerlink" title="二、比例相关问题"></a>二、比例相关问题</h2><pre><code>### 2.1 工程问题
+核心公式 总工 = 效率 * 时间
+常用方法：赋值法 
+
+1、先总工后效率(先给总工赋值)
+当题干给出 若干完成总工的时间或者时间信息充分，
+先设总工为时间的最小公倍数，再用 总工 / 时间 得到各自的效率
+
+题目出现 “中途休息”，总公工拆开列方程可求时间
+
+假设量 和 实际量 出现冲突时，找二者的比例关系 题型：求具体的工作量
+
+周期交替进行的，按周期工作，思路：以周期为单位 计算工作效率
+
+2、先效率后总工(先给效率赋值)
+出现若干相同元素(人、机器、动物)，默认单位效率1为，则数量可以代替效率
+总工一定时，效率和时间成反比；    总工 = 效率 * 时间，效率🔼 时间⬇️；效率⬇️ 时间🔼
+效率比可直接当做效率使用(按比例给效率赋值)
+通过方程得到效率比：
+    a. 题目给出明显的等量关系
+    b. 一件事情两种方式完成
+
+工作时间最优解：每小时运货最多，每字后面做分母，后面的主语做分子
+
+### 2.2 牛吃早问题
+
+出题标志：排比句 N头牛X天，M头牛Y天，问多少头牛Z天 或者 P头牛吃多少天
+
+a.牛吃草长型
+Y = (N - X) * T 
+Y现有存量  N牛的数量  X自然增长的速度  T天数
+
+b.牛吃草减型
+Y = (N + X) * T
+
+c.牛吃草极值型
+Y = (N - X) * T    N &lt;= T
+
+
+### 2.3 排列组合问题
+
+#### a.排列组合
+
+排列：有顺序，交换所选元素位置，结果改变 A
+组合：无顺序，交换所选元素位置，结果不改变 C / P
+
+分类用加法：要么...要么...任选其一即可
+分步用乘法：先...再...每一步都不能少
+
+#### b.隔板法
+
+n个相同元素分给m个不同的主体，
+每人至少一个，Cn-1 m-1
+每人至少不止一个，通过提前分配，构造“至少一个”
+
+#### c.错位排列
+
+元素个数        0  1  2  3  4    5
+错位种数        0  1  2  9  44  265
+
+部分错位：先用C几几选出错的，在乘以错位种数
+
+#### d.捆绑插空
+
+没有特殊要求：分步逐个考虑
+
+要求相邻，先捆绑(注意内部顺序)，在混合(排序/插空)
+
+要求不相邻，A不相邻，用A插入非A产生的空
+
+
+
+
+### 2.4 概率问题
+
+a.单一概率 = 满足条件的样本数 / 样本总数
+b.分类概率，分情况用加法，要么...要么...
+c.分步概率，分步用乘法，先...再...
+
+### 2.5 十字交叉法
+题型判定：混合问题
+    a.已知a%，b%，c%，求A / B
+    b.已知a%，b%，A，B，计算c%
+常考题型：
+    a.浓度 = 溶质 / 溶液
+    b.增长率 = 增长量 / 基期量
+    c.平均数 = 总数 / 项数(一般指人数)
+    d.比重 = 部分 / 总量
+
+
+甲  a% 大          c%-b%     A
+         c% 中    ------ = ----
+已  b% 小          a%-c%     B
+
+A / B 是混合元素的分母之比
+
+如果用到比例相关的知识，在资料分析中，居中不正中，偏向量大一方的增长率；
+
+在同一个总量中，比重可以代替量来计算</code></pre>
+<h2 id="三、行程问题"><a href="#三、行程问题" class="headerlink" title="三、行程问题"></a>三、行程问题</h2><pre><code>核心公式：路程 = 速度 * 时间   S = V * T
+
+1. 平均速度
+S一定，平均速度 = 2V1V2 / （V1 + V2）
+T一定，平均速度 = (V1 + V2) / 2
+结论：路程一定，等时间的平均速度 比 等距离的平均速度 快
+
+2.相遇追及
+相遇：相向而行，两者共同走完S 公式：(V1 + V2) * t = S
+     多次相遇：第N次相遇，两者走的总路程 = (2N - 1) * 单程
+追及：同向而行，快者 比 慢者 多走S  公式：(V1 - V2) * t = S     
+
+3. 比例路程
+路程一定，速度和时间成反比
+时间一定，速度和路程成正比
+速度一定，时间和路程成正比
+
+4. 环形跑道(从同一点出发，一圈的路程为S)
+相遇：反向，相遇 n 次两者共同走完 n 圈。 公式： (V1 + V2) * t = n * S
+相向：同向，快者超过/追上慢者 n 次，就比他多走 n 圈。  公式： (V1 - V2) * t = n * S
+
+5. 流水行船
+
+V顺 = V船 + V水
+V逆 = V船 - V水
+V船 = (V顺 + V逆) / 2
+V水 = (V顺 - V逆) / 2</code></pre>
+<h2 id="四、计数问题"><a href="#四、计数问题" class="headerlink" title="四、计数问题"></a>四、计数问题</h2><h3 id="4-1-比赛计数问题"><a href="#4-1-比赛计数问题" class="headerlink" title="4.1 比赛计数问题"></a>4.1 比赛计数问题</h3><pre><code>N个比赛单位 需要比赛的场次
+
+淘汰赛 仅需决出冠、亚军      比赛场次 = N - 1
+      需决出第1、2、3、4名  比赛场次 = N
+
+循环赛 单循环(任意两个队打一场比赛)            比赛场次 = Cn2
+      双循环(任意两个队打一场比赛，有先后顺序)  比赛场次 = An2 = Pn2
+
+注意： 默认的循环赛应该为 “单循环赛”
+    如果队伍总数为奇数，可能会出现轮空的情况</code></pre>
+<h3 id="4-2-最值问题"><a href="#4-2-最值问题" class="headerlink" title="4.2 最值问题"></a>4.2 最值问题</h3><h4 id="a-最不利原则"><a href="#a-最不利原则" class="headerlink" title="a. 最不利原则"></a>a. 最不利原则</h4><pre><code>标志：至少...保证... (确保、一定、肯定)
+构造最值的情况
+先选出所有反面 也就是 标准-1 (少选一个的思想)
+结果等于最不利+1</code></pre>
+<h4 id="b-数列构造"><a href="#b-数列构造" class="headerlink" title="b. 数列构造"></a>b. 数列构造</h4><pre><code>用数列的方法去构造最多和最少
+
+轻 有余数，取整数
+重 有余数进1
+
+集中运输，从两端向中间，从轻向重</code></pre>
+<h4 id="c-抽屉原理-鸽巣原理"><a href="#c-抽屉原理-鸽巣原理" class="headerlink" title="c.抽屉原理/鸽巣原理"></a>c.抽屉原理/鸽巣原理</h4><pre><code>标志：至少...同一...
+如果每一个抽屉 代表一个集合，每一个苹果代表一个元素
+n+1 个元素放入到 n 个集合中，其中必定有一个集合 至少有两个元素
+
+总结：平均分配，用元素总数除以集合个数，如果有余数，就用商+1</code></pre>
+<h3 id="4-3-植树问题"><a href="#4-3-植树问题" class="headerlink" title="4.3 植树问题"></a>4.3 植树问题</h3><h4 id="a-基础考点-传统植树问题"><a href="#a-基础考点-传统植树问题" class="headerlink" title="a. 基础考点(传统植树问题)"></a>a. 基础考点(传统植树问题)</h4><pre><code>直线植树 
+    普通直线植树：
+        默认为单边 路程 / 间隔 = 段数   段数 + 1 = 植树的颗数
+        双边：单边 * 2
+    楼间植树(或者装吊灯的时候，墙角不能装)
+        单：路程 / 间隔 = 段数 段数 - 1 = 颗
+        双：单边 * 2
+环形植树
+    路程 / 间隔 = 段数 = 颗
+
+    其中包括所有完整、闭合的环形，三角形，圆形，四边形，椭圆形等    </code></pre>
+<h4 id="b-生活化植树"><a href="#b-生活化植树" class="headerlink" title="b. 生活化植树"></a>b. 生活化植树</h4><pre><code>等间隔问题：分成3段 2个点
+爬楼梯：爬到 n 层，等于爬了 n-1 段，等于休息(起步不休息) n-2 次
+       n 层，n-1 段，休息 n-2 次</code></pre>
+<h4 id="c-不需要移动"><a href="#c-不需要移动" class="headerlink" title="c. 不需要移动"></a>c. 不需要移动</h4><pre><code>计算最小公倍数，回归传统植树
+
+重合点为不需要移动的增种，找两个段数的最大公约数，结果为 最大公约数+1 (也就是不需移动数)</code></pre>
+<h4 id="d-等间隔最少植树"><a href="#d-等间隔最少植树" class="headerlink" title="d. 等间隔最少植树"></a>d. 等间隔最少植树</h4><pre><code>计算最大公约数，间隔越大，种数越少    </code></pre>
+<h3 id="4-4-数字计算问题"><a href="#4-4-数字计算问题" class="headerlink" title="4.4 数字计算问题"></a>4.4 数字计算问题</h3><pre><code>注意：重点考察 发现规律 的能力
+做题步骤：先观察分析，再计算
+常用方法：带入排除法、赋值法、特值法、尾数法(末两位尾数法)
+
+都是整数运算(在资料分析中，大部分为约数)
+
+0 可以做数位，不可以做位数  1000  0001
+
+底数的个位数相同，平方的个位数也相同
+
+大数的幂次方个位数字规律：
+    底数去个位数，指数除以4，余几指数写几
+    整除指针写4   所有数的幂次方 个位数都以4位周期循环</code></pre>
+<h3 id="4-5-容斥问题"><a href="#4-5-容斥问题" class="headerlink" title="4.5 容斥问题"></a>4.5 容斥问题</h3><pre><code>a. 两条件标准公式
+    A + B + 都不 = 总数 + 都
+b. 三条件标准公式    
+    A + B + C + 都不 = 总数 + 只满足两者 + 都 * 2
+    A + B + C + 都不 = 总数 + AB + BC + AC - 都
+    A + B + C + 都不 = 总数 + 两者及以上 + 都</code></pre>
+<h2 id="五、几何问题"><a href="#五、几何问题" class="headerlink" title="五、几何问题"></a>五、几何问题</h2><p>周长相同，围成的图形越接近圆形，面积越大</p>
+<pre><code>            周长                面积</code></pre>
+<p>三角形        C = a + b + c    S = 1 / 2 a * h</p>
+<p>正方形        C = 4a             S = a²</p>
+<p>长方形        C = 2 * (a + b)     S = a * b</p>
+<p>梯形            C = a + b+ c + d S = ((a + b) * h) / 2</p>
+<p>平行四边形    C = 2 * (a + b)     S = a * b</p>
+<p>圆形            C = 2πr = πd     S = πr²         </p>
+<p>扇形            C = 2r + (n / 360) * 2πr  S = (n / 360) * πr²</p>
+<p>菱形            C = 4a             对角线乘积的一半</p>
+<p>三角函数        0°        30°            45°             60°            90°</p>
+<p>sin a         0       1 / 2      √2 / 2        √3 / 2             1       对 / 斜</p>
+<p>cos a         1      √3 / 2     √2 / 2        1 / 2             0         邻 / 斜</p>
+<p>tan a         0       √3 / 3         1            √3                 -         对 / 邻</p>
+<p>cot a         -        √3             1            √3 / 3             0        邻 / 对</p>
+<pre><code>         表面积                   体积</code></pre>
+<p>正方体        S = 6a²                  V = a³</p>
+<p>长方体        S = 2 * (ab + ac + bc) V = a * b * c</p>
+<p>球体            S = 4πr²               V = (4 / 3) πr³</p>
+<p>圆柱体        S = 2πr² + 2πrh          V = S底 * h = πr²h</p>
+<p>圆锥体        S = πr² + πrL           V = (1 / 3) * S底 * h = (1 / 3) πr²h</p>
+<h3 id="方阵问题"><a href="#方阵问题" class="headerlink" title="方阵问题"></a>方阵问题</h3><ol>
+<li>方阵总数 = 最外层每边数目的平方 </li>
+<li>方阵最外一层 比 内一层 的总数多8 (行数和列数分别大2)</li>
+<li>方阵最外层总数 = (最外层每边数目 - 1) * 4</li>
+<li>最外层每边数目 = (方阵最外层总数 / 4) + 1</li>
+<li>去掉一行、一列的总数 = 去掉每边的数目 * 2 - 1</li>
+</ol>
+<h2 id="六、年龄问题"><a href="#六、年龄问题" class="headerlink" title="六、年龄问题"></a>六、年龄问题</h2><pre><code>核心思路：年龄差不变
+
+年龄 = 当前年份 - 出生年份
+
+常识：
+    1. 年龄均为整数
+    2. 爷爷、奶奶年龄普遍在51-80左右，孙子童年
+    3. 夫妻年龄差0-4岁，丈夫普遍大于妻子
+    4. 哥哥、姐姐年龄差1岁以上(非双胞胎)
+    5. 父子、母子年龄差21-35岁左右
+    6. 成年默认18岁，童年6岁，未成年5-15岁
+
+闰年：4年1闰，百年不闰，400年再润
+百年不闰，只能被100整除，不能被400整除的，为平年</code></pre>
+<h2 id="七、经济利益问题"><a href="#七、经济利益问题" class="headerlink" title="七、经济利益问题"></a>七、经济利益问题</h2><pre><code>1. 总价 = 单价 * 销售量
+2. 利润 = 售价 - 成本
+3. 总利润 = 单件利润 * 销售量
+4. 利润率 = 利润 / 成本 = (售价 - 成本) / 成本 = (售价 / 成本) - 1
+5. 定价 = 成本 * (1 + 期望利润率)
+6. 几折：既 现价 为 原价 的百分之几十
+
+单价 = 定价 = 售价
+成本 = 进价
+
+资料分析中 利润率 = 利润 / 营业收入  </code></pre>
+<h2 id="八、溶液问题"><a href="#八、溶液问题" class="headerlink" title="八、溶液问题"></a>八、溶液问题</h2><pre><code>溶液的组成成份和分类
+    1. 溶质：被溶解的物质
+    2. 溶剂：能溶解其他物质的物质    通常使用水(有水参加的溶剂)
+    3. 饱和溶液：溶质不能继续被溶解的溶液
+    4. 不饱和溶液：溶质可以继续被溶解的溶液
+
+溶液问题的基本公式
+    溶液 = 溶质 + 溶剂
+    溶质 = 溶液 * 浓度 = (溶质 + 溶剂) * 浓度
+    浓度 = 溶质 / 溶液
+    混合浓度 = 总溶质 / 总溶液
+
+a. 溶液稀释问题(看谁没有变)
+    核心思路：找定量
+
+b. 混合问题
+    题型识别：两种溶液混合(三种)
+
+    混合问题的核心思路
+        混合后的浓度、增长率、平均数的值居中(居中不正中，偏向量大的)
+        混合前谁的量大，谁对于混合后的贡献最大(倾向贡献大的一方)
+        混合浓度 = 总溶质 / 总溶液</code></pre>
+<h2 id="九、周期问题"><a href="#九、周期问题" class="headerlink" title="九、周期问题"></a>九、周期问题</h2><h3 id="9-1-传统周期问题-时间相关的基础"><a href="#9-1-传统周期问题-时间相关的基础" class="headerlink" title="9.1 传统周期问题(时间相关的基础)"></a>9.1 传统周期问题(时间相关的基础)</h3><pre><code>标识：按...顺序，按...周期，交替进行
+1. 找准周期
+2. 用 总数据 / 周期，余数是几，就选择第几位元素，整除选择最后一位
+
+选项中有中国，大概率选中国</code></pre>
+<h3 id="9-2-涉及时间的周期"><a href="#9-2-涉及时间的周期" class="headerlink" title="9.2 涉及时间的周期"></a>9.2 涉及时间的周期</h3><pre><code>用 过的时间 / 周期，余数是几，就加几个时间单位(天/年)
+
+星期循环问题：
+    过几个星期不重要，重点看余数，余几星期X 就加几 
+    过的天数 / 7 看余数
+    过的天数 = 自然天 + 1；去头不去尾，去尾不去头
+自然天(年) 和 过的时间 的关系：
+    过的天数 = 自然天 - 1；
+    过的年份数 = 自然年 - 1；
+
+过整年，如果过闰日加2，没有过加1；
+往后推3天 = 往前推4天</code></pre>
+<p>干支纪年法<br>    10天干：年份 / 10 看余数<br>    12地支：年份 / 12 看余数    </p>
+<pre><code>甲  乙  丙  丁   戊  己  庚  辛   壬  癸
+4   5   6  7    8   9  0   1    2   3
+
+子  丑  寅  卯   辰  巳  午  未   申  酉  戌  亥
+鼠  牛  虎  兔   龙  蛇  马  羊   猴  鸡  狗  猪
+4   5  6   7    8   9  10  11  12  1   2   3</code></pre>
+<h3 id="9-3-下次相遇问题"><a href="#9-3-下次相遇问题" class="headerlink" title="9.3 下次相遇问题"></a>9.3 下次相遇问题</h3><pre><code>求各周期最小公倍数，算出新的周期
+注意：每隔 n 天 = 每 n+1 天，每 n+1 天 = 周期是 n+1 天
+
+结论：计算下次相遇，统一去头</code></pre>
+<h2 id="十、杂项问题"><a href="#十、杂项问题" class="headerlink" title="十、杂项问题"></a>十、杂项问题</h2><h3 id="10-1-过河问题"><a href="#10-1-过河问题" class="headerlink" title="10.1 过河问题"></a>10.1 过河问题</h3><p>M个人过河，船能载N个人，需要A个人划船(默认1)，相当于每次能载过去 N-A 个人；<br>共需过河 M-A / N-A   (有余数必进1)</p>
+<p>计算的结果为趟，往返为1趟</p>
+<h3 id="10-2-青蛙爬井"><a href="#10-2-青蛙爬井" class="headerlink" title="10.2 青蛙爬井"></a>10.2 青蛙爬井</h3><p>井的深度是M，青蛙每天爬N，每次滑下来A，相当于每天能爬 N-A<br>青蛙从井里跳出来需要 M-A / N-A   (有余数必进1)</p>
+<h3 id="10-3-空瓶换酒"><a href="#10-3-空瓶换酒" class="headerlink" title="10.3 空瓶换酒"></a>10.3 空瓶换酒</h3><p>M个空瓶换1瓶酒，相当于 M-1 个瓶子可以喝一瓶酒(不带瓶)；<br>如果有A个空瓶，M个空瓶可以换1瓶酒，可以换的酒数量是 A / M-1  (取整数)</p>
+<h3 id="10-4-烙饼问题"><a href="#10-4-烙饼问题" class="headerlink" title="10.4 烙饼问题"></a>10.4 烙饼问题</h3><p>需要烙饼的张数是A，面数是2A，锅里每次能放M张，没面烙的时间是T；<br>烙饼的总时间 (2A / M) * T  （注意：括号里的算式有余数必进1）</p>
+<h3 id="10-5-天秤问题"><a href="#10-5-天秤问题" class="headerlink" title="10.5 天秤问题"></a>10.5 天秤问题</h3><p>3的N次方个小球中，有1个特殊(轻)，需要用天平秤 N 次(就高不就低)；</p>
+<p>操作型题目，问最小一般选最小(80%以上)  1次不科学</p>
+<h2 id="数字推理"><a href="#数字推理" class="headerlink" title="数字推理"></a>数字推理</h2><p>大胆尝试，小心求证</p>
+<h3 id="一、-多级数列"><a href="#一、-多级数列" class="headerlink" title="一、 多级数列"></a>一、 多级数列</h3><p>做商特点：变化快， 整整整分，可拆分–倍数关系</p>
+<p>做和特点：大小变化不规则</p>
+<p>因式分解：项数少；可拆分–倍数关系<br>    找关系(-2，-1，0，1，2，3) （1，3，5，7，9）</p>
+<p>满足三项以上的特性才可以当做规律，递增平缓，推荐做差</p>
+<h3 id="二、-多重数列"><a href="#二、-多重数列" class="headerlink" title="二、 多重数列"></a>二、 多重数列</h3><p>长数列要分组：长数列指的是 项数&gt;= 8</p>
+<p>数列中有两个括号的：先交叉，再分组</p>
+<p>分组的种类：两两分组，先加减乘除，再考虑平方；<br>    三三分组，两个数求和或做差 等于 第三个数</p>
+<h3 id="三、-分数数列"><a href="#三、-分数数列" class="headerlink" title="三、 分数数列"></a>三、 分数数列</h3><p>1、 跳过被约分项</p>
+<p>2、 利用未被约分项推导</p>
+<h3 id="四、-幂次数列"><a href="#四、-幂次数列" class="headerlink" title="四、 幂次数列"></a>四、 幂次数列</h3><p>1、幂次方</p>
+<p>2、负幂次方</p>
+<p>3、幂次方修正</p>
+<h3 id="五、-多重数列"><a href="#五、-多重数列" class="headerlink" title="五、 多重数列"></a>五、 多重数列</h3><p>观察数列的整体变化趋势</p>
+<p>1、 整体递减：做差或者做商</p>
+<p>2、 整体递增：增长较缓–做和，增长较快–乘积，增长急速–平方</p>
+<h3 id="六、-图形数阵"><a href="#六、-图形数阵" class="headerlink" title="六、 图形数阵"></a>六、 图形数阵</h3><p>外围4个推中间</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2020/%E8%A1%8C%E6%B5%8B/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E5%85%AC%E8%80%83/">
+              #公考
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2020/one-days/" target="_self">第一天-副本</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2020/%E8%B5%84%E6%96%99%E5%88%86%E6%9E%90/" target="_self">行测-资料分析</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

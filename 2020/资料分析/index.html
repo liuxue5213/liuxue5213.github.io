@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>行测-资料分析 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="公考,公考," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>行测-资料分析</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2020-10-21
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E5%85%AC%E8%80%83/">
+            公考
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="资料分析"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="行测学习-实战策略"><a href="#行测学习-实战策略" class="headerlink" title="行测学习/实战策略"></a>行测学习/实战策略</h2><p>核心战略：集中优势火力，猛烈攻击有效得分区域！</p>
+<p>有效：难度小，容易得分的，单体分值小的或者分值高的，也就是言语理解与表达，数量关系，资料分析；</p>
+<p>1、题目难度：常识＞数量＞言语＞判断＞资料</p>
+<p>常识 抢时间，将更多的时间合理运用；<br>    每分钟3题；正式考试前 就要开始看<br>数量 抢分数，拉开差距的模块</p>
+<p>言语<br>判断 基础题<br>资料        占20分，并且考试难度相较于其他模块，偏小；<br>推荐时间25-30分钟左右</p>
+<p>2、答题目标：快速准确地选出答案</p>
+<p>选出答案：能估算 就不计算</p>
+<p>3、答题顺序：</p>
+<p>a. 找到适合自己的答题顺序</p>
+<p>适合自己的答题：做5套题以上，哪个模块正确率高，哪个模块就是最擅长的，然后优先做这个模块</p>
+<p>b. 大原则：需要冷静分析、推理的先做</p>
+<p>优先资料分析，逻辑推理；<br>图推，类比推理可放在后面；</p>
+<p>4、涂卡顺序：做一个模块，涂一个模块<br>涂完需要5-8分钟，不要从1-135；<br>如果涂错1道题，后面都会错；</p>
+<p>5、学会放弃：1分钟，没有思路坚决放弃（30秒原则）<br>正常情况下，最多2分钟；没有思路跳过进入下一题</p>
+<h2 id="资料分析学习-实战策略"><a href="#资料分析学习-实战策略" class="headerlink" title="资料分析学习/实战策略"></a>资料分析学习/实战策略</h2><p>1、辅助工具：直尺、量角器、手表<br>直尺 画横线、量刻度、撕卷子<br>量角器 量饼图<br>手表    钟表问题，一半 一半</p>
+<p>2、圈重点：时间、主语、重点字</p>
+<p>时间 现期、基期<br>主语 文字材料的主语<br>重点字 定题型</p>
+<p>3、计算方法：割补法、截位法、三位有效数字直除……（估算法）</p>
+<p>4、题型及做题顺序：图形→表格→综合→文字(数据不好找)</p>
+<p>5、数字敏感度：</p>
+<p>1 / 2    0.5        50%<br>1 / 3    0.333    33.3%<br>1 / 4    0.25    25%<br>1 / 5    0.2        20%<br>1 / 6    0.167    16.7%</p>
+<p>1 / 7    0.143    14.3%<br>1 / 8    0.125    12.5%<br>1 / 9    0.111    11.1%<br>1 / 10    0.1        10%</p>
+<p>1 / 11    0.091    9.1%<br>1 / 12    0.083    8.3%<br>1 / 13    0.077    7.7%<br>1 / 14    0.071    7.1%<br>1 / 15    0.067    6.7%</p>
+<p>1 / 16    0.0625    6.3%<br>1 / 17    0.059    5.9%<br>1 / 18    0.056    5.6%<br>1 / 19    0.053    5.3%<br>1 / 20    0.05    5%</p>
+<p>1 / 91    0.011    1.1%</p>
+<h2 id="资料分析高分必做"><a href="#资料分析高分必做" class="headerlink" title="资料分析高分必做"></a>资料分析高分必做</h2><p>1.公式和百化分背到烂熟！<br>2.整理所有知识点的出题标志！<br>3.整理错题、经典例题、高频考点！<br>4.每道题都必须圈重点！圈重点！圈重点！<br>5.用基础讲义了解估算法，用套题熟练估算法！<br>6.改变硬算的做题习惯，重点学习处理数据的技巧！</p>
+<p>1、 出题标志<br>2、 公式<br>3、 注意事项<br>4、 总结典型例题3-5题以上</p>
+<h2 id="资料分析概述"><a href="#资料分析概述" class="headerlink" title="资料分析概述"></a>资料分析概述</h2><p>资料分析主要是测查报考者对各种形式的文字、图表等资料的<code>综合理解</code>与<code>分析加工</code>的能力，这部分内容通常由统计性的图表、数字及文字材料构成</p>
+<p>针对一段资料一般有1-5个问题，报考者需要根据资料所提供的信息进行分析、比较、推测、计算，从四个备选答案中选出符合题意的答案</p>
+<p>备选答案：<br>1、不看选项，不计算(数量+资料)<br>2、选项也是已知条件</p>
+<p>先看重点字，定题型；<br>再看主语；<br>带主语找数据，代入公式</p>
+<h3 id="资料分析解题步骤及阅读技巧练习"><a href="#资料分析解题步骤及阅读技巧练习" class="headerlink" title="资料分析解题步骤及阅读技巧练习"></a>资料分析解题步骤及阅读技巧练习</h3><p>做题顺序： 1 -&gt;-&gt; 2 -&gt;-&gt; 3<br>1、 材料 时间，主语(+关系：总分、并列)<br>2、 问题 时间，主语，重点字 =&gt; 出题标志<br>3、 选项 把算式或数据，抄到题目旁边 或 选项后面</p>
+<p>资料分析之“结构阅读法”</p>
+<p>通用重点阅读对象：材料标题、时间表述、单位表述、主语、注释<br>文字类  30秒<br>表格类  15秒<br>图形类  10秒</p>
+<p>参考时间：不超过1分钟<br>计算时，看单位，每一段最多3个主语；超过3段以上，每一段大概率一个主语</p>
+<p>第五题快速解题<br>1、先看加减法的选项<br>2、先看现期数据的选项<br>3、先看持续/趋势类的选项<br>4、先看绝对值(最值)的选项<br>5、先看两期比重变化(类)的选项<br>6、先看所有简单到一看就出来结果的选项<br>7、先看主语一致的选项(进出口问题)<br>8、跳过项数太多的选项，项数少的优先计算</p>
+<h2 id="统计术语"><a href="#统计术语" class="headerlink" title="统计术语"></a>统计术语</h2><h3 id="基期、现期"><a href="#基期、现期" class="headerlink" title="基期、现期"></a>基期、现期</h3><p>基期 基础时期、时间靠前<br>现期/估算将来时 现在时期、时间靠后</p>
+<p>1、2016年的销售额是1000万元，2017年销售额为1200万元</p>
+<p>基期 2016年1000<br>现期 2017年1200<br>增长了 1200 - 1000 = 200</p>
+<p>2、 2020年销售额是1000万元，增长率为20%，如果明年保持同样的增长速度，2021年的销售额将达到多少</p>
+<p>现期 = 基期 * (1 + 增长率) = 1000 * (1+20%) = 1000 * 1.2 = 1200</p>
+<p>同比：与历史同期相比较<br>注释：同比实际是指与去年的同一时期相比较<br>年份减一</p>
+<p>环比：现在统计周期和上一个统计周期相比较，包括周环比、月环比、年环比<br>注释：环比实际上是指“与紧紧相邻的统计周期相比较”<br>最小的时间周期减一</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>2018年</th>
+<th>2018年上半年</th>
+<th>2018年第一季度</th>
+<th>2018年11月</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>同比</td>
+<td>2017年</td>
+<td>2017年上半年</td>
+<td>2017年第一季度</td>
+<td>2017年11月</td>
+</tr>
+<tr>
+<td>环比</td>
+<td>2017年</td>
+<td>2017年下半年</td>
+<td>2017年第四季度</td>
+<td>2018年10月</td>
+</tr>
+</tbody></table>
+<h3 id="基期量、现期量、增长率"><a href="#基期量、现期量、增长率" class="headerlink" title="基期量、现期量、增长率"></a>基期量、现期量、增长率</h3><p>基期量 = 现期量 - 增长量 = 现期量 / (1 ± 增长率)</p>
+<p>现期量 = 基期量 + 增长量 = 基期量 * (1 + 增长率)</p>
+<p>口诀：增长为加，下降为减，今年作乘，去年作除</p>
+<p>基期量出题标志：基期时间 + 主语 (量的单位)</p>
+<p>现期量出题标志：如果明年保持同样的增速 </p>
+<h3 id="化除为乘法"><a href="#化除为乘法" class="headerlink" title="化除为乘法"></a>化除为乘法</h3><p>使用题型：计算基期量（范围：|a%| &lt;= 10%）</p>
+<p>a% = 1 / N  a% * N = 100</p>
+<p>例：2017年的产量是678.12吨，较2016年下降3.27%<br>问2016年的产量是多少？</p>
+<p>基期量 = 现 / (1 - 增长率)<br>      = 680 / (1 - 3%)<br>      = 680 * (1 + 3%)<br>      = 678 +20 = 698</p>
+<h3 id="3位有效数字直除-95-P156"><a href="#3位有效数字直除-95-P156" class="headerlink" title="3位有效数字直除(95%+) P156"></a>3位有效数字直除(95%+) P156</h3><p>前提：选项的位数相同</p>
+<p>1、 如果选项的首位不同，用三位数有效数字直除，求出首位即可<br>2、 如果选项的首位相同，第二位不同，用三位有效数字直除，求出第一位，看出第二位</p>
+<p>大原则：保留的位数，比选项区别出大小的位数多一位</p>
+<p>例：2016年6月份，城镇消费品零售额23082亿元，同比增长10.5%；乡村消费品零售额3775亿元，同比增长11.2%。1-6月份，<code>城镇消费品零售额</code>134249亿元，同比增长10.2%；乡村消费品零售额21889亿元，同比增长11.0%<br>按1-6月份的同比增速，2017年1-6月份<code>城镇消费品零售额</code>约为()</p>
+<p>A.25506 B.172220 C.147942 D.153679</p>
+<p>134249 / (1 + 10.2%)</p>
+<p>错位相加：一个数乘以 1+10% 或者 1+1% </p>
+<p>增速最快 =&gt; 增长率最大</p>
+<h3 id="增长率"><a href="#增长率" class="headerlink" title="增长率"></a>增长率</h3><p>增长率 = (增长量 / 基期量) * 100%<br>      = (现期量 - 基期量) / 基期量<br>      = 增长量 / (现期量 - 增长量)<br>      = (现期量 / 基期量) - 1</p>
+<p>出题标志<br>    1、 计算：增加了/增加/增速/增幅为/增加比例为…/增加了a%/N倍</p>
+<pre><code>2、 比较增长率，增速最快/增幅最大/增加比例最大/变化幅度最大，|a%|最大</code></pre>
+<h4 id="减小误差"><a href="#减小误差" class="headerlink" title="减小误差"></a>减小误差</h4><p>减少误差，分子分母同升同降，<br>尽量估算第三位及第三位以后，<br>估算量占数据的百分之多少</p>
+<h4 id="涨跌幅度"><a href="#涨跌幅度" class="headerlink" title="涨跌幅度"></a>涨跌幅度</h4><table>
+<thead>
+<tr>
+<th>增长率</th>
+<th>8%</th>
+<th>-5%</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>增幅(涨幅)</td>
+<td>8%</td>
+<td>-5%</td>
+</tr>
+<tr>
+<td>降幅(跌幅)</td>
+<td>0</td>
+<td>5%</td>
+</tr>
+<tr>
+<td>变化幅度(涨跌幅度、取绝对值)</td>
+<td>8%</td>
+<td>5%</td>
+</tr>
+</tbody></table>
+<h3 id="倍数常见的出题题型-或常用语第五题"><a href="#倍数常见的出题题型-或常用语第五题" class="headerlink" title="倍数常见的出题题型(或常用语第五题)"></a>倍数常见的出题题型(或常用语第五题)</h3><p>1、 是 N 倍 = 多 N-1 倍<br>2、 约是N倍，N倍上下都符合<br>3、 N倍多，必须满足大于 N 倍，小于 N+1 倍；<br>   两成多，20-30之间，20% &lt; a% &lt; 30%<br>4、 超过    N 倍，所有大于 N 倍的都符合<br>5、 接近    N 倍，略小于 N 倍<br>6、 扩大 N 倍 = 多 N 倍 = 增长了 N 倍 = 是 N+1 倍   </p>
+<p>比较大小 需要列算式，抄数据，只有估算的数据</p>
+<p>结论：连续时间区间中，基期量差别不大</p>
+<p>如果比较增长率，重点比较增长量</p>
+<h3 id="增长量"><a href="#增长量" class="headerlink" title="增长量"></a>增长量</h3><p>增长量 = 现期量 - 基期量<br>      = 基期量 * 增长率<br>      = (现期量 * 增长率) / (1 ± 增长率) </p>
+<p>环比量 = 本月 - 上月</p>
+<h4 id="公式一：增长量-现期量-a-1-±-a"><a href="#公式一：增长量-现期量-a-1-±-a" class="headerlink" title="公式一：增长量 = (现期量 * a%) / (1 ± a%)"></a>公式一：增长量 = (现期量 * a%) / (1 ± a%)</h4><p>比较增长量，只用分子来估算 </p>
+<h4 id="公式二：增长量-现-N-1-减少量-现-N-1"><a href="#公式二：增长量-现-N-1-减少量-现-N-1" class="headerlink" title="公式二：增长量 = 现 / (N + 1)  减少量 = 现 / (N - 1)"></a>公式二：增长量 = 现 / (N + 1)  减少量 = 现 / (N - 1)</h4><p>N一般为整数，也有小数</p>
+<p>注意：<br>    a.只有选项差距很小，且百化分不精准，才用公式一计算增长量(比例较小，很少会计算)<br>    b.如果比较大小时，选项很接近，用公式二来计算   1300 * 25%   1500 * 22%<br>    c.增长率远超100%时，用公式二来比大小            2000 3000%   2000/0.33 2000 * 300%</p>
+<p>出题标志<br>1、 比较：增量最大/增加最多/增加值最大    对总量增加影响最大(绝对值最大)<br>2、 计算：增加了/增加/增产/增产量/增加值为… + 量的单位</p>
+<p>影响最大、最小 =&gt; 取绝对值</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>绝对值</th>
+<th>比上年增长（%）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>工业利润总额</td>
+<td>1754.5</td>
+<td>41.9</td>
+</tr>
+<tr>
+<td>其中：国有及国有控股企业</td>
+<td>299.8</td>
+<td>35.7</td>
+</tr>
+<tr>
+<td>其中：集体企业</td>
+<td>42.4</td>
+<td>30.3</td>
+</tr>
+<tr>
+<td>股份制企业</td>
+<td>1012.2</td>
+<td>41.7</td>
+</tr>
+<tr>
+<td>外商及港澳台商投资企业</td>
+<td>330.3</td>
+<td>31.6</td>
+</tr>
+<tr>
+<td>其中：私营企业</td>
+<td>1127.1</td>
+<td>44.5</td>
+</tr>
+<tr>
+<td>其中：大中型企业</td>
+<td>914.6</td>
+<td>31.1</td>
+</tr>
+</tbody></table>
+<p>例：与2009年相比，河北省2010年工业利润总额绝对值<code>增加最大</code>的所有制类型企业是()<br>A.国有及国有控股企业 B.私营企业 C.股份制企业 D.大中型企业</p>
+<p>300 * 36%        1100 * 45%     1000 * 42%   900 * 31%</p>
+<h3 id="比重、百分数、百分点"><a href="#比重、百分数、百分点" class="headerlink" title="比重、百分数、百分点"></a>比重、百分数、百分点</h3><p>比重 = 部分 / 总量<br>总量 = 部分 / 比重<br>部分 = 总量 * 比重<br>利润率 = 利润 / 营业收入<br>资产负载率 = 负债额 / 资产总额<br>人口增长率 = 出生率 - 死亡率</p>
+<h4 id="比重：总体中某部分-占-总体的百分比"><a href="#比重：总体中某部分-占-总体的百分比" class="headerlink" title="比重：总体中某部分 占 总体的百分比"></a>比重：总体中某部分 占 总体的百分比</h4><p>部分 =&gt; 总体 包含关系 比谁减谁，比谁除以谁</p>
+<h4 id="百分数：量A占量B的百分比例：-A-B-100-常见考点：增长率"><a href="#百分数：量A占量B的百分比例：-A-B-100-常见考点：增长率" class="headerlink" title="百分数：量A占量B的百分比例： (A / B) * 100% 常见考点：增长率"></a>百分数：量A占量B的百分比例： (A / B) * 100% 常见考点：增长率</h4><h4 id="百分点：两个百分数做差的结果-a-b-c"><a href="#百分点：两个百分数做差的结果-a-b-c" class="headerlink" title="百分点：两个百分数做差的结果 a% - b% = c%"></a>百分点：两个百分数做差的结果 a% - b% = c%</h4><p>1、 量与量比较，只能用百分数</p>
+<p>例：甲占乙的X%           甲 / 乙<br>   甲比乙的X%           (甲 - 乙) / 乙<br>   乙比甲的X%           (乙 - 甲) / 甲  绝对值<br>   今年比去年增加/减少X%  (现期 - 基期) / 基期</p>
+<p>2、 率与率比较，一般用百分点<br>直接做差，后减前(时间上的后和前) 也就是比谁减谁</p>
+<p>在同一个总量中，比重可以代替量来计算</p>
+<p>比例赋值：把总量赋值为100</p>
+<p>例：在2007年我国文化、体育和娱乐劳动力需求人数 比 水利、环境和公共设施管理业 多()<br>A.75% B.133% C.176% D.198%</p>
+<p>(1.4 - 0.6) / 0.6 = 4 / 3</p>
+<h3 id="指数-P32"><a href="#指数-P32" class="headerlink" title="指数 P32"></a>指数 P32</h3><p>指数：用于衡量某种要素相对变化的指标里<br>常见的指数包括：纳斯达克指数、物价指数、上证指数、区域价格指数</p>
+<p>1、 环比指数(年环比)<br>a. 指数只反应增长率，不体现具体的量(各年的基期都是100)<br>b. 指数的基期量，通常都是100(好计算增长率)<br>c. 指数的单位是点，这个点与百分点没有关系</p>
+<p>环比指数  2004  2005   2006<br> 100    102.3  105.3  97.2</p>
+<pre><code>     +2.3  +5.3   -2.8 </code></pre>
+<p>2、 定基指数<br>各期指数都以某一固定量作为基期<br>定基指数的数字直接当做具体量来计算</p>
+<p>定基指数2000 2005 2006 2007 2008<br>200         500  600  800  1200</p>
+<p>(800 - 600) / 800</p>
+<h3 id="翻番-番为整数"><a href="#翻番-番为整数" class="headerlink" title="翻番(番为整数)"></a>翻番(番为整数)</h3><p>翻一番为原来的2倍；<br>翻两番为原来的4倍；<br>依此类推，翻 N 番为原来的 2^n 倍</p>
+<h3 id="顺差、逆差-P35、P46"><a href="#顺差、逆差-P35、P46" class="headerlink" title="顺差、逆差 P35、P46"></a>顺差、逆差 P35、P46</h3><p>顺差(出超) = 出口 - 进口<br>逆差(入超) = 进口 - 出口</p>
+<p>对外贸易顺差：在一个时期内，一个国际(或地区)的出口商品额 大于 进口商品额</p>
+<p>对外贸易逆差：在一个时期内，一个国际(或地区)的出口商品额 小于 进口商品额</p>
+<p>1、 顺差，出 &gt; 进；逆差，进 &gt; 出<br>2、 净进口额 = 进口额 - 出口额<br>    净出口额 = 出口额 - 进口额<br>3、 对外贸易总额 = 进出口总额 = 进口额 +  出口额<br>4、 对外贸易差额 = |进口 - 出口|<br>5、 进出口总额增长率一定是混合增长率<br>6、 主题转换：法 =&gt; 中 出口：顺差<br>            中 =&gt; 法 进口：逆差</p>
+<h3 id="五年计划-P65"><a href="#五年计划-P65" class="headerlink" title="五年计划 P65"></a>五年计划 P65</h3><p>十五时期 2001-2005<br>十一五时期 2006-2010<br>十二五时期 2011-2015  常考<br>十三五时期 2016-2020  今年结束之后</p>
+<p>1、 同意替换：十二五末期 = 十三五初期<br>2、 常识：十三五末期 约等于 十二五初期<br>3、 年均产量：<br>    十二五期间平均产量  (2011-2015总量) / 5<br>    2011-2018年均产量  (2012 – 2018总量) / 7</p>
+<p>4、 十二五期间年均平均(5年计划，问年均增长量，初期値前推1年)<br>    年均增量 = (末期-初期) / 年份差<br>    2010末-2015末  (2010末-2015末) / 5</p>
+<p>5、 年均增长率：常考3-5年 n在3-5之间<br>    初期量 * (1 + a%)^n = 现期量  </p>
+<pre><code>如果n远超过5年，用估算法;
+(1 + a%)^n 略大于 1 + (a% * n)
+
+带入法，优先带入居中，好计算的选项
+15% 20% 25% 30%
+根据大小范围来选择(带入的选项，计算差值范围，来选择)
+2.6  8.7  12.5  21.2   带入居中值[10]
+
+十二五计划年均增长率
+(1 + a%)^5 = 2015末 / 2010末
+
+2011-2015年均增长率
+(1 + a%)^4 = 2015末 / 2011末</code></pre>
+<p>普通<br>    2012-2018年均  (2018末 - 2012末) / 6<br>特殊<br>    江苏、重庆<br>    2012-2018 这七年年均增量 (2018末 - 2011末) / 7</p>
+<h3 id="三大产业-三次产业-P67"><a href="#三大产业-三次产业-P67" class="headerlink" title="三大产业(三次产业) P67"></a>三大产业(三次产业) P67</h3><p>第一产业(一产业)：农业(种植业、林业、牧业、副业、渔业)<br>第二产业(二产业)：工业和建筑业<br>第三产业(三产业)：除第一、二产业以外的其他各业，也就是服务业</p>
+<p>三大产业的产值 = 增加值(特殊情况)<br>GDP = 三大产业的产值</p>
+<p>增加值：<br>1、 可当做增长量来用<br>2、 也可当做主语</p>
+<h3 id="人口自然增长"><a href="#人口自然增长" class="headerlink" title="人口自然增长"></a>人口自然增长</h3><p>公式：<br>    人口自然增长量 = 出生人数 - 死亡人数<br>    人口自然增长率 = 人口出生率 - 人口死亡率<br>单位：<br>    人口数：千人，百万，十亿…(注意：不要默认单位)<br>    人口自然增长率：‰ (资料中通常是‰，问题里可能是‰，注意：单位可能不一样)</p>
+<p>计算时看单位    </p>
+<h3 id="GDP-国内生产总值"><a href="#GDP-国内生产总值" class="headerlink" title="GDP(国内生产总值)"></a>GDP(国内生产总值)</h3><p>指一个国家(地区)所有常住单位在核算期内生产活动的最终结果</p>
+<p>一、二、三产业的增加值之和构成了国内生产总值</p>
+<h3 id="GNP-国民生产总值"><a href="#GNP-国民生产总值" class="headerlink" title="GNP(国民生产总值)"></a>GNP(国民生产总值)</h3><p>指一个国家（或地区）所有国民在一定时期内生产的最终产品和服务价值的总和</p>
+<h3 id="CPI-居民消费价格指数"><a href="#CPI-居民消费价格指数" class="headerlink" title="CPI(居民消费价格指数)"></a>CPI(居民消费价格指数)</h3><p>反映居民家庭购买消费品及服务价格水平变动情况的相对数（指数的基期数值定为一百）</p>
+<p>它是进行经济分析和决策、价格总水平监测和调控及国民经济核算的重要指标</p>
+<p>其按年度计算的居民消费价格指数变动率通常被用来作为反映通货膨胀或紧缩程度的指标</p>
+<h3 id="基尼系数"><a href="#基尼系数" class="headerlink" title="基尼系数"></a>基尼系数</h3><p>定量测定收入分配差异程度</p>
+<p>国际上通用的，用以衡量一个国家或地区人民收入差距的常用指标</p>
+<p>介于0–1之间，0分配趋向于平等；<br>越大，代表收入差距越大；</p>
+<h3 id="恩格尔系数"><a href="#恩格尔系数" class="headerlink" title="恩格尔系数"></a>恩格尔系数</h3><p>衡量一个国家或地区人民生活水平的常用指标，比例越低，代表生活水平越高</p>
+<p>恩格尔系数是食品支出总额占个人消费支出总额的比重</p>
+<h3 id="工业企业类型"><a href="#工业企业类型" class="headerlink" title="工业企业类型"></a>工业企业类型</h3><p>按轻、重工业分：轻工业企业、重工业企业</p>
+<p>按经济类型分：国有经济、集体经济、外商及港澳台投资经济、私营经济和其他经济</p>
+<p>按全社会工业口径分：规模以上工业、规模以下工业</p>
+<p>按规模以上工业：也即按全部国有及年产品销售收入500万元以上的非国有工业企业</p>
+<h3 id="专利"><a href="#专利" class="headerlink" title="专利"></a>专利</h3><p>发明专利、实用新型专利、外观设计专利</p>
+<h3 id="研究与试验发展（R＆D）经费"><a href="#研究与试验发展（R＆D）经费" class="headerlink" title="研究与试验发展（R＆D）经费"></a>研究与试验发展（R＆D）经费</h3><p>是指在科学技术领域，为增加知识总量、以及运用这远知识去创造新的应用而进行的科学研究与试验发展等系统性、创造性活动，包括基础研究、应用研究、试验发展三类活动</p>
+<h2 id="重点字-高频字–出题标志"><a href="#重点字-高频字–出题标志" class="headerlink" title="重点字/高频字–出题标志"></a>重点字/高频字–出题标志</h2><p>占 前除后<br>中 后除前  在“第五题”中，出现比重，先判定包含关系，前四题不需要<br>为 等同于“是”，约为…，为a倍，是a倍<br>每<br>1.平均数，”每“字后面做分母，再往后的主语做分子(后除前)<br>2.出现一个“每”字除1次</p>
+<p>每个人平均多少份 = 份数 / 人数</p>
+<p>每百万销售额，平均费用 = 费用 / (销售额 / 百万)</p>
+<p>比 比谁减谁，比谁除以谁<br>多/增长了/增长 看单位，增长相关的知识点，增长量<br>最多/最少/均/都 绝对性表述，取值类选项   做法：找反例<br>持续/连续/逐年/趋势 持续、连续、逐年都必须连续</p>
+<h2 id="增长率、比重相关速算法"><a href="#增长率、比重相关速算法" class="headerlink" title="增长率、比重相关速算法"></a>增长率、比重相关速算法</h2><p>一、隔年增长率(间隔增长、隔年、隔月) P30</p>
+<p>第三年相对于第一年的增长率：R1 + R2 + R1 * R2</p>
+<p>隔年倍数公式<br>第三年是第一年的倍数：R1 + R2 + R1 * R2 + 1</p>
+<p>隔年增长率 + 1 = 隔年倍数</p>
+<p>如果R1、R2均小于10%，|R1 * R2|远小于1%，可以忽略不计</p>
+<p>常考题型<br>1.计算隔年增长率/隔年倍数<br>2.计算隔年基期量 = 现期量 / (1 + a%)  a%为隔年增长率<br>3.计算隔年增长量 = 现期量 / (N + 1) a% = 1 / N</p>
+<p>隔月增长率，隔多月同样可以计算，不固定</p>
+<p>二、混合增长率(混合类…，比重，平均数)</p>
+<p>出题标志：量A + 量B = 量C；a% + b% = c%<br>口诀：<br>1.居中不正中，偏向量(基期量)大的<br>2.画图</p>
+<p>增长率 = 增长量 / 基期量</p>
+<p>比重 = 部分 / 总量</p>
+<p>平均数 = 总数 / 总项数 </p>
+<p>浓度 = 溶质 / 溶液</p>
+<p>如果增长率差距不大，则可以使用现期量代替基期量计算</p>
+<p>常考题型：<br>名词类<br>1.房地产 = 房产 + 地产<br>2.进出口 = 进口 + 出口<br>3.全国 = 城市 + 农村<br>4.总人数 = 男 + 女<br>5.(夏 + 秋) = 夏粮 + 秋粮<br>6.总量 = 已知 + 其他<br>7.水产品 = 水产品捕捞 + 水产品养殖<br>8.水产品养殖 = 海水养殖 + 淡水养殖<br>8.水产品捕捞 = 海水捕捞 + 淡水捕捞</p>
+<p>时间类<br>1.全年 = 1-3季度 + 4季度<br>2.上半年 = 1季度 + 2季度<br>3.全年 = 1-11月 + 12月<br>4.上半年 = 1-5月 + 6月</p>
+<p>80%以上的考点为混合增长率<br>1.不同种类，<br>2.同一种元素，不同的时间区间</p>
+<p>三、平均增长率</p>
+<p>出题标志：平均/每 + 增长了x%</p>
+<p>分子A的增速为a，分母B的增速为b，带入平均数增长率公式 = (a-b) / (1+b)</p>
+<p>出题形式：<br>1.计算平均数增长率，用公式<br>2.问平均数升降，参照比重变化 画箭头(比较a和b的大小)</p>
+<p>平均数增长率 = 现期 - 平均数的基期量 / 平均数的基期量</p>
+<p>常考：平均单价、平均产量</p>
+<p>平均数增长量(小众考点)<br>(A / B) - {[A / (1+a)] / [B / (1+b)]}<br>= (A / B) * [(a-b) / (1+a)]</p>
+<p>四、比重的四种常考题型<br>1.现期比重(默认现期) = 部分 / 整体<br>出题标志：“占” “中” “比例” “份额” “举足轻重的地位” “比重” “主导地位” “占比50%以上”…</p>
+<p>注意：在“第五题”中出现比重，优先判断包含关系</p>
+<p>2.现期比重变化<br>出题标志：“部分” 占 “整体” 的比重高于/低于 上年同期水平<br>“占…上升/下降…”<br>计算方法：现期比重 - 基期比重 </p>
+<p>判断现期比重变化的步骤<br>a.列式子 分子、分母的主语<br>b.抄数据 a、b 只抄增长率<br>c.画箭头 分子越大，上升；分母越大，下降；</p>
+<p>3.现期比重变化幅度<br>出题标志：“部分” 占 “整体” 的比重比上年 上升/下降__个百分点<br>“占…升降()百分点”<br>判断现期比重变化的步骤<br>1.列式子<br>2.抄数据<br>3.画箭头<br>4.选小数</p>
+<p>验证是否唯一：是否小于 |a-b| 是选择；否 用公式计算(估算)<br>箭头方向，在选项中最小的数字，适用90%</p>
+<p>(A/B) * [(a-b)/(1+a))] </p>
+<p>4.基期比重<br>出题标志：“基期时间…占…”</p>
+<p>估算基期比重的步骤<br>a.计算A/B<br>b.抄数据，画箭头</p>
+<p>计算现期和升降，估算基期 适用80%题型，然后判断是否唯一</p>
+<p>(A/B) * [(1+b)/(1+a))] </p>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><h3 id="P27-38-39-入门三个练习题，阅读材料"><a href="#P27-38-39-入门三个练习题，阅读材料" class="headerlink" title="P27 38 39 入门三个练习题，阅读材料"></a>P27 38 39 入门三个练习题，阅读材料</h3><p>增幅 = 增长率<br>提高，多减少加<br>同比，上月相比，环比<br>上涨比例最高 = 增长率最大<br>2% 10%很少会选到</p>
+<p>增长率最大、增速最快</p>
+<p>第五题快速解题 P28、P33</p>
+<p>截位法：用于缩小数据<br>在同一个算式中，所有的数据同时截到十位、百位，常用于求和、作除</p>
+<h3 id="P30-计算、截位法、分数比大小"><a href="#P30-计算、截位法、分数比大小" class="headerlink" title="P30 计算、截位法、分数比大小"></a>P30 计算、截位法、分数比大小</h3><p>做题方法的三合一<br>1、判断选项差距<br>2、保留三位有效数字<br>3、截位法</p>
+<p>分数比大小<br>1、通分法：分子分母其中一项化相同<br>2、参考值法：靠近一个特殊值，当做参照物，比如1/2，1/3<br>3、直除看首位<br>4、比较分子，分母的增长率</p>
+<h3 id="P32-指数贡献率、增长率"><a href="#P32-指数贡献率、增长率" class="headerlink" title="P32 指数贡献率、增长率"></a>P32 指数贡献率、增长率</h3><p>指数 一般情况，不会体现具体量<br>增长贡献率 = 部分增量 / 整体增量<br>拉动增长率 = 部分增量 / 整体基期量</p>
+<h3 id="P41-平均月增长"><a href="#P41-平均月增长" class="headerlink" title="P41 平均月增长"></a>P41 平均月增长</h3><p>年增速根号12 = 月增速<br>打包求和：把位数可以凑成整十，整百的先计算<br>量与量的比较，只能是%，a% - b% = c%</p>
+<h3 id="P43-人口相关问题"><a href="#P43-人口相关问题" class="headerlink" title="P43 人口相关问题"></a>P43 人口相关问题</h3><p>人口 / 面积 = 人口密度<br>增长数量 = 出生 - 死亡<br>一般讨论资料当中的数据<br>是几倍 直接除；<br>多几倍 先减再除；</p>
+<h3 id="P45-混合增长率、增长量"><a href="#P45-混合增长率、增长量" class="headerlink" title="P45 混合增长率、增长量"></a>P45 混合增长率、增长量</h3><p>比较大小，用于估算(2位居多)；<br>近10年，很少会用到3位数比较</p>
+<p>|a%| &lt;= 5%，现期 * a% 约等于 增量</p>
+<p>选项不可主观判断</p>
+<p>混合增长率 量A + 量B = 量C；<br>则a% + b% = c%;<br>居中不正中，偏向量(基期量)大的一方</p>
+<h3 id="P46-进出口相关，主语非中国"><a href="#P46-进出口相关，主语非中国" class="headerlink" title="P46 进出口相关，主语非中国"></a>P46 进出口相关，主语非中国</h3><p>出口、进口互相转换<br>进出口…增长了… 混合增长率</p>
+<h3 id="P47-GDP、三大产业"><a href="#P47-GDP、三大产业" class="headerlink" title="P47 GDP、三大产业"></a>P47 GDP、三大产业</h3><p>人均 = GDP / 人口<br>将 选项中的将来时，一般都是错的，除非给出估算的量和率，例如：明年保持同样的增速</p>
+<h3 id="P55-年均增长率、比重"><a href="#P55-年均增长率、比重" class="headerlink" title="P55 年均增长率、比重"></a>P55 年均增长率、比重</h3><p>年均增长率 = 带入原则，带入居中项，好计算，然后再根据结果进行微调</p>
+<h3 id="P61"><a href="#P61" class="headerlink" title="P61"></a>P61</h3><p>现期计算基期量时，多减少加(上涨，下跌，回落)<br>比上年同期下降a%(率的变化)<br>率 增长率为a倍/增长了a%</p>
+<h3 id="P156"><a href="#P156" class="headerlink" title="P156"></a>P156</h3><p>1、观察选项差距，只看差距较小的数据<br>2、差距很小<br>3、如果选项在第三位区别出大小，则保留4位有效数字；<br>一般情况下，保留3位有效数字，可以适用90%</p>
+<h3 id="P33-排名、平均相关、年份计算、增长率、年均增量"><a href="#P33-排名、平均相关、年份计算、增长率、年均增量" class="headerlink" title="P33 排名、平均相关、年份计算、增长率、年均增量"></a>P33 排名、平均相关、年份计算、增长率、年均增量</h3><p>选项差距大，成倍递增，或者首位不同</p>
+<p>跳过项数多，优先计算项数少的</p>
+<p>95-07 13个年份，等于12个整年，年份差等于12年；<br>19年1月-20年1月 13个月，过了12个月；</p>
+<p>n个自然年 = 过了 n-1 年；<br>n个自然月 = 过了 n-1 个月；</p>
+<h3 id="P34-计算、截位法、割补法、化除为乘"><a href="#P34-计算、截位法、割补法、化除为乘" class="headerlink" title="P34 计算、截位法、割补法、化除为乘"></a>P34 计算、截位法、割补法、化除为乘</h3><p>选项差距较小</p>
+<p>割补法：把一个数的一部分，补给另一个数，用于较小误差</p>
+<p>截位法：用于缩小数据，常用语求和、做除</p>
+<h3 id="P29-饼图、多个数求和、打包求和"><a href="#P29-饼图、多个数求和、打包求和" class="headerlink" title="P29 饼图、多个数求和、打包求和"></a>P29 饼图、多个数求和、打包求和</h3><p>饼图 需计算总量</p>
+<p>判断排名第一，必须同时满足两个条件<br>1、在已知中最高<br>2、大于饼图中“其他”的总和</p>
+<h3 id="P31-基础练习"><a href="#P31-基础练习" class="headerlink" title="P31 基础练习"></a>P31 基础练习</h3><p>在资料分析中，统一不使用尾数法，很多计算是约为…/约是…</p>
+<p>比谁减谁，比谁除以谁;</p>
+<p>甲比乙多 (甲 - 乙) / 乙 </p>
+<h3 id="P35-混合增长率、进出口、割补法-图示"><a href="#P35-混合增长率、进出口、割补法-图示" class="headerlink" title="P35 混合增长率、进出口、割补法(图示)"></a>P35 混合增长率、进出口、割补法(图示)</h3><p>进出口总额…增长了…  混合增长率</p>
+<h3 id="P37-饼图计算、打包求和、混合增长率"><a href="#P37-饼图计算、打包求和、混合增长率" class="headerlink" title="P37 饼图计算、打包求和、混合增长率"></a>P37 饼图计算、打包求和、混合增长率</h3><h3 id="P48-普通题、基期量、平均数、打包求和、不严谨2题-问什么，选什么"><a href="#P48-普通题、基期量、平均数、打包求和、不严谨2题-问什么，选什么" class="headerlink" title="P48 普通题、基期量、平均数、打包求和、不严谨2题(问什么，选什么)"></a>P48 普通题、基期量、平均数、打包求和、不严谨2题(问什么，选什么)</h3><h3 id="P76、P77-15国考，简单题，适合刚开始作业，没有大数据计算"><a href="#P76、P77-15国考，简单题，适合刚开始作业，没有大数据计算" class="headerlink" title="P76、P77 15国考，简单题，适合刚开始作业，没有大数据计算"></a>P76、P77 15国考，简单题，适合刚开始作业，没有大数据计算</h3><p>农村城镇收入<br>同比、环比、增长率、增长量、割补法</p>
+<p>P77 主营收入 现期、基期、比重、增长率</p>
+<p>P78 软件收入 比大小、估算、平均数、求和</p>
+<p>P80 群众文化活动 增长量、“每”、估算、直除</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2020/%E8%B5%84%E6%96%99%E5%88%86%E6%9E%90/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E5%85%AC%E8%80%83/">
+              #公考
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2020/%E8%A1%8C%E6%B5%8B/" target="_self">行测-数量关系</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2020/%E7%BB%99%E5%9C%A82020%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E/" target="_self">给在2020年的最后</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>DIV+CSS规则整理以及注意问题 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="前端,HTML," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>DIV+CSS规则整理以及注意问题</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2014-10-25
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E5%89%8D%E7%AB%AF/">
+            前端
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="DIV+CSS规则整理以及注意问题"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h3 id="善用css缩写规则"><a href="#善用css缩写规则" class="headerlink" title="善用css缩写规则"></a>善用css缩写规则</h3><p>注意上、右、下、左的书写顺序</p>
+<h4 id="1-关于边距（4边）："><a href="#1-关于边距（4边）：" class="headerlink" title="1. 关于边距（4边）："></a>1. 关于边距（4边）：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1px 2px 3px 4px (上、右、下、左)</span><br><span class="line">1px 2px 3px （省略的左等于右）</span><br><span class="line">1px 2px (省略的上等于下)</span><br><span class="line">1px （四边都相同）</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-简化所有："><a href="#2-简化所有：" class="headerlink" title="2. 简化所有："></a>2. 简化所有：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">body&#123;margin:0&#125;------------表示网页内所有元素的margin为0</span><br><span class="line">#menu&#123; margin:0&#125;------------表示menu盒子下的所有元素的margin为0</span><br></pre></td></tr></table></figure>
+
+<h3 id="伪类和选择符的配合使用"><a href="#伪类和选择符的配合使用" class="headerlink" title="伪类和选择符的配合使用"></a>伪类和选择符的配合使用</h3><p>将伪类和类组合起来用，就可以在同一个页面中做几组不同的链接效果了，例如，我们定义一组链接为红色，访问后为蓝色；另一组为绿色，访问后为黄色：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a.red:link &#123;color: #FF0000&#125;</span><br><span class="line">a.red:visited &#123;color: #0000FF&#125;</span><br><span class="line">a.blue:link &#123;color: #00FF00&#125;</span><br><span class="line">a.blue:visited &#123;color: #FF00FF&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="书写正确的链接样式"><a href="#书写正确的链接样式" class="headerlink" title="书写正确的链接样式"></a>书写正确的链接样式</h3><p>当用css定义链接的各种状态时，要注意书写的顺序即：:link :visited :hover :active利用首字母：L V H A，你可以通过记忆LoVe,Hate,两个单词来记住其顺序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">:link --------链接的颜色</span><br><span class="line">:visited -----鼠标点击后的颜色</span><br><span class="line">:hover -------鼠标放上去未点的颜色（悬停）</span><br><span class="line">:active-------鼠标点击瞬间的颜色</span><br></pre></td></tr></table></figure>
+
+<h3 id="hover的灵活运用"><a href="#hover的灵活运用" class="headerlink" title="hover的灵活运用"></a>hover的灵活运用</h3><p>IE6不支持除a标签以外的:hover属性，我们了解:hover属性是鼠标悬停效果。在IE7和FF中，对几乎任意元素都可以设置:hover属性效果。这对我们做不同的访问效果很好。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p &#123; width : 360px; height : 80px; padding : 20px; margin : 50px auto 0 auto;border : 1px solid #ccc; line-height : 25px; background : #fff;&#125;</span><br><span class="line">p:hover &#123; border : 1px solid #000;background : #ddd;&#125;----------------此效果针对IE7和FF</span><br><span class="line">p a &#123;color : #00f;text-decoration : none;font-size : 13px;&#125;</span><br><span class="line">p a:hover &#123;color : #036;text-decoration : underline;&#125;-----------------此效果针对IE6</span><br></pre></td></tr></table></figure>
+
+<h3 id="定义A标签要注意的小问题"><a href="#定义A标签要注意的小问题" class="headerlink" title="定义A标签要注意的小问题"></a>定义A标签要注意的小问题</h3><p>当我们定义a{color:red;}时，它代表了A的四种状态的样式，如果此时要定义一个鼠标放上的状态只要定义a:hover就可以了，其它三种状态就是A中所定义的样式。只定义了一个a:link时，一定要记得把其它三种状态定义出来！</p>
+<h3 id="区别relative和absolute"><a href="#区别relative和absolute" class="headerlink" title="区别relative和absolute"></a>区别relative和absolute</h3><h4 id="position-absolute"><a href="#position-absolute" class="headerlink" title="position:absolute;"></a>position:absolute;</h4><p>绝对定位，他是参照浏览器的左上角，配合TOP、RIGHT、BOTTOM、LEFT(下面简称TRBL)进行定位，在没有设定TRBL，默认依据父级的做标原始点为原始点。如果设定TRBL并且父级没有设定position属性，那么当前的absolute则以浏览器左上角为原始点进行定位，位置将由TRBL决定。</p>
+<h4 id="position-relative"><a href="#position-relative" class="headerlink" title="position:relative;"></a>position:relative;</h4><p>绝对相对定位，他是参照父级的原始点为原始点，无父级则以BODY的原始点为原始点，配合TRBL进行定位，当父级内有padding等CSS属性时，当前级的原始点则参照父级内容区的原始点进行定位。</p>
+<h3 id="区别块级元素block和内联元素inline"><a href="#区别块级元素block和内联元素inline" class="headerlink" title="区别块级元素block和内联元素inline"></a>区别块级元素block和内联元素inline</h3><p>块级—可定义宽高，另起独占一行 （如：div ul）<br>内联—不可定义宽高，如文本元素 （如a span）</p>
+<h3 id="区别display和visibility"><a href="#区别display和visibility" class="headerlink" title="区别display和visibility"></a>区别display和visibility</h3><p>display:none和visibility:hidden都可以隐藏一个元素,但visibility:hidden只是隐藏了元素的内容，但其使用的位置空间仍然被保留。而display:none则相当把元素从页面中去除，其占用位置也将被删除。</p>
+<h3 id="背景background的一些语法"><a href="#背景background的一些语法" class="headerlink" title="背景background的一些语法"></a>背景background的一些语法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">background-image:url(背景图案.jpg,gif,bmp);</span><br><span class="line">background-color:#FFFFFF; （背景颜色）</span><br><span class="line">background-color : transparent; &lt;--设定背景为透明色 –&gt;</span><br><span class="line">background-repeat 改变背景图片的重复并排的设定</span><br></pre></td></tr></table></figure>
+
+<p>说明<br>repeat 背景图片并排<br>repeat-x 背景图片以X方向 并排<br>repeat-y 背景图片以Y方向 并排<br>no-repeat 背景图片不 以并排的方式处理<br>background-attachment是否固定图片位置</p>
+<p>说明<br>scroll 拉动卷轴时，背景图片会跟着移动（缺省值）<br>fixed 拉动卷轴时，背景图片不会跟着移动<br>以长度定位background-position: x y<br>使用百分比定位 background-position: x% y%</p>
+<p>说明<br>x% 往右移<br>y% 往下移<br>backgroud-position: 0% 0%; 左边上方<br>backgroud-position: 0% 50%; 左边中间<br>backgroud-position: 50% 0%; 中间上方<br>backgroud-position: 50% 50%; 正中间<br>backgroud-position: 100% 0%; 右边上方<br>backgroud-position: 0% 100%; 左边下方<br>backgroud-position: 100% 50%; 右边中间<br>backgroud-position: 50% 100%; 中间下方<br>backgroud-position: 100% 100%; 右边下方</p>
+<h3 id="如何清除图片下方出现几像素的空白间隙？"><a href="#如何清除图片下方出现几像素的空白间隙？" class="headerlink" title="如何清除图片下方出现几像素的空白间隙？"></a>如何清除图片下方出现几像素的空白间隙？</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">方法1： img&#123;display:block;&#125;  </span><br><span class="line">方法2： img&#123;vertical-align:top;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何让文本垂直对齐文本输入框？"><a href="#如何让文本垂直对齐文本输入框？" class="headerlink" title="如何让文本垂直对齐文本输入框？"></a>如何让文本垂直对齐文本输入框？</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input&#123;vertical-align:middle;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何让单行文本在容器内垂直居中？"><a href="#如何让单行文本在容器内垂直居中？" class="headerlink" title="如何让单行文本在容器内垂直居中？"></a>如何让单行文本在容器内垂直居中？</h3><p>只需设置文本的行高等于容器的高度即可 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#test&#123;height:25px;line-height:25px;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何让超链接访问后和访问前的颜色不同且访问后仍保留hover和active效果？"><a href="#如何让超链接访问后和访问前的颜色不同且访问后仍保留hover和active效果？" class="headerlink" title="如何让超链接访问后和访问前的颜色不同且访问后仍保留hover和active效果？"></a>如何让超链接访问后和访问前的颜色不同且访问后仍保留hover和active效果？</h3><p>按L-V-H-A的顺序设置超链接样式即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">a:link&#123;color:#03c;&#125;</span><br><span class="line">a:visited&#123;color:#666;&#125;</span><br><span class="line">a:hover&#123;color:#f30;&#125;</span><br><span class="line">a:active&#123;color:#c30;&#125;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何使文本溢出边界不换行强制在一行内显示？"><a href="#如何使文本溢出边界不换行强制在一行内显示？" class="headerlink" title="如何使文本溢出边界不换行强制在一行内显示？"></a>如何使文本溢出边界不换行强制在一行内显示？</h3><p>设置容器的宽度和white-space为nowrap即可，其效果类似<code>&lt;/br&gt;</code>标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#test&#123;width:150px;white-space:nowrap;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何使文本溢出边界显示为省略号？"><a href="#如何使文本溢出边界显示为省略号？" class="headerlink" title="如何使文本溢出边界显示为省略号？"></a>如何使文本溢出边界显示为省略号？</h3><p>首先需设置将文本强制在一行内显示，然后将溢出的文本通过overflow:hidden截断，并以text-overflow:ellipsis方式将截断的文本显示为省略号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#test&#123;width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何使连续的长字符串自动换行？"><a href="#如何使连续的长字符串自动换行？" class="headerlink" title="如何使连续的长字符串自动换行？"></a>如何使连续的长字符串自动换行？</h3><p>word-wrap的break-word值允许单词内换行 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#test&#123;width:150px;word-wrap:break-word;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何清除浮动？"><a href="#如何清除浮动？" class="headerlink" title="如何清除浮动？"></a>如何清除浮动？</h3><p>方法1： test为浮动元素的下一个兄弟元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#test&#123;clear:both;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法2： #test为浮动元素的父元素。zoom:1也可以替换为固定的width或height</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#test&#123;display:block;zoom:1;overflow:hidden;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法3： #test为浮动元素的父元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">#test&#123;zoom:1;&#125;</span><br><span class="line">#test:after&#123;display:block;clear:both;visibility:hidden;height:0;content:&#39;&#39;;&#125;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何让未知尺寸的图片在已知宽高的容器内水平垂直居中？"><a href="#如何让未知尺寸的图片在已知宽高的容器内水平垂直居中？" class="headerlink" title="如何让未知尺寸的图片在已知宽高的容器内水平垂直居中？"></a>如何让未知尺寸的图片在已知宽高的容器内水平垂直居中？</h3><p>#test是img的祖父节点，p是img的父节点。Know More：未知尺寸的图片如何水平垂直居中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">#test&#123;display:table-cell;*display:block;*position:relative;width:200px;height:200px;text-align:center;vertical-align:middle;&#125;</span><br><span class="line">#test p&#123;*position:absolute;*top:50%;*left:50%;margin:0;&#125;</span><br><span class="line">#test p img&#123;*position:relative;*top:-50%;*left:-50%;vertical-align:middle;&#125;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何设置span的宽度和高度（即如何设置内联元素的宽高）？"><a href="#如何设置span的宽度和高度（即如何设置内联元素的宽高）？" class="headerlink" title="如何设置span的宽度和高度（即如何设置内联元素的宽高）？"></a>如何设置span的宽度和高度（即如何设置内联元素的宽高）？</h3><p>要使内联元素可以设置宽高，只需将其定义为块级或者内联块级元素即可。所以方法非常多样，既可以设置display属性，也可以设置float属性，或者position属性等等 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">span&#123;display:block;width:200px;height:100px;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何去掉超链接的虚线框？"><a href="#如何去掉超链接的虚线框？" class="headerlink" title="如何去掉超链接的虚线框？"></a>如何去掉超链接的虚线框？</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&#123;outline:none;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何容器透明，内容不透明？"><a href="#如何容器透明，内容不透明？" class="headerlink" title="如何容器透明，内容不透明？"></a>如何容器透明，内容不透明？</h3><p>高级浏览器直接使用rgba颜色值实现；IE浏览器在定义容器透明的同时，让子节点相对定位，也可达到效果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.outer&#123;width:200px;height:200px;background:rgba(0,0,0,.2);background:#000\9;filter:alpha(opacity&#x3D;20)\9;&#125;</span><br><span class="line">.outer .inner&#123;position:relative\9;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何做1像素细边框的table？"><a href="#如何做1像素细边框的table？" class="headerlink" title="如何做1像素细边框的table？"></a>如何做1像素细边框的table？</h3><p>方法1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#test&#123;border-collapse:collapse;border:1px solid #ddd;&#125;</span><br><span class="line">#test th,#test td&#123;border:1px solid #ddd;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法2：IE7及更早浏览器不支持border-spacing属性，但是可以通过table的标签属性cellspacing来替代</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#test&#123;border-spacing:1px;background:#ddd;&#125;</span><br><span class="line">#test tr&#123;background:#fff;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何让层在falsh上显示？"><a href="#如何让层在falsh上显示？" class="headerlink" title="如何让层在falsh上显示？"></a>如何让层在falsh上显示？</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;param name&#x3D;&quot;wmode&quot; value&#x3D;&quot;transparent&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何使用标准的方法在页面上插入flash？"><a href="#如何使用标准的方法在页面上插入flash？" class="headerlink" title="如何使用标准的方法在页面上插入flash？"></a>如何使用标准的方法在页面上插入flash？</h3><p>至于flash的宽高可以在css里设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;object id&#x3D;&quot;flash-show&quot; type&#x3D;&quot;application&#x2F;x-shockwave-flash&quot; data&#x3D;&quot;*.swf&quot;&gt;</span><br><span class="line">&lt;param name&#x3D;&quot;movie&quot; value&#x3D;&quot;*.swf&quot; &#x2F;&gt;</span><br><span class="line">&lt;param name&#x3D;&quot;wmode&quot; value&#x3D;&quot;transparent&quot; &#x2F;&gt;</span><br><span class="line">&lt;img src&#x3D;&quot;*.jpg&quot; alt&#x3D;&quot;用于不支持flash或屏蔽flash时显示&quot; &#x2F;&gt;</span><br><span class="line">&lt;&#x2F;object&gt;</span><br></pre></td></tr></table></figure>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2014/DIV+CSS%E8%A7%84%E5%88%99%E6%95%B4%E7%90%86%E4%BB%A5%E5%8F%8A%E6%B3%A8%E6%84%8F%E9%97%AE%E9%A2%98/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/HTML/">
+              #HTML
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2014/%E7%BD%91%E9%A1%B5%E5%B8%83%E5%B1%80%E7%B1%BB%E5%9E%8B/" target="_self">网页布局类型</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2014/JS%E5%88%A4%E6%96%AD%E5%8F%AA%E8%83%BD%E8%BE%93%E5%85%A5%E6%95%B0%E5%AD%97%E3%80%81%E5%AD%97%E6%AF%8D%E7%AD%89%E9%AA%8C%E8%AF%81%E6%80%BB%E7%BB%93/" target="_self">JS判断只能输入数字、字母等验证总结</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>
