@@ -239,185 +239,69 @@
   })
 </script>
 
-      <div class="container">
-  <div class="timeline">
-  <span class="archive-move-on"></span>
-  <span class="archive-page-counter">
-    
-      <span>当前位于 1/3 页</span>
-    
-  </span>
-  
-  
-    <div class="collection-title">
-      <h2>
-        
-          <span>分类 : LINUX</span>
-        
-      </h2>
-    </div>
-  
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2020/Shell%E8%84%9A%E6%9C%AC/">
-          <span>Shell脚本</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        07-20
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2020/Iptables%E9%98%B2%E7%81%AB%E5%A2%99/">
-          <span>Linux-iptables介绍</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        06-30
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2020/crontab/">
-          <span>crontab</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        04-20
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2020/Git%E5%86%B2%E7%AA%81/">
-          <span>GIT冲突</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        04-19
-      </div>
-    </header>
-  </article>
-  
-  
-    <div class="collection-title">
-      <h2>
-        <span>2019</span>
-      </h2>
-    </div>
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2019/%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%8F%82%E6%95%B0/">
-          <span>编译安装参数</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        12-03
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2019/LINUX%E5%91%BD%E4%BB%A4/">
-          <span>Linux命令</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        07-18
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2019/Vim%E6%89%93%E5%BC%80%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">
-          <span>VIM打开多个文件操作</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        04-14
-      </div>
-    </header>
-  </article>
-  
-  
-    <div class="collection-title">
-      <h2>
-        <span>2018</span>
-      </h2>
-    </div>
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2018/LINUX%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E5%91%BD%E4%BB%A4/">
-          <span>Linux查看文件内容的命令</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        07-03
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2018/Nginx/">
-          <span>NGINX笔记</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        05-14
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2018/%E5%AE%89%E8%A3%85RabbitMQ/">
-          <span>安装RabbitMQ</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        03-05
-      </div>
-    </header>
-  </article>
-  
-</div>
-  <nav class="page-navigation">
-    
-    
-      <a href="/categories/LINUX/page/2/">下一页</a>
-    
-  </nav>
-</div>
+      // category-index.css
+%item {
+  display: inline-block;
+  margin: 0.4rem 1.4rem;
+  font-size: 1.6rem;
+  font-family: "Monda", "PingFang SC", "Microsoft YaHei", sans-serif;
+
+  a {
+    display: inline-block;
+    position: relative;
+    color: #555;
+    text-decoration: none;
+    padding: 0 0.3rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background: #f03838;
+      transition: all 0.3s ease;
+    }
+
+    &:hover {
+      color: #f03838;
+    }
+
+    &:hover::before {
+      width: 100%;
+      left: 0;
+      right: auto;
+    }
+  }
+
+  .category-list-count {
+    color: #bbb;
+    font-style: normal;
+    padding: 0 0.2rem;
+
+    &::before {
+      content: "[";
+    }
+    &::after {
+      content: "]";
+    }
+  }
+}
+
+.container.category-index {
+  line-height: 3;
+  h3 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 0 0 2rem;
+  }
+
+  .category-list-item {
+    @extend %item;
+  }
+}
 
       <footer>
   <p class="site-info">

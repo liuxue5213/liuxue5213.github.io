@@ -239,173 +239,69 @@
   })
 </script>
 
-      <div class="container">
-  <div class="timeline">
-  <span class="archive-move-on"></span>
-  <span class="archive-page-counter">
-    
-      <span>当前位于 1/5 页</span>
-    
-  </span>
-  
-  
-    <div class="collection-title">
-      <h2>
-        
-          <span>分类 : 网络安全</span>
-        
-      </h2>
-    </div>
-  
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2021/55%E6%8F%90%E6%9D%83/">
-          <span>提权</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        12-31
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2021/53%E5%85%8D%E6%9D%80/">
-          <span>免杀</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        12-29
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2021/51LIUNX-GDB%E8%B0%83%E8%AF%95/">
-          <span>LIUNX-GDB调试</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        12-25
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2021/50PowerShell/">
-          <span>PowerShell</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        12-24
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2021/nc/">
-          <span>NC反弹shell</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        12-15
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2021/49CobaltStrike/">
-          <span>CobaltStrike</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        12-01
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2021/48PWN/">
-          <span>PWN</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        11-26
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2021/47%E5%AF%86%E7%A0%81%E5%AD%A6/">
-          <span>密码学</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        11-20
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2021/46%E5%85%B6%E4%BB%96%E6%BC%8F%E6%B4%9E/">
-          <span>其他漏洞</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        11-11
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2021/45%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">
-          <span>反序列化漏洞</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        10-30
-      </div>
-    </header>
-  </article>
-  
-</div>
-  <nav class="page-navigation">
-    
-    
-      <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/page/2/">下一页</a>
-    
-  </nav>
-</div>
+      // category-index.css
+%item {
+  display: inline-block;
+  margin: 0.4rem 1.4rem;
+  font-size: 1.6rem;
+  font-family: "Monda", "PingFang SC", "Microsoft YaHei", sans-serif;
+
+  a {
+    display: inline-block;
+    position: relative;
+    color: #555;
+    text-decoration: none;
+    padding: 0 0.3rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background: #f03838;
+      transition: all 0.3s ease;
+    }
+
+    &:hover {
+      color: #f03838;
+    }
+
+    &:hover::before {
+      width: 100%;
+      left: 0;
+      right: auto;
+    }
+  }
+
+  .category-list-count {
+    color: #bbb;
+    font-style: normal;
+    padding: 0 0.2rem;
+
+    &::before {
+      content: "[";
+    }
+    &::after {
+      content: "]";
+    }
+  }
+}
+
+.container.category-index {
+  line-height: 3;
+  h3 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 0 0 2rem;
+  }
+
+  .category-list-item {
+    @extend %item;
+  }
+}
 
       <footer>
   <p class="site-info">
