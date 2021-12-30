@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>nmap | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,扫描工具," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>nmap</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-04-26
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="8nmap"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="一、-nmap-network-mapper"><a href="#一、-nmap-network-mapper" class="headerlink" title="一、 nmap network mapper"></a>一、 nmap network mapper</h2><p>Nmap 是一款用亍网络发现和安全审计的网络安全工具，它是自由软件。软件名字 Nmap 是Network Mapper 的简称</p>
+<p>通常情况下，Nmap 用于网络主机清单、管理服务升级调度 监控主机服务运行状况、检测目标主机是否在线、端口开放情况、侦测运行的服务类型及版本信息、侦测操作系统的设备类型等信息。</p>
+<p>nmap 支持很多扫描技术，例如：UDP、TCP connect()、TCP SYN(半开扫描)、ftp 代理(bounce<br>攻击)、反向标志、ICMP、FIN、ACK 扫描、圣诞树(Xmas Tree)、SYN 扫描和 null 扫描</p>
+<p>支持多种扫描，例如：udp、tcp connect、tcp syn(半开扫描)、ftp代理(bounce攻击)、反向标志、icmp、fin、ack扫描、圣诞树(xmas tree)、syn扫描、null扫描等</p>
+<p>-v 详细信息<br>-p 1-65535 端口号<br>-O 操作系统<br>-A 所有信息<br>–randomize-hosts 随机扫描<br>–scan-delay 3 192.168.1.1-255 扫描间隔，ip不会重复扫描</p>
+<p>-f 报文分段，nmap会将包分段在几个包中，使得包过滤器、IDS检测更加困难</p>
+<h2 id="二、-zenmap"><a href="#二、-zenmap" class="headerlink" title="二、 zenmap"></a>二、 zenmap</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p><a target="_blank" rel="noopener" href="https://nmap.org/download.html">https://nmap.org/download.html</a></p>
+<p>wget <a target="_blank" rel="noopener" href="https://nmap.org/dist/zenmap-7.91-1.noarch.rpm">https://nmap.org/dist/zenmap-7.91-1.noarch.rpm</a></p>
+<p>noarch 没有32 64位架构的要求</p>
+<p>转换rpm包</p>
+<p>apt -y install alien </p>
+<p>alien zenmap-7.80-1.noarch.rpm</p>
+<p>dpkg -i zenmap_7.80-2_all.deb</p>
+<h4 id="安装问题"><a href="#安装问题" class="headerlink" title="安装问题"></a>安装问题</h4><p>Could not import the zenmapGUI.App module: ‘No module named gtk’. I checked in these directories:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;archive.ubuntu.com&#x2F;ubuntu&#x2F;pool&#x2F;universe&#x2F;p&#x2F;pygtk&#x2F;python-gtk2_2.24.0-5.1ubuntu2_amd64.deb</span><br><span class="line"></span><br><span class="line">wget http:&#x2F;&#x2F;azure.archive.ubuntu.com&#x2F;ubuntu&#x2F;pool&#x2F;universe&#x2F;p&#x2F;pygobject-2&#x2F;python-gobject-2_2.28.6-14ubuntu1_amd64.deb</span><br><span class="line"></span><br><span class="line">wget http:&#x2F;&#x2F;security.ubuntu.com&#x2F;ubuntu&#x2F;pool&#x2F;universe&#x2F;p&#x2F;pycairo&#x2F;python-cairo_1.16.2-2ubuntu2_amd64.deb</span><br><span class="line"></span><br><span class="line">dpkg -i python-cairo_1.16.2-2ubuntu2_amd64.deb</span><br><span class="line"></span><br><span class="line">dpkg -i python-gobject-2_2.28.6-14ubuntu1_amd64.deb</span><br><span class="line"></span><br><span class="line">dpkg -i python-gtk2_2.24.0-5.1ubuntu2_amd64.deb</span><br></pre></td></tr></table></figure>
+
+<h3 id="1、-加速扫描-nmap-T4-A-v"><a href="#1、-加速扫描-nmap-T4-A-v" class="headerlink" title="1、 加速扫描 nmap -T4 -A -v"></a>1、 加速扫描 nmap -T4 -A -v</h3><p>-T4 加快执行，范围0-5</p>
+<p>-T0:非常慢的扫描，用于IDS逃逸<br>-T1:缓慢的扫描，用于IDS逃逸<br>-T2:降低速度以降低对带宽的消耗<br>-T3:默认，根据目标的反应时间自动调整时间<br>-T4:快速扫描，常用的扫描方式<br>-T5:极速扫描，牺牲准确度来提高速度</p>
+<h3 id="2、-udp扫描-nmap-sS-sU-T4-A-v"><a href="#2、-udp扫描-nmap-sS-sU-T4-A-v" class="headerlink" title="2、 udp扫描 nmap -sS -sU -T4 -A -v"></a>2、 udp扫描 nmap -sS -sU -T4 -A -v</h3><p>-sS tco syn扫描<br>-sU udp扫描</p>
+<h3 id="3、-端口-namp-p-1-65535-T4-A-v"><a href="#3、-端口-namp-p-1-65535-T4-A-v" class="headerlink" title="3、 端口 namp -p 1-65535 -T4 -A -v"></a>3、 端口 namp -p 1-65535 -T4 -A -v</h3><p>-p 指定端口范围<br>-A 全端口扫描</p>
+<h3 id="4、-noping-扫描-nmap-T4-A-v-Pn"><a href="#4、-noping-扫描-nmap-T4-A-v-Pn" class="headerlink" title="4、 noping 扫描 nmap -T4 -A -v -Pn"></a>4、 noping 扫描 nmap -T4 -A -v -Pn</h3><p>-Pn 非ping扫描</p>
+<h3 id="5、-ping扫描-nmap-sn"><a href="#5、-ping扫描-nmap-sn" class="headerlink" title="5、 ping扫描 nmap -sn"></a>5、 ping扫描 nmap -sn</h3><p>-sn </p>
+<h3 id="6、-快速模式-nmap-T4-F"><a href="#6、-快速模式-nmap-T4-F" class="headerlink" title="6、 快速模式 nmap -T4 -F"></a>6、 快速模式 nmap -T4 -F</h3><p>-F </p>
+<h3 id="7、-快速扫描-加强模式-nmap-sV-T4-O-–version-light"><a href="#7、-快速扫描-加强模式-nmap-sV-T4-O-–version-light" class="headerlink" title="7、 快速扫描-加强模式 nmap -sV -T4 -O –version-light"></a>7、 快速扫描-加强模式 nmap -sV -T4 -O –version-light</h3><p>-O 服务器版本检测<br>-sV 探测端口及服务版本<br>–version-light 显示到目标主机的路由节点</p>
+<h3 id="8、-路由跟踪-nmap-sn-traceroute"><a href="#8、-路由跟踪-nmap-sn-traceroute" class="headerlink" title="8、 路由跟踪 nmap -sn -traceroute"></a>8、 路由跟踪 nmap -sn -traceroute</h3><p>-sn ping扫描，关闭端口扫描<br>-traceroute</p>
+<h3 id="9、常规扫描"><a href="#9、常规扫描" class="headerlink" title="9、常规扫描"></a>9、常规扫描</h3><h3 id="10、-全部扫描"><a href="#10、-全部扫描" class="headerlink" title="10、 全部扫描"></a>10、 全部扫描</h3><p>-g 指定源端口号<br>-PY 简单的控制传输协议</p>
+<h2 id="三、-基本参数"><a href="#三、-基本参数" class="headerlink" title="三、 基本参数"></a>三、 基本参数</h2><p>nmap 常规扫描<br>nmap ip</p>
+<p>-v 扫描服务器，显示它打开的端口及扫描详细信息<br>nmap -v ip</p>
+<p>-p 指定端口范围： 例如端口 1-200<br>nmap -p ip</p>
+<p>-O 查看操作系统类型<br>nmap -O ip</p>
+<p>-A 所有信息<br>nmap -A ip</p>
+<p>查找一个网段内所有机器的操作系统类型<br>nmap -O 192.168.1.0/24</p>
+<p>随机扫描，延时扫描，达到隐藏自己的效果<br>–randomize-hosts # 随机扫描<br>–scan-delay #延时扫描,单位秒</p>
+<p>nmap –randomize-hosts –scan-delay 5 192.168.1.1-10</p>
+<h3 id="关闭端口"><a href="#关闭端口" class="headerlink" title="关闭端口"></a>关闭端口</h3><h4 id="Windwos"><a href="#Windwos" class="headerlink" title="Windwos"></a>Windwos</h4><p>查看端口及对应的进程号信息（看主机的端口监听状况）<br>netstat -ano | findstr “端口号(3306)”</p>
+<p>关闭进程：需要指定 pid，最好使用管理员权限<br>taskkill /pid “pid(最后一个数值)” /f</p>
+<h4 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h4><p>netstat -auntp |grep 端口号  查看主机的端口监听状况<br>lsof -i :22 #列出指定端口相关信息<br>ps -aux | grep PID/程序名称</p>
+<p>kill -9 PID<br>killall 程序名称</p>
+<h3 id="四、-nmap防火墙"><a href="#四、-nmap防火墙" class="headerlink" title="四、 nmap防火墙"></a>四、 nmap防火墙</h3><p>open 开放<br>filter 可能被防火墙阻止<br>closed 关闭</p>
+<p>-PS tcp syn ping 可绕过防火墙<br>-PA 只会扫描ack包 可绕过防火墙<br>-PU 只会对目标进行udp ping扫描 发送udp包获取相应<br>-PP icmp时间戳ping扫描 可绕过防火墙<br>-PE iemp(互联网控制报文协议) 在指定的系统上输出ping<br>-Pn ping方式扫描<br>-sA 发现防火墙规则 </p>
+<h4 id="限制-80-端口"><a href="#限制-80-端口" class="headerlink" title="限制 80 端口"></a>限制 80 端口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -A INPUT -i ens33 -d 192.168.1.200 -p tcp --dport 80 -j DROP</span><br><span class="line">iptables -t filter -A INPUT -i ens33 -s 192.168.1.226 -d 192.168.1.200 -p tcp --dport 80 -j</span><br><span class="line">DROP</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、-nmap-使用脚本进行扫描"><a href="#四、-nmap-使用脚本进行扫描" class="headerlink" title="四、 nmap 使用脚本进行扫描"></a>四、 nmap 使用脚本进行扫描</h3><p>/usr/share/nmap/scripts </p>
+<p>nmap –script ip-geolocation-* ip</p>
+<p>dns搜集<br>nmap –script dns-brute.nse ip </p>
+<p>系统信息<br>nmap –script membase-http-info.nse ip</p>
+<p>常见漏洞扫描<br>nmap –script smb-vuln-* ip</p>
+<p>web常见漏洞 sql注入<br>nmap –script http-sql-injection.nse ip</p>
+<p>cms注入<br>nmap –script htt-vuln-cve2017-8917.nse ip</p>
+<p>数据库<br>nmap -p 3306 –script mysql-brute.nse ip<br>nmap -p 3306 –script mysql-info.nse ip</p>
+<p>nmap –script smb-vuln-* 154.196.161.164</p>
+<p>auth: 负责处理鉴权证书（绕开鉴权）的脚本<br>broadcast: 在局域网内探查更多服务开启状况，如dhcp/dns/sqlserver等服务<br>brute: 提供暴力破解方式，针对常见的应用如http/snmp等<br>default: 使用-sC或-A选项扫描时候默认的脚本，提供基本脚本扫描能力<br>discovery: 对网络进行更多的信息，如SMB枚举、SNMP查询等<br>dos: 用于进行拒绝服务攻击<br>exploit: 利用已知的漏洞入侵系统<br>external: 利用第三方的数据库或资源，例如进行whois解析<br>fuzzer: 模糊测试的脚本，发送异常的包到目标机，探测出潜在漏洞 intrusive: 入侵性的脚本，此类脚本可能引发对方<br>的IDS/IPS的记录或屏蔽<br>malware: 探测目标机是否感染了病毒、开启了后门等信息<br>safe: 此类与intrusive相反，属于安全性脚本<br>version: 负责增强服务与版本扫描（Version Detection）功能的脚本<br>vuln: 负责检查目标机是否有常见的漏洞（Vulnerability），如是否有MS08_067</p>
+<h3 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h3><p>ping扫描<br>nmap -sP 192.168.1.1</p>
+<p>无ping扫描<br>nmap -P0 192.168.1.1</p>
+<p>TCP SYN Ping 扫描<br>nmap -PS 192.168.1.1</p>
+<p>TCP ACK Ping 扫描<br>nmap -PA 192.168.1.1</p>
+<p>UDP Ping扫描<br>nmap -PU 192.168.1.1</p>
+<p>多目标扫描<br>nmap -sP 192.168.1.1</p>
+<p>扫描网段<br>nmap -sP 192.168.1.*<br>nmap -sP 192.168.1.0/24</p>
+<p>指定扫描的端口<br>nmap -p 80 192.168.1.1</p>
+<p>默认扫描，nmap会扫描最有可能的1000个TCP端口<br>nmap 192.168.1.1</p>
+<p>TCP SYN 比较常用的扫描方式，半开扫描<br>nmap-sS 192.168.1.1</p>
+<p>TCP连接扫描<br>nmap -sT 192.168.1.1</p>
+<p>nmap -sV 192.168.1.1<br>nmap -sV -A 192.168.1.1<br>nmap扫描到端口后，会在nmap-service中查询的服务，nmap-service中包含了很多不同服务的报文<br>-sV用于版本探测（端口对应的应用的版本信息）<br>-A更加详细的信息</p>
+<p>操作系统识别<br>nmap -O 192.168.1.1</p>
+<p>报文分段<br>nmap -f 192.168.1.1</p>
+<p>IP欺骗<br>让目标主机误认为这不是一个真实的扫描，可以躲避防火墙和某些规则的限制</p>
+<p>使用RND随机生成10个IP地址<br>nmap -D RND:10 192.168.1.1</p>
+<p>指定随机地址<br>nmap -D 192.168.1.1,192.168.1.2,192.168.1.3</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/8nmap/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E6%89%AB%E6%8F%8F%E5%B7%A5%E5%85%B7/">
+              #扫描工具
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/7Wireshark/" target="_self">Wireshark抓包工具</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/%E4%BD%BF%E7%94%A8HEXO-Github-%E6%90%AD%E5%BB%BA%E5%85%8D%E8%B4%B9%E5%8D%9A%E5%AE%A2/" target="_self">使用HEXO Github 搭建免费博客</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

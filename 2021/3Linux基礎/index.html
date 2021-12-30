@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>Linux基礎 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,基礎," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>Linux基礎</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-08-02
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="3Linux基礎"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="Linux基礎"><a href="#Linux基礎" class="headerlink" title="Linux基礎"></a>Linux基礎</h2><h3 id="一、-簡介"><a href="#一、-簡介" class="headerlink" title="一、 簡介"></a>一、 簡介</h3><p>Linux 是一套免费使用和自由传播的类 Unix 操作系统，是一个基於 POSIX 和 Unix 的多用户，多任务，支持多线程和多 CPU 的操作系统。它能运行主要的 Unix 工具软件，应用程序和网络协议。它支持32 位和 64 位硬件。Linux 继承了 Unix 以网络为核心的设计思想，是一个性能稳定的多用户网络操作系统。</p>
+<p>Linux 严格来说是单指操作系统的内核，因操作系统中包含了许多用户图形接口和其他实用工具。如今 Linux 常用来指基於 Linux 的完整操作系统，内核则改以 Linux 内核称之。由於这些支持用户空间的系统工具和库主要由理查德·斯托曼在 1983 年发起的 GNU 计划提供，自由软件基金会提议将其组合系统命名为 GNU/Linux，但 Linux 不属於 GNU 计划，这个名称没有得到社区的一致认同。</p>
+<p>Linux 最初是作为支持英特尔 x86 架构的个人电脑的一个自由操作系统。目前 Linux 已经被移植到更多的计算机硬件平台，进进超出其他任何操作系统。Linux 可以运行在服务器和其他大型平台之上，如大型计算机和超级计算机。世界上 500 个最快的超级计算机已 100％运行 Linux 发行版或变种。Linux 也广泛应用在嵌入式系统上，如手机（Mobile Phone）、平板电脑（Tablet）、路由器（Router）、电视（TV）和电子游戏机等。在秱劢设备上广泛使用的 Android 操作系统就是创建在 Linux 内核之上</p>
+<p>通常情况下，Linux 被打包成供个人计算机和服务器使用的 Linux 发行版，一些流行的主流 Linux发布版，包括 Debian（及其派生版本 Ubuntu、Linux Mint）、Fedora（及其相关版本 Red Hat Enterprise Linux、CentOS）和 openSUSE 等。Linux 发行版包含 Linux 内核和支撑内核的实用程序和库，通常还带有大量可以满足各类需求的应用程序。个人计算机使用的 Linux 发行版通常包含 X Window 和一个相应的桌面环境，如 GNOME 或 KDE。桌面 Linux 操作系统常用的应用程序，包括 Firefox 网页浏览器、LibreOffice 办公软件、GIMP 图像处理工具等。由於 Linux 是自由软件，任何人都可以创建一个符合自己需求的 Linux 发行版</p>
+<h3 id="二、-Linux-优点"><a href="#二、-Linux-优点" class="headerlink" title="二、 Linux 优点"></a>二、 Linux 优点</h3><p>Linux 由众多内核组成，其源代码完全开源；</p>
+<p>Linux 继承了 Unix 的特点，具有非常强大的网络功能，其支持所有的因特网协议，包括 TCP/IPv6和链路层拓扑程序等，且可以利用 Unix 的网络特性开发出新的协议栈；</p>
+<p>Linux 系统工具链完整，简单操作就可以配置出合适的开发环境，可以简化开发过程，减少开发<br>中仿真工具的障碍，使系统具有较强的秱植性</p>
+<h3 id="三、-常用命令"><a href="#三、-常用命令" class="headerlink" title="三、 常用命令"></a>三、 常用命令</h3><h4 id="1-目錄操作"><a href="#1-目錄操作" class="headerlink" title="1. 目錄操作"></a>1. 目錄操作</h4><p>pwd 显示当前目录<br>cd  改变当前目录<br>ls  显示目录中的文件和子目录<br>    -h 易读的方式显示文件大小<br>    -a 显示隱藏文件<br>    -l 目录的文件大小 自動顯示<br>mkdir 创建目录 mkdir<br>    -p a/b/c 自動创建父目录<br>cp 将文件复制到另一个位置<br>    -p 保留文件权限，拥有者，时间戳属性<br>mv 将文件移動到另一个位置（可用於重命名）<br>rm 删除一个文件<br>-f 强制删除文件，不提示确认信息<br>-r 删除所有文件和子目录<br>chmod 改变文件权限<br>4：读（r）<br>2: 写（w）<br>1: 执行（x）<br>chmod 755 1.txt<br>chmod +x 1.txt</p>
+<h4 id="2-测试命令"><a href="#2-测试命令" class="headerlink" title="2. 测试命令"></a>2. 测试命令</h4><p>ping 网络連通性测试工具<br>    -c N 发送 N 个数据包</p>
+<p>wget 一个非交互的网络下载工具<br>    -b 后台下载<br>    -O path 保存到指定目录</p>
+<h4 id="3-進程管理"><a href="#3-進程管理" class="headerlink" title="3. 進程管理"></a>3. 進程管理</h4><p>ps 显示在本地机器上当前运行的進程列表<br>ps aux 查看所有進程<br>状态说明（STAT） D 表示不可中断的睡眠状态<br>R 表示运行或就绪状态<br>S 表示可中断的睡眠状态<br>T 表示停止状态<br>Z 表示僵尸状态<br>&lt; 表示高优先级進程<br>N 表示低优先级進程</p>
+<ul>
+<li>表示前台迚程组中的進程<br>l 表示多线程進程<br>s 表示会话進程的首進程</li>
+</ul>
+<p>排序：<br>ps -aux –sort -pcpu | more 按 cpu 占用百分比做降序排序<br>ps -aux –sort -rss | more 按内存占用百分比做降序排序</p>
+<p>top 命令：交互查看進程和系统相关属性信息，默认为 3 秒刷新一次</p>
+<p>前五行是系统的整体的统计信息<br>top - 21:06:13 up 7:40, 2 users, load average: 0.00, 0.01, 0.05<br>任务: 190 total  1 running, 189 sleeping,   0 stopped,   0 zombie<br>%Cpu(s):  0.3 us,  0.2 sy,  0.0 ni, 99.5 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st<br>MiB Mem :   1951.6 total,   1064.3 free,    483.9 used,    403.3 buff/cache<br>MiB Swap:    975.0 total,    975.0 free,      0.0 used.   1319.3 avail Mem</p>
+<p>任务队列信息(第一行)<br>top - 21:06:13            当前时间<br>up 7:43               系统运行时间，格式为时:分<br>2 users               当前登录用户数<br>系统负载，即任务队列的平均长度。 三个数值分别为 1 分钟、5分钟、15 分钟前到现在的平均值。  load average: 0.00, 0.01, 0.05 </p>
+<p>進程和 CPU 的信息( 第二、三行)<br>当有多个 CPU 时，这些内容可能会超过两行。按 1 键时可以切换显示 CPU 的信息<br>任务: 190 total    進程总数<br>1 running         正在运行的進程数，如果是一个 CPU 一般只有一个，如果有两个 CPU 则会有 2 个<br>189 sleeping      睡眠的進程数<br>0 stopped         停止的進程数<br>0 zombie          僵尸進程数</p>
+<p>%Cpu(s):  0.3 us  系统用户進程使用 CPU 百分比<br>0.2 sy            内核中的進程占用 CPU 百分比<br>0.0 ni            用户迚程空间内改变过优先级的進程占用 CPU 百分比<br>99.5 id           空闲 CPU 百分比<br>0.0 wa            等待 IO 完成所占用的时间百分比<br>0.0 hi            硬件中断所占用的时间百分比<br>0.0 si            软件中断所占用的时间百分比<br>0.0 st            被偷走的时间百分比</p>
+<p>内存信息(第四五行)</p>
+<p>MiB Mem :   1951.6 total  物理内存总量<br>1064.3 free               空闲内存总量<br>483.9 used                使用的物理内存总量<br>403.3 buff/cache          用作内核缓存的内存量。和 free -k 一个意思</p>
+<p>MiB Swap:    975.0 total  交换区总量<br>975.0 free                空闲交换区总量<br>0.0 used                  使用的交换区总量<br>1319.3 avail Mem          总的可利用内存是多少</p>
+<p>進程信息</p>
+<p>PID 進程id<br>PR 优先级<br>USER 進程所有者的用户名<br>NI 進程优先级。 nice 值。负值表示高优先级，正值表示低优先级<br>VIRT 虚拟内存集<br>RES 实际使用内存大小，长驻内存集<br>SHR 共享内存大小<br>S 進程状态<br>  D=不可中断的睡眠状态<br>  R=运行<br>  S=睡眠<br>  T=跟踪/停止<br>  Z=僵尸進程<br>%CPU 上次更新到现在的 CPU 时间占用百分比<br>%MEM 進程使用的物理内存百分比<br>TIME+ 進程使用的 CPU 时间总计，单位 1/100 秒<br>COMMAND 命令名/命令行</p>
+<p>TOP 的快捷键</p>
+<p>默认 3s 刷新一次，根据 CPU 占用百分比排序<br>空格：立即刷新<br>q：退出<br>M：按内存排序<br>P：按 CPU 排序<br>T：根据在 CPU 中运行的累计时间進行排序<br>l：是否显示平均负载和启劢时间<br>t：是否显示運行和 CPU 状态相关信息<br>m：是否显示内存相关信息<br>c：是否显示完整的命令行信息<br>k：终止某个進程<br>d：更改刷新时间</p>
+<p>kill 给進程发送一个信号<br>kill -9 1024 关闭 PID 为 1024 的迚程<br>service 管理系统中的服务<br>service apache2 status 查看服务状态<br>service apache2 stop|start 停止|启劢服务<br>netstat 显示网络统计信息，TCP/IP 网络連接<br>-a 显示所有违接<br>-n 禁止解析 IP 地址和端口号<br>-t 显示 TCP 违接</p>
+<p>ifconfig 管理网络适配器<br>ifconfig eth0 192.168.1.100 netmask 255.255.255.0  给 eth0 配置 IP 地址和子网掩码</p>
+<h4 id="4-用户管理"><a href="#4-用户管理" class="headerlink" title="4. 用户管理"></a>4. 用户管理</h4><p>useradd         创建，更新用户<br>useradd test    创建用户<br>    -s          指定登录 shell<br>passwd          修改用户密码<br>passwd 123456<br>userdel         删除一个用户不其相关的文件<br>userdel -r test 删除 test 用户，併删除目录和邮件<br>su              更改用户 ID 或成为超级用户<br>su root         切换到 root 用户<br>sudo            以超级用户的身份执行命令<br>sudo ifconfig   以 root 身份执行命令</p>
+<h4 id="5-信息查詢"><a href="#5-信息查詢" class="headerlink" title="5. 信息查詢"></a>5. 信息查詢</h4><p>whoami      显示当前登录账户<br>history     查看 shell 歷史命令<br>    -c        清除歷史记录<br>uname       输出系统信息<br>    -a      显示所有信息<br>    -r      显示内核的发行版本号<br>shutdown    关闭，重启计算机<br>    -h      关闭计算机<br>    -r      重新启劢计算机<br>shutdown -h 0(now) 立刻关闭计算机</p>
+<h4 id="6-VIM编辑器"><a href="#6-VIM编辑器" class="headerlink" title="6. VIM编辑器"></a>6. VIM编辑器</h4><p>三种模式：<br>    命令模式：一键啟動 vim,就進入命令模式<br>    输入模式：按 i 進入输入模式<br>    底行模式：按：（冒号）進入底行模式</p>
+<p>命令模式：<br>    gg  跳到第一行<br>    G   跳到最后一行<br>    dd  剪切当前行<br>    p   粘贴到下一行<br>    yy  复制当前行<br>    dG  從当前删除到文件结尾<br>    /keyword 关键词搜索</p>
+<p>输入模式：按 i 進入输入模式，开始输入文件内容</p>
+<p>底行模式：<br>    :w  保存内容<br>    :q  退出 vim<br>    :q! 强制退出 vim,不保存修改内容<br>    :3  跳到第三行</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/3Linux%E5%9F%BA%E7%A4%8E/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E5%9F%BA%E7%A4%8E/">
+              #基礎
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/26CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/" target="_self">CSRF跨站请求伪造</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/27SSRF%E6%9C%8D%E5%8B%99%E5%99%A8%E7%AB%AF%E8%AB%8B%E6%B1%82%E5%81%BD%E9%80%A0/" target="_self">SSRF跨站请求伪造</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

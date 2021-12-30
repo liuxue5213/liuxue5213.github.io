@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>主动信息搜集 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,信息搜集," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>主动信息搜集</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-04-03
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="5主动信息搜集"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="主动信息搜集的原理"><a href="#主动信息搜集的原理" class="headerlink" title="主动信息搜集的原理"></a>主动信息搜集的原理</h2><h3 id="一、-特点"><a href="#一、-特点" class="headerlink" title="一、 特点"></a>一、 特点</h3><ol>
+<li>直接与目标交互通信</li>
+<li>无法避免留下痕迹</li>
+<li>扫描发送不同的探测，根据结果判断目标的状态</li>
+<li>可以使用受控電腦進行探測，或者代理</li>
+</ol>
+<h3 id="二、-发现目标主机的过程"><a href="#二、-发现目标主机的过程" class="headerlink" title="二、 发现目标主机的过程"></a>二、 发现目标主机的过程</h3><ol>
+<li>识别存活主机，发现潜在目标</li>
+<li>输出一个ip地址列表或者范围</li>
+<li>在二、三、四层进行探测发现</li>
+</ol>
+<h3 id="三、-osi七层模型-tcp-ip五层模型"><a href="#三、-osi七层模型-tcp-ip五层模型" class="headerlink" title="三、 osi七层模型   tcp/ip五层模型"></a>三、 osi七层模型   tcp/ip五层模型</h3><p>osi，開放式系統互連，把網絡通信的工作分為7層，分別是物理層，數據鏈路層，網絡層，傳輸層，會話層，表示層，應用層</p>
+<p>信息發送 自上到下；接收 自下至上<br>应用层     为应用提供服务<br>表示层     数据格式转化、数据加密<br>会话层     建立、管理、维护会话          例如：http telnet ftp ftp dns smtp<br>传输层     建立、管理、维护端到端的连接    例如：tcp  udp<br>网络层     ip地址及路由选择            例如：ip icmp    rip   igmp<br>数据链路层  提供介质访问和链路管理     例如：arp rarp ieee8.2.3  ppp  csma/cd<br>物理层     物理层                     例如：fe自协商  manchester mlt-3 4a pam5</p>
+<p>基于osi模型 进行扫描优缺点<br>2层 速度快、可靠   不可路由<br>3层 可路由，速度较快  经常被防火墙过滤<br>4层 可路由，结果可靠，不可能被防火墙过滤，可以发现所有端口都被过滤的主机<br>    全端口扫描速度慢、基于状态过滤的防火墙可能被过滤扫描</p>
+<h4 id="第-7-层应用层"><a href="#第-7-层应用层" class="headerlink" title="第 7 层应用层"></a>第 7 层应用层</h4><p>OSI 中的最高层。为特定类型的网络应用提供了访问 OSI 环境的手段。应用层确定進程之间通信的性质，以满足用户的需要。应用层不仅要提供应用進程所需要的信息交换和进程操作，而且还要作为应用進程的用户代理，来完成一些信息交换所必需的功能。它包括：文件传送访问和管理 FTAM、虚拟终端 VT、事务处理 TP、进程数据库访问 RDA、制造报文规范 MMS、目录服务 DS 等协议；应用层能不应用程序界面沟通，以达到展示给用户的目的。 在此常见的协议有:HTTP，HTTPS，FTP，TELNET，SSH，SMTP，POP3 等</p>
+<h4 id="第-6-层表示层"><a href="#第-6-层表示层" class="headerlink" title="第 6 层表示层"></a>第 6 层表示层</h4><p>主要用於处理两个通信系统裡面 交换信息的表示方式。为上层用户解决用户信息的语法问题。它包括数据格式交换、数据加密不解密、数据压缩不终端类型的转换</p>
+<h4 id="第-5-层会话层"><a href="#第-5-层会话层" class="headerlink" title="第 5 层会话层"></a>第 5 层会话层</h4><p>在两个节点之间建立端連接。为端系统的应用程序提供了对话控制机制。此服务包括建立連接是以全双工还是以半双工的方式進行设置，尽管可以在层 4 中处理双工方式 ；会话层管理登入和注销过程。</p>
+<p>它具体管理两个用户和迚程之间的对话。如果在某一时刻只允许一个用户执行一项特定的操作，会话层协议就会管理这些操作，如阻止两个用户同时更新数据库中的同一组数据。</p>
+<h4 id="第-4-层传输层"><a href="#第-4-层传输层" class="headerlink" title="第 4 层传输层"></a>第 4 层传输层</h4><p>传输层建立了主机端口到端口的連接，传输层的作用是为上层协议（上层会会话层）提供端口到端口的可靠和透明的数据传输服务，包括处理差错控制和流量控制等问题。该层向高层屏蔽了下层数据通信的细节，使高层用户看到的只是在两个传输实体间的一条主机到主机的、可由用户控制和设定的、可靠的数据通路。我们通常说的，TCP UDP 就是在这一层</p>
+<h4 id="第-3-层网络层"><a href="#第-3-层网络层" class="headerlink" title="第 3 层网络层"></a>第 3 层网络层</h4><p>通过 IP 寻址来建立两个节点之间的連接，为源端的运输层送来的分组，选择合适的路由和交换节点，正确无误地按照地址传送给目的端的运输层。也是经常说的 IP 协议层。IP 协议是 Internet 的基础</p>
+<h4 id="第-2-层数据链路层"><a href="#第-2-层数据链路层" class="headerlink" title="第 2 层数据链路层"></a>第 2 层数据链路层</h4><p>将比特组合成字节,再将字节组合成帧,使用链路层地址 (以太网使用 MAC 地址)来访问介质,并進行差错检测</p>
+<h4 id="第-1-层物理层"><a href="#第-1-层物理层" class="headerlink" title="第 1 层物理层"></a>第 1 层物理层</h4><p>处於 OSI 参考模型的最底层。物理层的主要功能是利用物理传输介质为数据链路层提供物理連接，以便透明的传送比特流。常用设备有（各种物理设备）网卡、集线器、中繼器、调制解调器、网线、双绞线、同轴电缆</p>
+<h3 id="四、-二层发现-arping-netdiscover-搜索"><a href="#四、-二层发现-arping-netdiscover-搜索" class="headerlink" title="四、 二层发现 - arping/netdiscover 搜索"></a>四、 二层发现 - arping/netdiscover 搜索</h3><p>链路层中的协议进行搜索 一般使用arp协议</p>
+<p>扫描速度快，可靠性高</p>
+<p>arp协议  地址解析协议   address resolution protocol </p>
+<p>作用：计算机通过arp协议将局域网的32位ip地址转成 对应的48位物理地址，也就是网卡的mac地址</p>
+<p>以太网中，数据传输的目标是mac地址，主机之间的通信，必须要知道mac地址，当只知道ip信息的时候，“地址解析”就是主机在发送前将目标ip地址转换成mac地址的过程；</p>
+<h4 id="使用-arping-进行搜索"><a href="#使用-arping-进行搜索" class="headerlink" title="使用 arping 进行搜索"></a>使用 arping 进行搜索</h4><p>arping 192.168.1.1 -c 1   只发送1次请求 </p>
+<h4 id="netdiscover-主動、被動方式探测局域网存活主机"><a href="#netdiscover-主動、被動方式探测局域网存活主机" class="headerlink" title="netdiscover 主動、被動方式探测局域网存活主机"></a>netdiscover 主動、被動方式探测局域网存活主机</h4><p>主动：主動探测发现网络内主机</p>
+<p>netdiscover -i eth0网卡 ip<br>netdiscover -i eth0网卡 -r 192.168.1.0/24 子网掩码</p>
+<p>被動模式：更加隐蔽，但是速度会比较慢，网卡被设置为混杂模式来侦听网络内的 arp 数据包進行探测，这种方式就需要网络内设备发送 arp 包才能被探测到</p>
+<p>netdiscover -p  不会发送任何内容，被动发现</p>
+<h3 id="三、-三层发现-ping"><a href="#三、-三层发现-ping" class="headerlink" title="三、 三层发现 - ping"></a>三、 三层发现 - ping</h3><p>利用 OSI 中网络中的协议進行主机發現，一般使用 IP,ICMP 协议</p>
+<p>三层扫描的优缺点</p>
+<p>优点：可以經過路由的主机，速度相对较快<br>缺点：速度比二层發現慢，經常会被防火墙过滤</p>
+<p>ping 192.168.1.1</p>
+<h4 id="traceroute-域名-路由跟踪"><a href="#traceroute-域名-路由跟踪" class="headerlink" title="traceroute 域名 路由跟踪"></a>traceroute 域名 路由跟踪</h4><p>traceroute baidu.com</p>
+<h4 id="hping3-压力测试、ddos攻击"><a href="#hping3-压力测试、ddos攻击" class="headerlink" title="hping3 压力测试、ddos攻击"></a>hping3 压力测试、ddos攻击</h4><p>tcp/ip数据包组装、分析的工具；通常用来做压力测试；会立即发送请求 每次只能扫描一个目标 随机ip(局域网内)</p>
+<p>hping3 -c 1000 -d 120 -S -w 64 -p 80 —-flood —-rand-source  网址<br>-c 1000 数据包的数量<br>-d 120  发送到目标机器每个数据包的大小；单位字节<br>-S 只发送syn数据包<br>-w 64 tcp窗口大小<br>-p 80 端口80<br>-—flood 尽快发送数据包，不需要考虑入站回复<br>—-rand-source 使用随机性的源头ip地址，伪造只限于局域网下</p>
+<h4 id="fping-hping3的增强版-可以对网段使用"><a href="#fping-hping3的增强版-可以对网段使用" class="headerlink" title="fping hping3的增强版 可以对网段使用"></a>fping hping3的增强版 可以对网段使用</h4><p>fping -g 192.168.1.0/24 -c 1  &gt; fping.txt<br>  -g 对整个网段<br>  -c 表示 ping 的次数</p>
+<blockquote>
+<p>fping.txt 将扫描结果重定向到 fping.txt ，扫描一个网段输出结果非常多，重定向到文件中只会获得存活的主机信息</p>
+</blockquote>
+<p>fping -g 192.168.1.0/24 -c 1 2&gt; /dev/null 1&gt; fping.txt<br>cat fping.txt |grep -v “timed” &gt; fping1.txt</p>
+<p>cat fping.txt |grep -v “timed”</p>
+<p>fping -g 192.168.1.0/24 -c 1 2&gt; /dev/null | grep -v “timed” &gt; fping2.txt</p>
+<h3 id="四、-四层发现-nmap"><a href="#四、-四层发现-nmap" class="headerlink" title="四、 四层发现 - nmap"></a>四、 四层发现 - nmap</h3><p>nmap 是一个网络探测和安全扫描程序，系统管理者和个人可以使用这个软件扫描大型的网络，獲取那台主机正在运行以及提供什么服务等信息。nmap 支持很多扫描技术，例如：UDP、TCP connect()、TCP SYN(半开扫描)、ftp 代理(bounce 攻击)、反向标志、ICMP、FIN、ACK 扫描、圣诞树(Xmas Tree)、SYN 扫描和 null 扫描。还可以探测操作系统类型。</p>
+<p>主要是tcp、udp协议</p>
+<p>tcp是可靠协议，需要三次握手<br>udp速度快，不需要三次握手</p>
+<h4 id="nmap-network-mapper-网络探测和安全扫描"><a href="#nmap-network-mapper-网络探测和安全扫描" class="headerlink" title="nmap network mapper 网络探测和安全扫描"></a>nmap network mapper 网络探测和安全扫描</h4><p>主机开放的端口<br>检测相应端口的软件和版本<br>检测操作系统、硬件地址、软件<br>脆弱性的漏洞 namp脚本</p>
+<p>端口状态解析<br>open tcp连接、udp报文<br>close 关闭的端口<br>filtered 无法探测是否开放、过滤可能来自防火墙或者路由规则<br>unfiltered 未被过滤 端口可访问 ，无法确定是否开放；只有用于映射防火墙规则的ack扫描才会把端口分到这个状态<br>open|filtered 无法确定端口开放还是被过滤，开放的端口不响应<br>close|filtered 关闭或者被过滤 无法确定</p>
+<p>用法：<br>nmap -sn 1092.168.1.0/24   扫描局域网在线的<br>nmap -sn 1092.168.1.1-254</p>
+<p>查看端口进程<br>lsof -i:22 查看22端口<br>ps aux | grep sshd<br>find / -name sshd</p>
+<p>全连接 半连接扫描<br>\sym        \syn<br>/syn+ack      /syn+ack<br>\ack        \rst<br>\rst</p>
+<p>nmap -sS 192.168.1.1 -p 80,81,443,3306<br>nmap -O 192.168.1.1   显示操作系统类型<br>nmap -sS -O 192.168.1.0/24 扫描网段中的操作系统</p>
+<p>nmap -v -p 80 192.168.1.1-100 扫描开启80端口的</p>
+<p>隐藏扫描<br>—randomize_hosts 随机扫描，对目标主机的顺序随机划分<br>—scan-delay 延时扫描 单位秒</p>
+<p>nmap -v —randomize_hosts —scan-delay  3000ms -p 80 192.168.1.1-100</p>
+<p>使用通配符<br>nmap -v -p 80 192.168.1.*    *为1-254</p>
+<p>nmap -T4 -A -v ip<br>0-5级别 越高扫描越快 容易被防火墙屏蔽<br>-v 显示冗余信息<br>-A 对操作系统和软件版本进行检测</p>
+<p>nmap -sS -sU -T4 -A -v<br>-sS tcp syn扫描<br>-sU udp扫描</p>
+<p>nmap -p 1-65535 -T4 -A -v<br>扫描所有tcp端口</p>
+<p>nmap -T4 -A -v -Pn<br>非ping 扫描</p>
+<p>nmap -sn<br>ping扫描 速度快 容易被屏蔽</p>
+<p>namp -T4 -F 快速模式</p>
+<p>namp -sV T4 -O -F —version-light 快速加强模式</p>
+<p>nmap -sn —traceroute  路由跟踪<br>显示本机到目标的路由节点</p>
+<p>nmap -sS -sU -T4 -A -v -PE -PP -PS80,443,-PA3389,PU40125 -PY -g 53 —script all<br>慢速全面扫描</p>
+<p>windows   =》 zenmap</p>
+<h4 id="nc-netcat扫描端口"><a href="#nc-netcat扫描端口" class="headerlink" title="nc   netcat扫描端口"></a>nc   netcat扫描端口</h4><p>可以进行tcp/udp端口监听<br>端口扫描，发起tcp/udp连接<br>机器之间传输文件、网络测速</p>
+<p>nc -nv  -w 1 -z 192.168.1.1  1-100<br>-nv 扫描的是ip地址 不做域名解析<br>-w 超时时间<br>-z 端口扫描</p>
+<h3 id="五、-使用-scapy-进行定制数据包高级扫描"><a href="#五、-使用-scapy-进行定制数据包高级扫描" class="headerlink" title="五、 使用 scapy 进行定制数据包高级扫描"></a>五、 使用 scapy 进行定制数据包高级扫描</h3><p>可以让用户发送、监听、解析并伪装成网络报文的python程序</p>
+<h4 id="定制arp协议"><a href="#定制arp协议" class="headerlink" title="定制arp协议"></a>定制arp协议</h4><p>ARP().display()<br>hwtype= 0x1                              硬件类型<br>ptype= IPv4         协议类型<br>hwlen= None       硬件地址长度 mac<br>plen= None          协议地址长度 ip<br>op= who-has<br>hwsrc= 00:0c:29:c6:03:f1    源mac地址<br>psrc= 192.168.1.53      源ip地址<br>hwdst= 00:00:00:00:00:00<br>pdst= 0.0.0.0       向谁发送</p>
+<p>向192.168.1.1发送 arp请求<br>sr1函数包含发送数据包和接收数据包的功能</p>
+<p>sr1(ARP(pdst=“192.168.1.1”))</p>
+<p>&lt;ARP  hwtype=0x1 ptype=IPv4 hwlen=6 plen=4 op=is-at hwsrc=50:64:2b:d1:4f:1e psrc=192.168.1.1 hwdst=00:0c:29:c6:03:f1 pdst=192.168.1.53 |&lt;Padding  load=’\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00’ |&gt;&gt;<br>可以返回网关 或者目标的mac地址</p>
+<h4 id="定制ping包-ip和icmp协议组合"><a href="#定制ping包-ip和icmp协议组合" class="headerlink" title="定制ping包  ip和icmp协议组合"></a>定制ping包  ip和icmp协议组合</h4><p>IP().display()</p>
+<p>  version= 4      ipv4<br>  ihl= None     首部长度<br>  tos= 0x0      服务<br>  len= None     总长度<br>  id= 1       标识<br>  flags=<br>  frag= 0       标志<br>  ttl= 64       生存时间<br>  proto= hopopt   传输控制协议<br>  chksum= None    首部校验和<br>  src= 127.0.0.1    源地址<br>  dst= 127.0.0.1    目的地址<br>  \options\</p>
+<p>ICMP().display()</p>
+<p>  type= echo-request    类型，标识icmp报文类型<br>  code= 0       代码<br>  chksum= None      检验和<br>  id= 0x0       标识<br>  seq= 0x0</p>
+<p>使用 ip生成ping的源ip和目标ip、icmp生成类型</p>
+<p>sr1(IP(dst=‘192.168.1.1’)/ICMP(), timeout=1)</p>
+<p>Received 2 packets, got 1 answers, remaining 0 packets<br>&lt;IP  version=4 ihl=5 tos=0x0 len=28 id=27467 flags= frag=0 ttl=64 proto=icmp chksum=0x8c0f src=192.168.1.1 dst=192.168.1.53 |&lt;ICMP  type=echo-reply code=0 chksum=0xffff id=0x0 seq=0x0 |&lt;Padding  load=’\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00’ |&gt;&gt;&gt;    </p>
+<h4 id="定制tcp协议syn请求"><a href="#定制tcp协议syn请求" class="headerlink" title="定制tcp协议syn请求"></a>定制tcp协议syn请求</h4><p>TCP().display()</p>
+<p>  sport= ftp_data   tcp源端口<br>  dport= http     tcp目的端口<br>  seq= 0        32位序号<br>  ack= 0        32位确认序号<br>  dataofs= None   4位首部长度<br>  reserved= 0   保留6位<br>  flags= S      标志域，紧急标志，有意义的应急标志，推，重置连接标志，同步序号标志，完成发送数据标志；排列顺序 urg、ack、psh、rst、syn、fin<br>  window= 8192    窗口大小<br>  chksum= None    16位校验和<br>  urgptr= 0     优先指针<br>  options= []     选项</p>
+<p>sr1( IP(dst=“192.168.1.1”) / TCP(flags=“S”,dport=80), timeout=1 )</p>
+<p>IP  version=4 ihl=5 tos=0x0 len=44 id=0 flags=DF frag=0 ttl=64 proto=tcp chksum=0xb745 src=192.168.1.1 dst=192.168.1.53 |&lt;TCP  sport=http dport=ftp_data seq=3367302510 ack=1 dataofs=6 reserved=0 flags=SA window=14600 chksum=0x1cff urgptr=0 options=[(‘MSS’, 1460)] |&lt;Padding  load=’\x00\x00’ |&gt;&gt;&gt;</p>
+<p>flags = SA syn+ack  证明80端口开放</p>
+<p>从以上响应结果中得到一个 flags=SA 的数据包。SA 标志即 SYN+ACK。表示收到服务器 tcp 三次握手中的第二个包，可以收到响应包，表示端口开放。</p>
+<p>注：这种基於 tcp 的半链接扫描，更隐密，更不容易被發現</p>
+<h3 id="擴展：-tcp-header"><a href="#擴展：-tcp-header" class="headerlink" title="擴展： tcp header"></a>擴展： tcp header</h3><p>Source Port（16 bits）：源端口号，用亍标记主机進程，端口号也称为進程地址<br>Destination Port（16 bits） ：目标端口号，通过 16 位字节标识 0-65535 共 65536 个端口<br>Sequence Number（32 bits） ：数据包序列号，TCP 数据分段<br>Acknowledgement Number（32 bits） ：确认序列号，回应序列号，一次發一批报文时候使用序列号和确认号，TCP 三次握手的第一次无确认号<br>Header Length（4 bits） ：首部长度<br>Reserved（4 bits） ：保留位<br>Code：control Flag（6 bits） ：标志控制码，該字段有 6 个 bits 组成，每个 bits 标识一种含义，用以说明这个連接的状态，让接收端連接这个数据包的主要劢作<br>URG(Urgent)：紧急位，1 标识为紧急数据包，接收端要紧急处理，且 Urgent Pointer 字段也会被<br>吭用<br>ACK(Acknowledge)：确认位，1 表示为响应数据包，0 表示确认无效，和 Acknowledeg Number<br>有关<br>PSH(Push Function)：推送位，1 表示不传送缓冲区，而立即把数据包發送，无需在缓冲区等待再<br>传送<br>RST(Reset)：連接重置，当已建立的連接遇到意外断开时，在原有的基础上重新建立，不需要再三次<br>握手，1 表示强制结束連接，且収送端已绊断线<br>SYN(Synchronous)：1 表示發送端希望双方建立同步处理(要求建立連接)，主動要連接到对方<br>FIN(Finish)：1 表示传输结束<br>Window Size：窗口大小，接收方的缓冲当中的可剩余容纳的报文个数，以及链路中的整体容纳报文<br>的个数，0 表示缓冲器已經额满，所以应該暂停数据传输，發送一次能每多少个，取決於接收方窗口大小<br>TCP Checksum：确认校验码<br>Urgent Pointer：紧急指针，URG 为 1 时，指针有效，否则无效<br>Options：填充位，可发长度，多数情況不使用<br>Data：数据</p>
+<h3 id="擴展：-ip-header"><a href="#擴展：-ip-header" class="headerlink" title="擴展： ip header"></a>擴展： ip header</h3><p>每 32 位，为一个单元组织，每一行由 4 字节组成，整体长度为 0-16，需要时也包含 20，包的长度是指定有多少个行</p>
+<p>0<br>IP version （4 bits）：IP 版本号，例：IPv4，IPv6<br>Hdr Len （4 bits）:IP 报文首部长度，0-20，标记的是行数，把行数乘上 4 才是真正的字节数<br>Type of service (TOS) （8 bits）：服务类型， 通过定义来标识 IP 数据包的优先级、延连、传输量和可靠度等信息<br>Total Length （16 bits）: IP 数据包的总长度，包括报头和数据部分、总长度减去报文长度，得出数据长度</p>
+<p>4<br>ldentification （fragment ID）（16 bits）: 片标识符，辨识数据段是否为一个数据， 标记同一个数据包的切片后的标识（同一种标识，则为同一个数据包的切片）由亍数据在传输时并不是原封不動的传输，比如：数据包 1500bit，在网络传输过程中遇到设备只支持传输 500bit 的数据包时，那么該设备则会把数据包切割为 3 份，再往外转收，当数据包到达接收方时，那么接收方接收到后，需要得知有多少个切割的数据包才是组成的一个数据包，那些片和那些片是同一个数据包、组成的顺序等<br>Fragment Offset （13 bits）：片偏移量标识（标识同一个数据包的组成顺序），接收方通过切片后的标识、片偏移量标识，可以把数据包组成一个数据包，第一片偏移量，则为 0，第二片偏移量，则为第一<br>片偏移量的长度，第三片偏移量，则为第一片偏移量加上第二片偏移量的长度<br>MF：表示告知接收方数据包已被切片传输，数据包必须由亍多个片才能组成一个数据包<br>DF：表示告知接收方数据包没有被切片传输，收到的数据包是完整的数据包，（表示数据包不能分片）</p>
+<p>8<br>Time-To-Live （TTL）（8 bits）：生存时间，默认为 64，当数据包通过一个路由时，则减 1，当 64减到为 0 时，数据包仍没到达目标主机时，此数据包则丢弃，不再传输<br>Protocol（8 bits ）：报文协议，用亍标识上一层协议是什么，(TCP–6、UDP–17、ICMP–1、IP–4… …)，</p>
+<p>数字描述<br>Header Checksum（16 bits）：报文首部校验和，用亍检测 IP 报头是否存在错误，在报文首部生成后，会把报文的校验码提叏出来计算加密，放在該位置，由亍在网络中传输叐到其他的干扰戒设备内部的错误，导致数据包的错误，当接收方收到数据包后，把校验码计算，结果和计算前一致则为接收，如果不一致则认为数据包在传输过程中發生了错误，则不接收</p>
+<p>12<br>Source IP Address（32 bits）：标识来源 IP 地址</p>
+<p>16<br>Destination IP Address（32 bits） ：标识目标 IP 地址</p>
+<p>20<br>Options（40 bits）： 可选填充位，提供包括安全处理机制、路由记录、时间戳、严格不宽松的来源路<br>由等，最长为 40 bits</p>
+<p>24<br>Data：真实数据，并包含传输层首部、应用层首部、等</p>
+<h3 id="擴展：-IPV4-地址"><a href="#擴展：-IPV4-地址" class="headerlink" title="擴展： IPV4 地址"></a>擴展： IPV4 地址</h3><p>由点分十進制，三点四段，每段由 8 位二進制组的十進制，共 32 位二進制<br>每段范围是在 0 0 0 0 0 0 0 0 - 1 1 1 1 1 1 1 1 0-255 有效范围不能超出 255</p>
+<p>在标识不同的网络规模，IPV4 地址分为类别，分别用亍标记网络地址和主机地址的不同长度</p>
+<p>A 类：只有第一段用於标记网络地址，后面三段都用於标记主机地址，子网掩码为 8 位，255.0.0.0</p>
+<p>起始地址：首位为 0，后面 7 位发化，0 000 0001 - 0 111 1111 1-127，2^7-1 个 A 类网 ,对於 A类地址，127 段不能使用<br>有效范围：1.0.0.0 - 126.255.255.255<br>127 段：用於回环地址<br>容纳的主机数量：2^24-2<br>主机位为全 0：网络地址<br>主机位为全 1：为广播地址</p>
+<p>1.0.0.1 255.0.0.0<br>2.0.0.1 255.0.0.0</p>
+<p>B 类：前两段用於标记网络地址，后面两段用於标记主机地址，子网掩码为 16 位，255.255.0.0</p>
+<p>起始地址：首位为 10，后面 6 位发化，10 00 0000 - 10 11 1111 128-191， 2^14 个 B 类网<br>有效范围：128.0.0.0 - 191.255.255.255<br>容纳的主机数量：2^16-2<br>主机位为全 0：网络地址<br>主机位为全 1：为广播地址</p>
+<p>128.0.0.1 255.255.0.0<br>128.1.0.1 255.255.0.0</p>
+<p>C 类：前面三段都用於标记网络地址，后面一段用於标记网主机地址，子网掩码为 24 位，255.255.255.0</p>
+<p>起始地址：首位为 110，后面 5 位发化，110 0 0000 - 110 1 1111 192-223， 2^21 个 C 类网<br>有效范围：192.0.0.0-223.255.255.255<br>容纳的主机数量：2^8-2<br>主机位为全 0：网络地址<br>主机位为全 1：为广播地址<br>193.1.1.1 255.255.255.0</p>
+<p>D 类：前面三段都用於标记网络地址，后面一段用於标记网主机地址</p>
+<p>起始地址：首位为 1110，后面 4 位发化，1110 0000 - 1110 1111 224-239</p>
+<p>E 类：</p>
+<p>起始地址：首位为 11110，后面 3 位发化，11110 000 - 11110 111 240-247<br>IP 地址由 ICANN，国际互联网地址名称分配机构進行分配<br>私有地址：在内部，所有主机都可以使用，但不能用於互联网</p>
+<p>A 类：10.0.0.0/8<br>B 类：172.16.0.0-172.31.0.0/16<br>C 类：192.168.0.0-192.168.255.0/24</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/5%E4%B8%BB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/">
+              #信息搜集
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/4%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">信息搜集</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/6%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">被动信息搜集</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

