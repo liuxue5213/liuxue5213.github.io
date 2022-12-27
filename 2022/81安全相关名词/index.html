@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>81安全相关名词 | JohnScott2046的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,网络安全," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott2046</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>81安全相关名词</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2022-08-22
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="81安全相关名词"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="安全相关名词"><a href="#安全相关名词" class="headerlink" title="安全相关名词"></a>安全相关名词</h2><hr>
+<p>title: 渗透测试行业术语<br>date: 2021-08-02 19:27:10<br>categories: 网络安全<br>tags:</p>
+<ul>
+<li>网络安全</li>
+</ul>
+<hr>
+<p>网络安全(一)渗透测试行业术语</p>
+<!-- more -->
+
+<h2 id="渗透测试行业术语"><a href="#渗透测试行业术语" class="headerlink" title="渗透测试行业术语"></a>渗透测试行业术语</h2><h3 id="1-肉鸡"><a href="#1-肉鸡" class="headerlink" title="1. 肉鸡"></a>1. 肉鸡</h3><p>比喻可以随意被我们控制的电脑</p>
+<h3 id="2-木马"><a href="#2-木马" class="headerlink" title="2. 木马"></a>2. 木马</h3><p>伪装成正常程序的恶意程序，一旦运行可以控制电脑</p>
+<h3 id="3-远控"><a href="#3-远控" class="headerlink" title="3. 远控"></a>3. 远控</h3><p>远距离控制另外一台电脑</p>
+<h3 id="4-网页木马"><a href="#4-网页木马" class="headerlink" title="4.网页木马"></a>4.网页木马</h3><p>伪装成正常页面的恶意页面，一旦访问便会下载木马自动执行</p>
+<h3 id="5-黑页"><a href="#5-黑页" class="headerlink" title="5. 黑页"></a>5. 黑页</h3><p>攻击者在目标网站放的嘲讽页面</p>
+<h3 id="6-挂马"><a href="#6-挂马" class="headerlink" title="6. 挂马"></a>6. 挂马</h3><p>将木马写进目标网页文件中，让访问者中马</p>
+<h3 id="7-大马"><a href="#7-大马" class="headerlink" title="7. 大马"></a>7. 大马</h3><p>功能强大的网页后门，能执行命令，操作文件，连接数据库</p>
+<h3 id="8-小马"><a href="#8-小马" class="headerlink" title="8. 小马"></a>8. 小马</h3><p>功能单一，一般用来传输大马</p>
+<h3 id="9-一句话后门"><a href="#9-一句话后门" class="headerlink" title="9. 一句话后门"></a>9. 一句话后门</h3><p>对网站进行控制的一段代码</p>
+<h3 id="10-后门"><a href="#10-后门" class="headerlink" title="10. 后门"></a>10. 后门</h3><p>相当于控制目标主机的备用钥匙</p>
+<h3 id="11-拖库"><a href="#11-拖库" class="headerlink" title="11. 拖库"></a>11. 拖库</h3><p>从数据库导出数据</p>
+<h3 id="12-社工库"><a href="#12-社工库" class="headerlink" title="12. 社工库"></a>12. 社工库</h3><p>包含很多隐私信息的库</p>
+<h3 id="13-撞库"><a href="#13-撞库" class="headerlink" title="13. 撞库"></a>13. 撞库</h3><p>用已有数据库进行攻击</p>
+<h3 id="14-提权"><a href="#14-提权" class="headerlink" title="14. 提权"></a>14. 提权</h3><p>提升在服务器中的权限</p>
+<h3 id="15-网络钓鱼"><a href="#15-网络钓鱼" class="headerlink" title="15. 网络钓鱼"></a>15. 网络钓鱼</h3><p>用欺骗性的电子邮件或者伪造的站点来进行诈骗活动。</p>
+<h3 id="16-社会工程学攻击"><a href="#16-社会工程学攻击" class="headerlink" title="16. 社会工程学攻击"></a>16. 社会工程学攻击</h3><p>通过对被攻击者的心理弱点、本能反应、好奇心、信任、贪婪等心理陷阱所采取的欺骗、伤害等手段</p>
+<h3 id="17-rookit"><a href="#17-rookit" class="headerlink" title="17. rookit"></a>17. rookit</h3><p>攻击者用来隐藏自己的行踪和保留root访问权限的工具</p>
+<h3 id="18-IPC"><a href="#18-IPC" class="headerlink" title="18. IPC"></a>18. IPC</h3><p>是共享“命名管道”的资源，可通过验证用户名和密码获得相应的权限，在远程管理计算机和查看计算机的共享资源时使用。</p>
+<h3 id="19-弱口令"><a href="#19-弱口令" class="headerlink" title="19. 弱口令"></a>19. 弱口令</h3><p>容易被猜解的密码</p>
+<h3 id="20-默认共享"><a href="#20-默认共享" class="headerlink" title="20. 默认共享"></a>20. 默认共享</h3><p>WINDOWS2000/XP/2003 系统开启共享服务时自动开启所有硬盘的共享</p>
+<h3 id="21-shell"><a href="#21-shell" class="headerlink" title="21. shell"></a>21. shell</h3><p>命令执行环境</p>
+<h3 id="22-交互式shell"><a href="#22-交互式shell" class="headerlink" title="22. 交互式shell"></a>22. 交互式shell</h3><p>shell等待输入，并且执行输入的命令</p>
+<h3 id="23-webshell"><a href="#23-webshell" class="headerlink" title="23. webshell"></a>23. webshell</h3><p>以asp、php、jsp或者cgi等网页文件形式存在的一种命令执行环境。</p>
+<h3 id="24-溢出"><a href="#24-溢出" class="headerlink" title="24. 溢出"></a>24. 溢出</h3><p>程序对接受的输入数据没有执行有效的检测而导致错误，造成程序崩溃或者执行攻击者的命令。有堆溢出栈溢出。</p>
+<h3 id="25-注入"><a href="#25-注入" class="headerlink" title="25. 注入"></a>25. 注入</h3><p>用户提交的数据被当做指令进行处理</p>
+<h3 id="26-注入点"><a href="#26-注入点" class="headerlink" title="26. 注入点"></a>26. 注入点</h3><p>类似于回显点</p>
+<h3 id="27-旁站入侵"><a href="#27-旁站入侵" class="headerlink" title="27. 旁站入侵"></a>27. 旁站入侵</h3><p>同一服务器上有多个站点，通过入侵其中一个站点，通过提权夸目录访问其他站点</p>
+<h3 id="28-C段扫描"><a href="#28-C段扫描" class="headerlink" title="28. C段扫描"></a>28. C段扫描</h3><p>拿下同一网段的服务器，再以该服务器为跳板，去拿下其他同网段内的服务器</p>
+<h3 id="29-内网"><a href="#29-内网" class="headerlink" title="29. 内网"></a>29. 内网</h3><p>局域网。如果IP地址是10.0.0.0—10.255.255.255，172.16.0.0—172.31.255.255，192.168.0.0—192.168.255.255</p>
+<h3 id="30-外网"><a href="#30-外网" class="headerlink" title="30. 外网"></a>30. 外网</h3><p>直接连入Internet，可以与互联网上任意一台电脑互相访问。</p>
+<h3 id="31-中间人攻击"><a href="#31-中间人攻击" class="headerlink" title="31. 中间人攻击"></a>31. 中间人攻击</h3><p>MITM攻击，以中间人劫持的方式进行攻击</p>
+<h3 id="32-端口"><a href="#32-端口" class="headerlink" title="32. 端口"></a>32. 端口</h3><p>相当于数据的传输通道，用于接受数据，然后传输给相应的服务。一般一个端口对应一个服务。</p>
+<h3 id="33-免杀"><a href="#33-免杀" class="headerlink" title="33. 免杀"></a>33. 免杀</h3><p>逃过杀毒软件的查杀</p>
+<h3 id="34-加壳"><a href="#34-加壳" class="headerlink" title="34. 加壳"></a>34. 加壳</h3><p>利用特殊算法，将EXE可执行程序或者DDL动态连接库文件的编码进行改变（比如实现压缩、加密），以达到缩小文件体积或者加密程序编码，甚至是躲过杀毒软件查杀的目的。还可以保护软件不被非法修改或反编译等。</p>
+<h3 id="35-花指令"><a href="#35-花指令" class="headerlink" title="35. 花指令"></a>35. 花指令</h3><p>几句汇编指令，让汇编语句进行一些跳转，使得杀毒软件不能正常的判断病毒文件的构造</p>
+<h3 id="36-TCP-IP"><a href="#36-TCP-IP" class="headerlink" title="36. TCP/IP"></a>36. TCP/IP</h3><p>网络通信协议，规范了网络上所有的通信设备之间的通信数据格式。</p>
+<h3 id="37-路由器"><a href="#37-路由器" class="headerlink" title="37. 路由器"></a>37. 路由器</h3><p>将IP数据包正确的送到目的地的网络设备，因此也叫IP路由器</p>
+<h3 id="38-蜜罐"><a href="#38-蜜罐" class="headerlink" title="38. 蜜罐"></a>38. 蜜罐</h3><p>好比是情报收集系统，故意让人来攻击，因此来收集黑客的技术手段、所用工具、以及掌握他们的社交</p>
+<h3 id="39-拒绝服务攻击"><a href="#39-拒绝服务攻击" class="headerlink" title="39. 拒绝服务攻击"></a>39. 拒绝服务攻击</h3><p>DDOS！</p>
+<h3 id="40-CC攻击"><a href="#40-CC攻击" class="headerlink" title="40. CC攻击"></a>40. CC攻击</h3><p>攻击者借助代理服务器生成指向受害主机的合法请求，实现DDOS的伪装</p>
+<h3 id="41-脚本注入攻击"><a href="#41-脚本注入攻击" class="headerlink" title="41. 脚本注入攻击"></a>41. 脚本注入攻击</h3><p>脚本就是漏洞类型，比如SQL注入攻击</p>
+<h3 id="42-加密技术"><a href="#42-加密技术" class="headerlink" title="42. 加密技术"></a>42. 加密技术</h3><p>保密手段，利用技术手段将重要数据转换成乱码</p>
+<h3 id="43-局域网内部的ARP攻击"><a href="#43-局域网内部的ARP攻击" class="headerlink" title="43. 局域网内部的ARP攻击"></a>43. 局域网内部的ARP攻击</h3><p>ARP（地址解析协议），作用是通过目标设备的IP地址，来查询目标设备的MAC地址，以保证通信的进行。攻击者向对方计算机不断发送有欺诈性质的ARP数据包，数据包内包含有与当前设备重复的MAC地址，使对方在回应报文时，由于简单的地址重复错误而导致不能进行正常的网络通<br>信。容易造成目标无法正常上网，以及弹框“本机的XX段硬件地址与网络中的XX段地址冲突”</p>
+<h3 id="44-欺骗攻击，有哪些攻击方式"><a href="#44-欺骗攻击，有哪些攻击方式" class="headerlink" title="44. 欺骗攻击，有哪些攻击方式"></a>44. 欺骗攻击，有哪些攻击方式</h3><p>网络欺骗技术主要有：HONEYPOT和分布式HONEYPOT 、欺骗空间技术等。</p>
+<p>主要方式有：IP欺骗、ARP欺骗、DNS欺骗、Web欺骗、电子邮件欺骗、源路由欺骗（通过指定路由，以假冒身份与其他主机进行合法通信或发送假报文，使受攻击主机出现错误动作）、地址欺骗（包括伪造源地址和伪造中间站点）等。</p>
+<h3 id="45-嗅探"><a href="#45-嗅探" class="headerlink" title="45. 嗅探"></a>45. 嗅探</h3><p>捕获在网络中传输的数据信息</p>
+<h3 id="46-跳板"><a href="#46-跳板" class="headerlink" title="46. 跳板"></a>46. 跳板</h3><p>一个具有辅助作用的机器，利用该机器控制其他主机，一般和肉鸡连用</p>
+<h3 id="47-权限"><a href="#47-权限" class="headerlink" title="47. 权限"></a>47. 权限</h3><p>控制用户可以访问的内容</p>
+<h3 id="48-IP地址"><a href="#48-IP地址" class="headerlink" title="48. IP地址"></a>48. IP地址</h3><p>相当于电脑的身份证，长度32位，由4个数值部分组成，每个数值部分可取值0-255，各部分之间用“-”分开。</p>
+<h3 id="49-RARP反向地址解析协议"><a href="#49-RARP反向地址解析协议" class="headerlink" title="49. RARP反向地址解析协议"></a>49. RARP反向地址解析协议</h3><p>将硬件地址映射到网络地址</p>
+<h3 id="50-UDP-用户数据报协议"><a href="#50-UDP-用户数据报协议" class="headerlink" title="50. UDP 用户数据报协议"></a>50. UDP 用户数据报协议</h3><p>无连接的传输层协议，提供面向事务的简单不可靠信息传送服务</p>
+<h3 id="51-TCP协议"><a href="#51-TCP协议" class="headerlink" title="51. TCP协议"></a>51. TCP协议</h3><p>面向连接的、可靠的、基于字节流的传输层通信协议。SYN-&gt;SYN-ACK-&gt;ACK</p>
+<h3 id="52-FTP文件传输协议"><a href="#52-FTP文件传输协议" class="headerlink" title="52. FTP文件传输协议"></a>52. FTP文件传输协议</h3><p>允许用户以文件操作的方式（文件的增、删、改、查、传送等）与另一主机相互通信。</p>
+<h3 id="53-SMTP简单邮件传送协议"><a href="#53-SMTP简单邮件传送协议" class="headerlink" title="53. SMTP简单邮件传送协议"></a>53. SMTP简单邮件传送协议</h3><p>系统之间传送电子邮件</p>
+<h3 id="54-TELNET终端协议"><a href="#54-TELNET终端协议" class="headerlink" title="54. TELNET终端协议"></a>54. TELNET终端协议</h3><p>允许用户以虚拟终端的方式访问远程主机</p>
+<h3 id="55-HTTP协议"><a href="#55-HTTP协议" class="headerlink" title="55. HTTP协议"></a>55. HTTP协议</h3><p>简单的请求—响应协议，运行在TCP之上，指定了客户端可能发送给服务器什么样的消息以及得到什么样的响应。</p>
+<h3 id="56-HTTPS安全超文本传输协议"><a href="#56-HTTPS安全超文本传输协议" class="headerlink" title="56. HTTPS安全超文本传输协议"></a>56. HTTPS安全超文本传输协议</h3><p>加密的HTTP协议</p>
+<h3 id="57-TFTP"><a href="#57-TFTP" class="headerlink" title="57. TFTP"></a>57. TFTP</h3><p>简单文件传输协议</p>
+<h3 id="58-ICMP协议"><a href="#58-ICMP协议" class="headerlink" title="58. ICMP协议"></a>58. ICMP协议</h3><p>Inter控制消息协议。ping的时候用此协议。操作系统规定ICMP数据包最大不超过64KB，而如果发送的ICMP包超过64KB，就会导致主机出现内存分配错误，进而导致耗费大量的资源处理，疲于奔命，最终瘫痪，死机。</p>
+<h3 id="59-DNS协议"><a href="#59-DNS协议" class="headerlink" title="59. DNS协议"></a>59. DNS协议</h3><p>将域名解析成IP，也可以将IP转换成域名</p>
+<h3 id="60-root"><a href="#60-root" class="headerlink" title="60. root"></a>60. root</h3><p>最高权限的用户，也就是超级管理员</p>
+<h3 id="61-EXP-Exploit"><a href="#61-EXP-Exploit" class="headerlink" title="61. EXP/Exploit"></a>61. EXP/Exploit</h3><p>漏洞利用代码，运行之后对目标进行攻击</p>
+<h3 id="62-POC-Proof-of-Concept"><a href="#62-POC-Proof-of-Concept" class="headerlink" title="62. POC/Proof of Concept"></a>62. POC/Proof of Concept</h3><p>漏洞验证代码，检测目标是否存在对应漏洞的一个程序而已。</p>
+<h3 id="63-Payload"><a href="#63-Payload" class="headerlink" title="63. Payload"></a>63. Payload</h3><p>指“成功”exploit之后，真正在目标系统执行的代码或指令。</p>
+<h3 id="64-ShellCode"><a href="#64-ShellCode" class="headerlink" title="64. ShellCode"></a>64. ShellCode</h3><p>shell代码，是Payload的一种，由于其正向/反向shell而得名。</p>
+<h3 id="65-脱壳"><a href="#65-脱壳" class="headerlink" title="65. 脱壳"></a>65. 脱壳</h3><p>将保护软件的壳脱掉，方便修改</p>
+<h3 id="66-蠕虫病毒"><a href="#66-蠕虫病毒" class="headerlink" title="66. 蠕虫病毒"></a>66. 蠕虫病毒</h3><p>通常是一个脚本程序能调用功能更大的组件来完成自己的功能，比如XSS蠕虫。</p>
+<h3 id="67-LAN"><a href="#67-LAN" class="headerlink" title="67. LAN"></a>67. LAN</h3><p>局域网，LAN上所有的网络属于同一个内网</p>
+<h3 id="68-Proxy"><a href="#68-Proxy" class="headerlink" title="68. Proxy"></a>68. Proxy</h3><p>代理</p>
+<h3 id="69-HTML"><a href="#69-HTML" class="headerlink" title="69. HTML"></a>69. HTML</h3><p>编写网页的计算机语言</p>
+<h3 id="70-CSS"><a href="#70-CSS" class="headerlink" title="70. CSS"></a>70. CSS</h3><p>美化网页内容的作用</p>
+<h3 id="71-Javascript"><a href="#71-Javascript" class="headerlink" title="71. Javascript"></a>71. Javascript</h3><p>增加网页功能</p>
+<h3 id="72-CMS"><a href="#72-CMS" class="headerlink" title="72. CMS"></a>72. CMS</h3><p>网页模板</p>
+<h3 id="73-独立服务器"><a href="#73-独立服务器" class="headerlink" title="73. 独立服务器"></a>73. 独立服务器</h3><p>独立服务器整体硬件都是独立的，可以部署任何想要的东西</p>
+<h3 id="74-VPS"><a href="#74-VPS" class="headerlink" title="74. VPS"></a>74. VPS</h3><p>操作系统虚拟化技术，多用于虚拟机。</p>
+<h3 id="75-域名"><a href="#75-域名" class="headerlink" title="75. 域名"></a>75. 域名</h3><p>IP地址的别称</p>
+<h3 id="76-CTF（夺旗赛）"><a href="#76-CTF（夺旗赛）" class="headerlink" title="76. CTF（夺旗赛）"></a>76. CTF（夺旗赛）</h3><p>网络安全技术人员之间技术竞技的一种比赛形式</p>
+<h3 id="77-awd攻防对抗赛"><a href="#77-awd攻防对抗赛" class="headerlink" title="77. awd攻防对抗赛"></a>77. awd攻防对抗赛</h3><p>分为攻击者和防守者，攻者得分，失者扣分。也就是攻击者攻击别人的靶机获得Flag可以得分，被攻击的要扣分，在攻击的同时也要保护好自己的主机不被别人得分，以防扣分。</p>
+<h3 id="78-CVE"><a href="#78-CVE" class="headerlink" title="78. CVE"></a>78. CVE</h3><p>漏洞披露</p>
+<h3 id="79-CNVD"><a href="#79-CNVD" class="headerlink" title="79. CNVD"></a>79. CNVD</h3><p>国家信息安全漏洞共享平台</p>
+<h3 id="80-0day"><a href="#80-0day" class="headerlink" title="80. 0day"></a>80. 0day</h3><p>还未被公布的或者还没有相应补丁的漏洞</p>
+<h3 id="81-1day"><a href="#81-1day" class="headerlink" title="81. 1day"></a>81. 1day</h3><p>刚发布的漏洞，虽然官网有补丁，但是依旧有很多主机没安装补丁的漏洞</p>
+<h3 id="82-Nday"><a href="#82-Nday" class="headerlink" title="82. Nday"></a>82. Nday</h3><p>已经公布出来的0day</p>
+<h3 id="83-APT攻击"><a href="#83-APT攻击" class="headerlink" title="83. APT攻击"></a>83. APT攻击</h3><p>高级可持续性攻击，指组织或者小团体利用先进的技术手段对特定目标进行长期可持续经网络攻击的攻击形式。</p>
+<h3 id="84-渗透测试"><a href="#84-渗透测试" class="headerlink" title="84. 渗透测试"></a>84. 渗透测试</h3><p>黑盒测试、白盒测试、灰盒测试</p>
+<h3 id="85-暗网"><a href="#85-暗网" class="headerlink" title="85. 暗网"></a>85. 暗网</h3><p>隐藏的网络，需要使用特定的软件、配置或者授权才能登录。一般用Tor洋葱浏览器。暗网是利用加密传输、P2P对等网络、多点中继混淆等，为用户提供匿名的互联网信息访问的一类技术手段。非常的匿名。</p>
+<h3 id="86-恶意软件"><a href="#86-恶意软件" class="headerlink" title="86. 恶意软件"></a>86. 恶意软件</h3><p>可以达到非授权控制计算机或窃取计算机数据等多种恶意行为的程序。</p>
+<h3 id="87-间谍软件"><a href="#87-间谍软件" class="headerlink" title="87. 间谍软件"></a>87. 间谍软件</h3><p>在用户不知情的情况下，在其电脑、手机上安装后门，具备手机用户信息、监听、偷拍的软件</p>
+<h3 id="88-洪水攻击"><a href="#88-洪水攻击" class="headerlink" title="88. 洪水攻击"></a>88. 洪水攻击</h3><p>攻击者对网络资源发送过量数据时就发生了洪水攻击，只要攻击流量足够大，就可以将防御手段打穿。DDOS也属于一种。</p>
+<h3 id="89-SYN攻击"><a href="#89-SYN攻击" class="headerlink" title="89. SYN攻击"></a>89. SYN攻击</h3><p>利用操作系统TCP协议设计上的问题执行的DDOS，涉及TCP建立连接时三次握手</p>
+<h3 id="90-DoS攻击"><a href="#90-DoS攻击" class="headerlink" title="90. DoS攻击"></a>90. DoS攻击</h3><p>拒绝服务攻击。攻击者通过利用漏洞或发送大量的请求导致攻击对象无法访问网站或网络无法被访问。</p>
+<h3 id="91-DDoS"><a href="#91-DDoS" class="headerlink" title="91. DDoS"></a>91. DDoS</h3><p>分布式DoS攻击，通常是多个肉鸡一起向你发送网络请求，导致网络阻塞而不能正常上网。</p>
+<h3 id="92-抓鸡"><a href="#92-抓鸡" class="headerlink" title="92. 抓鸡"></a>92. 抓鸡</h3><p>设法控制其电脑，将其沦为肉鸡</p>
+<h3 id="93-端口扫描"><a href="#93-端口扫描" class="headerlink" title="93. 端口扫描"></a>93. 端口扫描</h3><p>发送一组端口扫描信息，通过该信息了解到可以从哪里探寻到攻击弱点，并了解其提供的计算机网络服务类型，试图以此入侵某计算机</p>
+<h3 id="94-反弹端口"><a href="#94-反弹端口" class="headerlink" title="94. 反弹端口"></a>94. 反弹端口</h3><p>让被控端主动连接控制端</p>
+<h3 id="95-鱼叉攻击"><a href="#95-鱼叉攻击" class="headerlink" title="95. 鱼叉攻击"></a>95. 鱼叉攻击</h3><p>让欺骗性的电子邮件看起来更加可信的网络钓鱼攻击。</p>
+<h3 id="96-钓鲸攻击"><a href="#96-钓鲸攻击" class="headerlink" title="96. 钓鲸攻击"></a>96. 钓鲸攻击</h3><p>针对高级管理人员和组织内其他高级人员的网络钓鱼攻击</p>
+<h3 id="97-水坑攻击"><a href="#97-水坑攻击" class="headerlink" title="97. 水坑攻击"></a>97. 水坑攻击</h3><p>先分析目标的上网活动规律，寻找攻击目标经常访问网站的弱点，先将此网站植入攻击代码，一旦攻击目标访问该网站就会“中招”</p>
+<h3 id="98-C2（Command-and-Control）"><a href="#98-C2（Command-and-Control）" class="headerlink" title="98. C2（Command and Control）"></a>98. C2（Command and Control）</h3><p>命令行控制常见于APT攻击场景中，攻击者与被攻击目标机器上恶意软件进行交互。</p>
+<h3 id="99-供应链攻击"><a href="#99-供应链攻击" class="headerlink" title="99. 供应链攻击"></a>99. 供应链攻击</h3><p>黑客攻击目标机构的合作伙伴，并以该合作伙伴为跳板，达到渗透目标用户的目的。类似水坑攻击。</p>
+<h3 id="100-渗透"><a href="#100-渗透" class="headerlink" title="100. 渗透"></a>100. 渗透</h3><p>通过扫描检测网络设备及系统有么有安全漏洞，有的话就入侵，就像一滴水透过一块有漏洞的木板，渗透成功就是入侵。</p>
+<h3 id="101-横移"><a href="#101-横移" class="headerlink" title="101. 横移"></a>101. 横移</h3><p>攻击者入侵后，从目标机器向内部网络进行拓展，搜寻控制更多的系统</p>
+<h3 id="102-暗链"><a href="#102-暗链" class="headerlink" title="102. 暗链"></a>102. 暗链</h3><p>看不见的网站链接，类似于友情链接，有效提高网站权重。</p>
+<h3 id="103-暴库"><a href="#103-暴库" class="headerlink" title="103. 暴库"></a>103. 暴库</h3><p>通过恶意代码让网站爆出其他一些敏感数据</p>
+<h3 id="104-薅羊毛"><a href="#104-薅羊毛" class="headerlink" title="104. 薅羊毛"></a>104. 薅羊毛</h3><p>指网赚一族利用各种网络金融产品或红包推广线下抽成赚钱。</p>
+<h3 id="105-BEC（商业电子邮件攻击）"><a href="#105-BEC（商业电子邮件攻击）" class="headerlink" title="105. BEC（商业电子邮件攻击）"></a>105. BEC（商业电子邮件攻击）</h3><p>针对高管人员的攻击，攻击者通常冒充决策者的邮件，来说服/诱骗高管短时间完成经济交易。</p>
+<h3 id="106-电信诈骗"><a href="#106-电信诈骗" class="headerlink" title="106. 电信诈骗"></a>106. 电信诈骗</h3><p>通过电话、网络和短信方式，编造虚假信息，设置骗局，诱使受害人打款或转账，对受害人实施的犯罪行为。</p>
+<h3 id="107-杀猪盘"><a href="#107-杀猪盘" class="headerlink" title="107. 杀猪盘"></a>107. 杀猪盘</h3><p>属于电信诈骗的一种，是一种网络交友诱导股票投资、赌博等类型的诈骗，指放长线“养猪”诈骗，养的越久，诈骗得越狠。</p>
+<h3 id="108-黑产"><a href="#108-黑产" class="headerlink" title="108. 黑产"></a>108. 黑产</h3><p>以互联网作为媒介，以网络技术为主要手段，来进行的非法交易。比如非法的数据交易产业。</p>
+<h3 id="109-黑帽黑客"><a href="#109-黑帽黑客" class="headerlink" title="109. 黑帽黑客"></a>109. 黑帽黑客</h3><p>以非法目的进行黑客攻击的人，即无授权的渗透。</p>
+<h3 id="110-白帽黑客"><a href="#110-白帽黑客" class="headerlink" title="110. 白帽黑客"></a>110. 白帽黑客</h3><p>有授权的渗透攻击</p>
+<h3 id="111-红帽黑客"><a href="#111-红帽黑客" class="headerlink" title="111. 红帽黑客"></a>111. 红帽黑客</h3><p>正义的白帽黑客 ，主要利用自己掌握的技术去维护国内网络安全的人。</p>
+<h3 id="112-红队"><a href="#112-红队" class="headerlink" title="112. 红队"></a>112. 红队</h3><p>攻防演习的攻击队伍</p>
+<h3 id="113-蓝队"><a href="#113-蓝队" class="headerlink" title="113. 蓝队"></a>113. 蓝队</h3><p>攻防演习的防守队伍</p>
+<h3 id="114-紫队"><a href="#114-紫队" class="headerlink" title="114. 紫队"></a>114. 紫队</h3><p>攻防演习的监理方或裁判</p>
+<h3 id="115-加密机"><a href="#115-加密机" class="headerlink" title="115. 加密机"></a>115. 加密机</h3><p>主机加密的设备，与主机之间使用的是TCP/IP协议通信。</p>
+<h3 id="116-CA证书"><a href="#116-CA证书" class="headerlink" title="116. CA证书"></a>116. CA证书</h3><p>为实现双方安全通信提供了电子认证</p>
+<h3 id="117-SSL证书"><a href="#117-SSL证书" class="headerlink" title="117. SSL证书"></a>117. SSL证书</h3><p>数字证书的一种，类似于驾驶证的副本，因为配置在服务器上，也称为SSL服务器证书</p>
+<h3 id="118-防火墙"><a href="#118-防火墙" class="headerlink" title="118. 防火墙"></a>118. 防火墙</h3><p>保护计算机的安全，可以有选择性的接受外部访问。</p>
+<h3 id="119-IDS"><a href="#119-IDS" class="headerlink" title="119. IDS"></a>119. IDS</h3><p>入侵检测系统，对黑客发起的攻击或者攻击之前就检测，并加以拦截。IDS不同于防火墙，防火墙只能屏蔽入侵，而IDS却能在入侵发生之前就作出反应。</p>
+<h3 id="120-NIDS"><a href="#120-NIDS" class="headerlink" title="120. NIDS"></a>120. NIDS</h3><p>网络入侵检测系统，主要用于检测Hacker或Cracker</p>
+<h3 id="121-IPS"><a href="#121-IPS" class="headerlink" title="121. IPS"></a>121. IPS</h3><p>入侵防御系统，一般作为防火墙和防病毒软件的补充来投入使用。</p>
+<h3 id="122-杀毒软件"><a href="#122-杀毒软件" class="headerlink" title="122. 杀毒软件"></a>122. 杀毒软件</h3><p>用于保护电脑，防御病毒的软件</p>
+<h3 id="123-反病毒引擎"><a href="#123-反病毒引擎" class="headerlink" title="123. 反病毒引擎"></a>123. 反病毒引擎</h3><p>一套判断特定程序的行为是否为病毒程序（包括可疑的）的技术机制</p>
+<h3 id="124-防毒墙"><a href="#124-防毒墙" class="headerlink" title="124. 防毒墙"></a>124. 防毒墙</h3><p>类似杀毒软件，主要部署在网络出口，用于对病毒进行扫描和查杀。</p>
+<h3 id="125-告警"><a href="#125-告警" class="headerlink" title="125. 告警"></a>125. 告警</h3><p>指网络安全设备对攻击行为产生的警报</p>
+<h3 id="126-误报"><a href="#126-误报" class="headerlink" title="126. 误报"></a>126. 误报</h3><p>无效告警</p>
+<h3 id="127-漏报"><a href="#127-漏报" class="headerlink" title="127. 漏报"></a>127. 漏报</h3><p>检测出非法行为但是没有告警</p>
+<h3 id="128-NAC"><a href="#128-NAC" class="headerlink" title="128. NAC"></a>128. NAC</h3><p>网络准入控制，宗旨是防止病毒和蠕虫等新兴黑客技术对企业安全造成危害</p>
+<h3 id="129-漏扫"><a href="#129-漏扫" class="headerlink" title="129. 漏扫"></a>129. 漏扫</h3><p>漏洞扫描，基于漏洞数据库的扫描，从而发现可利用漏洞的一种安全检测行为。</p>
+<h3 id="130-UTM"><a href="#130-UTM" class="headerlink" title="130. UTM"></a>130. UTM</h3><p>统一威胁管理，即将不同的设备的安全能力集中在同一网关上，实现统一管理和运维。</p>
+<h3 id="131-网闸"><a href="#131-网闸" class="headerlink" title="131. 网闸"></a>131. 网闸</h3><p>连接两个独立主机系统的信息安全设备。其中以数据文件形式进行的无协议摆渡。</p>
+<h3 id="132-堡垒机"><a href="#132-堡垒机" class="headerlink" title="132. 堡垒机"></a>132. 堡垒机</h3><p>运用各种技术手段监控和记录运维人员对网络内的服务器、网络设备、安全设备、数据库等设备的操作行为，以便集中报警、及时处理及审计定责。</p>
+<h3 id="133-数据库审计"><a href="#133-数据库审计" class="headerlink" title="133. 数据库审计"></a>133. 数据库审计</h3><p>实时记录网络上的数据库活动，对数据遭受的攻击进行告警，对攻击行为进行阻断等。</p>
+<h3 id="134-DLP"><a href="#134-DLP" class="headerlink" title="134. DLP"></a>134. DLP</h3><p>数据防泄露</p>
+<h3 id="135-VPN"><a href="#135-VPN" class="headerlink" title="135. VPN"></a>135. VPN</h3><p>虚拟专用网，通过对数据包的加密和数据包目标地址的转换实现远程访问</p>
+<h3 id="136-SD—WAN"><a href="#136-SD—WAN" class="headerlink" title="136. SD—WAN"></a>136. SD—WAN</h3><p>软件定义广域网，用于连接企业网络、数据中心、互联网应用及云服务</p>
+<h3 id="137-网关"><a href="#137-网关" class="headerlink" title="137. 网关"></a>137. 网关</h3><p>通常指路由器、防火墙、IDS、VPN等边界网络设备</p>
+<h3 id="138-WAF"><a href="#138-WAF" class="headerlink" title="138. WAF"></a>138. WAF</h3><p>Web应用防护墙</p>
+<h3 id="139-SOC"><a href="#139-SOC" class="headerlink" title="139. SOC"></a>139. SOC</h3><p>安全运行中心，协助管理员进行时间分析、风险分析、预警管理和应急响应处理的安全管理系统。</p>
+<h3 id="140-LAS"><a href="#140-LAS" class="headerlink" title="140. LAS"></a>140. LAS</h3><p>日志审计系统，主要功能是提供日志收集、检索和分析能力。</p>
+<h3 id="141-NOC"><a href="#141-NOC" class="headerlink" title="141. NOC"></a>141. NOC</h3><p>网络操作中心或网络运行中心，是远程网络通讯的管理、监视和维护中心。</p>
+<h3 id="142-SIEM"><a href="#142-SIEM" class="headerlink" title="142. SIEM"></a>142. SIEM</h3><p>安全信息和事件管理</p>
+<h3 id="143-上网行为管理"><a href="#143-上网行为管理" class="headerlink" title="143. 上网行为管理"></a>143. 上网行为管理</h3><p>帮助互联网用户控制和管理对互联网使用的设备。</p>
+<h3 id="144-沙箱"><a href="#144-沙箱" class="headerlink" title="144. 沙箱"></a>144. 沙箱</h3><p>一个用于安全运行程序的机制，常常用来运行不可信的程序。</p>
+<h3 id="145-沙箱逃逸"><a href="#145-沙箱逃逸" class="headerlink" title="145. 沙箱逃逸"></a>145. 沙箱逃逸</h3><p>一种识别沙箱环境、并利用静默、欺骗等技术，绕过沙箱检测的现象。</p>
+<h3 id="146-网络靶场"><a href="#146-网络靶场" class="headerlink" title="146. 网络靶场"></a>146. 网络靶场</h3><p>模拟真实环境的平台</p>
+<h3 id="147-加密技术"><a href="#147-加密技术" class="headerlink" title="147. 加密技术"></a>147. 加密技术</h3><p>算法和秘钥</p>
+<h3 id="148-黑名单"><a href="#148-黑名单" class="headerlink" title="148. 黑名单"></a>148. 黑名单</h3><p>在名单上的软件、地址等，都被认为是违法的、不可访问的。</p>
+<h3 id="149-白名单"><a href="#149-白名单" class="headerlink" title="149. 白名单"></a>149. 白名单</h3><p>在名单上的软件、地址等，都被认为是合法的、可访问的。</p>
+<h3 id="150-边界防御"><a href="#150-边界防御" class="headerlink" title="150. 边界防御"></a>150. 边界防御</h3><p>以网络边界为核心的防御模式，将所有的安全威胁都挡在外网。</p>
+<h3 id="151-南北向流量"><a href="#151-南北向流量" class="headerlink" title="151. 南北向流量"></a>151. 南北向流量</h3><p>指数据中心内外部通信所产生的流量</p>
+<h3 id="152-东西向流量"><a href="#152-东西向流量" class="headerlink" title="152. 东西向流量"></a>152. 东西向流量</h3><p>指数据中心内部不同主机之间通信所产生的流量</p>
+<h3 id="153-规则库"><a href="#153-规则库" class="headerlink" title="153. 规则库"></a>153. 规则库</h3><p>类似于黑白名单，用于存储大量安全规则。也可以比喻为网络空间的法律 。</p>
+<h3 id="154-下一代"><a href="#154-下一代" class="headerlink" title="154. 下一代"></a>154. 下一代</h3><p>用于表示产品或者技术有较大的幅度的创新</p>
+<h3 id="155-大数据安全分析"><a href="#155-大数据安全分析" class="headerlink" title="155. 大数据安全分析"></a>155. 大数据安全分析</h3><p>区别于传统的被动规则匹配的防御模式，以主动收集和分析大数据的方法，找出其可能存在的安全威胁。因此也称为数据驱动安全。</p>
+<h3 id="156-EPP"><a href="#156-EPP" class="headerlink" title="156. EPP"></a>156. EPP</h3><p>端点保护平台，部署在终端设备上的安全防护解决方案，用户防止针对终端的恶意软件、恶意脚本等安全威胁。</p>
+<h3 id="157-EDR"><a href="#157-EDR" class="headerlink" title="157. EDR"></a>157. EDR</h3><p>端点检测与响应，对操作系统调用等异常行为分析，检测和防护未知威胁，最终达到杀毒软件无法解决未知威胁的目的。</p>
+<h3 id="158-NDR"><a href="#158-NDR" class="headerlink" title="158. NDR"></a>158. NDR</h3><p>网络检测与响应，可提高网络安全的可见性和威胁免疫力。</p>
+<h3 id="159-安全可视化"><a href="#159-安全可视化" class="headerlink" title="159. 安全可视化"></a>159. 安全可视化</h3><p>指在网络安全领域中的呈现技术，将网络安全加固、检测、防御、响应等过程中的数据和结果进行可视化</p>
+<h3 id="160-NTA"><a href="#160-NTA" class="headerlink" title="160. NTA"></a>160. NTA</h3><p>网络流量分析</p>
+<h3 id="161-MDR"><a href="#161-MDR" class="headerlink" title="161. MDR"></a>161. MDR</h3><p>托管检测与响应，主要用来监控网络</p>
+<h3 id="162-应急响应"><a href="#162-应急响应" class="headerlink" title="162. 应急响应"></a>162. 应急响应</h3><p>指一个组织为了应对各种意外事件发生所做的准备以及在事件发生后所采取的措施</p>
+<h3 id="163-XDR"><a href="#163-XDR" class="headerlink" title="163. XDR"></a>163. XDR</h3><p>指以检测和响应技术为核心的网络安全策略的统称，包括EDR、NDR、MDR等</p>
+<h3 id="164-安全运营"><a href="#164-安全运营" class="headerlink" title="164. 安全运营"></a>164. 安全运营</h3><p>贯穿产品研发、业务运行、漏洞修复、防护与检测、应急响应等一系列环节的管理方法和流程，保障业务安全。</p>
+<h3 id="165-威胁情报"><a href="#165-威胁情报" class="headerlink" title="165. 威胁情报"></a>165. 威胁情报</h3><p>对目标有产生威胁的情报，主要有人读情报和机读情报</p>
+<h3 id="166-TTP"><a href="#166-TTP" class="headerlink" title="166. TTP"></a>166. TTP</h3><p>战术Tactics、技术Techniques和过程Procedures，作为威胁情报的一种组成部分，可为安全分析人员提供决策支撑。</p>
+<h3 id="167-IOC"><a href="#167-IOC" class="headerlink" title="167. IOC"></a>167. IOC</h3><p>失陷标示，用以发现APT团伙，木马后门，僵尸网络控制的标示。</p>
+<h3 id="168-态势感知"><a href="#168-态势感知" class="headerlink" title="168. 态势感知"></a>168. 态势感知</h3><p>基于环境、动态、整体的洞悉安全风险的能力</p>
+<h3 id="169-探针"><a href="#169-探针" class="headerlink" title="169. 探针"></a>169. 探针</h3><p>网络安全探针，部署在网路拓扑的关键节点上，用于收集和分析流量和日志，发现异常行为等</p>
+<h3 id="170-网络空间测绘"><a href="#170-网络空间测绘" class="headerlink" title="170. 网络空间测绘"></a>170. 网络空间测绘</h3><p>用搜素引擎技术来提供交互，让人们可以方便的搜索到网络空间上的设备。</p>
+<h3 id="171-逆向"><a href="#171-逆向" class="headerlink" title="171. 逆向"></a>171. 逆向</h3><p>从产品中提取原理及设计信息并应用于再造及改进的行为都属于逆向工程。在网络安全中，更多的是调查取证，恶意软件分析等。</p>
+<h3 id="172-爬虫"><a href="#172-爬虫" class="headerlink" title="172. 爬虫"></a>172. 爬虫</h3><p>按照一定规则，自动抓取万维网信息的程序或脚本</p>
+<h3 id="173-防爬"><a href="#173-防爬" class="headerlink" title="173. 防爬"></a>173. 防爬</h3><p>防止信息被爬虫获取</p>
+<h3 id="174-区块链"><a href="#174-区块链" class="headerlink" title="174. 区块链"></a>174. 区块链</h3><p>共享数据库，存储于其中的数据或信息，具有“不可伪造”、“全程留痕”、“可以追述”、“公开透明”、“集体维护”等特征</p>
+<h3 id="175-风控"><a href="#175-风控" class="headerlink" title="175. 风控"></a>175. 风控</h3><p>利用大数据分析的方法来判断业务可能存在的安全风险。主要用于金融信贷领域，防止坏账的发生。</p>
+<h3 id="176-渗透测试"><a href="#176-渗透测试" class="headerlink" title="176. 渗透测试"></a>176. 渗透测试</h3><p>为了证明网络防御按照预期计划正常运行而提供的一种机制。通常是邀请攻击团队，按照一定规则攻击既定目标，从而找出其中存在的漏洞或其他安全隐患，并出具测试报告和整改建议</p>
+<h3 id="177-代码审计"><a href="#177-代码审计" class="headerlink" title="177. 代码审计"></a>177. 代码审计</h3><p>根据源代码去寻找漏洞</p>
+<h3 id="178-NTLM验证"><a href="#178-NTLM验证" class="headerlink" title="178. NTLM验证"></a>178. NTLM验证</h3><p>一种身份验证。</p>
+<h3 id="179-数据脱敏"><a href="#179-数据脱敏" class="headerlink" title="179. 数据脱敏"></a>179. 数据脱敏</h3><p>对某些敏感信息通过脱敏规则进行数据的变形，实现敏感隐私数据的可靠保护。</p>
+<h3 id="180-CISO"><a href="#180-CISO" class="headerlink" title="180. CISO"></a>180. CISO</h3><p>首席信息安全官，是主要安全的负责人</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2022/81%E5%AE%89%E5%85%A8%E7%9B%B8%E5%85%B3%E5%90%8D%E8%AF%8D/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+              #网络安全
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2022/85shell/" target="_self">85shell</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2022/82%E7%AB%AF%E5%8F%A3%E5%A4%A7%E5%85%A8%E4%BB%8B%E7%BB%8D/" target="_self">82端口大全介绍</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

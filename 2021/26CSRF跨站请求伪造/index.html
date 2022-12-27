@@ -8,7 +8,7 @@
   
   
   
-  <title>CSRF跨站请求伪造 | JohnScott2046的博客</title>
+  <title>26CSRF跨站请求伪造 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>CSRF跨站请求伪造</span>
+    <span>26CSRF跨站请求伪造</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -287,6 +287,21 @@
 <p>CSRF Poc模板修改，然后上传到目标服务器，触发</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">form 表单 添加id&#x3D;&quot;form&quot;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    function validate()&#123;</span><br><span class="line">        document.getElementById(&#39;form&#39;).submit();    </span><br><span class="line">    &#125;</span><br><span class="line">    setTimeout(validate, 100);</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
 
+<h3 id="如何设计落地一个CSRF-Token"><a href="#如何设计落地一个CSRF-Token" class="headerlink" title="如何设计落地一个CSRF Token"></a>如何设计落地一个CSRF Token</h3><p>在请求中添加一个攻击者不知道的参数（且该参数浏览器不会自动发送），让服务端可以区别出请求是否经过用户的同意。</p>
+<p>这样用户知道该参数，发送请求的时候，携带cookie和该参数；而攻击者不知道该参数，浏览器发送请求时，只自动携带了 cookie。服务端即可通过校验该参数，来判断操作是否是用户真实想进行的。</p>
+<p>这个参数，就被称为 csrf token。</p>
+<p>HTTP request Header: 将 token 添加在 header 中发送，它具有一个天然的优势，可以利用浏览器的同源策略：csrf token header 相当于一个自定义 header，在跨域请求时，携带自定义 header，会触发预检请求，若预检请求不通过，正式请求就不会发送。</p>
+<h3 id="双重提交（Double-Submit-Cookie）"><a href="#双重提交（Double-Submit-Cookie）" class="headerlink" title="双重提交（Double Submit Cookie）"></a>双重提交（Double Submit Cookie）</h3><p>在请求到达服务端后，服务端不需要再从数据库/缓存中读取对应的值来跟 csrf token 比对。只需要跟请求中的 csrf cookie 比对即可。这个 cookie 就是服务端当初签发出去的 token 参数。只要它们相等，就证明请求是经过用户同意发送的，因为攻击者无法读取这个 cookie 值，也就无法将这个值作为 token 参数，添加到请求中发送，而用户是知道的（用户可以读取 csrf token cookie）。</p>
+<p>可以使用加密签名的方式：将用户的 session token 作为明文，使用服务端的密钥进行加密签名，将面名后的秘文作为 csrf token value 发送给客户端。</p>
+<p>使用 session token 作为明文有 2 个好处：即保证了 csrf token 跟 user 绑定，又保证了 csrf token 的随机且唯一。即：csrf_token = HMAC(session_token, application_secret)</p>
+<p>当服务端收到请求后，从缓存/数据库/cookie 中获取原来的加密明文 session_token，使用服务端的密钥再进行一次加密签名，比对签名后的结果 和 请求中携带的 csrf token 参数是否相等，若相等，则：csrf token 是服务端签发的</p>
+<p>签名的内容没有被篡改，即该 token 就是当前用户的。</p>
+<h3 id="CORS原理、利用及修复"><a href="#CORS原理、利用及修复" class="headerlink" title="CORS原理、利用及修复"></a>CORS原理、利用及修复</h3><p>CORS全称是”跨域资源共享”（Cross-origin resource sharing）,Origin源未严格，从而造成跨域问题,允许浏览器向跨源服务器，发出XMLHttpRequest请求</p>
+<p>Origin为 * 的时候，使用curl测试CORS，</p>
+<p>curl -H “Origin: <a target="_blank" rel="noopener" href="https://evil.com”/">https://evil.com”</a> -I</p>
+<h3 id="CRLF注入原理"><a href="#CRLF注入原理" class="headerlink" title="CRLF注入原理"></a>CRLF注入原理</h3><p>CRLF指的是回车符(CR，ASCII 13，\r，%0d) 和换行符(LF，ASCII 10，\n，%0a)。</p>
+<p>CRLF注入漏洞的本质和XSS有点相似，攻击者将恶意数据发送给易受攻击的Web应用程序，Web应用程序将恶意数据输出在HTTP响应头中。（XSS一般输出在主体中）</p>
+<p>所以CRLF注入漏洞的检测也和XSS漏洞的检测差不多。通过修改HTTP参数或URL，注入恶意的CRLF，查看构造的恶意数据是否在响应头中输出</p>
 <h3 id="XSRF"><a href="#XSRF" class="headerlink" title="XSRF"></a>XSRF</h3><p>xsrf = xss + csrf</p>
 <h3 id="CSRF-Tester工具"><a href="#CSRF-Tester工具" class="headerlink" title="CSRF Tester工具"></a>CSRF Tester工具</h3><p>用來檢測web頁面是否存在防禦，http referer、token、自定義請求header</p>
 <p>使用代理抓取頁面的所有連接信息，修改之後重新提交測試，檢測是否存在漏洞</p>
@@ -398,13 +413,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/23SQL%E6%B3%A8%E5%85%A5-%E6%80%BB%E7%BB%93/" target="_self">SQL注入-总结</a>
+        <a href="/2021/23SQL%E6%B3%A8%E5%85%A5-%E6%80%BB%E7%BB%93/" target="_self">23SQL注入-总结</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/3Linux%E5%9F%BA%E7%A4%8E/" target="_self">Linux基礎</a>
+        <a href="/2021/55%E5%86%85%E7%BD%91%E4%BB%A3%E7%90%86/" target="_self">内网代理</a>
         <i class="iconfont icon-next"></i>
       </div>
     

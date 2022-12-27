@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>83二进制 | JohnScott2046的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,网络安全," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott2046</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>83二进制</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2022-09-02
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="83二进制"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="二进制"><a href="#二进制" class="headerlink" title="二进制"></a>二进制</h2><h3 id="二进制安全"><a href="#二进制安全" class="headerlink" title="二进制安全"></a>二进制安全</h3><p>二进制安全是一种主要用于字符串操作函数相关的计算机编程术语，一个二进制安全功能（函数），其本质上将操作输入作为原始的、无任何特殊格式意义的数据流</p>
+<p>二进制分析<br>分析计算机二进制程序（称为二进制文件），及其包含的机器代码和数据属性的科学和艺术。</p>
+<p>二进制分析的目标是确定二进制程序的真正属性，以理解它们真正的功能</p>
+<p>逆向工程（Reverse Engineering）<br>即反向工程，是一种技术过程，根据已知的结果，通过逆向分析来推导出程序或软件的具体实现方法，也可以是对一项目标产品进行逆向分析研究，得到产品的设计要素，从而制造出相近但不完全一样的产品。</p>
+<h3 id="软件安全"><a href="#软件安全" class="headerlink" title="软件安全"></a>软件安全</h3><p>软件逆向工程是通过反汇编和以及调试等手段，分析程序的二进制可执行代码，从而获得程序的算法细节和实现原理。</p>
+<p>软件逆向工程的研究对象通常是没有公开源代码的计算机程序，已经经过编译的二进制可执行代码（如 Windows 平台上的 PE 文件，包括 EXE、动态链接库 DLL等文件格式）（Linux 系统的 ELF 文件 以及静态链接库 .so 文件）</p>
+<p>白盒测试：已知源代码，代码审计<br>黑盒测试：逆向、渗透测试</p>
+<p>逆向工程类似于软件工程中的“黑盒”测试，需要借助跟踪调试手段，从二进制机器代码开始分析程序。在信息安全领域，逆向工程技术的主要应用包括：<br>（1）软件破解，破解软件的版权保护措施，让用户不支付授权费用而无限制使<br>用软件的全部功能；<br>（2）病毒和恶意程序分析，分析病毒、恶意程序的传播机制和危害并设计出解<br>决方法；<br>（3）系统漏洞分析，分析漏洞原理，设计补丁程序或者编写利用程序。<br>此外，逆向工程技术还用来分析不公开的文件格式、协议等；跨平台硬件驱动程<br>序的分析和编写；挖掘操作系统未文档化的 API；计算机犯罪取证等</p>
+<h3 id="二进制漏洞"><a href="#二进制漏洞" class="headerlink" title="二进制漏洞"></a>二进制漏洞</h3><p>二进制漏洞是指程序存在安全缺陷，导致攻击者恶意构造的数据（如 Shellcode）进入程序相关处理代码时，改变程序原定的执行流程，从而实现破坏或获取超出原有的权限</p>
+<p>常见的二进制漏洞 主要分为：<br>溢出攻击：栈溢出、堆溢出、整数溢出等<br>格式化字符串、双重释放、释放重引用、数组访问越界、内核级、类型混淆、沙盒逃逸以及 PRC 等</p>
+<p>二进制漏洞研究员</p>
+<ol>
+<li>漏洞挖掘 实战 研究协议，文件格式，软件代码(逆向算法及实现方式),fuzz 模糊测试，安全技术研究，0day cve</li>
+<li>漏洞挖掘 方法工具，代码编写，软件开发，漏洞原理，研究文章，安全工具 安全技术研究 漏洞分析 已出现的漏洞进行复现，exp poc 深入分析，漏洞成因分析，应急响应专家</li>
+<li>漏洞特征识别检测 病毒分析，已知漏洞的特征归纳总结，公司的产品赋能，沙箱，主机卫士等</li>
+<li>漏洞利用 深入理解操作系统底层原理，移动端，PC 端，深入理解安全防护措施，Windows DEP Linux 的 Canary，利用漏洞分析，书写漏洞利用exp，CTF Pwn</li>
+</ol>
+<ol>
+<li>C C++编程，基础语法，编译、链接、反汇编过程的学习</li>
+<li>底层语言 汇编语言掌握一个架构，x86 arm 汇编</li>
+<li>静态分析能力，多训练，从可执行文件推到程序源码</li>
+<li>PE文件结构 ELF 文件结构</li>
+<li>CTF相关训练</li>
+<li>高级二进制利用技术论文阅读学习</li>
+</ol>
+<h3 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h3><p>⼆进制 0000 0001 0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111<br>⼗六进制 0 1 2 3 4 5 6 7 8 9 A B C D E F<br>⼗进制 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15</p>
+<h3 id="数据宽度"><a href="#数据宽度" class="headerlink" title="数据宽度"></a>数据宽度</h3><p>位(BIT)比特    1位<br>字节(Byte)     8位<br>字(Word)      16位、2个字节<br>双字 (Doubleword)  32位、2个字、4个字节<br>Q Word 四字   64位</p>
+<p>字节(Byte)的存储范围使用十六进制表示则为:0 - 0xFF<br>字(Word)的存储范围:0 - 0xFFFF<br>双字(Doubleword)的存储范围:0 - 0xFFFFFFFF</p>
+<p>无符号数、有符号数<br>无符号数存储在计算机内就是其本身的值</p>
+<h3 id="原码、反码、补码"><a href="#原码、反码、补码" class="headerlink" title="原码、反码、补码"></a>原码、反码、补码</h3><p>原码:最高位为符号位，其余各位为数值本身的绝对值 反码:正数反码与原码相同，负数符号位为1，其余位对原码取反 补码:正数补码与原码相同，负数符号位为1，其余位对原码取反加1 字节(Byte)的形式将1、6、-1这三个有符号数存入计算机中，其二进制表示1是一个正数，所以二进制原码、反码、补码都为:0000 0001;同理数字6也是如此。 -1是一个负数 1000 0001 存储形式通过补码</p>
+<p>原码:1000 0001<br>反码 1111 1110<br>补码 1111 1111</p>
+<p>与运算:两个位都为1，结果才为1 and &amp;<br>1011 0001<br>1101 1000<br>—————— 1001 0000</p>
+<p>或运算:只要有一个为1就为1 |<br>1011 0001<br>1101 1000<br>——————<br>1111 1001</p>
+<p>异或运算:不一样时则为1 xor ^<br>1011 0001<br>1101 1000<br>——————<br>0110 1001</p>
+<p>非运算:0就是1、1就是0 Not ~<br>1101 1000<br>0010 0111</p>
+<p>左移:各二进制位全部左移若干位，高位丢弃，低位补0 &lt;&lt; shl<br>1101 1000  shl2  0110 0000 </p>
+<p>右移:各二进制位全部右移若干位，低位丢弃，高位补0(shr)或补符号位(sar) shr<br>1101 0101  shr2  0011 0101</p>
+<h3 id="加壳"><a href="#加壳" class="headerlink" title="加壳"></a>加壳</h3><p>UPX vmp ，就是利用特殊的算法，将 EXE 可执行程序或者 DLL 动态连接库文件的编码进行 改变(比 如实现压缩、加密)，以达到缩小文件体积或者加密程序编码，甚至是躲过杀毒软件查 杀的目的。<br>目前较常用的壳有 UPX，ASPack、PePack、PECompact、UPack、免疫 007、木⻢彩衣等 等</p>
+<h3 id="软件脱壳"><a href="#软件脱壳" class="headerlink" title="软件脱壳"></a>软件脱壳</h3><p>顾名思义，就是利用相应的工具，把在软件“外面”起保护作用的“壳”程序去除，还文件本来面 目，这样再修改文件内容或进行分析检测就容易多了</p>
+<h3 id="免杀"><a href="#免杀" class="headerlink" title="免杀"></a>免杀</h3><p>通过加壳、加密、修改特征码、加花指令等等技术来修改程序，使其逃过杀毒软件的查杀</p>
+<h3 id="花指令"><a href="#花指令" class="headerlink" title="花指令"></a>花指令</h3><p>通过加入不影响程序功能的多余汇编指令，使得杀毒软件不能正常的判断病毒文件的构造。说 通俗点就是“杀毒软件是从头到脚按顺序来识别病毒。如果我们把病毒的头和脚颠倒位置，杀 毒软件就找不到病毒了</p>
+<h3 id="Rootkit"><a href="#Rootkit" class="headerlink" title="Rootkit"></a>Rootkit</h3><p>Rootkit 是攻击者用来隐藏自己的行踪和保留 root(根权限，可以理解成 WINDOWS 下的 system 或者管理员权限)访问权限的工具。通常，攻击者通过远程攻击的方式获得 root 访问 权限，或者是先使用密码猜解(破解) 的方式获得对系统的普通访问权限，进入系统后，再通过 对方系统存在的安全漏洞获得系统 的 root 或 system 权限。然后，攻击者就会在对方的系统 中安装 Rootkit，以达到自己⻓久控制对方的目的，Rootkit 功能上与木⻢和后⻔很类似，但远 比它们要隐蔽</p>
+<h3 id="模糊测试-fuzz-testing-fuzzing-是一种软件测试技术。其核心思想是将自动或半自动生成的随机数据输入到一个程序中，并监"><a href="#模糊测试-fuzz-testing-fuzzing-是一种软件测试技术。其核心思想是将自动或半自动生成的随机数据输入到一个程序中，并监" class="headerlink" title="模糊测试 (fuzz testing, fuzzing) 是一种软件测试技术。其核心思想是将自动或半自动生成的随机数据输入到一个程序中，并监"></a>模糊测试 (fuzz testing, fuzzing) 是一种软件测试技术。其核心思想是将自动或半自动生成的随机数据输入到一个程序中，并监</h3><p>视程序异常，如崩溃，断言(assertion)失败，以发现可能的程序错误，比如内存泄漏。 </p>
+<h3 id="汇编语言"><a href="#汇编语言" class="headerlink" title="汇编语言"></a>汇编语言</h3><p>汇编语言(Assembly Language)是任何一种用于电子计算机、微处理器、微控制器或其他可 编程器件的低级语言，亦称为符号语言。  Arm，x86,mips</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2022/83%E4%BA%8C%E8%BF%9B%E5%88%B6/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+              #网络安全
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2022/86CTF/" target="_self">86CTF</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2022/87docker/" target="_self">87docker</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

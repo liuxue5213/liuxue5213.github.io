@@ -8,7 +8,7 @@
   
   
   
-  <title>Linux基礎 | JohnScott2046的博客</title>
+  <title>3Linux基礎 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>Linux基礎</span>
+    <span>3Linux基礎</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -287,13 +287,32 @@
 <h3 id="二、-Linux-优点"><a href="#二、-Linux-优点" class="headerlink" title="二、 Linux 优点"></a>二、 Linux 优点</h3><p>Linux 由众多内核组成，其源代码完全开源；</p>
 <p>Linux 继承了 Unix 的特点，具有非常强大的网络功能，其支持所有的因特网协议，包括 TCP/IPv6和链路层拓扑程序等，且可以利用 Unix 的网络特性开发出新的协议栈；</p>
 <p>Linux 系统工具链完整，简单操作就可以配置出合适的开发环境，可以简化开发过程，减少开发<br>中仿真工具的障碍，使系统具有较强的秱植性</p>
-<h3 id="三、-常用命令"><a href="#三、-常用命令" class="headerlink" title="三、 常用命令"></a>三、 常用命令</h3><h4 id="1-目錄操作"><a href="#1-目錄操作" class="headerlink" title="1. 目錄操作"></a>1. 目錄操作</h4><p>pwd 显示当前目录<br>cd  改变当前目录<br>ls  显示目录中的文件和子目录<br>    -h 易读的方式显示文件大小<br>    -a 显示隱藏文件<br>    -l 目录的文件大小 自動顯示<br>mkdir 创建目录 mkdir<br>    -p a/b/c 自動创建父目录<br>cp 将文件复制到另一个位置<br>    -p 保留文件权限，拥有者，时间戳属性<br>mv 将文件移動到另一个位置（可用於重命名）<br>rm 删除一个文件<br>-f 强制删除文件，不提示确认信息<br>-r 删除所有文件和子目录<br>chmod 改变文件权限<br>4：读（r）<br>2: 写（w）<br>1: 执行（x）<br>chmod 755 1.txt<br>chmod +x 1.txt</p>
+<h3 id="三、-常用命令"><a href="#三、-常用命令" class="headerlink" title="三、 常用命令"></a>三、 常用命令</h3><p>查看内核版本<br>uname -a<br>uname -r<br>uname -mrs<br>rpm -q kernel<br>dmesg | grep Linux<br>ls /boot | grep vmlinu<br>cat /proc/version</p>
+<p>查看linux版本信息<br>lsb_release -a<br>cat /etc/issue</p>
+<p>查看linux是64为还是32位<br>getconf LONG_BIT<br>file /bin/ls</p>
+<p>查看环境变量<br>cat /etc/profile<br>cat /etc/bashrc<br>cat ~/.bash_profile<br>cat ~/.bashrc<br>cat ~/.bash_logout<br>env</p>
+<p>直接查看系统的架构<br>dpkg –print-architecture<br>arch<br>file /lib/systemd/systemd</p>
+<p>查看Mint系统对应的Ubuntu系统<br>cat /etc/os-release</p>
+<p>只获取 Ubuntu 的基本信息<br>cat /etc/upstream-release/lsb-release</p>
+<p>x86_64，x64，AMD64基本上是同一个东西<br>x86是intel开发的一种32位指令集<br>x84_64是CPU迈向64位的时候<br>x86_64是一种64位的指令集，x86_64是x86指令的超集，在x86上可以运行的程序，在x86_64上也可以运行，x86_64是AMD发明的，也叫AMD64</p>
+<h4 id="1-目錄操作"><a href="#1-目錄操作" class="headerlink" title="1. 目錄操作"></a>1. 目錄操作</h4><p>touch day{1..31}天.txt 批量創建文件<br>pwd 显示当前目录<br>cd  改变当前目录<br>cat file 正向查看文件<br>cat -n file 查看时显示文件行数<br>tac file 从最后一行反向查看文件<br>more file 查看一个长文件的内容<br>head -n 2 file 查看前2行<br>tail -n 2 file 查看最后2行<br>tail -n +100 file 从100行之后开始显示<br>cat file | head -n 500 |tail -n +100 显示100-500之间的内容<br>cat file | tail -n +100 | head -n 100 显示100-199之间的内容</p>
+<p>ls  显示目录中的文件和子目录<br>    -h 易读的方式显示文件大小<br>    -a 显示全部文件，包括隱藏文件<br>    -l 目录文件和目录的详细资料<br>    -R 所有列表，包括子目录<br>    [0-9] 显示包含数字的文件名和目录名<br>mkdir 创建目录 mkdir<br>    -p a/b/c 自動创建父目录<br>cp 将文件复制到另一个位置<br>    -a 将文件的特性一起复制<br>    -p 保留文件权限，拥有者，时间戳属性<br>    -i 如复制的目标文件已存在时，会先询问再操作<br>    -r 复制目录多个文件<br>    -u 目标文件与源文件有差异时才会复制<br>mv 将文件移動到另一个位置（可用於重命名）<br>    -f 强制移动，目标目录存在时会强制覆盖<br>    -i 如复制的目标文件已存在时，会先询问再操作<br>    -u 目标文件已存在时，并且比目标文件更新，才会更新<br>rm 删除一个文件<br>    -f 强制删除文件，不提示确认信息<br>    -r 删除所有文件和子目录<br>    -i 会先询问再操作<br>chmod 改变文件权限<br>    4：读（r）<br>    2: 写（w）<br>    1: 执行（x）<br>chmod 755 1.txt<br>      +x 1.txt<br>      ugo+rwx directory 设置目录的所有人(u)、群组(g)以及其他人(o) 以读r、写w和执行x的权限<br>      go-rwx directory  删除群组(g)与其他人(o)对目录的读r、写w、执行x权限</p>
+<p>chown user file 改变文件的所有人属性<br>      -R user directory 改变目录下所有文件的所有人属性<br>      user:group file 改变文件所有人和群组的属性</p>
+<p>chgrp group file 改变文件的群组</p>
+<p>find / -name file  从/目录开始查询file<br>     / -user root  搜索用户root的文件和目录<br>     /use/bin -type f -atime +100 搜索过去100天内 未被使用过的执行文件<br>     /usr/bin -type f -mtime -10 搜索10天内 被创建或者修改过的文件<br>find /var/mail/ -size +50M -exec rm {} ＼  删除大于50M的文件</p>
+<p>grep keyword /var/log/messages 在/var/log/messages文件中查找关键字keyword<br>     ^keyword /var/log/messages 查找以keyword开头的词语<br>     [0-9] /var/log/messages 选择文件中所有包含数字的行<br>     keyword -R /var/log/* 从目录/var/log下面 搜索keyword</p>
+<p>sed ‘s/stringa1/stringa2/g’ name.txt 将name.txt文件中的string1替换成string2<br>sed ‘/^$/d’ name.txt 将name.txt文件，删除所有空白行</p>
+<p>paste file1 file2 合并两个文件或两栏的内容<br>paste -d ‘+’ file1 file2 合并两个文件的内容，中间用”+”区分</p>
+<p>tar -c 新建打包文件<br>    -t 查看打包文件的内容含有哪些文件名<br>    -x 解打包或解压缩的功能，可以搭配-C（大写）指定解压的目录，注意-c,-t,-x不能同时出现在同一条命令中<br>    -j 通过bzip2的支持进行压缩/解压缩<br>    -z 通过gzip的支持进行压缩/解压缩<br>    -v 在压缩/解压缩过程中，将正在处理的文件名显示出来<br>    -f filename filename为要处理的文件<br>    -C dir 指定压缩/解压缩的目录dir</p>
+<p>tar -jcv -f filename.tar.bz2 压缩要被处理的文件或目录名称<br>tar -jtv -f filename.tar.bz2b 查询<br>tar -jxv -f filename.tar.bz2 -C 解压缩的目录</p>
+<p>bzip2 file1 压缩文件<br>bunzip2 file1.bz2 解压文件</p>
+<p>gzip file1 压缩文件<br>gzip -9 file1 最大程度压缩</p>
+<p>gunzip file1.gz 解压文件</p>
+<p>rar a file1.rar test_file 创建一个叫做 ‘file1.rar’ 的包<br>rar a file1.rar file1 file2 dir1 同时压缩 ‘file1’, ‘file2’ 以及目录 ‘dir1’<br>rar x file1.rar 解压rar包</p>
+<p>zip file1.zip file1 创建一个zip格式的压缩包<br>unzip file1.zip 解压一个zip格式压缩包<br>zip -r file1.zip file1 file2 dir1 将几个文件和目录同时压缩成一个zip格式的压缩</p>
 <h4 id="2-测试命令"><a href="#2-测试命令" class="headerlink" title="2. 测试命令"></a>2. 测试命令</h4><p>ping 网络連通性测试工具<br>    -c N 发送 N 个数据包</p>
 <p>wget 一个非交互的网络下载工具<br>    -b 后台下载<br>    -O path 保存到指定目录</p>
-<h4 id="3-進程管理"><a href="#3-進程管理" class="headerlink" title="3. 進程管理"></a>3. 進程管理</h4><p>ps 显示在本地机器上当前运行的進程列表<br>ps aux 查看所有進程<br>状态说明（STAT） D 表示不可中断的睡眠状态<br>R 表示运行或就绪状态<br>S 表示可中断的睡眠状态<br>T 表示停止状态<br>Z 表示僵尸状态<br>&lt; 表示高优先级進程<br>N 表示低优先级進程</p>
-<ul>
-<li>表示前台迚程组中的進程<br>l 表示多线程進程<br>s 表示会话進程的首進程</li>
-</ul>
+<h4 id="3-進程管理"><a href="#3-進程管理" class="headerlink" title="3. 進程管理"></a>3. 進程管理</h4><p>ps 显示在本地机器上当前运行的進程列表<br>ps aux 查看所有進程<br>    D 表示不可中断的睡眠状态<br>    R 表示运行或就绪状态<br>    S 表示可中断的睡眠状态<br>    T 表示停止状态<br>    Z 表示僵尸状态<br>    &lt; 表示高优先级進程<br>    N 表示低优先级進程<br>    + 表示前台迚程组中的進程<br>    l 表示多线程進程<br>    s 表示会话進程的首進程<br>    []表示內核啟動的進程</p>
 <p>排序：<br>ps -aux –sort -pcpu | more 按 cpu 占用百分比做降序排序<br>ps -aux –sort -rss | more 按内存占用百分比做降序排序</p>
 <p>top 命令：交互查看進程和系统相关属性信息，默认为 3 秒刷新一次</p>
 <p>前五行是系统的整体的统计信息<br>top - 21:06:13 up 7:40, 2 users, load average: 0.00, 0.01, 0.05<br>任务: 190 total  1 running, 189 sleeping,   0 stopped,   0 zombie<br>%Cpu(s):  0.3 us,  0.2 sy,  0.0 ni, 99.5 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st<br>MiB Mem :   1951.6 total,   1064.3 free,    483.9 used,    403.3 buff/cache<br>MiB Swap:    975.0 total,    975.0 free,      0.0 used.   1319.3 avail Mem</p>
@@ -307,7 +326,8 @@
 <p>PID 進程id<br>PR 优先级<br>USER 進程所有者的用户名<br>NI 進程优先级。 nice 值。负值表示高优先级，正值表示低优先级<br>VIRT 虚拟内存集<br>RES 实际使用内存大小，长驻内存集<br>SHR 共享内存大小<br>S 進程状态<br>  D=不可中断的睡眠状态<br>  R=运行<br>  S=睡眠<br>  T=跟踪/停止<br>  Z=僵尸進程<br>%CPU 上次更新到现在的 CPU 时间占用百分比<br>%MEM 進程使用的物理内存百分比<br>TIME+ 進程使用的 CPU 时间总计，单位 1/100 秒<br>COMMAND 命令名/命令行</p>
 <p>TOP 的快捷键</p>
 <p>默认 3s 刷新一次，根据 CPU 占用百分比排序<br>空格：立即刷新<br>q：退出<br>M：按内存排序<br>P：按 CPU 排序<br>T：根据在 CPU 中运行的累计时间進行排序<br>l：是否显示平均负载和启劢时间<br>t：是否显示運行和 CPU 状态相关信息<br>m：是否显示内存相关信息<br>c：是否显示完整的命令行信息<br>k：终止某个進程<br>d：更改刷新时间</p>
-<p>kill 给進程发送一个信号<br>kill -9 1024 关闭 PID 为 1024 的迚程<br>service 管理系统中的服务<br>service apache2 status 查看服务状态<br>service apache2 stop|start 停止|启劢服务<br>netstat 显示网络统计信息，TCP/IP 网络連接<br>-a 显示所有违接<br>-n 禁止解析 IP 地址和端口号<br>-t 显示 TCP 违接</p>
+<p>kill 给進程发送一个信号<br>kill -9 1024 強制关闭 PID 为 1024 的迚程</p>
+<p>service 管理系统中的服务<br>service apache2 status 查看服务状态<br>service apache2 stop|start 停止|启劢服务<br>netstat 显示网络统计信息，TCP/IP 网络連接<br>-a 显示所有违接<br>-n 禁止解析 IP 地址和端口号<br>-t 显示 TCP 违接<br>netstat -nutl 正在監聽的端口</p>
 <p>ifconfig 管理网络适配器<br>ifconfig eth0 192.168.1.100 netmask 255.255.255.0  给 eth0 配置 IP 地址和子网掩码</p>
 <h4 id="4-用户管理"><a href="#4-用户管理" class="headerlink" title="4. 用户管理"></a>4. 用户管理</h4><p>useradd         创建，更新用户<br>useradd test    创建用户<br>    -s          指定登录 shell<br>passwd          修改用户密码<br>passwd 123456<br>userdel         删除一个用户不其相关的文件<br>userdel -r test 删除 test 用户，併删除目录和邮件<br>su              更改用户 ID 或成为超级用户<br>su root         切换到 root 用户<br>sudo            以超级用户的身份执行命令<br>sudo ifconfig   以 root 身份执行命令</p>
 <h4 id="5-信息查詢"><a href="#5-信息查詢" class="headerlink" title="5. 信息查詢"></a>5. 信息查詢</h4><p>whoami      显示当前登录账户<br>history     查看 shell 歷史命令<br>    -c        清除歷史记录<br>uname       输出系统信息<br>    -a      显示所有信息<br>    -r      显示内核的发行版本号<br>shutdown    关闭，重启计算机<br>    -h      关闭计算机<br>    -r      重新启劢计算机<br>shutdown -h 0(now) 立刻关闭计算机</p>
@@ -315,6 +335,12 @@
 <p>命令模式：<br>    gg  跳到第一行<br>    G   跳到最后一行<br>    dd  剪切当前行<br>    p   粘贴到下一行<br>    yy  复制当前行<br>    dG  從当前删除到文件结尾<br>    /keyword 关键词搜索</p>
 <p>输入模式：按 i 進入输入模式，开始输入文件内容</p>
 <p>底行模式：<br>    :w  保存内容<br>    :q  退出 vim<br>    :q! 强制退出 vim,不保存修改内容<br>    :3  跳到第三行</p>
+<h3 id="LINUX系统软件安装和卸载的常见方法"><a href="#LINUX系统软件安装和卸载的常见方法" class="headerlink" title="LINUX系统软件安装和卸载的常见方法"></a>LINUX系统软件安装和卸载的常见方法</h3><p>A.rpm包卸载：rpm -e XXX.rpm   (如果想忽略依赖，可加上–nodeps)<br>B.yum remove xxx.rpm  这种方法非常不建议使用，卸载过程会将待卸载的软件包所依赖的软件包一并卸载掉，很容易造成系统缺少某些包而崩溃等问题<br>C.源码包卸载：cd命令进入编译后的软件目录，即安装时的目录，执行make uninstall命令即可；或者直接删除安装目录</p>
+<h3 id="Windows和LINUX常用的远程连接工具有那些"><a href="#Windows和LINUX常用的远程连接工具有那些" class="headerlink" title="Windows和LINUX常用的远程连接工具有那些"></a>Windows和LINUX常用的远程连接工具有那些</h3><p>命令远程连接工具：Xshell、SecureCRT、Putty、SSH Secure Shell Client等<br>图形远程连接工具：xmanager（需安装配置服务并打开177端口）、VNC-Viewer（linux需安装vncserver）、windows自带的远程桌面（linux需安装xrdp和vnc）</p>
+<h3 id="如何修改LINUX的IP地址、网关和主机名"><a href="#如何修改LINUX的IP地址、网关和主机名" class="headerlink" title="如何修改LINUX的IP地址、网关和主机名"></a>如何修改LINUX的IP地址、网关和主机名</h3><p>A、修改IP地址、网关：编辑/etc/sysconfig/network-scripts/ifcfg-eth0，修改里面IPADDR和GATEWAY内容，没有这两行，则添加即可，添加时确保BOOTPROTO=static，静态地址，如IPADDR=192.168.1.100   GATEWAY=192.168.1.1<br>B、修改主机名称：编辑/etc/sysconfig/network，修改里面的HOSTNAME内容，如设置主机名称为mysql，则：HOSTNAME=mysql即可；</p>
+<h3 id="centos7-6静态ip"><a href="#centos7-6静态ip" class="headerlink" title="centos7.6静态ip"></a>centos7.6静态ip</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens32</span><br><span class="line"></span><br><span class="line">bootproto&#x3D;static</span><br><span class="line">onboot&#x3D;yes</span><br><span class="line"></span><br><span class="line">#在最后加上几行，IP地址、子网掩码、网关、dns服务器</span><br><span class="line">IPADDR&#x3D;192.168.1.160</span><br><span class="line">NETMASK&#x3D;255.255.255.0</span><br><span class="line">GATEWAY&#x3D;192.168.1.1</span><br><span class="line">DNS1&#x3D;119.29.29.29</span><br><span class="line">DNS2&#x3D;8.8.8.8</span><br><span class="line"></span><br><span class="line">#重启网络</span><br><span class="line">systemctl restart network</span><br></pre></td></tr></table></figure>
+
+<h3 id="ubuntu20-04静态ip"><a href="#ubuntu20-04静态ip" class="headerlink" title="ubuntu20.04静态ip"></a>ubuntu20.04静态ip</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">sudo vim &#x2F;etc&#x2F;netplan&#x2F;00-installer-config.yaml</span><br><span class="line"></span><br><span class="line">network:</span><br><span class="line">  ethernets:</span><br><span class="line">    ens33:</span><br><span class="line">      addresses: [192.168.31.215&#x2F;24]    #配置的静态ip地址和掩码</span><br><span class="line">      dhcp4: no    #关闭DHCP，如果需要打开DHCP则写yes</span><br><span class="line">      optional: true</span><br><span class="line">      gateway4: 192.168.31.1    #网关地址</span><br><span class="line">      nameservers:</span><br><span class="line">         addresses: [192.168.31.1,114.114.114.114]    #DNS服务器地址</span><br><span class="line">  version: 2</span><br><span class="line">  renderer: networkd    #指定后端采用systemd-networkd或Network Manager，不填则默认systemd-workd</span><br><span class="line"></span><br><span class="line">#应用新配置</span><br><span class="line">sudo netplan apply</span><br></pre></td></tr></table></figure>
     </div>
   </div>
   
@@ -417,13 +443,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/26CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/" target="_self">CSRF跨站请求伪造</a>
+        <a href="/2021/55%E5%86%85%E7%BD%91%E4%BB%A3%E7%90%86/" target="_self">内网代理</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/27SSRF%E6%9C%8D%E5%8B%99%E5%99%A8%E7%AB%AF%E8%AB%8B%E6%B1%82%E5%81%BD%E9%80%A0/" target="_self">SSRF跨站请求伪造</a>
+        <a href="/2021/27SSRF%E6%9C%8D%E5%8B%99%E5%99%A8%E7%AB%AF%E8%AB%8B%E6%B1%82%E5%81%BD%E9%80%A0/" target="_self">27SSRF跨站请求伪造</a>
         <i class="iconfont icon-next"></i>
       </div>
     

@@ -8,7 +8,7 @@
   
   
   
-  <title>Windows基礎 | JohnScott2046的博客</title>
+  <title>2Windows基礎 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>Windows基礎</span>
+    <span>2Windows基礎</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -291,11 +291,32 @@
 <h4 id="3-windows-10"><a href="#3-windows-10" class="headerlink" title="3. windows 10"></a>3. windows 10</h4><p>Windows 10，为微软公司 2015 年推出的电脑操作系统，——Windows 家族里 Windows NT 系列操作系统的最新版，为 Windows 8 和Windows Phone 8.1的后继者。设计目标是统一包括个人电脑、平板电脑、智能手机、嵌入式系统、Xbox One、Surface Hub 和 HoloLens 等设备的操作系统</p>
 <p>微软将 Windows 10 变成一项服务，它将持续接收更新。根据微软官方统计，Windows 10 的占有率已经超越 Windows 7，在所有 Windows 中位列第一</p>
 <p>正式版本於 2015 年 7 月 29 日发行幵开放给符合条件的用户免费升级，不过 Windows 7、8 已於 UTC-10 的 2016 年 7 月 30 日零点关闭免费直接升级通道，而面向使用辅劣技术的用户而设的 Windows 10 免费升级到 2017 年 12 月 31 日结束，之后升级就必须付费（曾经升级过 Windows 10 幵获取许可的用户除外）。但据消息称，Windows 7、Windows 8 用户仍可免费升级至 Windows 10，前提是有正版的 Windows 数字许可</p>
-<h3 id="二、-windows-系统常用命令"><a href="#二、-windows-系统常用命令" class="headerlink" title="二、 windows 系统常用命令"></a>二、 windows 系统常用命令</h3><h4 id="1-目录操作"><a href="#1-目录操作" class="headerlink" title="1. 目录操作"></a>1. 目录操作</h4><p>cd 切换目录<br>cd c:\test #迚入到 c 盘下的 test 目录<br>dir 显示目录中的文件和子目录列表<br>type 显示文本文件的内容<br>type 1.txt #显示 1.txt 文件内容<br>echo 打印内容<br>echo jingfeng&gt;1.txt #把 jingfeng 写入到 1.txt<br>md 创建目录<br>md jingfeng #创建目录名为 jingfeng 的文件夹<br>copy 复制文件<br>xcopy 复制文件夹<br>ren 重命名文件<br>rd 删除一个目录，rd 默认仅能删除空目录，如何目录有文件需要使用/S 选项<br>/S 不仅删除目录本身，还删除目录下的内容<br>/Q 安静模式，不會询问是否删除<br>del 删除一个或多个文件</p>
-<h4 id="2-测试"><a href="#2-测试" class="headerlink" title="2. 测试"></a>2. 测试</h4><p>ping 测试网络连通性<br>ping <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a><br>nslookup DNS 域名解析工具<br>nslookup <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 8.8.8.8</p>
-<h4 id="3-進程管理"><a href="#3-進程管理" class="headerlink" title="3. 進程管理"></a>3. 進程管理</h4><p>tasklist    显示计算机上运行的迚程列表<br>tasklist /V 显示详细任务信息<br>taskkill    按照迚程 ID（PID）或映像名称终止任务<br>taskkill /PID 1024          停止 PID=1024 的迚程<br>taskkill /IM capiws.exe     停止名称为 capiws 的迚程<br>taskkill /F /PID 1024       强制终止迚程</p>
-<h4 id="4-用户管理"><a href="#4-用户管理" class="headerlink" title="4. 用户管理"></a>4. 用户管理</h4><p>net user              windows 账户管理工具<br>net user guest        列出 guest 账户的信息<br>net user hacker 123456 /add       添加账户<br>net user hacker 888888            修改密码<br>net user hacker /active:yes|no    启用|禁用账户<br>net user hacker /delete           删除账户</p>
+<h3 id="二、-windows-系统常用命令"><a href="#二、-windows-系统常用命令" class="headerlink" title="二、 windows 系统常用命令"></a>二、 windows 系统常用命令</h3><h4 id="1-目录操作"><a href="#1-目录操作" class="headerlink" title="1. 目录操作"></a>1. 目录操作</h4><p>cd 切换目录<br>cd c:\test #迚入到 c 盘下的 test 目录<br>dir 显示目录中的文件和子目录列表<br>type 显示文本文件的内容<br>type 1.txt #显示 1.txt 文件内容<br>echo 打印内容<br>echo jingfeng&gt;1.txt #把 jingfeng 写入到 1.txt<br>md 创建目录<br>md jingfeng #创建目录名为 jingfeng 的文件夹<br>copy 复制文件<br>xcopy 复制文件夹<br>ren 重命名文件<br>rd 删除一个目录，rd 默认仅能删除空目录，如何目录有文件需要使用/S 选项<br>rd /S 不仅删除目录本身，还删除目录下的内容<br>rd /Q 安静模式，不會询问是否删除<br>del 删除一个或多个文件</p>
+<h4 id="2-测试"><a href="#2-测试" class="headerlink" title="2. 测试"></a>2. 测试</h4><p>ping 测试网络连通性<br>ping <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a><br>nslookup DNS 域名解析工具<br>nslookup <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a><br>nslookup <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 8.8.8.8 指定dns来解析地址<br>quit 退出交互式頁面</p>
+<h4 id="3-進程管理"><a href="#3-進程管理" class="headerlink" title="3. 進程管理"></a>3. 進程管理</h4><p>tasklist    显示计算机上运行的進程列表<br>tasklist /V 显示详细任务信息<br>taskkill    按照進程 ID（PID）或映像名称终止任务<br>taskkill /PID 1024          停止 PID=1024 的進程<br>taskkill /IM capiws.exe     停止名称为 capiws 的進程<br>taskkill /F /PID 1024       强制终止進程<br>schtasks /QUERY /fo LIST /v  系统上的计划任务<br>tasklist /SVC  查看服务的进程ID<br>DRIVERQUERY  查看已安装驱动程序的列表<br>net start  查看已经启动Windows服务<br>wmic qfe get Caption,Description,HotFixID,InstalledOn | findstr /C:”KBxxxxxxx”  上面的命令没有输出，說明补丁未安装</p>
+<h4 id="4-用户管理"><a href="#4-用户管理" class="headerlink" title="4. 用户管理"></a>4. 用户管理</h4><p>net user              windows 账户管理工具<br>net user guest        列出 guest 账户的信息<br>net user hacker 123456 /add       添加账户<br>net user hacker 888888            修改密码<br>net user hacker /active:yes|no    启用|禁用账户<br>net user hacker /delete           删除账户<br>query user 查看在线用户</p>
+<p>net user test$  簡單隱藏用戶</p>
 <h4 id="5-网络管理"><a href="#5-网络管理" class="headerlink" title="5. 网络管理"></a>5. 网络管理</h4><p>ipconfig            显示网络配置信息<br>ipconfig /all       显示完整配置信息<br>ipconfig /displaydns    显示 DNS 缓存<br>ipconfig /flushdns      清理 DNS 缓存</p>
+<h4 id="6-查看防火墙规则"><a href="#6-查看防火墙规则" class="headerlink" title="6. 查看防火墙规则"></a>6. 查看防火墙规则</h4><p>netstat -ano<br>netsh firewall show config<br>netsh firewall show state</p>
+<p>for /d %i in (d:\www*) do @echo %i  列出d:\www的所有目录</p>
+<h4 id="7-windows"><a href="#7-windows" class="headerlink" title="7. windows"></a>7. windows</h4><p>查看当前shell权限<br>whoami /user &amp;&amp; whoami /priv</p>
+<p>查看系统信息<br>systeminfo</p>
+<p>查看在线用户<br>quser</p>
+<p>查看 tcp/udp 网络连接状态<br>netstat -ano</p>
+<p>LISTENING：表示监听中，这个端口正在开放，可以提供服务<br>CLOSING：表示关闭的，表示端口人为或者防火墙使其关闭(也许服务被卸载)<br>TIME_WAIT：表示正在等待连接 就是你正在向该端口发送请求连接状态<br>ESTABLISHED：表示是对方与你已经连接 正在通信交换数据</p>
+<p>查看机器名<br>hostname</p>
+<p>查看当前操作系统<br>wmic OS get Caption,CSDVersion,OSArchitecture,Version</p>
+<p>查杀毒软件情况<br>WMIC /Node:localhost /Namespace:\root\SecurityCenter2 Path AntiVirusProduct Get displayName /Format:List</p>
+<p>查看当前安装的程序<br>wmic product get name,version</p>
+<p>查看网络配置<br>有Primary Dns Suffix（主DNS后缀）就说明是域内，空则当前机器应该在工作组<br>ipconfig /all</p>
+<p>有些进程可能是域用户启的-&gt;通过管理员权限-窃取凭证-&gt;窃取域用户的凭证<br>tasklist /v</p>
+<p>查看当前登录域<br>net config workstation</p>
+<p>远程桌面连接历史记录<br>cmdkey /l</p>
+<p>查看本机上的用户账号列表<br>net user</p>
+<p>查看本机用户test的信息<br>net user test</p>
+<p>显示所在域的用户名单<br>net user /domain</p>
+<p>获取某个域用户的详细信息<br>net user 域用户 /doamin</p>
+<p>修改域用户密码：需要管理员权限<br>net user /domain 域用户名 密码</p>
     </div>
   </div>
   
@@ -404,7 +425,7 @@
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/4%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">信息搜集</a>
+        <a href="/2021/4%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">4信息搜集</a>
         <i class="iconfont icon-next"></i>
       </div>
     

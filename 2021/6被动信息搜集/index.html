@@ -8,7 +8,7 @@
   
   
   
-  <title>被动信息搜集 | JohnScott2046的博客</title>
+  <title>6被动信息搜集 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>被动信息搜集</span>
+    <span>6被动信息搜集</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -280,7 +280,7 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      <h3 id="一、-shodon搜索引擎"><a href="#一、-shodon搜索引擎" class="headerlink" title="一、 shodon搜索引擎"></a>一、 shodon搜索引擎</h3><p>地址 <a target="_blank" rel="noopener" href="https://www.shodan.io/">https://www.shodan.io</a></p>
+      <h3 id="一、-shodan搜索引擎"><a href="#一、-shodan搜索引擎" class="headerlink" title="一、 shodan搜索引擎"></a>一、 shodan搜索引擎</h3><p>地址 <a target="_blank" rel="noopener" href="https://www.shodan.io/">https://www.shodan.io</a></p>
 <h4 id="1、-搜索网络摄像头-wabcam"><a href="#1、-搜索网络摄像头-wabcam" class="headerlink" title="1、 搜索网络摄像头 wabcam"></a>1、 搜索网络摄像头 wabcam</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wabcam</span><br></pre></td></tr></table></figure>
 
 <h4 id="2、-搜索指定端口-port-端口号"><a href="#2、-搜索指定端口-port-端口号" class="headerlink" title="2、 搜索指定端口 port:端口号"></a>2、 搜索指定端口 port:端口号</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net:ip</span><br><span class="line">port:9200 elk日志</span><br></pre></td></tr></table></figure>
@@ -292,7 +292,48 @@
 <h4 id="5、-其他方法"><a href="#5、-其他方法" class="headerlink" title="5、 其他方法"></a>5、 其他方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">hostname 搜索指定主机或者域名  hostname：&quot;baidu&quot;</span><br><span class="line">port 指定端口或者服务 port:&quot;3306&quot;</span><br><span class="line">country 搜索指定国家 country:&quot;CN&quot;</span><br><span class="line">city 指定城市   city:&quot;Beijing&quot;</span><br><span class="line">org 指定的组织或者公司 org:&quot;baidu&quot;</span><br><span class="line">isp 指定的isp供应商   isp:&quot;China Telecom&quot;</span><br><span class="line">product 指定的操作系统、软件、平台 product:&quot;Apache httpd&quot;</span><br><span class="line">version 指定的软件版本 version:&quot;1.20.1&quot;</span><br><span class="line">geo 指定的地理位置  geo:&quot;39.144212,117.208293&quot;</span><br><span class="line">before&#x2F;after 指定的收录时间前后的数据  before:&quot;21-01-1&quot;</span><br><span class="line">net 指定的ip或者子网  net:&quot;34.97.110.0&#x2F;24&quot;</span><br></pre></td></tr></table></figure>
 
 
-<h3 id="二、-Google搜索"><a href="#二、-Google搜索" class="headerlink" title="二、 Google搜索"></a>二、 Google搜索</h3><h4 id="1、-关键字搜索"><a href="#1、-关键字搜索" class="headerlink" title="1、 关键字搜索"></a>1、 关键字搜索</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">site    指定域名    site:baidu.com intitle:login|admin|manage|manager|admin_login|login_admin|system|boss|master</span><br><span class="line">inurl   在url中存在的关键字   inurl:php?id&#x3D;</span><br><span class="line">intext  网页内容里面的关键字</span><br><span class="line">filetype    指定文件类型 </span><br><span class="line">intitle 网页标题中的关键字</span><br><span class="line">link    返回所有指定域名的链接</span><br><span class="line">info    查找指定的站点信息</span><br><span class="line">cache   搜索google的内容缓存</span><br><span class="line">-关键字  不希望搜索结果中该关键字的网页</span><br></pre></td></tr></table></figure>
+<h3 id="二、-Google搜索"><a href="#二、-Google搜索" class="headerlink" title="二、 Google搜索"></a>二、 Google搜索</h3><p>通配符</p>
+<table>
+<thead>
+<tr>
+<th>通配符</th>
+<th>语义</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>包含关键字</td>
+<td>+前面必须要有一个空格</td>
+<td>admin +login</td>
+</tr>
+<tr>
+<td>-</td>
+<td>排除关键字</td>
+<td>-前面必须要有一个空格</td>
+<td>mysql -csdn</td>
+</tr>
+<tr>
+<td>~</td>
+<td>同义词</td>
+<td>~前面必须要有一个空格</td>
+<td>mysql ~csdn</td>
+</tr>
+<tr>
+<td>*</td>
+<td>模糊查询</td>
+<td>*代表任意字符</td>
+<td>mysql**</td>
+</tr>
+<tr>
+<td>“”</td>
+<td>强调</td>
+<td></td>
+<td>“mysql”</td>
+</tr>
+</tbody></table>
+<h4 id="1、-关键字搜索"><a href="#1、-关键字搜索" class="headerlink" title="1、 关键字搜索"></a>1、 关键字搜索</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">site    指定域名    site:baidu.com intitle:login|admin|manage|manager|admin_login|login_admin|system|boss|master</span><br><span class="line">inurl   在url中存在的关键字   inurl:php?id&#x3D;</span><br><span class="line">intext  网页内容里面的关键字</span><br><span class="line">filetype    指定文件类型 </span><br><span class="line">intitle 网页标题中的关键字</span><br><span class="line">link    返回所有指定域名的链接</span><br><span class="line">info    查找指定的站点信息</span><br><span class="line">cache   搜索google的内容缓存</span><br><span class="line">-关键字  不希望搜索结果中该关键字的网页</span><br></pre></td></tr></table></figure>
 
 <h4 id="2、-搜索敏感信息"><a href="#2、-搜索敏感信息" class="headerlink" title="2、 搜索敏感信息"></a>2、 搜索敏感信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">intitle:关键字</span><br><span class="line">filetype:xls 身份证</span><br></pre></td></tr></table></figure>
 
@@ -333,7 +374,9 @@
 <h4 id="10、-高级搜索：可以使用括号-和-amp-amp-完全匹配-等符号"><a href="#10、-高级搜索：可以使用括号-和-amp-amp-完全匹配-等符号" class="headerlink" title="10、 高级搜索：可以使用括号 和 &amp;&amp; || != ==完全匹配  等符号"></a>10、 高级搜索：可以使用括号 和 &amp;&amp; || != ==完全匹配  等符号</h4><h3 id="四、-maltego搜集子域名"><a href="#四、-maltego搜集子域名" class="headerlink" title="四、 maltego搜集子域名"></a>四、 maltego搜集子域名</h3><p>数据挖掘工具，用于在线调查、查找互联网资源的关系</p>
 <p>客户端的版本  ce社区版 classic  xl</p>
 <p>ce不能用于商业、单个返回的最大实体数量限制、没有图形导出功能</p>
-<h3 id="五、-layer子域名挖掘机"><a href="#五、-layer子域名挖掘机" class="headerlink" title="五、 layer子域名挖掘机"></a>五、 layer子域名挖掘机</h3><p>域名查询工具，支持服务接口、暴力搜索、同服挖掘三种模式，<br>支持打开网站、复制域名、复制ip、复制cdn、导出域名、导出ip、导出域名+ip+web服务器、存活网站</p>
+<h3 id="五、-子域名"><a href="#五、-子域名" class="headerlink" title="五、 子域名"></a>五、 子域名</h3><p>域名查询工具，支持服务接口、暴力搜索、同服挖掘三种模式，<br>支持打开网站、复制域名、复制ip、复制cdn、导出域名、导出ip、导出域名+ip+web服务器、存活网站</p>
+<p>layer挖掘机<br>lijiejie/subdomainsbrute<br>ring04h/wydomain<br>aboul3la/syblist3r</p>
+<p><a target="_blank" rel="noopener" href="http://chaziyu.com/">http://chaziyu.com</a></p>
 <h3 id="六、-查询网站域名注册信息和备案信息"><a href="#六、-查询网站域名注册信息和备案信息" class="headerlink" title="六、 查询网站域名注册信息和备案信息"></a>六、 查询网站域名注册信息和备案信息</h3><p>阿里雲：<a target="_blank" rel="noopener" href="https://whois.aliyun.com/">https://whois.aliyun.com/</a><br>站长之家：<a target="_blank" rel="noopener" href="http://whois.chinaz.com/">http://whois.chinaz.com/</a></p>
 <p>备案信息查询<br><a target="_blank" rel="noopener" href="http://www.beianbeian.com/">http://www.beianbeian.com/</a><br><a target="_blank" rel="noopener" href="https://www.tianyancha.com/">https://www.tianyancha.com/</a></p>
 <p>Whois 命令查询<br>whois xx.com</p>
@@ -346,6 +389,52 @@
 <p>CIDR网段<br>cidr:网段  CIDR：192.168.158.12/24</p>
 <p>指定网站域名<br>Site:网站域名</p>
 <p>keyword:关键词<br>keyword:admin</p>
+<h3 id="八、-whois"><a href="#八、-whois" class="headerlink" title="八、 whois"></a>八、 whois</h3><p>whois数据库记录有该域名的DNS服务器信息和注册人的联系信息。</p>
+<p>WHOIS是一个标准的互联网协议，可用于收集网络注册、注册域名、IP地址和自治系统的信息。</p>
+<p>默认安装的Kali Linux 带有whois客户端程序。 如需查询某一域名的whois信息，可在终端中使用下述whois指令</p>
+<p>whois baidu.com</p>
+<p>在线whois <a target="_blank" rel="noopener" href="http://whois.chinaz.com/">http://whois.chinaz.com</a></p>
+<h3 id="九、-Dns历史解析"><a href="#九、-Dns历史解析" class="headerlink" title="九、 Dns历史解析"></a>九、 Dns历史解析</h3><p>有A记录、别名记录(CNAME)、MX记录、TXT记录、NS记录</p>
+<h4 id="A-Address-记录"><a href="#A-Address-记录" class="headerlink" title="A(Address)记录"></a>A(Address)记录</h4><p>是用来指定主机名（或域名）对应的IP地址记录。用户可以将该域名下的网站服务器指向到自己的web server上。同时也可以设置您域名的二级域名。</p>
+<h4 id="别名-CNAME-记录"><a href="#别名-CNAME-记录" class="headerlink" title="别名(CNAME)记录"></a>别名(CNAME)记录</h4><p>也被称为规范名字。这种记录允许您将多个名字映射到同一台计算机。通常用于同时提供WWW和MAIL服务的计算机。例如，有一台计算机名为“host.mydomain.com”（A记录）。它同时提供WWW和MAIL服务，为了便于用户访问服务。可以为该计算机设置两个别名（CNAME）：WWW和MAIL。这两个别名的全称就是“<a target="_blank" rel="noopener" href="http://www.mydomain.com”和“mail.mydomain.com”.实际上他们都指向“host.mydomain.com”.同样的方法可以用于当您拥有多个域名需要指向同一服务器ip,此时您就可以将一个域名做a记录指向服务器ip然后将其他的域名做别名到之前做a记录的域名上,那么当您的服务器ip地址变更时您就可以不必麻烦的一个一个域名更改指向了/">www.mydomain.com”和“mail.mydomain.com”。实际上他们都指向“host.mydomain.com”。同样的方法可以用于当您拥有多个域名需要指向同一服务器IP，此时您就可以将一个域名做A记录指向服务器IP然后将其他的域名做别名到之前做A记录的域名上，那么当您的服务器IP地址变更时您就可以不必麻烦的一个一个域名更改指向了</a> 只需要更改做A记录的那个域名其他做别名的那些域名的指向也将自动更改到新的IP地址上了。</p>
+<p>如何检测CNAME记录？</p>
+<ol>
+<li>进入命令状态；（开始菜单 - 运行 - CMD[回车]）</li>
+<li>输入命令” nslookup -q=cname 这里填写对应的域名或二级域名”，查看返回的结果与设置的是否一致即可</li>
+</ol>
+<h4 id="MX-Mail-Exchanger-记录"><a href="#MX-Mail-Exchanger-记录" class="headerlink" title="MX(Mail Exchanger)记录"></a>MX(Mail Exchanger)记录</h4><p>邮件交换记录，它指向一个邮件服务器，用于电子邮件系统发邮件时根据 收信人的地址后缀来定位邮件服务器。例如，当Internet上的某用户要发一封信给 <a href="mailto:&#117;&#115;&#x65;&#114;&#x40;&#109;&#x79;&#x64;&#x6f;&#x6d;&#x61;&#105;&#110;&#46;&#x63;&#111;&#109;">&#117;&#115;&#x65;&#114;&#x40;&#109;&#x79;&#x64;&#x6f;&#x6d;&#x61;&#105;&#110;&#46;&#x63;&#111;&#109;</a> 时，该用户的邮件系统通过DNS查找mydomain.com这个域名的MX记录，如果MX记录存在， 用户计算机就将邮件发送到MX记录所指定的邮件服务器上。</p>
+<h4 id="TXT记录"><a href="#TXT记录" class="headerlink" title="TXT记录"></a>TXT记录</h4><p>一般指为某个主机名或域名设置的说明</p>
+<ol>
+<li>admin IN TXT “jack, mobile:13011112222”；</li>
+<li>mail IN TXT “邮件主机, 存放在xxx ,管理人：AAA”，Jim IN TXT “contact: <a href="mailto:&#x61;&#98;&#99;&#64;&#x6d;&#97;&#x69;&#108;&#115;&#101;&#114;&#118;&#x65;&#114;&#x2e;&#99;&#x6f;&#x6d;">&#x61;&#98;&#99;&#64;&#x6d;&#97;&#x69;&#108;&#115;&#101;&#114;&#118;&#x65;&#114;&#x2e;&#99;&#x6f;&#x6d;</a>“，也就是您可以设置 TXT ，以便使别人联系到您。</li>
+</ol>
+<p>如何检测TXT记录</p>
+<ol>
+<li>进入命令状态；（开始菜单 - 运行 - CMD[回车]）；</li>
+<li>输入命令”nslookup -q=txt 这里填写对应的域名或二级域名”，查看返回的结果与设置的是否一致即可</li>
+</ol>
+<h4 id="ns记录"><a href="#ns记录" class="headerlink" title="ns记录"></a>ns记录</h4><p>Name Server 是一种域名服务器记录，用来明确当前你的域名是由哪个DNS服务器来进行解析的。</p>
+<p>使用命令查询</p>
+<h4 id="nslookup"><a href="#nslookup" class="headerlink" title="nslookup"></a>nslookup</h4><p><code>nslookup 域名</code></p>
+<p>A 地址记录(Ipv4)<br>AAAA 地址记录（Ipv6）<br>AFSDB Andrew文件系统数据库服务器记录（不懂）<br>ATMA ATM地址记录（不是自动提款机）<br>CNAME 别名记录<br>HINFO 硬件配置记录，包括CPU、操作系统信息<br>ISDN 域名对应的ISDN号码<br>MB 存放指定邮箱的服务器<br>MG 邮件组记录<br>MINFO 邮件组和邮箱的信息记录<br>MR 改名的邮箱记录<br>MX 邮件服务器记录<br>NS 名字服务器记录<br>PTR 反向记录（从IP地址解释域名）<br>RP 负责人记录<br>RT 路由穿透记录（不懂）<br>SRV TCP服务器信息记录（将有大用处）<br>TXT 域名对应的文本信息<br>X25 域名对应的X.25地址记录</p>
+<h4 id="dig"><a href="#dig" class="headerlink" title="dig"></a>dig</h4><p>dig 域名</p>
+<p>指定DNS服务器查询<br>dig @114.114.114.114 域名</p>
+<p>查询MX记录<br>dig 域名 MX</p>
+<p>IP反查域名<br>dig -x IP</p>
+<h3 id="十、-旁站、C段查询"><a href="#十、-旁站、C段查询" class="headerlink" title="十、 旁站、C段查询"></a>十、 旁站、C段查询</h3><p>旁站是和目标网站在同一台服务器上的其它的网站</p>
+<p>在我们做渗透当中，当一个网站没有任何漏洞，无法突破，但是他有一个旁站，可以拿到旁站的Webshell提权拿到服务器，就相当于同样完成了主站渗透</p>
+<p>在线网站 <a target="_blank" rel="noopener" href="https://www.webscan.cc/">https://www.webscan.cc</a></p>
+<p>C段是和目标服务器ip处在同一个C段的其它服务器</p>
+<p><a target="_blank" rel="noopener" href="https://chapangzhan.com/">https://chapangzhan.com</a> 通过域名ip解析获取目标ip地址进行C段查询，此条件必须要获取到目标真实ip</p>
+<h3 id="十一、-dirsearch"><a href="#十一、-dirsearch" class="headerlink" title="十一、 dirsearch"></a>十一、 dirsearch</h3><p>11漏洞掃描工具.md</p>
+<h3 id="十二、-dirb"><a href="#十二、-dirb" class="headerlink" title="十二、 dirb"></a>十二、 dirb</h3><p>11漏洞掃描工具.md</p>
+<h3 id="十三、-IP反查"><a href="#十三、-IP反查" class="headerlink" title="十三、 IP反查"></a>十三、 IP反查</h3><p>ip反查：通过获取到的ip反差域名信息</p>
+<p><a target="_blank" rel="noopener" href="http://ip.yqie.com/">http://ip.yqie.com/</a><br><a target="_blank" rel="noopener" href="http://stool.chinaz.com/same">http://stool.chinaz.com/same</a><br><a target="_blank" rel="noopener" href="https://tools.ipip.net/ipdomain.php">https://tools.ipip.net/ipdomain.php</a></p>
+<h3 id="十四、-WAF识别"><a href="#十四、-WAF识别" class="headerlink" title="十四、 WAF识别"></a>十四、 WAF识别</h3><p>wafw00f <a href="https://github.com/EnableSecurity/wafw00f">https://github.com/EnableSecurity/wafw00f</a></p>
+<p>python setup.py install<br>python main.py url 即可以探测目标网站是否存在waf</p>
+<h3 id="十五、-CDN"><a href="#十五、-CDN" class="headerlink" title="十五、 CDN"></a>十五、 CDN</h3><p>在windows中的cmd界面输入nslookup进入域名解析操作，如出现多个解析结果则存在CDN，只有一个结果则不存在CDN</p>
+<p><a target="_blank" rel="noopener" href="http://ping.chinaz.com/">http://ping.chinaz.com/</a><br><a target="_blank" rel="noopener" href="https://www.17ce.com/">https://www.17ce.com/</a></p>
+<p>用多种各地ping的服务，查看对应IP地址是否唯一，唯一则不存在CDN，相反则存在</p>
     </div>
   </div>
   
@@ -448,13 +537,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/5%E4%B8%BB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">主动信息搜集</a>
+        <a href="/2021/5%E4%B8%BB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">5主动信息搜集</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/7Wireshark/" target="_self">Wireshark抓包工具</a>
+        <a href="/2021/7Wireshark/" target="_self">7Wireshark抓包工具</a>
         <i class="iconfont icon-next"></i>
       </div>
     

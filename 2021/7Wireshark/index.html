@@ -8,7 +8,7 @@
   
   
   
-  <title>Wireshark抓包工具 | JohnScott2046的博客</title>
+  <title>7Wireshark抓包工具 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>Wireshark抓包工具</span>
+    <span>7Wireshark抓包工具</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -293,8 +293,38 @@
 <p>http.request.method==”GET”</p>
 <p>注：两个条件用 or 进行了连接，是或的意思； 当然我们也可以使用 and<br>or 的意思是两个条件满足一个就行<br>and 的意思是两个条件必须同时满足</p>
 <h4 id="or-and-組合查詢"><a href="#or-and-組合查詢" class="headerlink" title="or and 組合查詢"></a>or and 組合查詢</h4><p>ip.src_host == 192.168.1.53 or ip.src_host == 192.168.1.226 </p>
-<h3 id="四、-常見的協議包"><a href="#四、-常見的協議包" class="headerlink" title="四、 常見的協議包"></a>四、 常見的協議包</h3><h4 id="1-arp-地址解析協議"><a href="#1-arp-地址解析協議" class="headerlink" title="1. arp 地址解析協議"></a>1. arp 地址解析協議</h4><p>cd /dev<br>ls -la | grep bp</p>
-<p>sudo chown user:admin bp*</p>
+<h3 id="四、-常见过滤语法"><a href="#四、-常见过滤语法" class="headerlink" title="四、 常见过滤语法"></a>四、 常见过滤语法</h3><h4 id="针对ip的过滤"><a href="#针对ip的过滤" class="headerlink" title="针对ip的过滤"></a>针对ip的过滤</h4><p>对源地址进行过滤<br>ip.src == 192.168.0.1</p>
+<p>对目的地址进行过滤<br>ip.dst == 192.168.0.1</p>
+<p>对源地址或者目的地址进行过滤<br>ip.addr == 192.168.0.1</p>
+<p>如果想排除以上的数据包，只需要将其用括号囊括，然后使用 “!” 即可<br>!(ip.addr == 192.168.0.1)</p>
+<h4 id="针对协议的过滤"><a href="#针对协议的过滤" class="headerlink" title="针对协议的过滤"></a>针对协议的过滤</h4><p>获某种协议的数据包，把协议的名字输入即可，只能为小写<br>http </p>
+<p>捕获多种协议的数据包<br>http or telnet</p>
+<p>排除某种协议的数据包<br>not arp  或  !tcp</p>
+<h4 id="针对端口的过滤（视传输协议而定）"><a href="#针对端口的过滤（视传输协议而定）" class="headerlink" title="针对端口的过滤（视传输协议而定）"></a>针对端口的过滤（视传输协议而定）</h4><p>捕获某一端口的数据包（以tcp协议为例）<br>tcp.port == 80</p>
+<p>捕获多端口的数据包，可以使用and来连接，下面是捕获高于某端口的表达式（以udp协议为例）<br>udp.port &gt;= 2048</p>
+<h4 id="针对长度和内容的过滤"><a href="#针对长度和内容的过滤" class="headerlink" title="针对长度和内容的过滤"></a>针对长度和内容的过滤</h4><p>针对长度的过虑（这里的长度指定的是数据段的长度）<br>udp.length &lt; 20<br>http.content_length &lt;=30</p>
+<p>针对uri 内容的过滤 matches 后的关键字是不区分大小写的！<br>http.request.uri matches “user” (请求的uri中包含“user”关键字的)<br>http.request.uri contains “User” (请求的uri中包含“user”关键字的)<br>注意：contains 后的关键字是区分大小写的！</p>
+<h4 id="针对http请求的一些过滤实例"><a href="#针对http请求的一些过滤实例" class="headerlink" title="针对http请求的一些过滤实例"></a>针对http请求的一些过滤实例</h4><p>过滤出请求地址中包含“user”的请求，不包括域名；<br>http.request.uri contains “User”</p>
+<p>精确过滤域名<br>http.host==baidu.com</p>
+<p>模糊过滤域名<br>http.host contains “baidu”</p>
+<p>过滤请求的content_type类型<br>http.content_type ==”text/html”</p>
+<p>过滤http请求方法<br>http.request.method==”POST”</p>
+<p>过滤tcp端口<br>tcp.port==80<br>http &amp;&amp; tcp.port==80 or tcp.port==5566</p>
+<p>过滤http响应状态码<br>http.response.code==302</p>
+<p>过滤含有指定cookie的http数据包<br>http.cookie contains “userid”</p>
+<h3 id="五、-使用fiddler的中间人代理技术拿到含有私钥的服务器证书"><a href="#五、-使用fiddler的中间人代理技术拿到含有私钥的服务器证书" class="headerlink" title="五、 使用fiddler的中间人代理技术拿到含有私钥的服务器证书"></a>五、 使用fiddler的中间人代理技术拿到含有私钥的服务器证书</h3><ol>
+<li>打开fiddler并启用https代理服务</li>
+<li>用配置了fiddler代理的浏览器访问百度</li>
+<li>运行”certmgr.msc“打开证书管理器</li>
+<li>从Personal/Certificates目录下找到 <code>*.baidu.com</code> 的证书，右键所有任务-导出</li>
+</ol>
+<p>取出证书中的私钥 使用openssl取出私钥</p>
+<ol>
+<li><p>将pfx证书转为pem证书<br>openssl pkcs12 -in &lt;pfx证书路径&gt; -nodes -out &lt;输出的pem证书路径(.pem)&gt;<br>openssl pkcs12 -in baidu.pfx -nodes -out baidu.pem</p>
+</li>
+<li><p>从pem证书中取出私钥<br>openssl rsa -in &lt;pem证书路径&gt; -out &lt;输出的私钥文件路径(.key)&gt;<br>openssl rsa -in baidu.pem -out baidu.key</p>
+</li>
+</ol>
     </div>
   </div>
   
@@ -397,13 +427,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/6%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">被动信息搜集</a>
+        <a href="/2021/6%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">6被动信息搜集</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/8nmap/" target="_self">nmap</a>
+        <a href="/2021/8nmap/" target="_self">8nmap</a>
         <i class="iconfont icon-next"></i>
       </div>
     

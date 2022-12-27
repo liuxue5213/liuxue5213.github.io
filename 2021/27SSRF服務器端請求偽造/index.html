@@ -8,7 +8,7 @@
   
   
   
-  <title>SSRF跨站请求伪造 | JohnScott2046的博客</title>
+  <title>27SSRF跨站请求伪造 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>SSRF跨站请求伪造</span>
+    <span>27SSRF跨站请求伪造</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -287,18 +287,43 @@
 <p>服務端提供了從其他服務器獲取數據庫的功能，但沒有對內網目標地址進行過濾和限制</p>
 <p>服務器限制外網訪問，只可以內網連接，跳板機</p>
 <p>用戶 =&gt; cdn =&gt; 服務器<br>      內網主機 </p>
-<h4 id="容易出现SSRF漏洞的地方"><a href="#容易出现SSRF漏洞的地方" class="headerlink" title="容易出现SSRF漏洞的地方"></a>容易出现SSRF漏洞的地方</h4><p>有远程图片加载的地方、富文本編輯器<br>网站采集、网页抓取的地方、輸入url採集數據<br>頭像、192.168.1.230/image?url=192.168.1.230/image/1.jpg</p>
+<h3 id="SSRF漏洞原理、利用方式及修复方案？Java和PHP的SSRF区别？"><a href="#SSRF漏洞原理、利用方式及修复方案？Java和PHP的SSRF区别？" class="headerlink" title="SSRF漏洞原理、利用方式及修复方案？Java和PHP的SSRF区别？"></a>SSRF漏洞原理、利用方式及修复方案？Java和PHP的SSRF区别？</h3><p>原理：利用一个可以发起网络请求的服务，当作跳板来攻击其他服务。</p>
+<h4 id="容易出现SSRF漏洞的地方"><a href="#容易出现SSRF漏洞的地方" class="headerlink" title="容易出现SSRF漏洞的地方"></a>容易出现SSRF漏洞的地方</h4><p>远程图片加载、图片或文章收藏功能、URL分享、通过URL在线翻译、转码等功能点处</p>
+<ol>
+<li>分享：通过url地址分享网页内容</li>
+<li>转码：通过URL地址把原地址的网页内容调优使其适合手机屏幕浏览</li>
+<li>在线翻译：通过URL地址翻译对应文本的内容</li>
+<li>图片加载与下载：通过URL地址加载或下载图片</li>
+<li>图片、文章收藏功能</li>
+</ol>
+<p>有远程图片加载的地方、富文本編輯器<br>网站采集、网页抓取的地方、輸入url採集數據<br>頭像、192.168.1.230/image?url=192.168.1.230/image/1.jpg</p>
+<h3 id="SSRF漏洞利用"><a href="#SSRF漏洞利用" class="headerlink" title="SSRF漏洞利用"></a>SSRF漏洞利用</h3><ol>
+<li>CURL支持协议</li>
+<li>利用file协议读取文件</li>
+<li>利用dict协议查看端口开放</li>
+<li>利用gopher协议反弹shell</li>
+</ol>
+<h3 id="SSRF漏洞利用绕过"><a href="#SSRF漏洞利用绕过" class="headerlink" title="SSRF漏洞利用绕过"></a>SSRF漏洞利用绕过</h3><p>使用@：<a target="_blank" rel="noopener" href="http://A.com@10.10.10.10/">http://A.com@10.10.10.10</a> = 10.10.10.10</p>
+<p>IP地址转换成十进制、八进制：127.0.0.1 = 2130706433</p>
+<p>使用短地址：<a target="_blank" rel="noopener" href="http://10.10.116.11/">http://10.10.116.11</a> = <a target="_blank" rel="noopener" href="http://t.cn/RwbLKDx">http://t.cn/RwbLKDx</a></p>
+<p>利用短地址（<a target="_blank" rel="noopener" href="http://dwz.cn/11SMa%EF%BC%89%EF%BC%9B">http://dwz.cn/11SMa）；</a></p>
+<p>端口绕过：ip后面加一个端口</p>
+<p>xip.io：10.0.0.1.xip.io = 10.0.0.1</p>
+<p>通过js跳转.</p>
+<p>利用DNS解析</p>
+<p>利用句号（127。0。0。1）</p>
+<p>利用[::]（http://[::]:80/）；</p>
+<p>协议（Dict://、SFTP://、TFTP://、LDAP://、Gopher://）</p>
 <h4 id="SSRF漏洞的危害"><a href="#SSRF漏洞的危害" class="headerlink" title="SSRF漏洞的危害"></a>SSRF漏洞的危害</h4><p>对服务器所在的内网进行端口扫描，获取一些服务信息等<br>攻击运行在内网或者本地的应用程序<br>对内网文件進行訪問<br>攻击内外网的 WEB 应用<br>下载内网资源<br>利用 Redis 未授权访问，HTTP CRLF注入达到 getshell<br>进行跳板<br>无视cdn</p>
-<h4 id="pikachu"><a href="#pikachu" class="headerlink" title="pikachu"></a>pikachu</h4><p><a href="https://github.com/zhuifengshaonianhanlu/pikachu">https://github.com/zhuifengshaonianhanlu/pikachu</a></p>
-<p>配置文件 <code>pikachu/inc/config.inc.php</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define(&#39;DBPW&#39;, &#39;123456&#39;);</span><br></pre></td></tr></table></figure>
-
-<p>點擊 安裝/初始化</p>
-<p><a target="_blank" rel="noopener" href="http://192.168.1.230/pikachu/vul/ssrf/ssrf_curl.php?url=http://127.0.0.1/pikachu/vul/ssrf/ssrf_info/info1.php">http://192.168.1.230/pikachu/vul/ssrf/ssrf_curl.php?url=http://127.0.0.1/pikachu/vul/ssrf/ssrf_info/info1.php</a></p>
-<p>内网端口扫描<br><a target="_blank" rel="noopener" href="http://192.168.1.230/pikachu/vul/ssrf/ssrf_curl.php?url=http://192.168.1.200:3306">http://192.168.1.230/pikachu/vul/ssrf/ssrf_curl.php?url=http://192.168.1.200:3306</a><br><a target="_blank" rel="noopener" href="http://192.168.1.230/pikachu/vul/ssrf/ssrf_curl.php?url=dict://192.168.1.200:3306">http://192.168.1.230/pikachu/vul/ssrf/ssrf_curl.php?url=dict://192.168.1.200:3306</a></p>
-<p>dict协议：词典网络协议，在RFC2009中进行描述。它的目标是超越Webster protocol，并允许 客户端在使用过程中访问更多字典。Dict服务器和客户机使用TCP端口 2628</p>
-<p>任意文件读取<br><a target="_blank" rel="noopener" href="http://192.168.1.230/pikachu/vul/ssrf/ssrf_curl.php?url=file:///home/1.txt">http://192.168.1.230/pikachu/vul/ssrf/ssrf_curl.php?url=file:///home/1.txt</a></p>
-<p><a target="_blank" rel="noopener" href="http://192.168.1.230/pikachu/vul/ssrf/ssrf_curl.php?file=php://filter/read=convert.base64-encode/resource=ssrf.php">http://192.168.1.230/pikachu/vul/ssrf/ssrf_curl.php?file=php://filter/read=convert.base64-encode/resource=ssrf.php</a><br>讀取的數據是經過base64編碼的，需要進行base64_decode</p>
+<h3 id="SSRF漏洞修复方式"><a href="#SSRF漏洞修复方式" class="headerlink" title="SSRF漏洞修复方式"></a>SSRF漏洞修复方式</h3><ol>
+<li>过滤返回信息，验证远程服务器对请求的响应是比较容易的方法；</li>
+<li>统一错误信息，避免用户可以根据错误信息来判断远端服务器的端口状态；</li>
+<li>限制请求的端口为http常用的端口，比如，80,443,8080,8090；</li>
+<li>黑名单内网ip。避免应用被用来获取获取内网数据，攻击内网；</li>
+<li>禁用不需要的协议。仅允许http和https请求；</li>
+<li>使用正则对参数进行效验，防止畸形请求绕过黑名单。</li>
+<li>禁止30x跳转</li>
+</ol>
 <h4 id="SSRF漏洞防御"><a href="#SSRF漏洞防御" class="headerlink" title="SSRF漏洞防御"></a>SSRF漏洞防御</h4><ol>
 <li>过滤 10.0.0.0/8 、172.16.0.0/12、192.168.0.0/16、localhost私有地址、IPv6地址</li>
 <li>过滤file:///、dict://、gopher://、ftp:// 危险schema</li>
@@ -308,6 +333,8 @@
 <li>限制请求端口，比如 80,443,8080,8088等</li>
 <li>禁用不需要的协议，仅仅允许HTTP和HTTPS</li>
 </ol>
+<h3 id="Java和PHP的SSRF区别"><a href="#Java和PHP的SSRF区别" class="headerlink" title="Java和PHP的SSRF区别"></a>Java和PHP的SSRF区别</h3><p>PHP支持的协议<br>·file:// — Accessing local filesystem<br>·http:// — Accessing HTTP(s) URLs<br>·ftp:// — Accessing FTP(s) URLs<br>·php:// — Accessing various I/O streams<br>·zlib:// — Compression Streams<br>·data:// — Data (RFC 2397)<br>·glob:// — Find pathnames matching pattern<br>·phar:// — PHP Archive<br>·ssh2:// — Secure Shell 2<br>·rar:// — RAR<br>·ogg:// — Audio streams<br>·expect:// — Process Interaction Streams</p>
+<p>Java支持的协议<br>·file<br>·ftp<br>·gopher<br>·http<br>·https<br>·jar<br>·mailto<br>·netdoc</p>
     </div>
   </div>
   
@@ -410,13 +437,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/3Linux%E5%9F%BA%E7%A4%8E/" target="_self">Linux基礎</a>
+        <a href="/2021/3Linux%E5%9F%BA%E7%A4%8E/" target="_self">3Linux基礎</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/28XXE-XML%E5%A4%96%E9%83%A8%E6%B3%A8%E5%85%A5%E5%AE%9E%E4%BD%93%E6%94%BB%E5%87%BB/" target="_self">XXE-XML外部注入實體攻擊</a>
+        <a href="/2021/28XXE-XML%E5%A4%96%E9%83%A8%E6%B3%A8%E5%85%A5%E5%AE%9E%E4%BD%93%E6%94%BB%E5%87%BB/" target="_self">28XXE-XML外部注入實體攻擊</a>
         <i class="iconfont icon-next"></i>
       </div>
     

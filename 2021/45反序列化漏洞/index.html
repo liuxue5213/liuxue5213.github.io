@@ -8,7 +8,7 @@
   
   
   
-  <title>反序列化漏洞 | JohnScott2046的博客</title>
+  <title>45反序列化漏洞 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,12 +254,12 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>反序列化漏洞</span>
+    <span>45反序列化漏洞</span>
   </h1>
   <div class="article-top-meta">
     <span>
       发布 : 
-      2021-10-30
+      2021-11-06
     </span>
     
       <span>
@@ -287,12 +287,90 @@
 <p>serialize可以将变量转换为字符串，并且在转换的过程中可以保存当前变量的值<br>unserialize则可以将serialize生成的字符串转换回变量</p>
 <p>反序列化是将字符串转换成变量或对象的过程</p>
 <h3 id="反序列化漏洞-1"><a href="#反序列化漏洞-1" class="headerlink" title="反序列化漏洞"></a>反序列化漏洞</h3><p>unserialize()函数的参数可控</p>
-<p>id=O:4:’demo’:1:{s:4:’name’;N;}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id&#x3D;O:4:&#39;demo&#39;:1:&#123;s:4:&#39;name&#39;;N;&#125;</span><br></pre></td></tr></table></figure>
+
 <p>construct()：构造函数，当一个对象创建时被调用。具有构造函数的类会在每次创建新对象时先调用此方法，所以非常适合在使用对象之前做一些初始化工作</p>
 <p>destruct()：析构函数，当一个对象销毁时被调用。会在到某个对象的所有引用都被删除或者当对象被显式销毁时执行</p>
 <p>toString()：当一个对象被当作一个字符串使用。此方法必须返回一个字符串，否则将发出一条E_RECOVERABLE_ERROR 级别的致命错误</p>
 <p>sleep()：常用于提交未提交的数据，或类似的清理操作。同时，如果有一些很大的对象，但不需要全部保存，这个功能就很好用。serialize()函数会检查类中是否存在一个魔术方法__sleep()。如果存在，该方法会先被调用，然后才执行序列化操作。此功能可以用于清理对象，并返回一个包含对象中所有应被序列化的变量名称的数组。如果该方法未返回任何内容，则 NULL 被序列化，并产生一个 E_NOTICE 级别的错误</p>
 <p>wakeup()：经常用在反序列化操作中，例如重新建立数据库连接，或执行其它初始化操作。unserialize()<br>会检查是否存在一个__wakeup()方法。如果存在，则会先调用__wakeup()，预先准备对象需要的资源</p>
+<p>在类外部使用 serialize() 函数进行序列化的时候，会先调用类内部的 __sleep() 方法，同理在调用 unserialize() 函数的时候会先调用 __wakeup() 方法。</p>
+<p>在上面的class中有一个 __wakeup() 方法，调用反序列化函数的时候会先调用了 __wakeup() 方法,但是这个方法有个缺陷，就是当 参数的个数大于实际参数个数的时候就可以跳过执行 __wakeup() 方法。所以修改一下参数个数再提交</p>
+<p>输出结果中Name和username，Name和password之间是有不可见字符的，因为private 声明的字段为私有字段，只在所声明的类中可见，在该类的子类和该类的对象实例中均不可见。</p>
+<p>因此私有字段的字段名在序列化时，类名和字段名前面都会加上ascii为0的字符（不可见字符）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?select&#x3D;O:4:&quot;Name&quot;:12:&#123;s:14:&quot;%00Name%00username&quot;;s:5:&quot;admin&quot;;s:14:&quot;%00Name%00password&quot;;s:3:&quot;100&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="java反序列化"><a href="#java反序列化" class="headerlink" title="java反序列化"></a>java反序列化</h2><p>jboss weblogic websphere jenkins java RMI</p>
+<p>把Java对象转换为字节序列的过程称为对象的序列化(Serialization)<br>把字节序列恢复为Java对象的过程称为对象的反序列化(DeSerialization)</p>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>当对象需要被网络传输时<br>当对象状态需要被持久化时</p>
+<h3 id="漏洞影响具体中间件及版本"><a href="#漏洞影响具体中间件及版本" class="headerlink" title="漏洞影响具体中间件及版本"></a>漏洞影响具体中间件及版本</h3><h3 id="JDK类库中的序列化API"><a href="#JDK类库中的序列化API" class="headerlink" title="JDK类库中的序列化API"></a>JDK类库中的序列化API</h3><p>Java.io.ObjectInputStream 代表对象输入流，它的 readObject() 方法从一个源输<br>入流中读取字节序列，再把它们反序列化为一个对象，并将其返回。</p>
+<p>Java.io.ObjectOutputStream 代表对象输出流，它的 writeObject(Object obj) 方<br>法可对参数指定的 obj 对象进行序列化，把得到的字节序列写到一个目标输出流中。</p>
+<p>只有实现了 Serializable 和 Externalizable 接口的类的对象才能被序列化。</p>
+<p>Externalizable 接口继承自 Serializable 接口，实现 Externalizable 接口的类完全由<br>自身来控制序列化的行为，而仅实现 Serializable 接口的类可以采用默认的序列化方式。</p>
+<h3 id="所需要的jar包"><a href="#所需要的jar包" class="headerlink" title="所需要的jar包"></a>所需要的jar包</h3><p><a target="_blank" rel="noopener" href="https://search.maven.org/search?q=fastjson">https://search.maven.org/search?q=fastjson</a><br><a target="_blank" rel="noopener" href="https://mvnrepository.com/artifact/com.alibaba/fastjson/1.2.24">https://mvnrepository.com/artifact/com.alibaba/fastjson/1.2.24</a></p>
+<h3 id="序列化数据特征"><a href="#序列化数据特征" class="headerlink" title="序列化数据特征"></a>序列化数据特征</h3><p>可以使用 xxd 命令查看序列化数据的十六进制，序列化数据头部十六进制为： aced 0005</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxd 1.ser</span><br></pre></td></tr></table></figure>
+
+<p>一般截获的通讯数据包中 Java 序列化特征值为经过 base64 加密后的数据，即 rO0AB</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo aced0005 | xxd -r -ps | openssl base64</span><br></pre></td></tr></table></figure>
+
+<h3 id="Java-集合框架"><a href="#Java-集合框架" class="headerlink" title="Java 集合框架"></a>Java 集合框架</h3><p>Java 实用类库中专门提供了一套动态对象数组的操作类——类集框架，就是为表示和操作集合而规定的一种统一的标准体系结构。主要包括集合（Collection）和图（Map）两种类型。任何集合框架都包含对外的接口、接口的实现和对集合运算的算法三大块内容。</p>
+<p>官方自带标准的 Java 集合框架位于 java.util 包中，提供了一些基础的集合类以及集合操作类。而 Commons Collections 就是集合类的一些扩展类和操作类，由第三方为官方标准 Collections API 提供更为强大的补充和支持。</p>
+<h4 id="Commons-Collections"><a href="#Commons-Collections" class="headerlink" title="Commons-Collections"></a>Commons-Collections</h4><p>转化修饰器：修改每个添加到集合中的对象</p>
+<h4 id="InvokerTransformer"><a href="#InvokerTransformer" class="headerlink" title="InvokerTransformer"></a>InvokerTransformer</h4><p>该漏洞出现的根源在 Commons-Collections 组件中对于集合的操作存在可以进行反射调用的方法，并且该方<br>法在相关对象反序列化时并未进行任何校验。</p>
+<p>即 InvokerTransformer 类的 transform 方法</p>
+<p>该方法需要输入一个 input 对象，然后使用反射的方法进行相应的函数调用。其中，iMethodName、iParamTypes为调用的方法名称以及该方法的参数类型，iArgs 为对应方法的参数值。在 InvokeTransformer 这个类的构造函数中我们可以发现，这三个参数均可控</p>
+<h4 id="ChainedTransformer"><a href="#ChainedTransformer" class="headerlink" title="ChainedTransformer"></a>ChainedTransformer</h4><p>Commons-Collections 组件提供了链式的 transformer 类来处理我们的输入</p>
+<p>可以构造一个能调用 <code>Runtime.getRuntime().exec(&quot;cmd&quot;)</code> 方法的 <code>ChainedTransformer </code>，来实现远<br>程代码执行(RCE)</p>
+<h4 id="TransformedMap"><a href="#TransformedMap" class="headerlink" title="TransformedMap"></a>TransformedMap</h4><p>当 Map 的 key/value 发生变化时，调用 keyTransformer/valueTransformer 对象的 transform 方法</p>
+<p>TransformedMap 类提供将Map 和 ChainedTransformer绑定的构造函数，所以只需要添加数据至 Map 中就会自动调用其 transform 方法，进而执行命令。</p>
+<p>依赖于触发 Map 中某一项去调用 setValue()，需要想办法通过 readObject()直接触发</p>
+<h4 id="Callers-of-transform-Method"><a href="#Callers-of-transform-Method" class="headerlink" title="Callers of transform Method"></a>Callers of transform Method</h4><p>通过调用层级图，我们可以发现两个比较明显的类调用了 transform 方法：<br>LazyMap<br>TransformedMap</p>
+<h3 id="构造条件"><a href="#构造条件" class="headerlink" title="构造条件"></a>构造条件</h3><p>目前可利用条件：<br>可以通过 Transformer 构造恶意代码<br>可以调用漏洞类 Transformer 的对象及方法</p>
+<p>缺少的利用条件：<br>类含有 Map 类型的成员变量，且可给该成员变量赋值<br>该类可在反序列化时调用 Map 类型的成员变量触发漏洞的函数</p>
+<h4 id="AnnotationInvocationHandler"><a href="#AnnotationInvocationHandler" class="headerlink" title="AnnotationInvocationHandler"></a>AnnotationInvocationHandler</h4><p>AnnotationInvocationHandler 类具备我们的条件，含有 Map 类型的成员变量 memberValues，且可以通过构造方法进行赋值。同时类还实现了 Serializable 接口，这意味着该类可以被序列化</p>
+<p>反序列化时调用的 readObject 方法。通过一系列操作之后，就会进入 setValue 方法。那么我们可以构造一个 AnnotationInvocationHandler 对象，然后传入我们构造的 Map 和 ChainedTransformer，当目标接收到我们的序列化后的对象的时候，调用 readObject 方法就会造成命令执行。</p>
+<h4 id="Gadget-Chain-–-TransformedMap-POC"><a href="#Gadget-Chain-–-TransformedMap-POC" class="headerlink" title="Gadget Chain – TransformedMap POC"></a>Gadget Chain – TransformedMap POC</h4><h3 id="官方补丁"><a href="#官方补丁" class="headerlink" title="官方补丁"></a>官方补丁</h3><p>禁用相关类的序列化功能。</p>
+<p>commons-collections-3.2.2.jar!/org/apache/commons/collections/functors/FunctorUtils.class</p>
+<h2 id="JSON-反序列化"><a href="#JSON-反序列化" class="headerlink" title="JSON 反序列化"></a>JSON 反序列化</h2><p>Java 处理 Json 格式数据有三个比较流行的类库：<br>Gson(google维护)<br>Jackson<br>Fastjson</p>
+<p>Fastjson 是阿里巴巴一个开源的 json 相关的 Java library，这个库能快速实现 Java 对象与 Json格式数据之间的转换。简单高效，广泛应用于 Web 服务以及 Android 应用客户端上。提供两个主要接口toJsonString 和 parseObject 来分别实现序列化和反序列化功能。</p>
+<p>项目地址 <a href="https://github.com/alibaba/fastjson">https://github.com/alibaba/fastjson</a></p>
+<p>JNDI(Java Naming and Directory Interface)，翻译成中文就是 Java命名和目录接口。</p>
+<p>从上(最底层)到下依次为 Java Application、JNDI API、Naming Manager(这个很关键)、JNDI SPI(Service ProviderInterface)，即服务提供接口。SPI的实现方式有多种，其中包括 RMI、LDAP、DNS、CORBA、NIS 等等，其中 RMI 和 LDAP是本次关注的重点</p>
+<h3 id="Fastjson-RCE-amp-JNDI-INJECTION"><a href="#Fastjson-RCE-amp-JNDI-INJECTION" class="headerlink" title="Fastjson RCE &amp; JNDI INJECTION"></a>Fastjson RCE &amp; JNDI INJECTION</h3><p>Fastjson RCE 的本质就是在反序列化时会调用目标类的 setter 方法。</p>
+<p>以 com.sun.rowset.JdbcRowSetImpl Gadget为例，类中的 setAutoCommit 方法中通过 connect 方法调用了 lookup 方法，且 lookup 方法的参数又能通过setDataSourceName 方法设置，即其参数可控。那么就会导致 JNDI 注入，最终实现任意命令执行。</p>
+<p>那什么又是 JNDI 注入呢？</p>
+<p>JNDI RCE 漏洞产生的原因就在于当我们在注册 RMI 服务时，可以指定 Codebase url，也就是远程要加载类的位置，设置该属性可以让 JDNI 应用程序在加载时去寻找我们指定的类</p>
+<p>这里还有一个比较重要的点，也是触发恶意代码的点。就是当 JNDI 应用程序通过 lookup(RMI 服务的地址)方法调用指定 Codebase url上的类后，会调用被远程调用类的构造方法，所以如果我们将恶意代码放在被远程调用类的构造方法中时，漏洞就会触发。</p>
+<h3 id="Fastjson常见漏洞原理"><a href="#Fastjson常见漏洞原理" class="headerlink" title="Fastjson常见漏洞原理"></a>Fastjson常见漏洞原理</h3><ol>
+<li>fastjson-1.2.24</li>
+</ol>
+<p>fastjson接受的JSON可以通过@type字段来指定该JSON应当还原成何种类型的对象，在反序列化的时候方便操作</p>
+<ol start="2">
+<li>fastjson-1.248以下</li>
+</ol>
+<p>checkAutoType中使用TypeUtils.getClassFromMapping(typeName)去获取class不为空，从而绕过了黑名单检测</p>
+<ol start="3">
+<li>fastjson-1.2.60以下</li>
+</ol>
+<p>字符串中包含\x转义字符时可以造成dos漏洞</p>
+<ol start="4">
+<li>1.2.70及以上版本，目前暂未被披露存在高危的漏洞利用链。</li>
+</ol>
+<p>当autotype开启时，参数中使用“@type”字段，可以指定任意的类，fastjson将反序列化为指定的对象。</p>
+<h3 id="如何彻底解决Fastjson漏洞"><a href="#如何彻底解决Fastjson漏洞" class="headerlink" title="如何彻底解决Fastjson漏洞"></a>如何彻底解决Fastjson漏洞</h3><p>官方维护了一份常见危险类型的黑名单，但众所周知，黑名单的机制很难覆盖全面。如果有攻击者找到黑名单以外的危险类型，依然会产生严重危害。</p>
+<ol>
+<li>方案一：开启safemode 适用于完全不需要autoType的应用。开启时，会强制关闭autoType。</li>
+</ol>
+<p>优点：最安全的方案，完全禁用autoType，新的版本再爆出反序列化漏洞时，极大概率不需要再升级也能免疫。<br>不足：仅适用于完全不需要autoType的应用。</p>
+<ol start="2">
+<li>方案二：配置一个autoType白名单。</li>
+</ol>
+<p>优点：相对安全，可以避免一些恶意类的传入，前提是白名单范围要尽量缩小。新的版本再爆出反序列化漏洞时，大概率不需要再升级也能免疫。<br>不足：情况复杂的业务，梳理有哪些数据是需要用到autoType反序列化的，整理出白名单需要一定时间。</p>
+<ol start="3">
+<li>方案三：autoType黑名单</li>
+</ol>
+<p>优点：整改成本低，处理速度快。<br>不足：安全性不如前两种方案，短期内可作为临时方案，缓解外部漏洞探测。有极低的概率会对已有业务产生影响（反序列化的内容里包含java.net.前缀类型对象的情况）。</p>
 
     </div>
   </div>
@@ -396,13 +474,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/44CMS%E6%BC%8F%E6%B4%9E/" target="_self">CMS漏洞</a>
+        <a href="/2021/44CMS%E6%BC%8F%E6%B4%9E/" target="_self">44CMS漏洞</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/46%E5%85%B6%E4%BB%96%E6%BC%8F%E6%B4%9E/" target="_self">其他漏洞</a>
+        <a href="/2021/46%E5%85%B6%E4%BB%96%E6%BC%8F%E6%B4%9E/" target="_self">46其他漏洞</a>
         <i class="iconfont icon-next"></i>
       </div>
     

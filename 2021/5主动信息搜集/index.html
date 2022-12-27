@@ -8,7 +8,7 @@
   
   
   
-  <title>主动信息搜集 | JohnScott2046的博客</title>
+  <title>5主动信息搜集 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>主动信息搜集</span>
+    <span>5主动信息搜集</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -317,8 +317,22 @@
 <p>优点：可以經過路由的主机，速度相对较快<br>缺点：速度比二层發現慢，經常会被防火墙过滤</p>
 <p>ping 192.168.1.1</p>
 <h4 id="traceroute-域名-路由跟踪"><a href="#traceroute-域名-路由跟踪" class="headerlink" title="traceroute 域名 路由跟踪"></a>traceroute 域名 路由跟踪</h4><p>traceroute baidu.com</p>
-<h4 id="hping3-压力测试、ddos攻击"><a href="#hping3-压力测试、ddos攻击" class="headerlink" title="hping3 压力测试、ddos攻击"></a>hping3 压力测试、ddos攻击</h4><p>tcp/ip数据包组装、分析的工具；通常用来做压力测试；会立即发送请求 每次只能扫描一个目标 随机ip(局域网内)</p>
+<h4 id="hping3-压力测试、ddos攻击"><a href="#hping3-压力测试、ddos攻击" class="headerlink" title="hping3 压力测试、ddos攻击"></a>hping3 压力测试、ddos攻击</h4><p>hping3是一款免费的数据包生成器和分析器。可用于安全审计、防火墙规则测试、网络测试、端口扫描、性能测试，压力测试(DOS)，几乎可以发送任意类型的TCP/IP数据包。功能强大但是每次只能向一个IP地址发送数据包，还能够在两个相互包含的通道之间传送文件</p>
+<p>tcp/ip数据包组装、分析的工具；通常用来做压力测试；会立即发送请求 每次只能扫描一个目标 随机ip(局域网内)</p>
+<p>(下载地址)[<a target="_blank" rel="noopener" href="http://www.hping.org/download.html]">http://www.hping.org/download.html]</a></p>
 <p>hping3 -c 1000 -d 120 -S -w 64 -p 80 —-flood —-rand-source  网址<br>-c 1000 数据包的数量<br>-d 120  发送到目标机器每个数据包的大小；单位字节<br>-S 只发送syn数据包<br>-w 64 tcp窗口大小<br>-p 80 端口80<br>-—flood 尽快发送数据包，不需要考虑入站回复<br>—-rand-source 使用随机性的源头ip地址，伪造只限于局域网下</p>
+<p>-i –interval  发送数据包间隔的时间 (uX即X微秒, 例如：-i u1000)<br>   –fast      等同 -i u10000 (每秒10个包)<br>   –faster    等同 -i u1000 (每秒100个包)<br>   –flood     尽最快发送数据包，不显示回复<br>-n 数字化输出，象征性输出主机地址<br>-I 网卡接口 (默认路由接口)</p>
+<ol>
+<li><p>ICMP测试<br>hping3 -1 目标（类似于ping命令）<br>hping3 -1 192.168.1.200</p>
+</li>
+<li><p>SYN方式扫描主机端口<br>hping3 –scan 端口范围 -S 目标<br>hping3 –scan 1-5000 -S 192.168.1.200</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Scanning 192.168.1.200 (192.168.1.200), port 1-5000</span><br><span class="line">5000 ports to scan, use -V to see all the replies</span><br><span class="line">+----+-----------+---------+---+-----+-----+-----+</span><br><span class="line">|port| serv name |  flags  |ttl| id  | win | len |</span><br><span class="line">+----+-----------+---------+---+-----+-----+-----+</span><br><span class="line">   80 http       : .S..A... 128  7193 65392    46</span><br><span class="line">  135 epmap      : .S..A... 128  7705 65392    46</span><br><span class="line">  139 netbios-ssn: .S..A... 128  7961  8192    46</span><br><span class="line">  443 https      : .S..A... 128  8217 65392    46</span><br><span class="line">  445 microsoft-d: .S..A... 128  8473 65392    46</span><br><span class="line">  902            : .S..A... 128  8985 65392    46</span><br><span class="line">  912            : .S..A... 128  9241 65392    46</span><br><span class="line"> 1080 socks      : .S..A... 128  9497 65392    46</span><br><span class="line"> 3306 mysql      : .S..A... 128  9753 65392    46</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>数据包追踪 类似于traceroute <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a><br>hping3 –traceroute -V -1 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></li>
+</ol>
 <h4 id="fping-hping3的增强版-可以对网段使用"><a href="#fping-hping3的增强版-可以对网段使用" class="headerlink" title="fping hping3的增强版 可以对网段使用"></a>fping hping3的增强版 可以对网段使用</h4><p>fping -g 192.168.1.0/24 -c 1  &gt; fping.txt<br>  -g 对整个网段<br>  -c 表示 ping 的次数</p>
 <blockquote>
 <p>fping.txt 将扫描结果重定向到 fping.txt ，扫描一个网段输出结果非常多，重定向到文件中只会获得存活的主机信息</p>
@@ -326,12 +340,22 @@
 <p>fping -g 192.168.1.0/24 -c 1 2&gt; /dev/null 1&gt; fping.txt<br>cat fping.txt |grep -v “timed” &gt; fping1.txt</p>
 <p>cat fping.txt |grep -v “timed”</p>
 <p>fping -g 192.168.1.0/24 -c 1 2&gt; /dev/null | grep -v “timed” &gt; fping2.txt</p>
+<h4 id="MHDDoS"><a href="#MHDDoS" class="headerlink" title="MHDDoS"></a>MHDDoS</h4><p><a href="https://github.com/MatrixTM/MHDDoS">https://github.com/MatrixTM/MHDDoS</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;MatrixTM&#x2F;MHDDoS.git</span><br><span class="line">cd MHDDoS</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>linux一键安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt -y update &amp;&amp; apt -y install curl wget libcurl4 libssl-dev python3 python3-pip make cmake automake autoconf m4 build-essential ruby perl golang git &amp;&amp; git clone https:&#x2F;&#x2F;github.com&#x2F;MatrixTM&#x2F;MHDDoS.git &amp;&amp; cd MH* &amp;&amp; pip3 install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>Layer7<br>支持RHEX, KILLER, DYN, SLOW, GET, EVEN, GSB, COOKIE, XMLRPC, AVB, CFB, STRESS, CFBUAM, NULL, OVH, POST, BYPASS, BOMB, TOR, APACHE, HEAD, BOT, STOMP, DOWNLOADER, DGB, PPS<br>python3 start.py bypass <a target="_blank" rel="noopener" href="https://example.com/">https://example.com</a> 5 101 socks5.txt 100 3600<br>python3 start.py bomb <a target="_blank" rel="noopener" href="https://example.com/">https://example.com</a> 0 50 proxy.txt 100 3600</p>
+<p>Layer4<br>支持MEM, NTP, SYN, UDP, MCPE, FIVEM, CPS, CLDAP, VSE, CHAR, ARD, RDP, TCP, MCBOT, CONNECTION, TS3, ICMP, MINECRAFT, DNS<br>python3 start.py udp 1.1.1.1:53 1 3600<br>python3 start.py dns 1.1.1.1:53 100 3600 dns.txt<br>python3 start.py minecraft 1.1.1.1:53 1000 3600 5 socks5.txt</p>
+<p>调试模式（记录攻击状态）<br>python3 start.py bypass <a target="_blank" rel="noopener" href="https://example.com/">https://example.com</a> 5 1000 socks5.txt 100 100 true<br>python3 start.py udp 1.1.1.1:53 1 100 true<br>python3 start.py dns 1.1.1.1:53 1 100 dns.txt true<br>python3 start.py minecraft 1.1.1.1:53 1 100 5 socks5.txt true</p>
+<p>工具/帮助<br>python3 start.py tools<br>支持DSTAT, PING, CHECK, INFO, CFIP, DNS, TSSRV<br>python3 start.py help</p>
 <h3 id="四、-四层发现-nmap"><a href="#四、-四层发现-nmap" class="headerlink" title="四、 四层发现 - nmap"></a>四、 四层发现 - nmap</h3><p>nmap 是一个网络探测和安全扫描程序，系统管理者和个人可以使用这个软件扫描大型的网络，獲取那台主机正在运行以及提供什么服务等信息。nmap 支持很多扫描技术，例如：UDP、TCP connect()、TCP SYN(半开扫描)、ftp 代理(bounce 攻击)、反向标志、ICMP、FIN、ACK 扫描、圣诞树(Xmas Tree)、SYN 扫描和 null 扫描。还可以探测操作系统类型。</p>
 <p>主要是tcp、udp协议</p>
 <p>tcp是可靠协议，需要三次握手<br>udp速度快，不需要三次握手</p>
 <h4 id="nmap-network-mapper-网络探测和安全扫描"><a href="#nmap-network-mapper-网络探测和安全扫描" class="headerlink" title="nmap network mapper 网络探测和安全扫描"></a>nmap network mapper 网络探测和安全扫描</h4><p>主机开放的端口<br>检测相应端口的软件和版本<br>检测操作系统、硬件地址、软件<br>脆弱性的漏洞 namp脚本</p>
 <p>端口状态解析<br>open tcp连接、udp报文<br>close 关闭的端口<br>filtered 无法探测是否开放、过滤可能来自防火墙或者路由规则<br>unfiltered 未被过滤 端口可访问 ，无法确定是否开放；只有用于映射防火墙规则的ack扫描才会把端口分到这个状态<br>open|filtered 无法确定端口开放还是被过滤，开放的端口不响应<br>close|filtered 关闭或者被过滤 无法确定</p>
-<p>用法：<br>nmap -sn 1092.168.1.0/24   扫描局域网在线的<br>nmap -sn 1092.168.1.1-254</p>
+<p>用法：<br>nmap -sn 192.168.1.0/24   扫描局域网在线的<br>nmap -sn 192.168.1.1-254</p>
 <p>查看端口进程<br>lsof -i:22 查看22端口<br>ps aux | grep sshd<br>find / -name sshd</p>
 <p>全连接 半连接扫描<br>\sym        \syn<br>/syn+ack      /syn+ack<br>\ack        \rst<br>\rst</p>
 <p>nmap -sS 192.168.1.1 -p 80,81,443,3306<br>nmap -O 192.168.1.1   显示操作系统类型<br>nmap -sS -O 192.168.1.0/24 扫描网段中的操作系统</p>
@@ -370,31 +394,6 @@
 <p>flags = SA syn+ack  证明80端口开放</p>
 <p>从以上响应结果中得到一个 flags=SA 的数据包。SA 标志即 SYN+ACK。表示收到服务器 tcp 三次握手中的第二个包，可以收到响应包，表示端口开放。</p>
 <p>注：这种基於 tcp 的半链接扫描，更隐密，更不容易被發現</p>
-<h3 id="擴展：-tcp-header"><a href="#擴展：-tcp-header" class="headerlink" title="擴展： tcp header"></a>擴展： tcp header</h3><p>Source Port（16 bits）：源端口号，用亍标记主机進程，端口号也称为進程地址<br>Destination Port（16 bits） ：目标端口号，通过 16 位字节标识 0-65535 共 65536 个端口<br>Sequence Number（32 bits） ：数据包序列号，TCP 数据分段<br>Acknowledgement Number（32 bits） ：确认序列号，回应序列号，一次發一批报文时候使用序列号和确认号，TCP 三次握手的第一次无确认号<br>Header Length（4 bits） ：首部长度<br>Reserved（4 bits） ：保留位<br>Code：control Flag（6 bits） ：标志控制码，該字段有 6 个 bits 组成，每个 bits 标识一种含义，用以说明这个連接的状态，让接收端連接这个数据包的主要劢作<br>URG(Urgent)：紧急位，1 标识为紧急数据包，接收端要紧急处理，且 Urgent Pointer 字段也会被<br>吭用<br>ACK(Acknowledge)：确认位，1 表示为响应数据包，0 表示确认无效，和 Acknowledeg Number<br>有关<br>PSH(Push Function)：推送位，1 表示不传送缓冲区，而立即把数据包發送，无需在缓冲区等待再<br>传送<br>RST(Reset)：連接重置，当已建立的連接遇到意外断开时，在原有的基础上重新建立，不需要再三次<br>握手，1 表示强制结束連接，且収送端已绊断线<br>SYN(Synchronous)：1 表示發送端希望双方建立同步处理(要求建立連接)，主動要連接到对方<br>FIN(Finish)：1 表示传输结束<br>Window Size：窗口大小，接收方的缓冲当中的可剩余容纳的报文个数，以及链路中的整体容纳报文<br>的个数，0 表示缓冲器已經额满，所以应該暂停数据传输，發送一次能每多少个，取決於接收方窗口大小<br>TCP Checksum：确认校验码<br>Urgent Pointer：紧急指针，URG 为 1 时，指针有效，否则无效<br>Options：填充位，可发长度，多数情況不使用<br>Data：数据</p>
-<h3 id="擴展：-ip-header"><a href="#擴展：-ip-header" class="headerlink" title="擴展： ip header"></a>擴展： ip header</h3><p>每 32 位，为一个单元组织，每一行由 4 字节组成，整体长度为 0-16，需要时也包含 20，包的长度是指定有多少个行</p>
-<p>0<br>IP version （4 bits）：IP 版本号，例：IPv4，IPv6<br>Hdr Len （4 bits）:IP 报文首部长度，0-20，标记的是行数，把行数乘上 4 才是真正的字节数<br>Type of service (TOS) （8 bits）：服务类型， 通过定义来标识 IP 数据包的优先级、延连、传输量和可靠度等信息<br>Total Length （16 bits）: IP 数据包的总长度，包括报头和数据部分、总长度减去报文长度，得出数据长度</p>
-<p>4<br>ldentification （fragment ID）（16 bits）: 片标识符，辨识数据段是否为一个数据， 标记同一个数据包的切片后的标识（同一种标识，则为同一个数据包的切片）由亍数据在传输时并不是原封不動的传输，比如：数据包 1500bit，在网络传输过程中遇到设备只支持传输 500bit 的数据包时，那么該设备则会把数据包切割为 3 份，再往外转收，当数据包到达接收方时，那么接收方接收到后，需要得知有多少个切割的数据包才是组成的一个数据包，那些片和那些片是同一个数据包、组成的顺序等<br>Fragment Offset （13 bits）：片偏移量标识（标识同一个数据包的组成顺序），接收方通过切片后的标识、片偏移量标识，可以把数据包组成一个数据包，第一片偏移量，则为 0，第二片偏移量，则为第一<br>片偏移量的长度，第三片偏移量，则为第一片偏移量加上第二片偏移量的长度<br>MF：表示告知接收方数据包已被切片传输，数据包必须由亍多个片才能组成一个数据包<br>DF：表示告知接收方数据包没有被切片传输，收到的数据包是完整的数据包，（表示数据包不能分片）</p>
-<p>8<br>Time-To-Live （TTL）（8 bits）：生存时间，默认为 64，当数据包通过一个路由时，则减 1，当 64减到为 0 时，数据包仍没到达目标主机时，此数据包则丢弃，不再传输<br>Protocol（8 bits ）：报文协议，用亍标识上一层协议是什么，(TCP–6、UDP–17、ICMP–1、IP–4… …)，</p>
-<p>数字描述<br>Header Checksum（16 bits）：报文首部校验和，用亍检测 IP 报头是否存在错误，在报文首部生成后，会把报文的校验码提叏出来计算加密，放在該位置，由亍在网络中传输叐到其他的干扰戒设备内部的错误，导致数据包的错误，当接收方收到数据包后，把校验码计算，结果和计算前一致则为接收，如果不一致则认为数据包在传输过程中發生了错误，则不接收</p>
-<p>12<br>Source IP Address（32 bits）：标识来源 IP 地址</p>
-<p>16<br>Destination IP Address（32 bits） ：标识目标 IP 地址</p>
-<p>20<br>Options（40 bits）： 可选填充位，提供包括安全处理机制、路由记录、时间戳、严格不宽松的来源路<br>由等，最长为 40 bits</p>
-<p>24<br>Data：真实数据，并包含传输层首部、应用层首部、等</p>
-<h3 id="擴展：-IPV4-地址"><a href="#擴展：-IPV4-地址" class="headerlink" title="擴展： IPV4 地址"></a>擴展： IPV4 地址</h3><p>由点分十進制，三点四段，每段由 8 位二進制组的十進制，共 32 位二進制<br>每段范围是在 0 0 0 0 0 0 0 0 - 1 1 1 1 1 1 1 1 0-255 有效范围不能超出 255</p>
-<p>在标识不同的网络规模，IPV4 地址分为类别，分别用亍标记网络地址和主机地址的不同长度</p>
-<p>A 类：只有第一段用於标记网络地址，后面三段都用於标记主机地址，子网掩码为 8 位，255.0.0.0</p>
-<p>起始地址：首位为 0，后面 7 位发化，0 000 0001 - 0 111 1111 1-127，2^7-1 个 A 类网 ,对於 A类地址，127 段不能使用<br>有效范围：1.0.0.0 - 126.255.255.255<br>127 段：用於回环地址<br>容纳的主机数量：2^24-2<br>主机位为全 0：网络地址<br>主机位为全 1：为广播地址</p>
-<p>1.0.0.1 255.0.0.0<br>2.0.0.1 255.0.0.0</p>
-<p>B 类：前两段用於标记网络地址，后面两段用於标记主机地址，子网掩码为 16 位，255.255.0.0</p>
-<p>起始地址：首位为 10，后面 6 位发化，10 00 0000 - 10 11 1111 128-191， 2^14 个 B 类网<br>有效范围：128.0.0.0 - 191.255.255.255<br>容纳的主机数量：2^16-2<br>主机位为全 0：网络地址<br>主机位为全 1：为广播地址</p>
-<p>128.0.0.1 255.255.0.0<br>128.1.0.1 255.255.0.0</p>
-<p>C 类：前面三段都用於标记网络地址，后面一段用於标记网主机地址，子网掩码为 24 位，255.255.255.0</p>
-<p>起始地址：首位为 110，后面 5 位发化，110 0 0000 - 110 1 1111 192-223， 2^21 个 C 类网<br>有效范围：192.0.0.0-223.255.255.255<br>容纳的主机数量：2^8-2<br>主机位为全 0：网络地址<br>主机位为全 1：为广播地址<br>193.1.1.1 255.255.255.0</p>
-<p>D 类：前面三段都用於标记网络地址，后面一段用於标记网主机地址</p>
-<p>起始地址：首位为 1110，后面 4 位发化，1110 0000 - 1110 1111 224-239</p>
-<p>E 类：</p>
-<p>起始地址：首位为 11110，后面 3 位发化，11110 000 - 11110 111 240-247<br>IP 地址由 ICANN，国际互联网地址名称分配机构進行分配<br>私有地址：在内部，所有主机都可以使用，但不能用於互联网</p>
-<p>A 类：10.0.0.0/8<br>B 类：172.16.0.0-172.31.0.0/16<br>C 类：192.168.0.0-192.168.255.0/24</p>
     </div>
   </div>
   
@@ -497,13 +496,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/4%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">信息搜集</a>
+        <a href="/2021/4%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">4信息搜集</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/6%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">被动信息搜集</a>
+        <a href="/2021/6%E8%A2%AB%E5%8A%A8%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">6被动信息搜集</a>
         <i class="iconfont icon-next"></i>
       </div>
     

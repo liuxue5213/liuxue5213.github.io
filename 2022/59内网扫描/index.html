@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>59内网扫描 | JohnScott2046的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,信息搜集," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott2046</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>59内网扫描</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2022-02-02
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="59内网扫描"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <h2 id="内网扫描"><a href="#内网扫描" class="headerlink" title="内网扫描"></a>内网扫描</h2><h3 id="Ms17010-scan"><a href="#Ms17010-scan" class="headerlink" title="Ms17010_scan"></a>Ms17010_scan</h3><p>Ehernal Blue通过Tcp端口445和139来利用SMBv1和NBT中的远程代码执行漏洞，恶意代码会扫描开放445文件共享端口的Windows机器，无需用户任何操作，只需要开机上网，攻击者就能在电脑和服务器中植入勒索软件</p>
+<p>下载地址 <a href="https://github.com/holmesian/ms17_010_scan">https://github.com/holmesian/ms17_010_scan</a></p>
+<p>扫单个IP<br>ms17010scan-h-n-amd64-1.exe -h 192.168.1.1</p>
+<p>扫IP段<br>ms17010scan-h-n-amd64-1.exe -n 192.168.1.0/24</p>
+<h3 id="Httpscan-Web扫描"><a href="#Httpscan-Web扫描" class="headerlink" title="Httpscan-Web扫描"></a>Httpscan-Web扫描</h3><p>httpscan是一个扫描指定CIDR网段的Web主机的小工具。和端口扫描器不一样，httpscan是以爬虫的方式进行Web主机发现，因此相对来说不容易被防火墙拦截。</p>
+<p>httpscan会返回IP 、http状态码 、Web容器版本 、以及网站标题</p>
+<p>下载地址 <a href="https://github.com/zer0h/httpscan">https://github.com/zer0h/httpscan</a></p>
+<p>python httpscan.py 192.168.1.0/24 -t 10</p>
+<h3 id="CMD内网主机存活扫描-windows使用"><a href="#CMD内网主机存活扫描-windows使用" class="headerlink" title="CMD内网主机存活扫描(windows使用)"></a>CMD内网主机存活扫描(windows使用)</h3><p>原理是使用ICMP的Ping命令去探测一个网段，目标是否存活</p>
+<p>for /l %i in (1,1,255) do @ping 192.168.1.%i ‐w 1 ‐n 1 | find /i “ttl”</p>
+<h3 id="Ladon大型内网渗透扫描器"><a href="#Ladon大型内网渗透扫描器" class="headerlink" title="Ladon大型内网渗透扫描器"></a>Ladon大型内网渗透扫描器</h3><p>Ladon一款用于大型网络渗透的多线程插件化综合扫描神器，含端口扫描、服务识别、网络资产、密码爆破、高危漏洞检测以及一键GetShell，支持批量A段/B段/C段以及跨网段扫描，支持URL、主机、域名列表扫描</p>
+<p>下载地址 <a href="https://github.com/k8gege/Ladon">https://github.com/k8gege/Ladon</a></p>
+<ol>
+<li>多协议探测内网主机存活</li>
+</ol>
+<p>Ladon.exe 192.168.1.0/24 OnlinePC</p>
+<ol start="2">
+<li>多协议识别操作系统</li>
+</ol>
+<p>Ladon.exe 192.168.1.0/24 OsScan</p>
+<ol start="3">
+<li>扫描内网SMB漏洞MS1701</li>
+</ol>
+<p>Ladon.exe 192.168.1.0/24 MS17010</p>
+<h2 id="内网存活主机"><a href="#内网存活主机" class="headerlink" title="内网存活主机"></a>内网存活主机</h2><h3 id="基于UDP的扫描"><a href="#基于UDP的扫描" class="headerlink" title="基于UDP的扫描"></a>基于UDP的扫描</h3><p>UDP简介：UDP（User Datagram Protocol）是一种无连接的协议，在第四层-传输层，处于IP协议的 上一层。<br>UDP有不提供数据包分组、组装和不能对数据包进行排序的缺点，也就是说，当报 文发送之后，是无法得知其是否安全完整到达的。</p>
+<p>UDP显著特性：</p>
+<ol>
+<li><p>UDP 缺乏可靠性。UDP 本身不提供确认，超时重传等机制。<br>UDP 数据报可能在网络中被 复制，被重新排序，也不保证每个数据报只到达一次。</p>
+</li>
+<li><p>UDP 数据报是有长度的。<br>每个 UDP 数据报都有长度，如果一个数据报正确地到达目的 地，那么该数据报的长度将随数据一起传递给接收方。<br>而 TCP 是一个字节流协议，没有任 何（协议上的）记录边界。</p>
+</li>
+<li><p>UDP 是无连接的。UDP 客户和服务器之前不必存在长期的关系。大多数的UDP实现中都 选择忽略源站抑制差错，在网络拥塞时，目的端无法接收到大量的UDP数据报</p>
+</li>
+<li><p>UDP 支持多播和广播</p>
+</li>
+</ol>
+<p>nmap扫描<br>nmao -sU -T5 -sV –max-retries 1 192.168.1.100 -p 500 （不推荐，理由慢）<br>    -sU 基于UDP的扫描<br>    -T5 nmap的扫描速度 -T（0-5）越大越快<br>    -sV  探测开启的端口来获取服务、版本信息<br>    –max-retries <tries>    扫描探测的上限次数设定<br>    -p 只扫描指定端口</p>
+<p>msf扫描<br>use auxiliary/scanner/discovery/udp_prob<br>set rhosts 192.168.1.1/24<br>set threads 10<br>run</p>
+<p>use auxiliary/scanner/discovery/udp_sweep<br>set rhosts 192.168.1.1/24<br>set threads 10<br>run</p>
+<p>auxiliary （辅助）/ scanner（扫描）/discovery（发现）/udp_probe（探测）/udp_sweep(彻底搜索)</p>
+<h3 id="基于arp的扫描"><a href="#基于arp的扫描" class="headerlink" title="基于arp的扫描"></a>基于arp的扫描</h3><p>ARP简介：ARP,通过解析网路层地址来找寻数据链路层地址的一个在网络协议包中极其重要的网络传输 协议。根据IP地址获取物理地址的一个TCP/IP协议。<br>主机发送信息时将包含目标IP地址的 ARP请求广播到网络上的所有主机，并接收返回消息，以此确定目标的物理地址</p>
+<p>nmap扫描 nmap -sn -RP 192.168.1.1/24<br>    -sn 不扫描端口，只扫描主机<br>    -PR  ARP ping扫描<br>    -sP        Ping扫描 sn<br>    -P0        无Ping扫描<br>    -PS        TCP SYN Ping扫描<br>    -PA         TCP ACK Ping扫描<br>    -PU         UDP ping扫描<br>    -PE/PM/PP    ICMP Ping Types扫描</p>
+<p>msf扫描<br>use auxiliary/scanner/discovery/arp_sweep<br>set rhosts 192.168.1.1/24<br>set threads 10<br>run</p>
+<h3 id="基于netbios的扫描"><a href="#基于netbios的扫描" class="headerlink" title="基于netbios的扫描"></a>基于netbios的扫描</h3><p>nmap扫描<br>netbios简介：IBM公司开发，主要用于数十台计算机的小型局域网。<br>该协议是一种在局域网上的程序可以 使用的应用程序编程接口（API），为程序提供了请求低级服务的同一的命令集，作用是为 了给局域网提供网络以及其他特殊功能。<br>系统可以利用WINS服务、广播及Lmhost文件等多种模式将NetBIOS名-——特指基于 NETBIOS协议获得计算机名称——解析为相应IP地址，实现信息通讯，所以在局域网内部使 用NetBIOS协议可以方便地实现消息通信及资源的共享</p>
+<p>nmap -sU –script nbstat.nse -p137 172.16.0.127 -T4<br>137端口默认开发netbios</p>
+<p>msf扫描<br>use auxiliary/scanner/netbios/nbname<br>set rhosts 192.168.1.1/24<br>run</p>
+<h3 id="基于snmp扫描"><a href="#基于snmp扫描" class="headerlink" title="基于snmp扫描"></a>基于snmp扫描</h3><p>SNMP简介：SNMP是一种简单网络管理协议，它属于TCP/IP五层协议中的应用层协议，用于网络管理的 协议。SNMP主要用于网络设备的管理。<br>SNMP协议主要由两大部分构成：SNMP管理站和 SNMP代理。<br>SNMP管理站是一个中心节点，负责收集维护各个SNMP元素的信息，并对这 些信息进行处理，最后反馈给网络管理员；而SNMP代理是运行在各个被管理的网络节点之 上，负责统计该节点的各项信息，并且负责与SNMP管理站交互，接收并执行管理站的命 令，上传各种本地的网络信息。</p>
+<p>nmap扫描<br>nmap -sU –script snmp-brute ip -T4</p>
+<p>msf扫描<br>use auxiliary/scanner/snmp/snmp_enum<br>set rhosts 192.168.1.1/24<br>run<br>默认161端口</p>
+<h3 id="基于icp扫描"><a href="#基于icp扫描" class="headerlink" title="基于icp扫描"></a>基于icp扫描</h3><p>ICMP简介：它是TCP/IP协议族的一个子协议，用于在IP主机、路由器之间传递控制消息。<br>控制消息是指 网络通不通、主机是否可达、路由是否可用等网络本身的消息。<br>这些控制消息虽然并不传输 用户数据，但是对于用户数据的传递起着重要的作用。</p>
+<p>nmap扫描<br>nmap -sP -PI 192.168.1.1/24  -T4<br>nmap ‐sn ‐PE ‐T4 192.168.1.0/24<br>    -PI 进行ping扫描<br>    -PE与P0功能一样 无ping扫描</p>
+<h3 id="基于smb服务扫描"><a href="#基于smb服务扫描" class="headerlink" title="基于smb服务扫描"></a>基于smb服务扫描</h3><p>SMB(全称是Server Message Block)是一个协议名，它能被用于Web连接和客户端与服务器之间的信息沟通。<br>SMB最初是IBM的贝瑞·费根鲍姆（Barry Feigenbaum）研制的，其目的是将DOS操作系统中的本地文件接口“中断13”改造为网络文件系统。</p>
+<p>nmap扫描<br>nmap -sU -sS –script smb-enum-shares.nse -p445 192.168.1.1/24<br>    -sS ：半开放扫描（非3次握手的tcp扫描）<br>    默认端口445<br>（使用频率最高的扫描选项：SYN扫描,又称为半开放扫描，它不打开一个完全的TCP连接，执行得很快，效率高（一个完整的tcp连接需要3次握手，而-sS选项不需要3次握手）Tcp SYN Scan (sS) 它被称为半开放扫描优点：</p>
+<p>Nmap发送SYN包到远程主机，但是它不会产生任何会话，目标主机几乎不会把连接记入系统日志。<br>（防止对方判断为扫描攻击），扫描速度快，效率高，在工作中使用频率最高缺点：它需要root/administrator权限执行）</p>
+<p>msf扫描<br>use auxiliary/scanner/smb/smb_version<br>set rhosts 172.0.0.1/24<br>run</p>
+<p>内网代理<br>netsh </p>
+<p>portfwd<br>工具下载路径<a href="https://github.com/rssnsj/portfwd.git">https://github.com/rssnsj/portfwd.git</a><br>在靶机A上使用如下命令下载portfwd端口转发工具。<br>git clone <a href="https://github.com/rssnsj/portfwd.git">https://github.com/rssnsj/portfwd.git</a></p>
+<p>regeorg正向代理</p>
+<p>反向代理<br>frp反向代理</p>
+<p>earthworm反向代理<br>git clone <a href="https://github.com/idlefire/ew.git">https://github.com/idlefire/ew.git</a><br>下载成功后运行如下命令,可在攻击机本地开启1080和8888监听端口，并将1080端口收到的流量转发至8888端口。<br>/ew_for_linux64 -s rcsocks -l 1080 -e 8888<br>使用命令netstat -antlp 可以看到攻击机本地开启了1080和8888监听端口</p>
+<p>在靶机A上上传earthworm,并运行如下命令连接攻击机的8888端口，建立与攻击机的反向代理。<br>./ew -s rssocks -d vpsip -e 8888</p>
+<p>在攻击机上修改全局代理软件proxychains的配置文件，默认路径为/etc/proxychains4.conf，配置socks5代理地址和端口如下：<br>socks5 127.0.0.1 1080</p>
+<p>在攻击机上使用如下命令通过代理隧道探测靶机B的3389端口是否开启，telnet使用的是tcp协议，而socks5协议支持tcp和udp协议数据的传递。<br>proxychains telnet 10.211.55.15 3389</p>
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2022/59%E5%86%85%E7%BD%91%E6%89%AB%E6%8F%8F/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/">
+              #信息搜集
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2022/58%E5%86%85%E7%BD%91%E5%8F%8D%E5%BC%B9shell/" target="_self">58内网反弹shell</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2022/60%E5%B8%B8%E8%A7%81WAF%E8%BF%9B%E7%A8%8B%E5%92%8C%E6%9C%8D%E5%8A%A1/" target="_self">60常见WAF进程和服务</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

