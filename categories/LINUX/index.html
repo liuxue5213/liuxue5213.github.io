@@ -8,7 +8,7 @@
   
   
   
-  <title>分类: LINUX | JohnScott2046的博客</title>
+  <title>分类: linux | JohnScott2046的博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -244,7 +244,7 @@
   <span class="archive-move-on"></span>
   <span class="archive-page-counter">
     
-      <span>当前位于 1/3 页</span>
+      <span>当前位于 1/1 页</span>
     
   </span>
   
@@ -252,7 +252,7 @@
     <div class="collection-title">
       <h2>
         
-          <span>分类 : LINUX</span>
+          <span>分类 : linux</span>
         
       </h2>
     </div>
@@ -262,150 +262,12 @@
   <article class="posts-collapse">
     <header>
       <h2>
-        <a href="/2020/Shell%E8%84%9A%E6%9C%AC/">
-          <span>Shell脚本</span>
+        <a href="/2022/88%E6%90%AD%E5%BB%BArmtp%E6%9C%8D%E5%8A%A1%E7%AB%AF/">
+          <span>88搭建rmtp服务端</span>
         </a>
       </h2>
       <div class="post-meta">
-        07-20
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2020/Iptables%E9%98%B2%E7%81%AB%E5%A2%99/">
-          <span>Linux-iptables介绍</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        06-30
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2020/crontab/">
-          <span>crontab</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        04-20
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2020/Git%E5%86%B2%E7%AA%81/">
-          <span>GIT冲突</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        04-19
-      </div>
-    </header>
-  </article>
-  
-  
-    <div class="collection-title">
-      <h2>
-        <span>2019</span>
-      </h2>
-    </div>
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2019/%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%8F%82%E6%95%B0/">
-          <span>编译安装参数</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        12-03
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2019/LINUX%E5%91%BD%E4%BB%A4/">
-          <span>Linux命令</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        07-18
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2019/Vim%E6%89%93%E5%BC%80%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">
-          <span>VIM打开多个文件操作</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        04-14
-      </div>
-    </header>
-  </article>
-  
-  
-    <div class="collection-title">
-      <h2>
-        <span>2018</span>
-      </h2>
-    </div>
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2018/LINUX%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E5%91%BD%E4%BB%A4/">
-          <span>Linux查看文件内容的命令</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        07-03
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2018/Nginx/">
-          <span>NGINX笔记</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        05-14
-      </div>
-    </header>
-  </article>
-  
-  
-  <article class="posts-collapse">
-    <header>
-      <h2>
-        <a href="/2018/%E5%AE%89%E8%A3%85RabbitMQ/">
-          <span>安装RabbitMQ</span>
-        </a>
-      </h2>
-      <div class="post-meta">
-        03-05
+        09-15
       </div>
     </header>
   </article>
@@ -413,8 +275,6 @@
 </div>
   <nav class="page-navigation">
     
-    
-      <a href="/categories/LINUX/page/2/">下一页</a>
     
   </nav>
 </div>
@@ -502,6 +362,98 @@ const handleScoll = () => {
 }
 
 const backToTop = () => {
+  let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop,
+    delay = 10,
+    time = 200;
+  if (scrollTop <= 20) {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    return;
+  }
+  let step = Math.ceil(scrollTop * delay / time);
+  let timer = setInterval(() => {
+    scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrollTop - step <= 0) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      clearInterval(timer);
+    } else {
+      document.documentElement.scrollTop = scrollTop - step;
+      document.body.scrollTop = scrollTop - step;
+    }
+  }, delay);
+}
+
+document.addEventListener("scroll", handleScoll(), false);
+
+document.querySelector(".back-to-top").addEventListener("click", backToTop, false);
+
+</script>
+
+    </div>
+
+    
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+<script>
+  (() => {
+    const mathjaxConfig = {
+      showProcessingMessages: false, //关闭js加载过程信息
+      messageStyle: "none", //不显示信息
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]], //行内公式选择符
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]], //段内公式选择符
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code", "a"] //避开某些标签
+      },
+      "HTML-CSS": {
+        availableFonts: ["STIX", "TeX"], //可选字体
+        showMathMenu: false //关闭右击菜单显示
+      }
+    }
+
+    let mathjaxInterval = setInterval(() => {
+      if(!window.MathJax){
+        return;
+      }
+      window.MathJax.Hub.Config(mathjaxConfig)
+      window.MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('app')])
+
+      clearInterval(mathjaxInterval)
+    }, 10)    
+  })()
+</script>
+    
+
+    <script src="https://cdn.bootcss.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script>
+<script async>
+  let fancyTimer = setInterval(function(){
+    if(!window.$){
+      return;
+    }
+    $(document).ready(function() {
+      $(".post img").each(function () {
+        if($(this).parent().get(0).tagName.toLowerCase() === "a") {
+          return;
+        }
+        // $(this).attr("data-fancybox", "gallery"); // if you add 'data-fancybox', img will display after showed
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "gallery");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      });
+      
+      clearInterval(fancyTimer);
+    });
+  }, 10);
+</script>
+
+    
+  </body>
+
+</html>
+) => {
   let scrollTop =
       document.documentElement.scrollTop || document.body.scrollTop,
     delay = 10,
