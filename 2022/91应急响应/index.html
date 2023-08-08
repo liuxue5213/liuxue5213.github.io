@@ -442,7 +442,7 @@
 <p>2.从历史记录中删除指定的命令<br>history | grep “keyword“，命令会输出历史记录中匹配的命令，每一条前面会有个数字。</p>
 <p>从历史记录中删除那个指定的项：history -d [num]<br>只保留前150行：sed -i ‘150,$d’ .bash_history</p>
 <p>破除隐藏：<br>提前备份.bash_history文件</p>
-<h3 id="隐藏远程SSH登陆记录"><a href="#隐藏远程SSH登陆记录" class="headerlink" title="隐藏远程SSH登陆记录"></a>隐藏远程SSH登陆记录</h3><p>隐身登录系统，不会被w、who、last等指令检测到。<br>ssh -T <a href="mailto:&#114;&#x6f;&#111;&#116;&#64;&#49;&#50;&#x37;&#46;&#x30;&#46;&#48;&#x2e;&#49;">&#114;&#x6f;&#111;&#116;&#64;&#49;&#50;&#x37;&#46;&#x30;&#46;&#48;&#x2e;&#49;</a> /bin/bash –i</p>
+<h3 id="隐藏远程SSH登陆记录"><a href="#隐藏远程SSH登陆记录" class="headerlink" title="隐藏远程SSH登陆记录"></a>隐藏远程SSH登陆记录</h3><p>隐身登录系统，不会被w、who、last等指令检测到。<br>ssh -T <a href="mailto:&#114;&#111;&#x6f;&#116;&#64;&#49;&#50;&#55;&#x2e;&#x30;&#x2e;&#48;&#x2e;&#49;">&#114;&#111;&#x6f;&#116;&#64;&#49;&#50;&#55;&#x2e;&#x30;&#x2e;&#48;&#x2e;&#49;</a> /bin/bash –i</p>
 <p>不记录ssh公钥在本地.ssh目录中<br>ssh -o UserKnownHostsFile=/dev/null -T user@host /bin/bash –i</p>
 <h3 id="端口复用"><a href="#端口复用" class="headerlink" title="端口复用"></a>端口复用</h3><p>利用IPTables进行端口复用</p>
 <ol>
